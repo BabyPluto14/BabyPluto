@@ -426,10 +426,27 @@ codebook_rows = [
 
 codebook_df = pd.DataFrame(codebook_rows, columns=["ColumnName", "Type", "ValueLabels"])
 
-# ── 17. WRITE EXCEL ───────────────────────────────────────────────────────────
+# ── 17. BUILD REGRESSION SHEET ───────────────────────────────────────────────
+regression_cols = [
+    "MonthlyOnlineSpend_Y",
+    "Age",
+    "Situation",
+    "MonthlyIncome",
+    "DisposableIncome",
+    "ShoppingFrequency",
+    "AvgPerPurchase",
+    "WhyShop_Avg",
+    "Influence_Avg",
+    "HoursOnline",
+    "SocialMediaDiscovery",
+]
+reg_df = out[regression_cols].copy()
+
+# ── 18. WRITE EXCEL ───────────────────────────────────────────────────────────
 with pd.ExcelWriter(OUTPUT, engine="openpyxl") as writer:
     out.to_excel(writer, sheet_name="Data", index=False)
     codebook_df.to_excel(writer, sheet_name="Codebook", index=False)
+    reg_df.to_excel(writer, sheet_name="Regression_Data", index=False)
 
 # ── 18. FORMAT with openpyxl ─────────────────────────────────────────────────
 wb = load_workbook(OUTPUT)
@@ -571,6 +588,28 @@ for i, (col, colour, desc) in enumerate(avg_rows, start=11):
 ws_key.column_dimensions["A"].width = 26
 ws_key.column_dimensions["B"].width = 18
 ws_key.column_dimensions["C"].width = 65
+
+# --- Regression_Data sheet ---
+ws_reg = wb["Regression_Data"]
+reg_hdr_fill = PatternFill(fill_type="solid", fgColor="375623")  # dark green
+reg_hdr_font = Font(color="FFFFFF", bold=True, size=10)
+reg_alt_fill = PatternFill(fill_type="solid", fgColor="EAF1E0")  # pale green
+
+for cell in ws_reg[1]:
+    cell.fill = reg_hdr_fill
+    cell.font = reg_hdr_font
+    cell.alignment = Alignment(horizontal="center", wrap_text=True)
+
+for row_idx, row in enumerate(ws_reg.iter_rows(min_row=2), start=2):
+    if row_idx % 2 == 0:
+        for cell in row:
+            cell.fill = reg_alt_fill
+
+for col_cells in ws_reg.columns:
+    max_len = max(len(str(c.value)) if c.value is not None else 0 for c in col_cells)
+    ws_reg.column_dimensions[col_cells[0].column_letter].width = min(max_len + 3, 26)
+
+ws_reg.freeze_panes = "A2"
 
 wb.save(OUTPUT)
 print(f"\nSaved → {OUTPUT}")
