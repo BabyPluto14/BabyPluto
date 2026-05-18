@@ -312,20 +312,24 @@ for col in buy_dummy_cols:
     out[col] = buy_dummies[col].values
 
 # Likert – WhyShop block
-for name in [
+why_shop_cols = [
     "WhyShop_Convenient", "WhyShop_SavesTime", "WhyShop_BetterPrices",
     "WhyShop_EnjoyBrowsing", "WhyShop_Habit", "WhyShop_Hobbies",
     "WhyShop_Curious", "WhyShop_Trending",
-]:
+]
+for name in why_shop_cols:
     out[name] = likert_series[name].values
+out["WhyShop_Avg"] = out[why_shop_cols].mean(axis=1).round(2)
 
 # Likert – Influence block
-for name in [
+influence_cols = [
     "Influence_Price", "Influence_Quality", "Influence_Brand",
     "Influence_SocialMedia", "Influence_OnlineAds", "Influence_WebDesign",
     "Influence_Reviews", "Influence_Recommendations",
-]:
+]
+for name in influence_cols:
     out[name] = likert_series[name].values
+out["Influence_Avg"] = out[influence_cols].mean(axis=1).round(2)
 
 # Likert – Discourages block
 for name in [
@@ -393,6 +397,8 @@ codebook_rows = [
     ("WhyShop_Hobbies",            "Scale (Likert 1–5)", likert_labels),
     ("WhyShop_Curious",            "Scale (Likert 1–5)", likert_labels),
     ("WhyShop_Trending",           "Scale (Likert 1–5)", likert_labels),
+    ("WhyShop_Avg",                "Scale (computed)",
+     "Row mean of all 8 WhyShop_* columns (1–5). Higher = stronger overall motivation to shop online."),
     ("Influence_Price",            "Scale (Likert 1–5)", likert_labels),
     ("Influence_Quality",          "Scale (Likert 1–5)", likert_labels),
     ("Influence_Brand",            "Scale (Likert 1–5)", likert_labels),
@@ -401,6 +407,8 @@ codebook_rows = [
     ("Influence_WebDesign",        "Scale (Likert 1–5)", likert_labels),
     ("Influence_Reviews",          "Scale (Likert 1–5)", likert_labels),
     ("Influence_Recommendations",  "Scale (Likert 1–5)", likert_labels),
+    ("Influence_Avg",              "Scale (computed)",
+     "Row mean of all 8 Influence_* columns (1–5). Higher = stronger overall influence on purchase decisions."),
     ("Discourages_PoorWebDesign",        "Scale (Likert 1–5)", likert_labels),
     ("Discourages_NegativeReviews",      "Scale (Likert 1–5)", likert_labels),
     ("Discourages_HighDeliveryCost",     "Scale (Likert 1–5)", likert_labels),
@@ -428,13 +436,26 @@ wb = load_workbook(OUTPUT)
 
 # --- Data sheet ---
 ws_data = wb["Data"]
-hdr_fill = PatternFill(fill_type="solid", fgColor="1F4E79")   # dark navy
-hdr_font = Font(color="FFFFFF", bold=True, size=10)
-alt_fill = PatternFill(fill_type="solid", fgColor="D9E8F5")   # pale blue
+hdr_fill   = PatternFill(fill_type="solid", fgColor="1F4E79")   # dark navy
+hdr_font   = Font(color="FFFFFF", bold=True, size=10)
+alt_fill   = PatternFill(fill_type="solid", fgColor="D9E8F5")   # pale blue
+orange_fill = PatternFill(fill_type="solid", fgColor="FF6600")  # orange
+red_fill    = PatternFill(fill_type="solid", fgColor="C00000")  # red
+
+# Map column name → 1-based column index for targeted header colouring
+col_index = {cell.value: cell.column for cell in ws_data[1]}
 
 for cell in ws_data[1]:
-    cell.fill = hdr_fill
-    cell.font = hdr_font
+    col_name = cell.value
+    if col_name == "WhyShop_Avg":
+        cell.fill = orange_fill
+        cell.font = Font(color="FFFFFF", bold=True, size=10)
+    elif col_name == "Influence_Avg":
+        cell.fill = red_fill
+        cell.font = Font(color="FFFFFF", bold=True, size=10)
+    else:
+        cell.fill = hdr_fill
+        cell.font = hdr_font
     cell.alignment = Alignment(horizontal="center", wrap_text=True)
 
 for row_idx, row in enumerate(ws_data.iter_rows(min_row=2), start=2):
@@ -470,6 +491,86 @@ ws_cb.column_dimensions["A"].width = 32
 ws_cb.column_dimensions["B"].width = 20
 ws_cb.column_dimensions["C"].width = 85
 ws_cb.freeze_panes = "A2"
+
+# --- Key sheet (Likert legend) ---
+ws_key = wb.create_sheet("Key")
+
+key_title_fill = PatternFill(fill_type="solid", fgColor="1F4E79")
+key_title_font = Font(color="FFFFFF", bold=True, size=11)
+
+# Title row
+ws_key["A1"] = "Likert Scale Key (applies to all WhyShop_*, Influence_*, and Discourages_* columns)"
+ws_key["A1"].font = key_title_font
+ws_key["A1"].fill = key_title_fill
+ws_key["A1"].alignment = Alignment(horizontal="left")
+ws_key.merge_cells("A1:C1")
+
+# Sub-header
+ws_key["A2"] = "Score"
+ws_key["B2"] = "Label"
+ws_key["C2"] = "Meaning"
+sub_fill = PatternFill(fill_type="solid", fgColor="2E75B6")
+sub_font = Font(color="FFFFFF", bold=True, size=10)
+for col_letter in ("A", "B", "C"):
+    ws_key[f"{col_letter}2"].fill = sub_fill
+    ws_key[f"{col_letter}2"].font = sub_font
+    ws_key[f"{col_letter}2"].alignment = Alignment(horizontal="center")
+
+likert_key_rows = [
+    (1, "Strongly Disagree", "Respondent strongly disagrees with the statement"),
+    (2, "Disagree",          "Respondent disagrees with the statement"),
+    (3, "Neutral",           "Respondent neither agrees nor disagrees"),
+    (4, "Agree",             "Respondent agrees with the statement"),
+    (5, "Strongly Agree",    "Respondent strongly agrees with the statement"),
+]
+row_fills = [
+    PatternFill(fill_type="solid", fgColor="FDEBD0"),  # light orange-ish for 1
+    PatternFill(fill_type="solid", fgColor="FDEBD0"),
+    PatternFill(fill_type="solid", fgColor="EAF1E0"),  # neutral green
+    PatternFill(fill_type="solid", fgColor="D5E8D4"),
+    PatternFill(fill_type="solid", fgColor="D5E8D4"),
+]
+for i, (score, label, meaning) in enumerate(likert_key_rows, start=3):
+    ws_key.cell(row=i, column=1, value=score)
+    ws_key.cell(row=i, column=2, value=label)
+    ws_key.cell(row=i, column=3, value=meaning)
+    for j in range(1, 4):
+        ws_key.cell(row=i, column=j).fill = row_fills[i - 3]
+        ws_key.cell(row=i, column=j).alignment = Alignment(horizontal="center" if j < 3 else "left")
+
+# Blank row then average column legend
+ws_key["A9"]  = "Average Column Key"
+ws_key["A9"].font = key_title_font
+ws_key["A9"].fill = key_title_fill
+ws_key.merge_cells("A9:C9")
+
+ws_key["A10"] = "Column"
+ws_key["B10"] = "Colour"
+ws_key["C10"] = "Description"
+for col_letter in ("A", "B", "C"):
+    ws_key[f"{col_letter}10"].fill = sub_fill
+    ws_key[f"{col_letter}10"].font = sub_font
+    ws_key[f"{col_letter}10"].alignment = Alignment(horizontal="center")
+
+avg_rows = [
+    ("WhyShop_Avg",   "Orange", "Mean of 8 'Why do you shop online?' Likert items (1–5)"),
+    ("Influence_Avg", "Red",    "Mean of 8 'What influences your purchase decisions?' Likert items (1–5)"),
+]
+avg_fills = [
+    PatternFill(fill_type="solid", fgColor="FFE0CC"),
+    PatternFill(fill_type="solid", fgColor="FFCCCC"),
+]
+for i, (col, colour, desc) in enumerate(avg_rows, start=11):
+    ws_key.cell(row=i, column=1, value=col)
+    ws_key.cell(row=i, column=2, value=colour)
+    ws_key.cell(row=i, column=3, value=desc)
+    for j in range(1, 4):
+        ws_key.cell(row=i, column=j).fill = avg_fills[i - 11]
+        ws_key.cell(row=i, column=j).alignment = Alignment(horizontal="center" if j < 3 else "left")
+
+ws_key.column_dimensions["A"].width = 26
+ws_key.column_dimensions["B"].width = 18
+ws_key.column_dimensions["C"].width = 65
 
 wb.save(OUTPUT)
 print(f"\nSaved → {OUTPUT}")
