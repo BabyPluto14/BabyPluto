@@ -287,6 +287,16 @@ social_raw = raw.iloc[:, 39].astype(str).str.strip()
 social_discovery = track_unmatched("SocialMediaDiscovery", social_raw, social_map)
 
 # ── 15. ASSEMBLE OUTPUT DATAFRAME ────────────────────────────────────────────
+employment_level_map = {
+    1: 1,  # Student (non-working) → Not earning
+    6: 1,  # Unemployed            → Not earning
+    7: 1,  # Stay-at-home          → Not earning
+    2: 2,  # Student (working)     → Partially earning
+    4: 2,  # Employed part-time    → Partially earning
+    3: 3,  # Employed full-time    → Fully earning
+    5: 3,  # Self-employed         → Fully earning
+}
+
 out = pd.DataFrame()
 
 # Y variable first
@@ -294,7 +304,7 @@ out["MonthlyOnlineSpend_Y"] = monthly_spend_Y.values
 
 # Demographics
 out["Age"]                = age.values
-out["Situation"]          = situation.values
+out["EmploymentLevel"]    = situation.map(employment_level_map).values
 out["RelationshipStatus"] = relationship.values
 out["MonthlyIncome"]      = monthly_income.values
 out["DisposableIncome"]   = disposable.values
@@ -358,12 +368,15 @@ codebook_rows = [
      "25=€0–€50, 75=€51–€100, 125=€101–€150, 175=€151–€200, 225=€200+"),
     ("Age", "Scale",
      "Numeric integer (years); '25ans ' cleaned to 25"),
-    ("Situation", "Nominal",
-     "1=Student (non-working), 2=Student (working), 3=Employed full-time, "
-     "4=Employed part-time, 5=Self-employed, 6=Unemployed, 7=Stay-at-home"),
-    ("RelationshipStatus", "Nominal",
-     "1=Single, 2=In a relationship, 3=Cohabiting, 4=Married; "
-     "messy values normalised before coding"),
+    ("EmploymentLevel", "Ordinal",
+     "1=Not earning (Student non-working / Unemployed / Stay-at-home), "
+     "2=Partially earning (Student working / Employed part-time), "
+     "3=Fully earning (Employed full-time / Self-employed). "
+     "Collapsed from 7-category employment question into ordered earning capacity levels."),
+    ("RelationshipStatus", "Ordinal",
+     "1=Single, 2=In a relationship, 3=Cohabiting, 4=Married. "
+     "Treated as ordinal by increasing relationship commitment/stability; "
+     "messy values normalised before coding."),
     ("MonthlyIncome", "Ordinal",
      "1=€0–€999, 2=€1000–€1999, 3=€2000–€2999, 4=€3000–€3999, 5=€4000+; "
      "NaN=Prefer not to say"),
@@ -422,31 +435,15 @@ codebook_rows = [
      "1=Less than 2 hours, 2=2–4 hours, 3=5–7 hours, 4=8–10 hours, 5=More than 10 hours"),
     ("SocialMediaDiscovery", "Ordinal",
      "1=Never, 2=Rarely, 3=Sometimes, 4=Often, 5=Very Frequently"),
-    ("EmploymentLevel", "Ordinal",
-     "Regression_Data only. Collapsed from Situation. "
-     "1=Not earning (Student non-working / Unemployed / Stay-at-home), "
-     "2=Partially earning (Student working / Employed part-time), "
-     "3=Fully earning (Employed full-time / Self-employed)"),
 ]
 
 codebook_df = pd.DataFrame(codebook_rows, columns=["ColumnName", "Type", "ValueLabels"])
 
 # ── 17. BUILD REGRESSION SHEET ───────────────────────────────────────────────
-# Recode Situation (nominal 1-7) into EmploymentLevel (ordinal 1-3)
-# for use in MLR — preserves the full nominal coding in the Data sheet
-employment_level_map = {
-    1: 1,  # Student (non-working) → Not earning
-    6: 1,  # Unemployed            → Not earning
-    7: 1,  # Stay-at-home          → Not earning
-    2: 2,  # Student (working)     → Partially earning
-    4: 2,  # Employed part-time    → Partially earning
-    3: 3,  # Employed full-time    → Fully earning
-    5: 3,  # Self-employed         → Fully earning
-}
-
 regression_cols = [
     "MonthlyOnlineSpend_Y",
     "Age",
+    "EmploymentLevel",
     "MonthlyIncome",
     "DisposableIncome",
     "ShoppingFrequency",
@@ -457,7 +454,6 @@ regression_cols = [
     "SocialMediaDiscovery",
 ]
 reg_df = out[regression_cols].copy()
-reg_df.insert(2, "EmploymentLevel", out["Situation"].map(employment_level_map))
 
 # ── 18. WRITE EXCEL ───────────────────────────────────────────────────────────
 with pd.ExcelWriter(OUTPUT, engine="openpyxl") as writer:
