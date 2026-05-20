@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CH3 – Valuing Bonds | Corporate Finance Study Guide</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f9;
+    color: #2d3748;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ===== TITLE PAGE ===== */
+  .title-block {
+    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 48px 40px;
+    margin-bottom: 48px;
+    text-align: center;
+  }
+  .title-block .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .title-block h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 12px; }
+  .title-block p { font-size: 1.1rem; opacity: 0.85; }
+
+  /* ===== TABLE OF CONTENTS ===== */
+  .toc {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .toc h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; color: #718096; margin-bottom: 16px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 6px 0; }
+  .toc a { color: #2b6cb0; text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* ===== SECTION HEADERS ===== */
+  .section { margin-bottom: 52px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-blue   { background: #ebf4ff; color: #2b6cb0; }
+  .icon-green  { background: #f0fff4; color: #276749; }
+  .icon-orange { background: #fffaf0; color: #c05621; }
+  .icon-red    { background: #fff5f5; color: #c53030; }
+  .icon-purple { background: #faf5ff; color: #6b46c1; }
+  .icon-teal   { background: #e6fffa; color: #285e61; }
+
+  .section-header h2 { font-size: 1.55rem; font-weight: 700; color: #1a202c; }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .card h3 { font-size: 1.1rem; font-weight: 700; color: #1a365d; margin-bottom: 12px; }
+  .card p  { margin-bottom: 10px; color: #4a5568; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ===== GRID ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 680px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .title-block h1 { font-size: 1.8rem; }
+  }
+
+  /* ===== HIGHLIGHT BOXES ===== */
+  .box {
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .box-blue   { background: #ebf8ff; border-left: 5px solid #3182ce; }
+  .box-green  { background: #f0fff4; border-left: 5px solid #38a169; }
+  .box-orange { background: #fffaf0; border-left: 5px solid #dd6b20; }
+  .box-red    { background: #fff5f5; border-left: 5px solid #e53e3e; }
+  .box-purple { background: #faf5ff; border-left: 5px solid #805ad5; }
+  .box-gray   { background: #f7fafc; border-left: 5px solid #a0aec0; }
+  .box strong { display: block; margin-bottom: 6px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .box-blue   strong { color: #2b6cb0; }
+  .box-green  strong { color: #276749; }
+  .box-orange strong { color: #c05621; }
+  .box-red    strong { color: #c53030; }
+  .box-purple strong { color: #6b46c1; }
+  .box-gray   strong { color: #718096; }
+
+  /* ===== FORMULA BLOCK ===== */
+  .formula {
+    background: #1a202c;
+    color: #a3e635;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    border-radius: 10px;
+    padding: 20px 28px;
+    margin: 18px 0;
+    line-height: 2;
+    overflow-x: auto;
+  }
+  .formula .comment { color: #94a3b8; font-style: italic; }
+
+  /* ===== TERM GLOSSARY ===== */
+  .term-row {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e8f0;
+    align-items: flex-start;
+  }
+  .term-row:last-child { border-bottom: none; }
+  .term-label {
+    min-width: 180px;
+    font-weight: 700;
+    color: #1a365d;
+    font-size: 0.95rem;
+  }
+  .term-desc { color: #4a5568; font-size: 0.95rem; }
+
+  /* ===== TIMELINE / CASH FLOW DIAGRAM ===== */
+  .timeline {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 24px 0 8px;
+    position: relative;
+    overflow-x: auto;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 3px;
+    background: #cbd5e0;
+    transform: translateY(-50%);
+  }
+  .cf-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+  }
+  .cf-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #2b6cb0;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #2b6cb0;
+    z-index: 1;
+    margin-bottom: 8px;
+  }
+  .cf-label-top { font-size: 0.8rem; font-weight: 700; color: #2b6cb0; margin-bottom: 4px; }
+  .cf-label-bot { font-size: 0.75rem; color: #718096; margin-top: 10px; }
+
+  /* ===== WORKED EXAMPLES ===== */
+  .example {
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #bee3f8;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .example-header {
+    background: #2b6cb0;
+    color: white;
+    padding: 14px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .example-body { padding: 24px; }
+  .example-body p { margin-bottom: 10px; color: #4a5568; }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin: 14px 0;
+    align-items: flex-start;
+  }
+  .step-num {
+    min-width: 32px; height: 32px;
+    background: #2b6cb0;
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { color: #1a365d; }
+
+  /* ===== ANSWER BOX ===== */
+  .answer {
+    background: #f0fff4;
+    border: 2px solid #9ae6b4;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-weight: 600;
+    color: #276749;
+  }
+
+  /* ===== RISK TABLE ===== */
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .risk-card {
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: 1px solid transparent;
+  }
+  .risk-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  .risk-card p  { font-size: 0.88rem; color: #4a5568; }
+
+  .risk-ir   { background: #fff5f5; border-color: #feb2b2; }
+  .risk-ir h4 { color: #c53030; }
+  .risk-def  { background: #fffaf0; border-color: #fbd38d; }
+  .risk-def h4 { color: #c05621; }
+  .risk-re   { background: #faf5ff; border-color: #d6bcfa; }
+  .risk-re h4 { color: #6b46c1; }
+  .risk-call { background: #f0fff4; border-color: #9ae6b4; }
+  .risk-call h4 { color: #276749; }
+  .risk-inf  { background: #ebf8ff; border-color: #90cdf4; }
+  .risk-inf h4 { color: #2b6cb0; }
+
+  /* ===== RATING TABLE ===== */
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  thead { background: #2b6cb0; color: white; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 0.9rem; }
+  tbody tr:nth-child(even) { background: #f7fafc; }
+  tbody td { padding: 12px 16px; font-size: 0.9rem; border-bottom: 1px solid #e2e8f0; }
+  .grade-inv-grade { color: #c53030; font-weight: 700; }
+  .grade-hi { color: #276749; font-weight: 700; }
+  .grade-mid { color: #c05621; font-weight: 700; }
+
+  /* ===== YIELD CURVE VISUAL ===== */
+  .curve-container {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .curve-desc { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .curve-type {
+    border-radius: 10px;
+    padding: 18px;
+    font-size: 0.9rem;
+  }
+  .curve-normal   { background: #f0fff4; border: 2px solid #9ae6b4; }
+  .curve-inverted { background: #fff5f5; border: 2px solid #feb2b2; }
+  .curve-type h4 { margin-bottom: 8px; }
+  .curve-normal h4   { color: #276749; }
+  .curve-inverted h4 { color: #c53030; }
+
+  /* ===== DURATION VISUAL ===== */
+  .dur-table { font-family: 'Courier New', monospace; font-size: 0.88rem; }
+  .dur-table thead { background: #553c9a; }
+
+  /* ===== KEY INSIGHT ===== */
+  .insight {
+    background: linear-gradient(135deg, #fef9c3, #fefce8);
+    border: 2px solid #fde047;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .insight::before { content: '💡 '; font-size: 1.1em; }
+  .insight strong { color: #713f12; }
+
+  /* ===== DRIVER CARDS ===== */
+  .driver { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #e2e8f0; }
+  .driver:last-child { border-bottom: none; }
+  .driver-arrow { font-size: 1.4rem; min-width: 36px; text-align: center; margin-top: 2px; }
+  .driver-text strong { color: #1a365d; }
+  .driver-text p { font-size: 0.9rem; color: #4a5568; margin-top: 4px; }
+
+  /* ===== RECAP ===== */
+  .recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .recap-item {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 20px;
+    border-left: 5px solid #2b6cb0;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  }
+  .recap-item h4 { font-size: 0.9rem; color: #2b6cb0; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .recap-item p  { font-size: 0.88rem; color: #4a5568; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    color: #a0aec0;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============================================================ TITLE -->
+  <div class="title-block">
+    <div class="tag">Corporate Finance · Chapter 3</div>
+    <h1>Valuing Bonds</h1>
+    <p>A complete, plain-language study guide with worked examples, visuals, and key insights</p>
+  </div>
+
+  <!-- ============================================================ TOC -->
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#intro">What is a Bond?</a></li>
+      <li><a href="#market">The Global Bond Market</a></li>
+      <li><a href="#terminology">Key Terminology</a></li>
+      <li><a href="#issuers">Types of Bond Issuers</a></li>
+      <li><a href="#modalities">Bond Modalities (Special Types)</a></li>
+      <li><a href="#pricing">Bond Pricing — NPV of Cash Flows</a></li>
+      <li><a href="#examples">Worked Examples</a></li>
+      <li><a href="#risks">Bond Risks</a></li>
+      <li><a href="#ratings">Bond Ratings</a></li>
+      <li><a href="#duration">Duration &amp; Volatility</a></li>
+      <li><a href="#inflation">Inflation &amp; Interest Rates</a></li>
+      <li><a href="#yield-curve">The Yield Curve</a></li>
+      <li><a href="#recap">Chapter Recap</a></li>
+    </ol>
+  </div>
+
+  <!-- ============================================================ 1. WHAT IS A BOND -->
+  <div class="section" id="intro">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📄</div>
+      <h2>1 · What is a Bond?</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>bond</strong> is essentially a loan — but packaged as a tradeable security. When a company or government needs money, instead of going to a bank it can <em>issue bonds</em> to many investors. Each investor lends a fixed amount and in return receives regular interest payments (coupons) and their money back at the end.</p>
+      <p>Think of it this way: if you buy a bond, <strong>you are the bank</strong>.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="box box-blue">
+        <strong>The Three Parties</strong>
+        <p><strong>Issuer</strong> — the borrower (government, company, bank). They sell the bond to raise cash.</p>
+        <p><strong>Bond-holder</strong> — the lender/investor. They buy the bond and receive future cash flows.</p>
+        <p><strong>Market</strong> — investors can resell bonds to each other on the secondary market.</p>
+      </div>
+      <div class="box box-green">
+        <strong>Why Bonds? (vs. Stocks)</strong>
+        <p>Bonds are "fixed-income" — the payments are <em>predetermined</em>, unlike dividends on stocks.</p>
+        <p>Bondholders have a <em>legal claim</em> to payments and are paid <em>before</em> shareholders in bankruptcy.</p>
+        <p>This makes bonds generally <em>less risky</em> than stocks — but also lower return.</p>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>AB InBev Example:</strong> In September 2023, AB InBev (maker of Budweiser, Stella Artois) had <strong>74 different bonds outstanding</strong> — each with different maturity dates, currencies, and coupon rates. Large companies routinely manage dozens of bonds simultaneously.
+    </div>
+  </div>
+
+  <!-- ============================================================ 2. GLOBAL BOND MARKET -->
+  <div class="section" id="market">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🌍</div>
+      <h2>2 · The Global Bond Market</h2>
+    </div>
+
+    <div class="card">
+      <p>The global bond market is enormous — larger than the global stock market. As of 2024 estimates, it is worth over <strong>$130 trillion</strong>, making it one of the most important financial markets in the world.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="box box-blue">
+        <strong>Sovereign Bonds — 62.2%</strong>
+        <p>Issued by governments (e.g., US Treasury, German Bunds, Japanese JGBs). These are typically the safest bonds since governments can raise taxes or print currency.</p>
+      </div>
+      <div class="box box-orange">
+        <strong>Corporate Bonds — 37.8%</strong>
+        <p>Issued by companies. Higher yield than government bonds because there's more risk the company could default. AB InBev, Apple, Toyota all issue corporate bonds.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ 3. TERMINOLOGY -->
+  <div class="section" id="terminology">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📖</div>
+      <h2>3 · Key Terminology</h2>
+    </div>
+
+    <div class="card">
+      <div class="term-row">
+        <div class="term-label">Nominal / Par / Face Value</div>
+        <div class="term-desc">The <strong>reference amount</strong> printed on the bond. Usually $1,000 or €1,000. This is NOT necessarily the price you pay or receive — it's the baseline for calculating coupon payments. Example: a 5% coupon on a $1,000 face value = $50/year.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">Maturity / Maturity Date</div>
+        <div class="term-desc">The date when the bond <strong>expires</strong>. On this date, the issuer makes the final coupon payment AND repays the principal (usually par value). A bond maturing in 10 years pays coupons every year for 10 years, then repays $1,000.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">Coupon Payment</div>
+        <div class="term-desc">The <strong>periodic interest payment</strong> the bond-holder receives. Can be annual, semi-annual, or quarterly. Named "coupon" because in the old days bonds had physical paper coupons you'd tear off and hand in to collect interest.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">Coupon Rate</div>
+        <div class="term-desc">Coupon rate = <strong>Annual Coupon ÷ Par Value</strong>. A bond with par value $1,000 and coupon rate 6% pays $60/year. This rate is <em>fixed</em> at issuance and does not change (for standard bonds).</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">Yield to Maturity (YTM)</div>
+        <div class="term-desc">The <strong>total annual return</strong> you'd earn if you buy the bond today and hold it until maturity. It's the discount rate that makes the present value of all future cash flows equal to the current bond price. YTM <em>fluctuates</em> with market interest rates.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">Issue Price vs. Bond Price</div>
+        <div class="term-desc"><strong>Issue price</strong> = price when the bond is first sold (primary market). <strong>Bond price</strong> = current market price (secondary market). Both can differ from par value. If interest rates rise after issuance, the bond price falls below par value (and vice versa).</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">At / Above / Below Par</div>
+        <div class="term-desc">
+          <strong>At par</strong>: Bond price = Face value (e.g., $1,000 = $1,000). YTM = coupon rate.<br>
+          <strong>Below par</strong> (discount): Bond price &lt; Face value. YTM &gt; coupon rate.<br>
+          <strong>Above par</strong> (premium): Bond price &gt; Face value. YTM &lt; coupon rate.
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>Coupon Rate vs. YTM — The Key Difference:</strong> The coupon rate is fixed forever. The YTM changes every day as market interest rates move. If market rates rise, your fixed coupon looks less attractive, so the bond price drops — and the YTM (calculated from that lower price) rises to match market rates.
+    </div>
+
+    <!-- Cash flow diagram -->
+    <div class="card" style="margin-top: 20px;">
+      <h3>Cash Flow Timeline of a Typical Bond</h3>
+      <p style="font-size:0.9rem; color:#718096; margin-bottom: 8px;">Example: 5-year bond, $1,000 par, 6% annual coupon</p>
+      <div class="timeline">
+        <div class="cf-node">
+          <div class="cf-label-top" style="color:#e53e3e;">−$Price</div>
+          <div class="cf-dot" style="background:#e53e3e; box-shadow: 0 0 0 2px #e53e3e;"></div>
+          <div class="cf-label-bot">Today (t=0)<br>You buy bond</div>
+        </div>
+        <div class="cf-node">
+          <div class="cf-label-top">+$60</div>
+          <div class="cf-dot"></div>
+          <div class="cf-label-bot">Year 1<br>Coupon</div>
+        </div>
+        <div class="cf-node">
+          <div class="cf-label-top">+$60</div>
+          <div class="cf-dot"></div>
+          <div class="cf-label-bot">Year 2<br>Coupon</div>
+        </div>
+        <div class="cf-node">
+          <div class="cf-label-top">+$60</div>
+          <div class="cf-dot"></div>
+          <div class="cf-label-bot">Year 3<br>Coupon</div>
+        </div>
+        <div class="cf-node">
+          <div class="cf-label-top">+$60</div>
+          <div class="cf-dot"></div>
+          <div class="cf-label-bot">Year 4<br>Coupon</div>
+        </div>
+        <div class="cf-node">
+          <div class="cf-label-top" style="color:#276749;">+$1,060</div>
+          <div class="cf-dot" style="background:#276749; box-shadow: 0 0 0 2px #276749;"></div>
+          <div class="cf-label-bot">Year 5<br>Coupon + Par</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ 4. ISSUERS -->
+  <div class="section" id="issuers">
+    <div class="section-header">
+      <div class="section-icon icon-green">🏛️</div>
+      <h2>4 · Types of Bond Issuers</h2>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>🏛️ Governments ("Sovereigns")</h3>
+        <p><strong>Treasury Bills</strong> (&lt;1 year) — short-term government debt, often zero-coupon</p>
+        <p><strong>Treasury Notes</strong> (1–10 years) — medium-term government bonds</p>
+        <p><strong>Treasury Bonds</strong> (&gt;10 years) — long-term government bonds; most sensitive to interest rate changes</p>
+        <p style="margin-top:8px; font-size:0.88rem; color:#718096;">Examples: US Treasury, German Bunds, UK Gilts, Belgian OLOs</p>
+      </div>
+      <div class="card">
+        <h3>🏢 Companies ("Corporates")</h3>
+        <p><strong>Commercial Paper</strong> (&lt;1 year) — short-term, money market instrument</p>
+        <p><strong>Short-term bonds</strong> (&lt;5 years) — also classified as money market</p>
+        <p><strong>Long-term bonds</strong> (&gt;5 years) — the classic corporate bond</p>
+        <p style="margin-top:8px; font-size:0.88rem; color:#718096;">Examples: Apple, Microsoft, AB InBev, Tesla all issue corporate bonds</p>
+      </div>
+      <div class="card">
+        <h3>🏦 Financial Institutions ("Financials")</h3>
+        <p><strong>Certificate of Deposit (CD)</strong> — bank issues a timed deposit paying fixed interest</p>
+        <p><strong>Savings Certificate</strong> — similar, offered to retail customers</p>
+        <p style="margin-top:8px; font-size:0.88rem; color:#718096;">These are important in banking and are also subject to interest rate risk</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ 5. MODALITIES -->
+  <div class="section" id="modalities">
+    <div class="section-header">
+      <div class="section-icon icon-teal">🔧</div>
+      <h2>5 · Bond Modalities (Special Types)</h2>
+    </div>
+
+    <div class="card">
+      <div class="term-row">
+        <div class="term-label">🕳️ Zero-Coupon Bond</div>
+        <div class="term-desc">Pays <strong>no periodic coupons</strong>. Sold at a deep discount and redeemed at par value. Your return comes entirely from the price difference. Example: buy for $700 today, receive $1,000 in 5 years. US Treasury Bills work this way. High interest rate risk because all value is at the end.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">📞 Callable Bond</div>
+        <div class="term-desc">The issuer has the <strong>right to redeem</strong> (call back) the bond before maturity, usually at par value. Issuers do this when rates fall — they refinance at lower rates. Bad for investors (who lose higher coupons). Callable bonds therefore pay a higher yield to compensate investors for call risk.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">🔄 Convertible Bond</div>
+        <div class="term-desc">Can be <strong>converted into shares</strong> of the issuing company at a fixed price. Attractive to investors who want bond safety but upside if stock rises. Usually pays a lower coupon because of this conversion option's value.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">〰️ Floating Rate Bond</div>
+        <div class="term-desc">Coupon rate is <strong>not fixed</strong> — it resets periodically based on a reference rate like LIBOR (now SOFR) + a spread. Example: "SOFR + 1.5%". If interest rates rise, your coupon rises too. Much less interest-rate risk than fixed-rate bonds.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-label">♾️ Perpetual Bond</div>
+        <div class="term-desc">Never matures — pays coupons <strong>forever</strong> with no final repayment. Rare but exists (e.g., UK Consols). Value = Annual Coupon ÷ YTM. Very high interest rate risk. Also known as "Consols" or "Perps".</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ 6. BOND PRICING -->
+  <div class="section" id="pricing">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🧮</div>
+      <h2>6 · Bond Pricing — NPV of Future Cash Flows</h2>
+    </div>
+
+    <div class="card">
+      <h3>The Core Principle</h3>
+      <p>A bond's price is simply the <strong>present value (NPV) of all its future cash flows</strong> — both coupon payments and the final repayment — discounted at the bond's YTM.</p>
+      <p>This is identical to the NPV logic used throughout corporate finance. The YTM is the opportunity cost (required return) for bond-holders.</p>
+    </div>
+
+    <div class="formula">
+<span class="comment">// Annual coupon bond — general formula</span>
+Price = C/(1+r)¹ + C/(1+r)² + ... + C/(1+r)ⁿ + FV/(1+r)ⁿ
+
+<span class="comment">// Simplified using annuity formula</span>
+Price = C × [1 - 1/(1+r)ⁿ] / r  +  FV / (1+r)ⁿ
+
+Where:
+  C   = periodic coupon payment (= coupon rate × par value)
+  r   = YTM per period (= annual YTM / payments per year)
+  n   = total number of periods
+  FV  = final payment (usually = par value)
+    </div>
+
+    <div class="box box-red">
+      <strong>The Golden Rule: YTM ↑ → Price ↓ (and vice versa)</strong>
+      <p>Bond price and yield always move in <strong>opposite directions</strong>. If market rates rise, your existing bond's fixed coupons look less attractive, so its price falls until its yield matches the market rate. This is the most important relationship in bond analysis.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="box box-green">
+        <strong>When YTM = Coupon Rate</strong>
+        <p>Bond trades AT PAR (Price = Face Value). Your coupon rate matches the market rate, so no premium or discount.</p>
+      </div>
+      <div class="box box-orange">
+        <strong>When YTM &gt; Coupon Rate</strong>
+        <p>Bond trades BELOW PAR (discount). Market rates are higher than your coupon, so price drops to compensate buyers.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 8px;">
+      <h3>Semi-Annual Coupons (very common in the US)</h3>
+      <p>Many bonds (especially US government bonds) pay coupons twice a year. Simply adjust:</p>
+      <ul style="padding-left: 20px; color: #4a5568; margin-top: 8px;">
+        <li>Coupon per period = Annual coupon ÷ 2</li>
+        <li>Periods = Years × 2</li>
+        <li>YTM per period = Annual YTM ÷ 2</li>
+      </ul>
+      <p style="margin-top: 10px;">The formula is exactly the same — just with periods instead of years.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ 7. WORKED EXAMPLES -->
+  <div class="section" id="examples">
+    <div class="section-header">
+      <div class="section-icon icon-orange">✏️</div>
+      <h2>7 · Worked Examples</h2>
+    </div>
+
+    <!-- EXAMPLE 1 -->
+    <div class="example">
+      <div class="example-header">Example 1 — IBM Bond (Annual Coupon, Find Price)</div>
+      <div class="example-body">
+        <p><strong>Problem:</strong> Today is October 1, 2022. An IBM bond pays $35 every September 30 for 5 years. In September 2027 it also makes the final repayment of $1,000. The bond is rated AAA (YTM = 2.5%). What is the bond's price?</p>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Identify the cash flows:</strong><br>
+            Coupon (C) = $35 per year &nbsp;|&nbsp; FV = $1,000 &nbsp;|&nbsp; n = 5 years &nbsp;|&nbsp; r = 2.5%
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Apply the bond pricing formula:</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 14px 20px;">
+Price = 35/(1.025)¹ + 35/(1.025)² + 35/(1.025)³ + 35/(1.025)⁴ + (35+1000)/(1.025)⁵
+      = 34.15 + 33.31 + 32.50 + 31.71 + 907.47
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <strong>Or use the annuity shortcut:</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 14px 20px;">
+Annuity PV  = 35 × [1 - 1/(1.025)⁵] / 0.025 = 35 × 4.6458 = 162.60
+FV PV       = 1000 / (1.025)⁵              = 1000 / 1.1314 = 884.00
+Total Price = 162.60 + 884.00
+            </div>
+          </div>
+        </div>
+        <div class="answer">Price ≈ $1,046.60 — The bond trades ABOVE par (premium) because the coupon rate (3.5%) &gt; YTM (2.5%)</div>
+        <p style="margin-top: 12px; font-size: 0.88rem; color: #718096;">Intuition: The market rate is only 2.5%, but this bond pays 3.5%. That's a better deal, so investors bid the price up above $1,000.</p>
+      </div>
+    </div>
+
+    <!-- EXAMPLE 2 -->
+    <div class="example">
+      <div class="example-header">Example 2 — German Bond with Non-Standard Final Payment</div>
+      <div class="example-body">
+        <p><strong>Problem:</strong> Today you purchase a German bond with nominal value €100, 5% coupon for 6 years. The final payment is €102 (not par). YTM = 3.8%. What is the price?</p>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Identify cash flows:</strong><br>
+            C = 5% × €100 = €5 per year &nbsp;|&nbsp; FV = €102 (not par!) &nbsp;|&nbsp; n = 6 &nbsp;|&nbsp; r = 3.8%
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Calculate:</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 14px 20px;">
+Annuity PV = 5 × [1 - 1/(1.038)⁶] / 0.038 = 5 × 5.2126 = 26.06
+FV PV      = 102 / (1.038)⁶ = 102 / 1.2506 = 81.56
+Total Price = 26.06 + 81.56
+            </div>
+          </div>
+        </div>
+        <div class="answer">Price ≈ €107.62 — Trades above par because coupon rate (5%) &gt; YTM (3.8%)</div>
+        <p style="margin-top: 12px; font-size: 0.88rem; color: #718096;">Note: The final payment of €102 (instead of €100) adds extra value. Always plug in the <em>actual</em> final payment, not automatically par value.</p>
+      </div>
+    </div>
+
+    <!-- EXAMPLE 3 -->
+    <div class="example">
+      <div class="example-header">Example 3 — Semi-Annual Coupons (US Government Bond)</div>
+      <div class="example-body">
+        <p><strong>Problem:</strong> 2-year US Government bond, nominal $1,000, annual coupon rate 4% paid semi-annually. Investors demand 2.48% return on 6-month investments. Find the price.</p>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Adjust for semi-annual payments:</strong><br>
+            C per period = 4%/2 × $1,000 = <strong>$20</strong><br>
+            n = 2 × 2 = <strong>4 periods</strong><br>
+            r per period = <strong>2.48%</strong> (already given as 6-month rate)
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Calculate:</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 14px 20px;">
+Annuity PV = 20 × [1 - 1/(1.0248)⁴] / 0.0248 = 20 × 3.8058 = 76.12
+FV PV      = 1000 / (1.0248)⁴ = 1000 / 1.1038 = 906.03
+Total Price = 76.12 + 906.03
+            </div>
+          </div>
+        </div>
+        <div class="answer">Price ≈ $982.15 — Trades below par because the YTM per period (2.48%) implies ~4.96% annual, which is higher than the 4% coupon rate.</div>
+        <p style="margin-top: 12px; font-size: 0.88rem; color: #718096;">Key: Always adjust both the coupon AND the discount rate to the same periodicity.</p>
+      </div>
+    </div>
+
+    <!-- EXAMPLE 4 -->
+    <div class="example">
+      <div class="example-header">Example 4 — Quarterly Coupons, Solve for Final Payment</div>
+      <div class="example-body">
+        <p><strong>Problem:</strong> 3-year US Government bond, $5,000 nominal, 4% annual coupon paid quarterly. Price = $5,000. Expected 1.25% return per quarter. What must the final payment be?</p>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Adjust for quarterly payments:</strong><br>
+            C per period = 4%/4 × $5,000 = <strong>$50</strong> per quarter<br>
+            n = 3 × 4 = <strong>12 periods</strong><br>
+            r = <strong>1.25%</strong> per quarter
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Set up the equation and solve for FV:</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 14px 20px;">
+5000 = 50 × [1 - 1/(1.0125)¹²] / 0.0125  +  FV / (1.0125)¹²
+5000 = 50 × 11.0785  +  FV / 1.16075
+5000 = 553.93 + FV / 1.16075
+FV / 1.16075 = 4446.07
+FV = 4446.07 × 1.16075
+            </div>
+          </div>
+        </div>
+        <div class="answer">Final Payment ≈ $5,160 — The final payment must exceed par value for this bond to be correctly priced at par given the quarterly compounding.</div>
+      </div>
+    </div>
+
+    <!-- EXAMPLE 5 -->
+    <div class="example">
+      <div class="example-header">Example 5 — Given Market Price, Find YTM (Reverse Problem)</div>
+      <div class="example-body">
+        <p><strong>Problem:</strong> A $1,000 Treasury bond expires in 5 years, coupon rate 1.5%. Market price = 101.15% (i.e., $1,011.50). What is the YTM?</p>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Identify known values:</strong><br>
+            Price = $1,011.50 &nbsp;|&nbsp; C = 1.5% × $1,000 = $15/year &nbsp;|&nbsp; FV = $1,000 &nbsp;|&nbsp; n = 5
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Set up equation — solve for r (use trial &amp; error or financial calculator):</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 14px 20px;">
+1011.50 = 15 × [1 - 1/(1+r)⁵] / r  +  1000 / (1+r)⁵
+
+<span class="comment">// Since price > par → YTM &lt; coupon rate → YTM &lt; 1.5%</span>
+<span class="comment">// Try r = 1.27%: PV ≈ 1011.50 ✓</span>
+            </div>
+          </div>
+        </div>
+        <div class="answer">YTM ≈ 1.27% — Less than the coupon rate (1.5%) because the bond trades at a premium (above par).</div>
+        <p style="margin-top: 12px; font-size: 0.88rem; color: #718096;">In Excel: use the <strong>RATE()</strong> or <strong>YIELD()</strong> function. In a financial calculator: N=5, PV=−1011.50, PMT=15, FV=1000, solve for I/Y.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ 8. RISKS -->
+  <div class="section" id="risks">
+    <div class="section-header">
+      <div class="section-icon icon-red">⚠️</div>
+      <h2>8 · Bond Risks</h2>
+    </div>
+
+    <div class="card">
+      <div class="risk-grid">
+        <div class="risk-card risk-ir">
+          <h4>📉 Interest Rate Risk</h4>
+          <p>The most important bond risk. When market interest rates rise, existing bond prices <em>fall</em>. Long-term bonds and low-coupon bonds are most exposed. Measured by duration and volatility (see Section 10).</p>
+        </div>
+        <div class="risk-card risk-def">
+          <h4>💀 Default / Credit Risk</h4>
+          <p>The issuer fails to make promised payments. Measured by credit ratings (Moody's, S&amp;P, Fitch). Higher default risk = higher YTM demanded by investors. Government bonds typically have the lowest default risk.</p>
+        </div>
+        <div class="risk-card risk-re">
+          <h4>🔁 Re-Investment Risk</h4>
+          <p>When you receive coupon payments, you must reinvest them. If rates have fallen by then, you reinvest at a lower rate than expected, reducing your total return below the original YTM.</p>
+        </div>
+        <div class="risk-card risk-call">
+          <h4>📞 Call Risk</h4>
+          <p>For callable bonds: the issuer may redeem the bond early, typically when rates fall. You lose the high coupon and must reinvest at lower market rates. Compensated by higher initial yield.</p>
+        </div>
+        <div class="risk-card risk-inf" style="grid-column: span 2;">
+          <h4>📈 Inflation Risk</h4>
+          <p>If inflation rises above expectations, the fixed coupon payments lose purchasing power. Your real return is lower than expected. Inflation-linked bonds (e.g., US TIPS) address this by linking payments to a price index.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ 9. RATINGS -->
+  <div class="section" id="ratings">
+    <div class="section-header">
+      <div class="section-icon icon-red">🏅</div>
+      <h2>9 · Bond Ratings</h2>
+    </div>
+
+    <div class="card">
+      <p>Three major credit rating agencies — <strong>Moody's</strong>, <strong>S&amp;P</strong>, and <strong>Fitch</strong> — assess the creditworthiness of bond issuers. A higher rating = lower default risk = lower YTM demanded = higher bond price.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Moody's</th>
+            <th>S&amp;P / Fitch</th>
+            <th>Category</th>
+            <th>What It Means</th>
+            <th>Typical Spread over Gov't</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="grade-hi">Aaa</td>
+            <td class="grade-hi">AAA</td>
+            <td>Investment Grade</td>
+            <td>Highest quality, minimal risk</td>
+            <td>~20–50 bps</td>
+          </tr>
+          <tr>
+            <td class="grade-hi">Aa</td>
+            <td class="grade-hi">AA</td>
+            <td>Investment Grade</td>
+            <td>Very high quality</td>
+            <td>~50–80 bps</td>
+          </tr>
+          <tr>
+            <td class="grade-mid">A</td>
+            <td class="grade-mid">A</td>
+            <td>Investment Grade</td>
+            <td>High quality, some risk</td>
+            <td>~80–150 bps</td>
+          </tr>
+          <tr>
+            <td class="grade-mid">Baa</td>
+            <td class="grade-mid">BBB</td>
+            <td>Investment Grade</td>
+            <td>Medium quality, adequate</td>
+            <td>~150–250 bps</td>
+          </tr>
+          <tr>
+            <td class="grade-inv-grade">Ba / B</td>
+            <td class="grade-inv-grade">BB / B</td>
+            <td>Speculative ("Junk")</td>
+            <td>Speculative, substantial risk</td>
+            <td>250–600+ bps</td>
+          </tr>
+          <tr>
+            <td class="grade-inv-grade">Caa–C</td>
+            <td class="grade-inv-grade">CCC–C</td>
+            <td>Speculative ("Junk")</td>
+            <td>Poor quality, very high risk</td>
+            <td>600–2000+ bps</td>
+          </tr>
+          <tr>
+            <td class="grade-inv-grade">—</td>
+            <td class="grade-inv-grade">D</td>
+            <td>Default</td>
+            <td>In default</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box box-orange">
+      <strong>The Investment Grade / Junk Line (BBB/Baa)</strong>
+      <p>This line matters enormously. Many pension funds and institutional investors are <em>legally required</em> to hold only investment-grade bonds. When a bond is downgraded below BBB (called a "fallen angel"), forced selling can cause sharp price drops. The yield spread over government bonds widens dramatically below investment grade.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ 10. DURATION -->
+  <div class="section" id="duration">
+    <div class="section-header">
+      <div class="section-icon icon-purple">⏱️</div>
+      <h2>10 · Duration &amp; Volatility (Modified Duration)</h2>
+    </div>
+
+    <!-- Macaulay Duration -->
+    <div class="card">
+      <h3>Macaulay Duration — "How Long Until You Get Paid Back?"</h3>
+      <p>Duration is the <strong>weighted average time</strong> (in years) until you receive the bond's cash flows — weighted by their present values. It tells you how long it takes to "recover" the bond's price in present value terms.</p>
+      <p>A zero-coupon bond has duration = maturity (all value comes at end). A coupon bond has duration &lt; maturity (you get coupons along the way).</p>
+
+      <div class="formula">
+<span class="comment">// Macaulay Duration formula</span>
+Duration = Σ [ t × PV(CFₜ) ] / Bond Price
+
+Where:
+  t      = time period (year 1, 2, 3, ...)
+  PV(CFₜ) = present value of cash flow at time t
+  Σ      = sum over all periods
+      </div>
+    </div>
+
+    <!-- Duration Worked Example -->
+    <div class="example">
+      <div class="example-header">Duration Example — 5-Year Bond, 9% Coupon, 8.5% YTM</div>
+      <div class="example-body">
+        <p><strong>Given:</strong> 5-year, 9% coupon, $1,000 face value, YTM = 8.5%</p>
+        <p>C = $90/year &nbsp;|&nbsp; FV = $1,000 &nbsp;|&nbsp; First find bond price, then compute duration.</p>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Find the bond price:</strong>
+            <div class="formula" style="font-size: 0.85rem; padding: 12px 18px;">
+Price = 90 × [1 - 1/(1.085)⁵] / 0.085 + 1000/(1.085)⁵
+      = 90 × 3.9406 + 1000 × 0.6650
+      = 354.65 + 665.00 = $1,019.65
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Calculate each cash flow's PV and weight by time:</strong>
+            <table class="dur-table" style="margin-top:10px; font-size: 0.82rem;">
+              <thead>
+                <tr><th>Year (t)</th><th>CF ($)</th><th>PV of CF ($)</th><th>t × PV(CF)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>90</td><td>82.95</td><td>82.95</td></tr>
+                <tr><td>2</td><td>90</td><td>76.45</td><td>152.90</td></tr>
+                <tr><td>3</td><td>90</td><td>70.46</td><td>211.38</td></tr>
+                <tr><td>4</td><td>90</td><td>64.94</td><td>259.76</td></tr>
+                <tr><td>5</td><td>1,090</td><td>724.85</td><td>3,624.25</td></tr>
+                <tr style="background: #ebf4ff; font-weight: 700;"><td>Total</td><td>—</td><td>1,019.65</td><td>4,331.24</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <strong>Compute duration:</strong>
+            <div class="formula" style="font-size: 0.88rem; padding: 12px 18px;">
+Duration = 4,331.24 / 1,019.65 = 4.25 years
+            </div>
+          </div>
+        </div>
+        <div class="answer">Macaulay Duration = 4.25 years — Even though this is a 5-year bond, you effectively "get paid back" in 4.25 years due to coupons received along the way.</div>
+      </div>
+    </div>
+
+    <!-- Modified Duration -->
+    <div class="card">
+      <h3>Modified Duration (Volatility) — Price Sensitivity to Rate Changes</h3>
+      <p>Modified duration tells you the <strong>% change in bond price for a 1 percentage point change in YTM</strong>. This is the key measure of interest rate risk.</p>
+
+      <div class="formula">
+<span class="comment">// Modified Duration (Bond Volatility)</span>
+Modified Duration (VOL%) = Macaulay Duration / (1 + YTM)
+
+<span class="comment">// Interpretation</span>
+ΔPrice% ≈ −VOL% × ΔYTM
+
+<span class="comment">// Example: VOL = 4.0%, YTM rises by 0.5%</span>
+ΔPrice% ≈ −4.0% × 0.5% = −2.0% price decrease
+      </div>
+
+      <div class="box box-purple">
+        <strong>Example Calculation</strong>
+        <p>From the duration example above: Duration = 4.25 years, YTM = 8.5%</p>
+        <p>Modified Duration = 4.25 / (1 + 0.085) = 4.25 / 1.085 = <strong>3.92%</strong></p>
+        <p>If YTM rises by 1%, the bond price falls by approximately <strong>3.92%</strong>.</p>
+        <p>If YTM rises by 0.25% (25 basis points), price falls by ≈ 3.92% × 0.25 = <strong>0.98%</strong>.</p>
+      </div>
+    </div>
+
+    <!-- 3 Drivers of Volatility -->
+    <div class="card">
+      <h3>Three Main Drivers of Bond Volatility</h3>
+
+      <div class="driver">
+        <div class="driver-arrow">⬆️</div>
+        <div class="driver-text">
+          <strong>Higher Coupon Rate → Lower Duration → Lower Volatility</strong>
+          <p>More coupon cash flows arrive early, pulling the duration (weighted average time) closer to today. The bond is less sensitive to rate changes because you recover value sooner.</p>
+        </div>
+      </div>
+      <div class="driver">
+        <div class="driver-arrow">⬆️</div>
+        <div class="driver-text">
+          <strong>Longer Maturity → Higher Duration → Higher Volatility</strong>
+          <p>A 30-year bond is far more exposed to rate changes than a 2-year bond. The distant cash flows are discounted more heavily, making the price very sensitive to rate shifts.</p>
+        </div>
+      </div>
+      <div class="driver">
+        <div class="driver-arrow">⬇️</div>
+        <div class="driver-text">
+          <strong>Lower YTM → Higher Volatility</strong>
+          <p>At lower rates, the discount factor is gentler — distant cash flows retain more of their value. This makes the price more sensitive to changes. At very low rates, a small change in yield causes a large price movement.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>Practical Takeaway:</strong> Long-duration bonds (long maturity + low coupon + low YTM) are extremely interest rate sensitive. A 30-year zero-coupon bond can lose 20–30% of its value from a 1% rise in rates. Short-duration bonds (short maturity + high coupon) are much more stable.
+    </div>
+  </div>
+
+  <!-- ============================================================ 11. INFLATION -->
+  <div class="section" id="inflation">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📊</div>
+      <h2>11 · Inflation &amp; Interest Rates</h2>
+    </div>
+
+    <div class="card">
+      <h3>Nominal vs. Real Interest Rate — The Fisher Equation</h3>
+
+      <div class="formula">
+<span class="comment">// Fisher Equation (approximation)</span>
+Real Rate ≈ Nominal Rate − Inflation Rate
+
+<span class="comment">// Fisher Equation (exact)</span>
+(1 + Nominal Rate) = (1 + Real Rate) × (1 + Inflation Rate)
+
+<span class="comment">// Example</span>
+Nominal Rate = 5%, Inflation = 3%
+Real Rate ≈ 5% − 3% = 2%
+Exact Real Rate = (1.05 / 1.03) − 1 = 1.942%
+      </div>
+
+      <div class="grid-2">
+        <div class="box box-blue">
+          <strong>Nominal Interest Rate</strong>
+          <p>The actual rate you earn/pay. Does NOT adjust for inflation. This is the rate on your bank account, bond coupon, or loan contract. What you see in the market.</p>
+        </div>
+        <div class="box box-green">
+          <strong>Real Interest Rate</strong>
+          <p>Adjusted for inflation — measures the true gain in purchasing power. If nominal rate = inflation rate, your real return is zero (you broke even in real terms).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Two Consistent Approaches to Valuation Under Inflation</h3>
+      <div class="box box-orange">
+        <strong>Approach 1: Nominal Rate → Nominal Cash Flows</strong>
+        <p>Use the nominal discount rate (which includes inflation compensation) to discount nominal cash flows (which are not adjusted for inflation). Standard bond pricing uses this approach — bond coupons are nominal, YTM is nominal.</p>
+      </div>
+      <div class="box box-green">
+        <strong>Approach 2: Real Rate → Real Cash Flows</strong>
+        <p>Strip out inflation from both: use the real discount rate to discount inflation-adjusted cash flows. Useful when comparing across time periods or countries with different inflation rates. Must be internally consistent — don't mix real rates with nominal flows.</p>
+      </div>
+    </div>
+
+    <div class="box box-red">
+      <strong>Inflation Is Back (Post-2021)</strong>
+      <p>After two decades of low inflation (2000–2020), inflation surged globally post-COVID. US CPI hit ~9% in 2022. This caused the Fed and ECB to rapidly raise interest rates. Bond prices fell sharply — 2022 was one of the worst years on record for bond returns, with long-duration bond portfolios losing 20–30%. This illustrates how real-world inflation and interest rate risk directly impact bond investors.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ 12. YIELD CURVE -->
+  <div class="section" id="yield-curve">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📈</div>
+      <h2>12 · The Yield Curve &amp; Inverted Yield Curve</h2>
+    </div>
+
+    <div class="curve-container">
+      <p>The <strong>yield curve</strong> plots interest rates (Y-axis) on government bonds of different maturities (X-axis) — from 3-month bills to 30-year bonds.</p>
+
+      <!-- Simple SVG yield curve -->
+      <svg viewBox="0 0 500 220" style="width:100%; max-width:500px; display:block; margin: 20px auto;">
+        <!-- Axes -->
+        <line x1="50" y1="180" x2="470" y2="180" stroke="#cbd5e0" stroke-width="2"/>
+        <line x1="50" y1="20"  x2="50"  y2="180" stroke="#cbd5e0" stroke-width="2"/>
+        <!-- X labels -->
+        <text x="80"  y="196" font-size="11" fill="#718096">3M</text>
+        <text x="155" y="196" font-size="11" fill="#718096">1Y</text>
+        <text x="235" y="196" font-size="11" fill="#718096">2Y</text>
+        <text x="315" y="196" font-size="11" fill="#718096">5Y</text>
+        <text x="390" y="196" font-size="11" fill="#718096">10Y</text>
+        <text x="445" y="196" font-size="11" fill="#718096">30Y</text>
+        <!-- Y label -->
+        <text x="8" y="100" font-size="11" fill="#718096" transform="rotate(-90, 25, 100)">Yield %</text>
+        <!-- Normal curve (upward) -->
+        <path d="M85,155 Q170,130 250,110 Q330,95 400,80 L455,75"
+              stroke="#38a169" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Inverted curve -->
+        <path d="M85,80  Q170,95  250,110 Q330,125 400,145 L455,155"
+              stroke="#e53e3e" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="6,4"/>
+        <!-- Legend -->
+        <line x1="60" y1="30" x2="100" y2="30" stroke="#38a169" stroke-width="3"/>
+        <text x="105" y="34" font-size="11" fill="#276749" font-weight="600">Normal (upward sloping)</text>
+        <line x1="60" y1="48" x2="100" y2="48" stroke="#e53e3e" stroke-width="3" stroke-dasharray="6,4"/>
+        <text x="105" y="52" font-size="11" fill="#c53030" font-weight="600">Inverted</text>
+      </svg>
+
+      <div class="curve-desc">
+        <div class="curve-type curve-normal">
+          <h4>Normal (Upward Sloping)</h4>
+          <p>Long-term rates &gt; Short-term rates. Normal state of affairs. Investors demand higher compensation for longer time horizons (more uncertainty). Signals <strong>healthy economic expectations</strong>.</p>
+        </div>
+        <div class="curve-type curve-inverted">
+          <h4>Inverted Yield Curve</h4>
+          <p>Short-term rates &gt; Long-term rates. Historically, this has <strong>preceded recessions</strong> in the US in nearly every case. Investors flock to long-term bonds for safety, driving long-term yields down.</p>
+          <p style="margin-top: 8px; font-size: 0.85rem;"><strong>Example from lecture:</strong> 5y vs. 2y: −34 basis points (inverted). 10y vs. 2y: −2 basis points (nearly flat).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>Key Spread to Watch:</strong> The "10Y–2Y spread" (difference between 10-year and 2-year Treasury yields) is the most watched yield curve indicator. When it goes negative (inverted), economists start predicting recession 12–18 months ahead. It was inverted in 2022–2023 before normalizing in 2024.
+    </div>
+  </div>
+
+  <!-- ============================================================ 13. RECAP -->
+  <div class="section" id="recap">
+    <div class="section-header">
+      <div class="section-icon icon-green">✅</div>
+      <h2>13 · Chapter Recap</h2>
+    </div>
+
+    <div class="recap-grid">
+      <div class="recap-item">
+        <h4>Terminology &amp; Modalities</h4>
+        <p>Par value, coupon rate, YTM, maturity. Special types: zero-coupon, callable, convertible, floating, perpetual.</p>
+      </div>
+      <div class="recap-item">
+        <h4>Bond Risks &amp; Ratings</h4>
+        <p>Interest rate, default, re-investment, call, inflation risk. Rating agencies grade creditworthiness → spread over government bonds.</p>
+      </div>
+      <div class="recap-item">
+        <h4>Bond Value = NPV</h4>
+        <p>Price = PV of all coupons + PV of final payment, discounted at YTM. Can solve for price, YTM, or final payment.</p>
+      </div>
+      <div class="recap-item">
+        <h4>YTM ↑ → Price ↓</h4>
+        <p>Negative relationship between yield and price is the most important bond principle. The main manifestation of interest rate risk.</p>
+      </div>
+      <div class="recap-item">
+        <h4>Duration &amp; Volatility</h4>
+        <p>Macaulay Duration = weighted avg. time of cash flows. Modified Duration = % price change per 1% change in YTM.</p>
+      </div>
+      <div class="recap-item">
+        <h4>Nominal vs. Real Rates</h4>
+        <p>Real Rate = Nominal Rate − Inflation. Always apply nominal rates to nominal flows, or real rates to real flows.</p>
+      </div>
+      <div class="recap-item" style="grid-column: span 2;">
+        <h4>Yield Curve</h4>
+        <p>Plots yield vs. maturity. Normal = upward slope (trust in economy). Inverted = short-term rates &gt; long-term rates (recession warning signal). Key spread: 10Y minus 2Y Treasury yield.</p>
+      </div>
+    </div>
+
+    <div class="box box-blue" style="margin-top: 24px;">
+      <strong>Quick Formula Sheet</strong>
+      <div class="formula" style="margin: 10px 0 0;">
+Bond Price    = C×[1−1/(1+r)ⁿ]/r + FV/(1+r)ⁿ
+Coupon Rate   = Annual Coupon / Par Value
+Real Rate     ≈ Nominal Rate − Inflation Rate  [approx]
+Macaulay Dur  = Σ[t × PV(CFₜ)] / Price
+Modified Dur  = Macaulay Duration / (1 + YTM)
+ΔPrice%       ≈ −Modified Duration × ΔYTM
+Perpetuity    = Annual Coupon / YTM
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Corporate Finance · Chapter 3 — Valuing Bonds · Study Guide</p>
+    <p style="margin-top: 4px;">Based on lecture slides (McGraw-Hill) · Supplemented with detailed explanations and examples</p>
+  </footer>
+
+</div>
+</body>
+</html>
