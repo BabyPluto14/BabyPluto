@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CH4 – Valuing Stocks | Study Guide</title>
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f4f6fb;
+      color: #1e2233;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── Layout ── */
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 60%, #3b82f6 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 3rem 2.5rem 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '📈';
+      font-size: 9rem;
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.2; }
+    .hero p  { margin-top: .75rem; font-size: 1.1rem; opacity: .88; max-width: 520px; }
+    .badge-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.4rem; }
+    .badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 30px;
+      padding: .25rem .85rem;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+
+    /* ── Section headers ── */
+    .section {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2rem 2rem 2.2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 12px rgba(30,34,51,.07);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1.3rem;
+    }
+    .section-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .icon-blue   { background: #dbeafe; }
+    .icon-green  { background: #dcfce7; }
+    .icon-purple { background: #ede9fe; }
+    .icon-orange { background: #ffedd5; }
+    .icon-rose   { background: #ffe4e6; }
+    .icon-teal   { background: #ccfbf1; }
+    .icon-indigo { background: #e0e7ff; }
+
+    h2 { font-size: 1.4rem; font-weight: 700; color: #1e2233; }
+    h3 { font-size: 1.1rem; font-weight: 700; color: #1e2233; margin: 1.4rem 0 .55rem; }
+    p  { margin-bottom: .9rem; color: #374151; }
+
+    /* ── Info cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.1rem 0;
+    }
+    .card {
+      border-radius: 12px;
+      padding: 1.2rem 1.1rem;
+      border-left: 4px solid transparent;
+    }
+    .card-blue   { background: #eff6ff; border-color: #3b82f6; }
+    .card-green  { background: #f0fdf4; border-color: #22c55e; }
+    .card-purple { background: #faf5ff; border-color: #a855f7; }
+    .card-orange { background: #fff7ed; border-color: #f97316; }
+    .card-rose   { background: #fff1f2; border-color: #f43f5e; }
+    .card-teal   { background: #f0fdfa; border-color: #14b8a6; }
+    .card h4 { font-size: .9rem; font-weight: 700; margin-bottom: .4rem; color: #1e2233; }
+    .card p  { font-size: .88rem; margin: 0; color: #4b5563; }
+
+    /* ── Formula boxes ── */
+    .formula-box {
+      background: #1e2233;
+      color: #e2e8f0;
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      margin: 1.2rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: .95rem;
+      overflow-x: auto;
+    }
+    .formula-box .label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: .5rem;
+    }
+    .formula-box .formula { color: #7dd3fc; font-size: 1.1rem; line-height: 1.8; }
+    .formula-box .note { color: #94a3b8; font-size: .82rem; margin-top: .6rem; font-family: 'Segoe UI', sans-serif; }
+
+    /* ── Example boxes ── */
+    .example {
+      background: #fefce8;
+      border: 1.5px solid #fde68a;
+      border-radius: 12px;
+      padding: 1.3rem 1.4rem;
+      margin: 1.2rem 0;
+    }
+    .example-title {
+      font-weight: 700;
+      color: #92400e;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: .6rem;
+    }
+    .example p { color: #451a03; font-size: .93rem; }
+    .example .steps { margin-top: .7rem; }
+    .example .step {
+      display: flex; gap: .7rem; margin-bottom: .45rem; font-size: .91rem; color: #451a03;
+    }
+    .step-num {
+      width: 22px; height: 22px;
+      background: #f59e0b;
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: .15rem;
+    }
+
+    /* ── Key insight ── */
+    .insight {
+      background: linear-gradient(90deg, #ede9fe, #fce7f3);
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      margin: 1.1rem 0;
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+    }
+    .insight-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: .05rem; }
+    .insight p { margin: 0; font-size: .93rem; color: #4c1d95; font-weight: 500; }
+
+    /* ── Quote ── */
+    blockquote {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+      border-radius: 0 10px 10px 0;
+      padding: .9rem 1.2rem;
+      margin: 1.1rem 0;
+      font-style: italic;
+      color: #1e40af;
+      font-size: .95rem;
+    }
+    blockquote footer { margin-top: .3rem; font-style: normal; font-weight: 700; font-size: .82rem; color: #3b82f6; }
+
+    /* ── Comparison table ── */
+    .table-wrap { overflow-x: auto; margin: 1.1rem 0; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th {
+      background: #1e2233;
+      color: #e2e8f0;
+      padding: .7rem 1rem;
+      text-align: left;
+      font-size: .82rem;
+      letter-spacing: .04em;
+    }
+    td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; color: #374151; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f9fafb; }
+
+    /* ── Two-col layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Tags ── */
+    .tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 6px;
+      padding: .15rem .55rem;
+      font-size: .78rem;
+      font-weight: 600;
+      margin: .15rem .1rem;
+    }
+    .tag-green  { background: #dcfce7; color: #166534; }
+    .tag-orange { background: #ffedd5; color: #9a3412; }
+    .tag-purple { background: #ede9fe; color: #5b21b6; }
+
+    /* ── Visual diagram ── */
+    .diagram {
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 1.4rem;
+      margin: 1.2rem 0;
+      text-align: center;
+    }
+    .diagram-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin: .5rem 0;
+    }
+    .diagram-box {
+      background: #fff;
+      border: 2px solid #3b82f6;
+      border-radius: 10px;
+      padding: .6rem 1rem;
+      font-size: .88rem;
+      font-weight: 600;
+      color: #1e40af;
+      min-width: 120px;
+    }
+    .diagram-arrow { font-size: 1.5rem; color: #94a3b8; }
+
+    /* ── Progress/recap bar ── */
+    .recap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: .8rem;
+      margin-top: 1rem;
+    }
+    .recap-item {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: .9rem 1rem;
+      display: flex;
+      gap: .6rem;
+      align-items: flex-start;
+      border: 1px solid #e5e7eb;
+    }
+    .recap-check { font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+    .recap-item p { font-size: .85rem; margin: 0; color: #374151; font-weight: 500; }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 2px dashed #e5e7eb; margin: 1.5rem 0; }
+
+    /* ── Callout ── */
+    .callout {
+      border-radius: 12px;
+      padding: 1rem 1.3rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+    }
+    .callout-warn  { background: #fff7ed; border: 1px solid #fed7aa; }
+    .callout-info  { background: #eff6ff; border: 1px solid #bfdbfe; }
+    .callout-icon  { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
+    .callout p     { margin: 0; font-size: .9rem; }
+    .callout-warn p { color: #7c2d12; }
+    .callout-info p { color: #1e40af; }
+
+    /* ── Footer ── */
+    .page-footer {
+      text-align: center;
+      color: #9ca3af;
+      font-size: .82rem;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <div class="hero">
+    <h1>Chapter 4 — Valuing Stocks</h1>
+    <p>Corporate Finance · Complete Study Guide · Everything you need to understand how a stock is priced, why it moves, and how analysts value companies.</p>
+    <div class="badge-row">
+      <span class="badge">Stock Markets</span>
+      <span class="badge">DDM Models</span>
+      <span class="badge">Gordon-Shapiro</span>
+      <span class="badge">PVGO</span>
+      <span class="badge">DCF & Multiples</span>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 1. WHY STOCKS ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🌍</div>
+      <h2>1 · The Big Picture — Why Do Stocks Matter?</h2>
+    </div>
+
+    <p>A <strong>stock (share / equity)</strong> represents a fractional ownership claim on a company. When you buy a share of Apple, you own a tiny slice of its factories, patents, cash, and future profits.</p>
+
+    <div class="two-col">
+      <div class="card card-blue">
+        <h4>Global equity markets</h4>
+        <p>Combined global stock market capitalisation exceeds <strong>$100 trillion</strong>. The US market alone (~NYSE + NASDAQ) accounts for roughly 44% of that total.</p>
+      </div>
+      <div class="card card-green">
+        <h4>Long-run track record</h4>
+        <p>US equities have delivered ~7% real returns per year over the past century — far outpacing bonds and inflation. But the path is bumpy.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚠️</div>
+      <p><strong>No free lunch:</strong> Higher long-run returns come packaged with higher short-run volatility. The <strong>VIX index</strong> (the "fear index," published by the CBOE) measures expected 30-day volatility using S&P 500 option prices. A reading above ~20 signals elevated uncertainty. On 5 March 2026 it stood at 24.28.</p>
+    </div>
+
+    <blockquote>
+      "In the short run, the market is a voting machine but in the long run, it is a weighing machine."
+      <footer>— Benjamin Graham, father of value investing</footer>
+    </blockquote>
+  </div>
+
+
+  <!-- ═══════════ 2. TERMINOLOGY ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📖</div>
+      <h2>2 · Key Terminology</h2>
+    </div>
+
+    <h3>Primary vs. Secondary Markets</h3>
+    <div class="two-col">
+      <div class="card card-teal">
+        <h4>Primary Market</h4>
+        <p>New shares are issued for the <em>first time</em> — the company raises fresh capital. Example: IPO (Initial Public Offering).</p>
+      </div>
+      <div class="card card-blue">
+        <h4>Secondary Market</h4>
+        <p>Existing shares are traded <em>between investors</em>. The company gets no new money; only ownership changes hands. Example: daily trading on NYSE.</p>
+      </div>
+    </div>
+
+    <h3>Types of Stock Exchanges</h3>
+    <div class="card-grid">
+      <div class="card card-blue">
+        <h4>Auction Market</h4>
+        <p>Buyers and sellers matched directly. Prices determined by competing bids/offers. <em>Examples: NYSE, LSE</em></p>
+      </div>
+      <div class="card card-purple">
+        <h4>Dealer Market</h4>
+        <p>Market makers quote a <strong>bid price</strong> (what they buy for) and an <strong>ask price</strong> (what they sell for). Spread = their profit. <em>Example: NASDAQ</em></p>
+      </div>
+      <div class="card card-orange">
+        <h4>OTC Market</h4>
+        <p>No centralised exchange. Traded directly between parties. Common for penny stocks, derivatives (options, futures, CDOs, CDSs).</p>
+      </div>
+    </div>
+
+    <h3>Stock Indices (Benchmarks)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Index</th><th>Country/Region</th><th>What it tracks</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>DJIA (Dow Jones)</td><td>USA</td><td>30 large industrial companies, price-weighted</td></tr>
+          <tr><td>S&amp;P 500</td><td>USA</td><td>500 large caps, market-cap weighted — most watched</td></tr>
+          <tr><td>Russell 2000</td><td>USA</td><td>2,000 small-cap stocks</td></tr>
+          <tr><td>Euronext 100</td><td>Europe</td><td>100 blue-chip European stocks</td></tr>
+          <tr><td>BEL 20</td><td>Belgium</td><td>20 largest Belgian companies on Euronext Brussels</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Growth Stocks vs. Value Stocks</h3>
+    <div class="two-col">
+      <div class="card card-green">
+        <h4>Growth Stocks</h4>
+        <p>High expected earnings growth. Often trade at a high P/E. Investors pay a premium for future potential. <em>Examples: Tesla, Nvidia</em></p>
+        <span class="tag tag-green">High P/E</span> <span class="tag tag-green">Low dividend</span>
+      </div>
+      <div class="card card-orange">
+        <h4>Value Stocks</h4>
+        <p>Trade at a discount relative to fundamentals (low P/E or P/B). Often mature, dividend-paying companies. <em>Examples: utility companies, banks</em></p>
+        <span class="tag tag-orange">Low P/E</span> <span class="tag tag-orange">Higher dividend</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 3. MARKET EFFICIENCY ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🧠</div>
+      <h2>3 · Market Efficiency — Do Prices Tell the Truth?</h2>
+    </div>
+
+    <h3>Efficient Market Hypothesis (EMH)</h3>
+    <p>The EMH (Eugene Fama, Nobel 2013) says stock prices <strong>already incorporate all available information</strong>, so you can't consistently beat the market through stock picking or timing.</p>
+
+    <div class="card-grid">
+      <div class="card card-blue">
+        <h4>Weak Form</h4>
+        <p>Prices reflect all <em>past trading data</em>. Technical analysis cannot generate excess returns.</p>
+      </div>
+      <div class="card card-purple">
+        <h4>Semi-Strong Form</h4>
+        <p>Prices reflect all <em>public information</em>. Fundamental analysis cannot generate excess returns.</p>
+      </div>
+      <div class="card card-rose">
+        <h4>Strong Form</h4>
+        <p>Prices reflect <em>all information</em>, including insider knowledge. Even insiders cannot beat the market.</p>
+      </div>
+    </div>
+
+    <h3>Challenges to EMH</h3>
+
+    <div class="two-col">
+      <div class="card card-orange">
+        <h4>Adaptive Market Hypothesis</h4>
+        <p>Andrew Lo (MIT): markets evolve like ecosystems. Efficiency varies over time as participants adapt. Opportunities exist but disappear when exploited.</p>
+      </div>
+      <div class="card card-purple">
+        <h4>Behavioral Finance</h4>
+        <p>Kahneman &amp; Thaler: humans are irrational. Biases (overconfidence, loss aversion, herding) create mispricings and bubbles.</p>
+      </div>
+    </div>
+    <div class="card card-rose" style="margin-top:1rem">
+      <h4>Financial Instability Hypothesis (Minsky)</h4>
+      <p>Periods of stability breed complacency and leverage. Debt builds up until a sudden "Minsky moment" collapse. Explains the 2008 crash.</p>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">💡</div>
+      <p>The <strong>2010 Flash Crash</strong> (6 May 2010) saw the Dow Jones drop ~1,000 points in minutes due to algorithmic high-frequency trading feedback loops — then recover most losses within the hour. It illustrated how e-trading can amplify market dislocations.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 4. DDM INTRO ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">💰</div>
+      <h2>4 · Dividend Discount Model (DDM) — The Core Idea</h2>
+    </div>
+
+    <p>The DDM is built on one simple principle: <strong>a stock is worth the present value of all the cash it will ever pay you</strong>. Those cash flows are dividends.</p>
+
+    <div class="diagram">
+      <p style="font-weight:700; color:#1e2233; margin-bottom:1rem;">Value = PV of all future dividends</p>
+      <div class="diagram-row">
+        <div class="diagram-box">Div₁</div>
+        <div class="diagram-arrow">+</div>
+        <div class="diagram-box">Div₂</div>
+        <div class="diagram-arrow">+</div>
+        <div class="diagram-box">Div₃</div>
+        <div class="diagram-arrow">+</div>
+        <div class="diagram-box">··· to ∞</div>
+      </div>
+      <div class="diagram-row" style="margin-top:.7rem">
+        <div class="diagram-box" style="border-color:#22c55e; color:#166534; min-width:240px;">All discounted at required return r</div>
+      </div>
+    </div>
+
+    <p>The <strong>three ingredients</strong> of any valuation exercise (from Chapter 0):</p>
+    <div class="card-grid">
+      <div class="card card-blue"><h4>1. Future Cash Flows</h4><p>Expected dividends each period.</p></div>
+      <div class="card card-green"><h4>2. Timing</h4><p>When exactly each dividend is paid.</p></div>
+      <div class="card card-purple"><h4>3. Discount Rate (r)</h4><p>The required return — must match the risk of the investment (opportunity cost).</p></div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 5. ONE-PERIOD DDM ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">1️⃣</div>
+      <h2>5 · DDM — One-Period Setting</h2>
+    </div>
+
+    <p>If you plan to hold a stock for exactly <strong>one year</strong>, you will receive one dividend and then sell the share. Your total return is:</p>
+
+    <div class="formula-box">
+      <div class="label">Expected Return</div>
+      <div class="formula">r = (Div₁ + P₁ − P₀) / P₀</div>
+      <div class="note">= Dividend Yield + Capital Gain Rate</div>
+    </div>
+
+    <p>Rearranging, today's price is the present value of next year's dividend and price:</p>
+
+    <div class="formula-box">
+      <div class="label">Today's Price</div>
+      <div class="formula">P₀ = (Div₁ + P₁) / (1 + r)</div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Worked Example — Proximus</div>
+      <p>Proximus is selling for <strong>€9.00</strong> today. Expected price in one year: <strong>€9.50</strong>. Expected dividend in one year: <strong>€0.60</strong>.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span>r = (0.60 + 9.50 − 9.00) / 9.00</span></div>
+        <div class="step"><span class="step-num">2</span><span>r = 1.10 / 9.00</span></div>
+        <div class="step"><span class="step-num">3</span><span><strong>r = 12.2%</strong> expected return</span></div>
+      </div>
+      <p style="margin-top:.6rem; font-size:.88rem;">That's 6.7% dividend yield + 5.6% capital gain.</p>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">💡</div>
+      <p>We can also run this <em>backwards</em>: given investors' required return r and a forecast of Div₁ and P₁, we calculate what today's fair price P₀ should be.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 6. MULTI-PERIOD DDM ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔢</div>
+      <h2>6 · DDM — Multi-Period Extension</h2>
+    </div>
+
+    <p>Substitute next year's price using the same one-period formula, then the year after, and so on. As the holding period stretches to infinity, the terminal price term shrinks to zero, leaving:</p>
+
+    <div class="formula-box">
+      <div class="label">General DDM Formula</div>
+      <div class="formula">P₀ = Div₁/(1+r)¹ + Div₂/(1+r)² + Div₃/(1+r)³ + ··· + Divₙ/(1+r)ⁿ</div>
+      <div class="note">Stock price = present value of ALL future dividends (to infinity)</div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Worked Example — Multi-Period</div>
+      <p>Proximus expected dividends: <strong>$1.20, $0.60, $0.60</strong> over years 1–3. Expected sale price at end of year 3: <strong>$11.00</strong>. Required return: <strong>8%</strong>.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span>PV(Div₁) = 1.20 / 1.08 = $1.111</span></div>
+        <div class="step"><span class="step-num">2</span><span>PV(Div₂) = 0.60 / 1.08² = $0.514</span></div>
+        <div class="step"><span class="step-num">3</span><span>PV(Div₃) = 0.60 / 1.08³ = $0.476</span></div>
+        <div class="step"><span class="step-num">4</span><span>PV(P₃) = 11.00 / 1.08³ = $8.732</span></div>
+        <div class="step"><span class="step-num">5</span><span><strong>P₀ = $10.83</strong></span></div>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">📌</div>
+      <p>As the horizon H → ∞, the PV of the terminal price → 0. The stock value is then <strong>entirely driven by the stream of dividends</strong> — which is why dividends are the fundamental unit of stock value in theory.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 7. ZERO GROWTH ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">0️⃣</div>
+      <h2>7 · Special Case 1 — Zero Growth DDM (Perpetuity)</h2>
+    </div>
+
+    <p>What if a company pays the <strong>exact same dividend forever</strong>? This is the simplest special case — a perpetuity.</p>
+
+    <div class="formula-box">
+      <div class="label">Zero Growth DDM</div>
+      <div class="formula">P₀ = Div / r</div>
+      <div class="note">Where Div = constant dividend per year, r = required return</div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Example</div>
+      <p>A stock pays a fixed dividend of <strong>$5</strong> per year forever. Required return = <strong>10%</strong>.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span>P₀ = 5 / 0.10 = <strong>$50</strong></span></div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">💡</div>
+      <p>This is used as a <strong>benchmark "no-growth" valuation</strong>. If a company pays out <em>all</em> its earnings as dividends (Div = EPS), then P₀ = EPS/r. Any value above this must come from growth — which is what PVGO measures (see Section 10).</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 8. CONSTANT GROWTH ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📈</div>
+      <h2>8 · Special Case 2 — Constant Growth DDM (Gordon-Shapiro)</h2>
+    </div>
+
+    <p>What if dividends grow at the same rate <strong>g</strong> every year forever? This is the Gordon-Shapiro model (also called the Gordon Growth Model).</p>
+
+    <div class="formula-box">
+      <div class="label">Constant Growth DDM — Gordon-Shapiro</div>
+      <div class="formula">P₀ = Div₁ / (r − g)</div>
+      <div class="note">
+        Div₁ = next year's expected dividend<br/>
+        r    = required return (must be > g)<br/>
+        g    = constant annual dividend growth rate
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚠️</div>
+      <p>The formula <strong>only works when r &gt; g</strong>. If g ≥ r, the denominator becomes zero or negative and the price would be infinite — economically unrealistic. In practice g is usually tied to long-run nominal GDP growth (~3-5%).</p>
+    </div>
+
+    <h3>Rearranging for Required Return r</h3>
+    <div class="formula-box">
+      <div class="label">Market Capitalisation Rate</div>
+      <div class="formula">r = Div₁/P₀ + g</div>
+      <div class="note">= Dividend Yield + Expected Dividend Growth Rate</div>
+    </div>
+
+    <h3>Where Does g Come From? — The Plowback Formula</h3>
+    <p>A firm grows dividends by <em>reinvesting</em> some earnings back into profitable projects. The key identities:</p>
+
+    <div class="card-grid">
+      <div class="card card-blue">
+        <h4>Payout Ratio</h4>
+        <p>Fraction of earnings paid out as dividends.<br/>Payout = Div / EPS</p>
+      </div>
+      <div class="card card-green">
+        <h4>Plowback Ratio</h4>
+        <p>Fraction of earnings retained.<br/>Plowback = 1 − Payout</p>
+      </div>
+      <div class="card card-purple">
+        <h4>Growth Rate g</h4>
+        <p><strong>g = ROE × Plowback ratio</strong><br/>More retained earnings + higher ROE → higher g</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Worked Example — Finding r</div>
+      <p>Stock price = <strong>$41.67</strong>, next dividend = <strong>$1.49</strong>, analysts forecast g = <strong>5.1%</strong>.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span>r = Div₁/P₀ + g = 1.49/41.67 + 0.051</span></div>
+        <div class="step"><span class="step-num">2</span><span>r = 0.0357 + 0.051 = <strong>8.67%</strong></span></div>
+      </div>
+      <p style="margin-top:.6rem; font-size:.88rem;">Alternative: payout = 62%, ROE = 10% → g = 10% × (1−0.62) = 3.8% → r = 1.49/41.67 + 0.038 = 7.4%</p>
+    </div>
+
+    <h3>The Dividend-Growth Trade-off</h3>
+    <div class="insight">
+      <div class="insight-icon">⚖️</div>
+      <p>Paying a higher dividend today <em>reduces</em> retained earnings → lower g → lower future dividends. The optimal payout decision depends on whether reinvesting capital earns <strong>more than r</strong>. If ROE > r, plowing back earnings <strong>increases</strong> stock price.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 9. PVGO ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🌱</div>
+      <h2>9 · PVGO — Present Value of Growth Opportunities</h2>
+    </div>
+
+    <p>Any stock's price can be decomposed into two parts:</p>
+
+    <div class="formula-box">
+      <div class="label">Stock Price Decomposition</div>
+      <div class="formula">P₀ = EPS / r  +  PVGO</div>
+      <div class="note">
+        EPS/r = no-growth benchmark (zero-growth perpetuity)<br/>
+        PVGO  = value added by future reinvestment opportunities
+      </div>
+    </div>
+
+    <div class="diagram">
+      <p style="font-weight:700;color:#1e2233;margin-bottom:1rem">Stock Price Breakdown</p>
+      <div class="diagram-row">
+        <div class="diagram-box" style="background:#dbeafe; border-color:#3b82f6;">Steady-State Value<br/><small>= EPS / r</small></div>
+        <div class="diagram-arrow">+</div>
+        <div class="diagram-box" style="background:#dcfce7; border-color:#22c55e;">PVGO<br/><small>= growth premium</small></div>
+        <div class="diagram-arrow">=</div>
+        <div class="diagram-box" style="background:#1e2233; color:#e2e8f0; border-color:#1e2233;">P₀<br/><small>Total Stock Price</small></div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Classic PVGO Example</div>
+      <p>Company pays 100% of earnings as dividend → EPS = Div = <strong>$8.33</strong>. Required return r = <strong>15%</strong>.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span><strong>No plowback price:</strong> P₀ = 8.33 / 0.15 = <strong>$55.56</strong></span></div>
+      </div>
+      <p style="margin-top:.6rem">Now the company decides to plowback <strong>40%</strong> of earnings at ROE = <strong>25%</strong>:</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">2</span><span>g = ROE × Plowback = 25% × 40% = <strong>10%</strong></span></div>
+        <div class="step"><span class="step-num">3</span><span>New Div₁ = EPS × Payout = 8.33 × 60% = <strong>$5.00</strong></span></div>
+        <div class="step"><span class="step-num">4</span><span><strong>Growth price:</strong> P₀ = 5.00 / (0.15 − 0.10) = <strong>$100.00</strong></span></div>
+        <div class="step"><span class="step-num">5</span><span><strong>PVGO = $100.00 − $55.56 = $44.44</strong></span></div>
+      </div>
+      <p style="margin-top:.7rem; font-size:.9rem; color:#451a03;">The reinvestment strategy creates <strong>$44.44 of additional value per share</strong> because ROE (25%) > r (15%) — each dollar reinvested is worth more than $1.</p>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">📌</div>
+      <p><strong>Key takeaway:</strong> PVGO is only positive when ROE &gt; r (the firm earns more than its cost of capital). If ROE = r, PVGO = 0 and growth adds no value. If ROE &lt; r, growth actually <em>destroys</em> value — paying out all earnings would be better!</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 10. MULTISTAGE DDM ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-indigo">🪜</div>
+      <h2>10 · Special Case 3 — Multistage DDM</h2>
+    </div>
+
+    <p>Real companies don't grow at a constant rate forever. A typical pattern: <strong>high growth phase → transition → stable growth phase</strong>. The multistage DDM handles this.</p>
+
+    <div class="diagram">
+      <div class="diagram-row">
+        <div class="diagram-box" style="background:#ede9fe;border-color:#a855f7;">Stage 1<br/><small>High growth<br/>e.g. 15% × 5 years</small></div>
+        <div class="diagram-arrow">→</div>
+        <div class="diagram-box" style="background:#dbeafe;border-color:#3b82f6;">Stage 2<br/><small>Stable growth<br/>e.g. 3% forever</small></div>
+      </div>
+    </div>
+
+    <h3>Method</h3>
+    <div class="card-grid">
+      <div class="card card-purple">
+        <h4>Step 1 — Calculate Stage 1 dividends</h4>
+        <p>Project each dividend during the high-growth phase using the high growth rate.</p>
+      </div>
+      <div class="card card-blue">
+        <h4>Step 2 — Terminal value at end of Stage 1</h4>
+        <p>Apply Gordon-Shapiro using the stable growth rate to get the stock price at start of Stage 2 (terminal value).</p>
+      </div>
+      <div class="card card-green">
+        <h4>Step 3 — Discount everything back</h4>
+        <p>PV all Stage 1 dividends + PV of the terminal value back to today.</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Worked Example — Adidas</div>
+      <p>Last dividend paid: <strong>€3.30</strong>. Next 5 years growth: <strong>15%/yr</strong>. After year 5: stable growth at <strong>3%/yr</strong>. Required return: <strong>8%</strong>.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span>Div₁ = 3.30 × 1.15 = €3.795</span></div>
+        <div class="step"><span class="step-num">2</span><span>Div₂ = 3.795 × 1.15 = €4.364</span></div>
+        <div class="step"><span class="step-num">3</span><span>Div₃ = €5.019 | Div₄ = €5.772 | Div₅ = €6.638</span></div>
+        <div class="step"><span class="step-num">4</span><span>Terminal value P₅ = Div₆ / (r − g) = (6.638 × 1.03) / (0.08 − 0.03) = €136.86</span></div>
+        <div class="step"><span class="step-num">5</span><span>P₀ = PV(Div₁…Div₅) + PV(P₅) at 8%</span></div>
+        <div class="step"><span class="step-num">6</span><span>P₀ = 3.51 + 3.25 + 3.00 + 2.78 + 4.52 + 93.10 ≈ <strong>€110.16</strong></span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ 11. BUSINESS VALUATION ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-rose">🏢</div>
+      <h2>11 · Business Valuation in Practice</h2>
+    </div>
+
+    <p>The goal is to estimate the <strong>intrinsic value per share (Vₑ)</strong> to support investment decisions: buy/hold/sell advice, long/short positions, IPO pricing, M&amp;A benchmarking.</p>
+
+    <div class="two-col">
+      <div class="card card-blue">
+        <h4>Absolute Valuation (Discounting)</h4>
+        <p>Models that explicitly project and discount future cash flows. More rigorous but data-intensive.</p>
+        <span class="tag">DDM</span>
+        <span class="tag">DCF</span>
+        <span class="tag">Residual Income</span>
+      </div>
+      <div class="card card-orange">
+        <h4>Relative Valuation (Multiples)</h4>
+        <p>Compare to peer firms using ratios. Fast and practical but relies on comparables being fairly priced.</p>
+        <span class="tag tag-orange">P/E</span>
+        <span class="tag tag-orange">P/S</span>
+        <span class="tag tag-orange">P/B</span>
+      </div>
+    </div>
+
+    <h3>Why DCF Is Often Preferred Over DDM</h3>
+    <p>Many companies don't pay dividends (especially growth companies), making DDM inapplicable. DCF models use <strong>free cash flows</strong> instead — what the company <em>could</em> pay if it chose to.</p>
+
+    <div class="two-col">
+      <div>
+        <h3>DCF — Free Cash Flow to Equity (FCFe)</h3>
+        <div class="formula-box">
+          <div class="label">FCFe Model</div>
+          <div class="formula">Vₑ = FCFe₁/(1+r)¹ + FCFe₂/(1+r)² + ···</div>
+          <div class="note">Discount rate = cost of equity</div>
+        </div>
+        <p style="font-size:.88rem">FCFe = Net Income + Depreciation − CapEx − ΔNWC + Net new borrowing</p>
+      </div>
+      <div>
+        <h3>DCF — Free Cash Flow to Firm (FCFf / WACC model)</h3>
+        <div class="formula-box">
+          <div class="label">FCFf (Enterprise Value) Model</div>
+          <div class="formula">EV = FCFf₁/(1+WACC)¹ + FCFf₂/(1+WACC)² + ···</div>
+          <div class="note">Discount at WACC (weighted avg. cost of debt+equity)</div>
+        </div>
+        <p style="font-size:.88rem">Then: Equity Value = EV − Net Debt. Divide by shares outstanding to get price per share.</p>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <h3>Relative Valuation — Multiples</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Multiple</th><th>Formula</th><th>What it tells you</th><th>Caution</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>P/E Ratio</strong></td>
+            <td>Price / EPS</td>
+            <td>How much investors pay per €1 of earnings. "Growth premium" shows up here.</td>
+            <td>Earnings can be manipulated; negative earnings → meaningless P/E</td>
+          </tr>
+          <tr>
+            <td><strong>Shiller CAPE</strong></td>
+            <td>Price / 10-yr avg. real EPS</td>
+            <td>Smooths out business cycle volatility; widely used for market-level valuation.</td>
+            <td>Can remain "overvalued" for years</td>
+          </tr>
+          <tr>
+            <td><strong>P/B Ratio</strong></td>
+            <td>Price / Book Value per share</td>
+            <td>Compares market value to accounting value. P/B &gt; 1 means market expects ROE &gt; cost of equity.</td>
+            <td>Intangibles often not on balance sheet</td>
+          </tr>
+          <tr>
+            <td><strong>P/S Ratio</strong></td>
+            <td>Price / Revenue per share</td>
+            <td>Useful when earnings are negative (e.g. early-stage). Focus on top-line growth.</td>
+            <td>Ignores profitability entirely</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Real-World P/E Comparison (March 2026)</div>
+      <div class="card-grid" style="margin-top:.5rem">
+        <div class="card card-teal">
+          <h4>Proximus (Telecom)</h4>
+          <p>P/E = <strong>5.10</strong><br/>Mature, regulated, high dividend yield. Market expects modest growth.</p>
+        </div>
+        <div class="card card-blue">
+          <h4>AB InBev (Beer)</h4>
+          <p>P/E = <strong>22.7</strong><br/>Global brand premium. Market prices in stable cash flows and brand strength.</p>
+        </div>
+        <div class="card card-rose">
+          <h4>Tesla (EV)</h4>
+          <p>P/E = <strong>370.49</strong><br/>Extreme growth premium. Market prices in robotics, AI, energy — not just car sales.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚠️</div>
+      <p><strong>The multiples trap:</strong> If you benchmark to comparable firms and the whole sector is overvalued, you'll also conclude your stock is fairly priced. "You go down if the entire ship sinks." Always combine multiples with at least one absolute valuation method.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ FORMULA CHEATSHEET ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-indigo">📋</div>
+      <h2>Formula Cheat Sheet</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Model</th><th>Formula</th><th>When to Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>One-period DDM</td><td>P₀ = (Div₁ + P₁) / (1+r)</td><td>Single-period horizon</td></tr>
+          <tr><td>Multi-period DDM</td><td>P₀ = Σ Divₜ/(1+r)ᵗ</td><td>Finite known dividends</td></tr>
+          <tr><td>Zero growth DDM</td><td>P₀ = Div / r</td><td>Constant, forever dividend</td></tr>
+          <tr><td>Gordon-Shapiro DDM</td><td>P₀ = Div₁ / (r − g)</td><td>Dividends grow at constant g</td></tr>
+          <tr><td>Required return</td><td>r = Div₁/P₀ + g</td><td>Back out r from market price</td></tr>
+          <tr><td>Dividend growth rate</td><td>g = ROE × Plowback</td><td>Estimate sustainable g</td></tr>
+          <tr><td>PVGO</td><td>PVGO = P₀ − EPS/r</td><td>Separate growth value from base</td></tr>
+          <tr><td>P/E ratio</td><td>P/E = Price / EPS</td><td>Quick relative comparison</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ RECAP ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">✅</div>
+      <h2>Chapter Recap — What You Should Know</h2>
+    </div>
+
+    <div class="recap-grid">
+      <div class="recap-item"><div class="recap-check">✅</div><p>Primary vs. secondary markets and types of exchanges (auction, dealer, OTC)</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>EMH, its three forms, and real-world critiques (behavioral finance, adaptive hypothesis)</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>Core DDM logic: stock price = PV of all future dividends</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>One-period DDM: r = (Div₁ + P₁ − P₀) / P₀</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>Zero-growth DDM: P₀ = Div / r (perpetuity)</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>Gordon-Shapiro: P₀ = Div₁ / (r − g) where g = ROE × Plowback</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>PVGO: the growth premium — only positive when ROE > r</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>Multistage DDM: project high-growth phase then apply Gordon-Shapiro for terminal value</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>DCF models (FCFe and FCFf/WACC) — preferred when dividends are absent</p></div>
+      <div class="recap-item"><div class="recap-check">✅</div><p>Multiples (P/E, P/B, P/S, CAPE) — quick but dependent on comparable quality</p></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    Based on CH4 — Valuing Stocks · Corporate Finance · Study Guide
+  </div>
+
+</div>
+</body>
+</html>
