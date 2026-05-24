@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Risk, Return, CAPM & WACC — Study Guide</title>
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --card:      #21253a;
+      --border:    #2e3350;
+      --accent1:   #6c63ff;   /* purple */
+      --accent2:   #00d4aa;   /* teal   */
+      --accent3:   #ff6b6b;   /* red    */
+      --accent4:   #ffd166;   /* yellow */
+      --accent5:   #06d6a0;   /* green  */
+      --text:      #e8eaf0;
+      --muted:     #8892b0;
+      --code-bg:   #161b2e;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .wrapper { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 24px 48px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.2; }
+    .hero h1 span { color: var(--accent1); }
+    .hero p { margin-top: 14px; color: var(--muted); font-size: 1.05rem; max-width: 640px; margin-inline: auto; margin-top: 14px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 24px; }
+    .pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+    .toc h2 { font-size: 1rem; font-weight: 700; color: var(--accent2); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; }
+    .toc ol { padding-left: 24px; }
+    .toc li { margin: 6px 0; font-size: 0.95rem; }
+
+    /* ── Chapter header ── */
+    .chapter {
+      margin-top: 64px;
+      padding: 28px 32px;
+      border-radius: 16px;
+      border-left: 5px solid var(--accent1);
+      background: var(--surface);
+    }
+    .chapter.ch2 { border-color: var(--accent2); }
+    .chapter.ch3 { border-color: var(--accent4); }
+    .chapter h2 { font-size: 1.55rem; font-weight: 800; }
+    .chapter p.sub { color: var(--muted); margin-top: 6px; font-size: 0.95rem; }
+
+    /* ── Section ── */
+    .section { margin-top: 40px; }
+    .section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h3 .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      background: rgba(108,99,255,.15);
+      font-size: 1rem;
+    }
+    .section p { margin-bottom: 14px; }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card h4 { font-size: 0.88rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 8px; }
+    .card .value { font-size: 1.5rem; font-weight: 800; color: var(--accent2); }
+    .card p { font-size: 0.9rem; margin-top: 8px; color: var(--muted); margin-bottom: 0; }
+
+    /* ── Formula boxes ── */
+    .formula-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent1);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 18px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      overflow-x: auto;
+    }
+    .formula-box .label {
+      display: block;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent1);
+      margin-bottom: 10px;
+    }
+    .formula-box .eq { color: var(--accent2); font-size: 1.05rem; line-height: 2; }
+    .formula-box .vars { margin-top: 12px; font-size: 0.83rem; color: var(--muted); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.8; }
+
+    /* ── Callout / info / warning ── */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .callout.info  { background: rgba(0,212,170,.08); border: 1px solid rgba(0,212,170,.3); }
+    .callout.warn  { background: rgba(255,214,102,.08); border: 1px solid rgba(255,214,102,.3); }
+    .callout.tip   { background: rgba(108,99,255,.08);  border: 1px solid rgba(108,99,255,.3); }
+    .callout.danger{ background: rgba(255,107,107,.08); border: 1px solid rgba(255,107,107,.3); }
+    .callout .emoji { font-size: 1.4rem; flex-shrink: 0; line-height: 1; }
+    .callout .body  { font-size: 0.93rem; }
+    .callout .body strong { font-weight: 700; }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; margin: 18px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead tr { background: var(--card); }
+    th { padding: 12px 16px; text-align: left; font-weight: 700; color: var(--muted); text-transform: uppercase; font-size: 0.78rem; letter-spacing: .07em; border-bottom: 2px solid var(--border); }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    td .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .tag.green  { background: rgba(6,214,160,.15);  color: var(--accent5); }
+    .tag.red    { background: rgba(255,107,107,.15); color: var(--accent3); }
+    .tag.purple { background: rgba(108,99,255,.15);  color: var(--accent1); }
+    .tag.yellow { background: rgba(255,214,102,.15); color: var(--accent4); }
+
+    /* ── Visual diagrams (CSS-art) ── */
+    .diagram { margin: 24px 0; }
+    .diagram .caption { text-align: center; font-size: 0.82rem; color: var(--muted); margin-top: 10px; }
+
+    /* Risk spectrum bar */
+    .risk-spectrum { display: flex; border-radius: 10px; overflow: hidden; height: 52px; margin: 16px 0; }
+    .risk-spectrum div { display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; text-align: center; padding: 0 8px; }
+
+    /* Beta meter */
+    .beta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .beta-card {
+      flex: 1 1 130px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .beta-card .b-val { font-size: 1.6rem; font-weight: 800; }
+    .beta-card .b-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+    .beta-card.defensive .b-val { color: var(--accent5); }
+    .beta-card.neutral    .b-val { color: var(--accent2); }
+    .beta-card.aggressive .b-val { color: var(--accent3); }
+
+    /* Portfolio diversification chart */
+    .divers-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 120px;
+      margin: 16px 0;
+      padding: 0 8px;
+    }
+    .divers-bar {
+      flex: 1;
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      min-width: 24px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .divers-bar .inner {
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+    }
+    .divers-bar .label {
+      position: absolute;
+      top: -20px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    /* CML/SML axis art */
+    .graph-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .graph-box svg { display: block; width: 100%; height: auto; }
+
+    /* Process steps */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 20px 0; }
+    .step { display: flex; gap: 16px; align-items: flex-start; position: relative; }
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 44px;
+      bottom: -16px;
+      width: 2px;
+      background: var(--border);
+    }
+    .step .num {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--accent1);
+      color: #fff; font-weight: 800; font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; z-index: 1;
+    }
+    .step .body { padding-top: 6px; padding-bottom: 24px; }
+    .step .body strong { display: block; margin-bottom: 4px; }
+    .step .body p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0; }
+
+    /* Example workout box */
+    .example {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin: 20px 0;
+    }
+    .example .ex-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent4);
+      margin-bottom: 14px;
+    }
+    .example table { font-size: 0.88rem; }
+
+    /* Key concept highlight */
+    .highlight {
+      background: linear-gradient(135deg, rgba(108,99,255,.12) 0%, rgba(0,212,170,.08) 100%);
+      border: 1px solid rgba(108,99,255,.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 18px 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero">
+  <div class="wrapper">
+    <h1>Risk, Return, <span>CAPM</span> &amp; WACC</h1>
+    <p>A complete visual study guide covering Chapters 7–9 of your Corporate Finance course — from measuring single-stock risk all the way to calculating a company's cost of capital.</p>
+    <div class="pill-row">
+      <div class="pill">CH7 · Measuring Risk &amp; Return</div>
+      <div class="pill">CH8 · Portfolio Theory &amp; CAPM</div>
+      <div class="pill">CH9 · COE &amp; WACC</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<!-- ══════════════ TABLE OF CONTENTS ══════════════ -->
+<div class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#big-picture">The Big Picture: Risk vs Return</a></li>
+    <li><a href="#ch7">CH7 · Measuring Risk &amp; Return of a Single Security</a></li>
+    <li><a href="#portfolio">CH7 · Portfolio Return &amp; Risk</a></li>
+    <li><a href="#diversification">CH7 · Diversification, Beta &amp; Sharpe Ratio</a></li>
+    <li><a href="#ch8">CH8 · Markowitz Portfolio Theory &amp; Efficient Frontier</a></li>
+    <li><a href="#capm">CH8 · CAPM — CML &amp; SML</a></li>
+    <li><a href="#apt">CH8 · APT &amp; Fama-French 3-Factor Model</a></li>
+    <li><a href="#ch9">CH9 · Cost of Equity (COE)</a></li>
+    <li><a href="#wacc">CH9 · WACC — Calculation &amp; Management</a></li>
+    <li><a href="#example">Full Worked Example: AB InBev</a></li>
+    <li><a href="#recap">Recap &amp; Cheat Sheet</a></li>
+  </ol>
+</div>
+
+<!-- ══════════════ BIG PICTURE ══════════════ -->
+<div id="big-picture" class="chapter">
+  <h2>The Big Picture: Why Risk &amp; Return?</h2>
+  <p class="sub">Before diving into formulas, understand the two-part journey of corporate finance.</p>
+</div>
+
+<div class="section">
+  <div class="card-grid">
+    <div class="card">
+      <h4>Part 1 · Value</h4>
+      <div class="value">NPV</div>
+      <p>Discount future cash flows at the opportunity cost of capital (hurdle rate). Higher risk → lower value, all else equal.</p>
+    </div>
+    <div class="card">
+      <h4>Part 2 · Risk</h4>
+      <div class="value">CAPM</div>
+      <p>Estimate <em>what that hurdle rate should be</em>. Risk drives required return — we need a way to measure and price it.</p>
+    </div>
+    <div class="card">
+      <h4>For Shareholders</h4>
+      <div class="value">COE</div>
+      <p>Cost of Equity — the return required by an individual equity investor.</p>
+    </div>
+    <div class="card">
+      <h4>For the Company</h4>
+      <div class="value">WACC</div>
+      <p>Weighted Average Cost of Capital — the overall hurdle rate for investment projects.</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    "Higher Risk = Higher Expected Return" — there are no free lunches in finance.
+  </div>
+
+  <div class="callout info">
+    <div class="emoji">📈</div>
+    <div class="body">
+      <strong>Historical proof:</strong> From 1802 to 2021, equities (high risk) returned far more than bonds (medium risk), which returned more than cash (low risk). Investors who accepted more risk were compensated with higher long-run returns.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH7: SINGLE SECURITY ══════════════ -->
+<div id="ch7" class="chapter">
+  <h2>CH7 · Measuring Risk &amp; Return of a Single Security</h2>
+  <p class="sub">Before building portfolios, we must be able to describe any single investment with two numbers: its expected return and its risk.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">📊</span> Expected Return</h3>
+  <p>The expected return is the <strong>probability-weighted average</strong> of all possible outcomes. Think of it as what you "expect on average" if you could repeat the investment many times.</p>
+
+  <div class="formula-box">
+    <span class="label">Formula: Expected Return</span>
+    <div class="eq">E(R) = Σ Pᵢ × Rᵢ</div>
+    <div class="vars">
+      Pᵢ = probability of scenario i occurring<br>
+      Rᵢ = return in scenario i<br>
+      (Σ means "sum over all scenarios")<br><br>
+      <strong>Using historical data:</strong>  E(R) = (R₁ + R₂ + … + Rₙ) / n
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-title">Worked Example — Securities A &amp; B (both priced at €100)</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Economy</th><th>Probability</th><th>Price A</th><th>Return A</th><th>Price B</th><th>Return B</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Boom</td><td>25%</td><td>€130</td><td>+30%</td><td>€120</td><td>+20%</td></tr>
+          <tr><td>Normal</td><td>50%</td><td>€110</td><td>+10%</td><td>€110</td><td>+10%</td></tr>
+          <tr><td>Recession</td><td>25%</td><td>€90</td><td>–10%</td><td>€95</td><td>–5%</td></tr>
+          <tr><td colspan="2"><strong>E(R)</strong></td><td></td><td><strong>+10%</strong></td><td></td><td><strong>+8.75%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.85rem;color:var(--muted);margin-top:12px;">E(Rₐ) = 0.25×30% + 0.50×10% + 0.25×(–10%) = 7.5% + 5% – 2.5% = <strong>10%</strong></p>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">📉</span> Risk = Standard Deviation</h3>
+  <p>Risk is the <strong>spread or deviation around the expected return</strong>. The wider the spread of possible outcomes, the riskier the investment.</p>
+
+  <div class="formula-box">
+    <span class="label">Variance &amp; Standard Deviation</span>
+    <div class="eq">σ²(R) = Σ Pᵢ × [Rᵢ − E(R)]²</div>
+    <div class="eq">σ(R) = √σ²(R)</div>
+    <div class="vars">
+      σ² = variance (risk squared — harder to interpret directly)<br>
+      σ  = standard deviation (same units as return — easy to interpret)<br><br>
+      <strong>Using historical data:</strong>  σ = √[ Σ(Rₜ − E(R))² / (n−1) ]
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="emoji">💡</div>
+    <div class="body">
+      <strong>Intuition:</strong> Think of expected return as the centre of a bell curve and standard deviation as how wide that bell curve is. A narrow bell = predictable returns = low risk. A wide bell = unpredictable returns = high risk.
+    </div>
+  </div>
+
+  <div class="graph-box">
+    <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Low risk bell -->
+      <text x="85" y="18" font-size="11" fill="#8892b0" text-anchor="middle">LOW RISK</text>
+      <path d="M 20,160 Q 45,160 55,140 Q 65,100 85,30 Q 105,100 115,140 Q 125,160 150,160" stroke="#06d6a0" stroke-width="2.5" fill="rgba(6,214,160,0.12)" />
+      <line x1="85" y1="25" x2="85" y2="165" stroke="#06d6a0" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <text x="85" y="178" font-size="10" fill="#06d6a0" text-anchor="middle">E(R)</text>
+
+      <!-- High risk bell -->
+      <text x="370" y="18" font-size="11" fill="#8892b0" text-anchor="middle">HIGH RISK</text>
+      <path d="M 220,160 Q 260,160 290,120 Q 320,70 370,28 Q 420,70 450,120 Q 480,160 500,160" stroke="#ff6b6b" stroke-width="2.5" fill="rgba(255,107,107,0.12)" />
+      <line x1="370" y1="24" x2="370" y2="165" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <text x="370" y="178" font-size="10" fill="#ff6b6b" text-anchor="middle">E(R)</text>
+
+      <!-- sigma arrows low -->
+      <line x1="60" y1="148" x2="85" y2="148" stroke="#06d6a0" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="110" y1="148" x2="85" y2="148" stroke="#06d6a0" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="85" y="142" font-size="9" fill="#06d6a0" text-anchor="middle">σ (small)</text>
+
+      <!-- sigma arrows high -->
+      <line x1="300" y1="148" x2="370" y2="148" stroke="#ff6b6b" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="440" y1="148" x2="370" y2="148" stroke="#ff6b6b" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="370" y="142" font-size="9" fill="#ff6b6b" text-anchor="middle">σ (large)</text>
+
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#8892b0"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="caption">Returns of a risky asset follow a normal distribution. A wider spread = higher σ = higher risk.</div>
+  </div>
+</div>
+
+<!-- ══════════════ CH7: PORTFOLIO ══════════════ -->
+<div id="portfolio" class="chapter ch2">
+  <h2>CH7 · Portfolio Return &amp; Risk</h2>
+  <p class="sub">When you combine assets into a portfolio, the maths changes — and something magical happens to risk.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">📦</span> Portfolio Expected Return</h3>
+  <p>Good news: portfolio return <em>is</em> simply the weighted average of the individual returns.</p>
+
+  <div class="formula-box">
+    <span class="label">Portfolio Expected Return</span>
+    <div class="eq">E(Rₚ) = Σ wᵢ × E(Rᵢ)</div>
+    <div class="vars">
+      wᵢ = fraction of total portfolio value invested in asset i<br>
+      E(Rᵢ) = expected return of asset i<br>
+      (weights must sum to 1: Σwᵢ = 1)
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="emoji">🔑</div>
+    <div class="body"><strong>Example:</strong> You invest 60% in Stock A (E(R) = 12%) and 40% in Stock B (E(R) = 8%). E(Rₚ) = 0.60 × 12% + 0.40 × 8% = 7.2% + 3.2% = <strong>10.4%</strong></div>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🔀</span> Portfolio Risk — The Correlation Effect</h3>
+  <p>Portfolio risk is <strong>NOT</strong> the weighted average of individual risks. Thanks to correlation, it can be significantly lower — this is the essence of diversification.</p>
+
+  <div class="formula-box">
+    <span class="label">Portfolio Variance (2-Asset Case)</span>
+    <div class="eq">σ²ₚ = w₁²σ²₁ + w₂²σ²₂ + 2·w₁·w₂·σ₁·σ₂·ρ₁₂</div>
+    <div class="vars">
+      σ₁, σ₂   = standard deviations of assets 1 and 2<br>
+      w₁, w₂   = portfolio weights<br>
+      ρ₁₂       = correlation coefficient between the two assets  (ranges from −1 to +1)<br>
+      σₚ        = √σ²ₚ  (portfolio standard deviation)
+    </div>
+  </div>
+
+  <p>The crucial insight is what the correlation ρ does:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Correlation (ρ)</th><th>Meaning</th><th>Effect on Portfolio Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ρ = +1</strong></td>
+          <td>Assets move perfectly together</td>
+          <td><span class="tag red">No diversification benefit</span> — σₚ = weighted average σ</td>
+        </tr>
+        <tr>
+          <td><strong>0 &lt; ρ &lt; 1</strong></td>
+          <td>Assets move somewhat together</td>
+          <td><span class="tag yellow">Some diversification</span> — σₚ &lt; weighted average σ</td>
+        </tr>
+        <tr>
+          <td><strong>ρ = 0</strong></td>
+          <td>Assets move independently</td>
+          <td><span class="tag green">Good diversification</span> — significant risk reduction</td>
+        </tr>
+        <tr>
+          <td><strong>ρ = −1</strong></td>
+          <td>Assets move perfectly opposite</td>
+          <td><span class="tag purple">Perfect hedge</span> — σₚ can reach zero!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <div class="emoji">⚡</div>
+    <div class="body">
+      <strong>Real-world insight:</strong> This is why diversifying across different asset classes (stocks + bonds + real estate + commodities) reduces portfolio risk — they don't all move together. During the 2008 financial crisis, correlations between asset classes spiked toward +1, which is why "diversification failed" exactly when people needed it most.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH7: DIVERSIFICATION ══════════════ -->
+<div id="diversification" class="chapter">
+  <h2>CH7 · Diversification, Beta &amp; The Sharpe Ratio</h2>
+  <p class="sub">Not all risk is equal. Some risk can be eliminated for free — the rest must be compensated.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🌀</span> Two Types of Risk</h3>
+
+  <div class="risk-spectrum">
+    <div style="flex:2; background:rgba(255,107,107,0.25); color:#ff6b6b;">Systematic Risk<br><small>(Market Risk)</small></div>
+    <div style="flex:3; background:rgba(108,99,255,0.25); color:#a09cff;">Total Risk</div>
+    <div style="flex:3; background:rgba(0,212,170,0.25); color:#00d4aa;">Idiosyncratic Risk<br><small>(Unique / Diversifiable)</small></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Idiosyncratic / Unique Risk</h4>
+      <p>Risk from factors specific to one company: bad management, product recall, scandal. <strong>Can be diversified away</strong> — rational investors never get compensated for it.</p>
+    </div>
+    <div class="card">
+      <h4>Systematic / Market Risk</h4>
+      <p>Economy-wide risk: recessions, interest rate changes, pandemics. <strong>Cannot be diversified away</strong> — you MUST be compensated for bearing it. Measured by <strong>Beta (β)</strong>.</p>
+    </div>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg" style="background:var(--code-bg);border-radius:10px;border:1px solid var(--border);">
+      <!-- axes -->
+      <line x1="50" y1="20" x2="50" y2="155" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="50" y1="155" x2="470" y2="155" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="22" y="90" font-size="10" fill="#8892b0" transform="rotate(-90,22,90)">Portfolio σ</text>
+      <text x="470" y="162" font-size="10" fill="#8892b0" text-anchor="end"># Securities</text>
+
+      <!-- total risk curve -->
+      <path d="M 60,28 Q 100,35 140,65 Q 200,105 260,125 Q 340,140 440,143" stroke="#6c63ff" stroke-width="2.5" fill="none"/>
+
+      <!-- market risk flat line -->
+      <line x1="60" y1="143" x2="440" y2="143" stroke="#ff6b6b" stroke-width="1.8" stroke-dasharray="6,4"/>
+
+      <!-- idiosyncratic fill -->
+      <path d="M 60,28 Q 100,35 140,65 Q 200,105 260,125 Q 340,140 440,143 L 440,143 L 60,143 Z" fill="rgba(108,99,255,0.08)"/>
+
+      <!-- labels -->
+      <text x="250" y="60" font-size="10" fill="#a09cff">Unique/diversifiable risk</text>
+      <text x="360" y="138" font-size="10" fill="#ff6b6b">Market / systematic risk</text>
+
+      <!-- x-axis ticks -->
+      <text x="90" y="165" font-size="9" fill="#8892b0" text-anchor="middle">1</text>
+      <text x="140" y="165" font-size="9" fill="#8892b0" text-anchor="middle">5</text>
+      <text x="210" y="165" font-size="9" fill="#8892b0" text-anchor="middle">10</text>
+      <text x="300" y="165" font-size="9" fill="#8892b0" text-anchor="middle">20</text>
+      <text x="420" y="165" font-size="9" fill="#8892b0" text-anchor="middle">100+</text>
+    </svg>
+    <div class="caption">As you add more securities to a portfolio, unique risk disappears. Market risk remains regardless.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">β</span> Beta — Measuring Market Risk</h3>
+  <p>Beta measures how sensitive a stock is to movements in the overall market. It is the <strong>slope of a regression line</strong> when you plot the stock's returns against market returns.</p>
+
+  <div class="formula-box">
+    <span class="label">Beta Definition</span>
+    <div class="eq">β = Cov(Rᵢ, Rₘ) / Var(Rₘ)</div>
+    <div class="vars">
+      Rᵢ = return on security i<br>
+      Rₘ = return on the market portfolio (e.g., S&amp;P 500, MSCI World)<br>
+      β = 1 means the stock moves exactly with the market
+    </div>
+  </div>
+
+  <div class="beta-row">
+    <div class="beta-card defensive">
+      <div class="b-val">β &lt; 1</div>
+      <div class="b-label">Defensive Stock<br><small>e.g., utilities, pharma</small></div>
+    </div>
+    <div class="beta-card neutral">
+      <div class="b-val">β = 1</div>
+      <div class="b-label">Moves with market<br><small>e.g., market index ETF</small></div>
+    </div>
+    <div class="beta-card aggressive">
+      <div class="b-val">β &gt; 1</div>
+      <div class="b-label">Aggressive Stock<br><small>e.g., tech, startups</small></div>
+    </div>
+    <div class="beta-card" style="">
+      <div class="b-val" style="color:var(--muted);">β &lt; 0</div>
+      <div class="b-label">Counter-cyclical<br><small>e.g., gold, inverse ETF</small></div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="emoji">💡</div>
+    <div class="body">
+      <strong>Portfolio Beta</strong> = weighted average of individual betas. If you hold 60% in a β=1.5 stock and 40% in a β=0.5 stock: βₚ = 0.6×1.5 + 0.4×0.5 = <strong>1.1</strong>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">⚖️</span> Sharpe Ratio — Return per Unit of Risk</h3>
+  <p>Instead of looking at return and risk separately, the Sharpe Ratio combines them: how much <em>excess</em> return do you get per unit of risk taken?</p>
+
+  <div class="formula-box">
+    <span class="label">Sharpe Ratio</span>
+    <div class="eq">Sharpe = (R − Rƒ) / σ</div>
+    <div class="vars">
+      R  = actual return of the security or portfolio<br>
+      Rƒ = risk-free rate (e.g., government bond yield)<br>
+      σ  = standard deviation of the security or portfolio<br>
+      Higher Sharpe = better risk-adjusted performance
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="emoji">📌</div>
+    <div class="body">
+      <strong>Example:</strong> Fund A returns 12% with σ = 10%. Fund B returns 15% with σ = 20%. Risk-free = 3%.<br><br>
+      Sharpe A = (12%−3%)/10% = <strong>0.90</strong><br>
+      Sharpe B = (15%−3%)/20% = <strong>0.60</strong><br><br>
+      Fund A gives more return per unit of risk — it's the better investment on a risk-adjusted basis!
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH8: MARKOWITZ ══════════════ -->
+<div id="ch8" class="chapter ch2">
+  <h2>CH8 · Markowitz Portfolio Theory &amp; The Efficient Frontier</h2>
+  <p class="sub">Harry Markowitz (1952, Nobel Prize 1990) asked a simple question: what is the optimal way to combine assets?</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🏆</span> The Efficient Frontier</h3>
+  <p>The key assumptions of Markowitz portfolio theory:</p>
+  <ul style="margin: 0 0 16px 20px; line-height: 2; font-size:0.95rem;">
+    <li>Returns are normally distributed with known mean and standard deviation.</li>
+    <li>Investors only care about <strong>risk and return</strong> — more return is better, less risk is better.</li>
+    <li>All investors are <strong>rational and risk-averse</strong>.</li>
+  </ul>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <strong>Combine 2 securities</strong>
+        <p>By varying the weights between two assets, you trace a curved line (a "bullet shape") in risk-return space. The curvature comes from their imperfect correlation.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <strong>Add more &amp; more securities (N → ∞)</strong>
+        <p>Each additional asset adds more combinations. The set of all feasible portfolios forms a filled "egg" shape. The upper-left edge of that shape is the Efficient Frontier.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <strong>Introduce a risk-free asset</strong>
+        <p>You can now lend/borrow at the risk-free rate Rƒ. This transforms the efficient frontier into a <strong>straight line</strong> — the Capital Market Line (CML).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="graph-box">
+    <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+      <!-- axes -->
+      <line x1="50" y1="20" x2="50" y2="240" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="50" y1="240" x2="500" y2="240" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="18" y="135" font-size="11" fill="#8892b0" text-anchor="middle" transform="rotate(-90,18,135)">Expected Return</text>
+      <text x="490" y="255" font-size="11" fill="#8892b0" text-anchor="end">Risk (σ)</text>
+
+      <!-- feasible region (filled egg) -->
+      <path d="M 100,220 Q 80,180 110,130 Q 140,80 200,55 Q 260,35 320,55 Q 380,75 380,130 Q 380,185 330,220 Q 260,240 180,230 Z" fill="rgba(108,99,255,0.06)" stroke="rgba(108,99,255,0.2)" stroke-width="1"/>
+
+      <!-- efficient frontier (upper curve) -->
+      <path d="M 110,205 Q 95,160 120,120 Q 145,85 200,58 Q 255,36 310,58 Q 365,80 375,130" stroke="#6c63ff" stroke-width="2.5" fill="none"/>
+      <text x="350" y="68" font-size="10" fill="#a09cff">Efficient Frontier</text>
+
+      <!-- market portfolio M -->
+      <circle cx="230" cy="80" r="7" fill="#ffd166"/>
+      <text x="240" y="76" font-size="11" fill="#ffd166" font-weight="bold">M</text>
+
+      <!-- CML -->
+      <line x1="50" y1="230" x2="450" y2="28" stroke="#00d4aa" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="420" y="40" font-size="10" fill="#00d4aa">CML</text>
+
+      <!-- Rf point -->
+      <circle cx="50" cy="230" r="4" fill="#00d4aa"/>
+      <text x="56" y="230" font-size="10" fill="#00d4aa">Rƒ</text>
+
+      <!-- labels -->
+      <text x="150" y="190" font-size="9" fill="#8892b0">Feasible portfolios</text>
+
+      <!-- minimum variance portfolio -->
+      <circle cx="98" cy="180" r="4" fill="#8892b0"/>
+      <text x="60" y="178" font-size="9" fill="#8892b0">Min.</text>
+      <text x="55" y="188" font-size="9" fill="#8892b0">Variance</text>
+    </svg>
+    <div class="caption">The Efficient Frontier is the upper-left edge of all feasible portfolios. M is the market portfolio — where the CML is tangent to the frontier.</div>
+  </div>
+
+  <div class="callout info">
+    <div class="emoji">🎯</div>
+    <div class="body">
+      <strong>Key insight:</strong> Any rational investor should hold a portfolio ON the efficient frontier. A portfolio below or inside the frontier means you're accepting unnecessary risk for your return level — that's irrational. The tangency point M (the market portfolio) is special because it has the <strong>highest Sharpe ratio</strong> of all possible portfolios.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH8: CAPM ══════════════ -->
+<div id="capm" class="chapter">
+  <h2>CH8 · CAPM — The Capital Asset Pricing Model</h2>
+  <p class="sub">CAPM gives us a precise formula linking risk (measured by beta) to the expected return of any security.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">📐</span> Two Key Lines</h3>
+
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+    <div class="card" style="border-color: var(--accent2);">
+      <h4>Capital Market Line (CML)</h4>
+      <p>For <strong>portfolios</strong>. Uses total risk (σ) on the x-axis. Describes the best possible risk/return trade-off achievable by mixing the risk-free asset with portfolio M.</p>
+    </div>
+    <div class="card" style="border-color: var(--accent1);">
+      <h4>Security Market Line (SML)</h4>
+      <p>For <strong>individual securities</strong>. Uses beta on the x-axis. This is the formula we actually use in practice to price individual assets. <em>This is CAPM.</em></p>
+    </div>
+  </div>
+
+  <div class="formula-box" style="border-color: var(--accent2);">
+    <span class="label" style="color:var(--accent2);">CML — Capital Market Line (for Portfolios)</span>
+    <div class="eq">E(Rₚ) = Rƒ + [(E(Rₘ) − Rƒ) / σₘ] × σₚ</div>
+    <div class="vars">
+      Rƒ          = risk-free rate<br>
+      E(Rₘ)      = expected market return<br>
+      σₘ          = standard deviation of the market portfolio<br>
+      σₚ          = standard deviation of your portfolio<br>
+      (E(Rₘ)−Rƒ)/σₘ = Sharpe ratio of the market
+    </div>
+  </div>
+
+  <div class="formula-box" style="border-color: var(--accent1);">
+    <span class="label" style="color:var(--accent1);">SML — Security Market Line (CAPM) — for Individual Securities</span>
+    <div class="eq">E(Rᵢ) = Rƒ + βᵢ × (E(Rₘ) − Rƒ)</div>
+    <div class="vars">
+      E(Rᵢ)      = expected return on security i  (the "fair" return given its risk)<br>
+      Rƒ          = risk-free rate<br>
+      βᵢ          = beta of security i<br>
+      E(Rₘ) − Rƒ = market risk premium (typically ~5–7% historically)
+    </div>
+  </div>
+
+  <div class="graph-box">
+    <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+      <!-- axes -->
+      <line x1="50" y1="20" x2="50" y2="240" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="50" y1="240" x2="490" y2="240" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="18" y="135" font-size="11" fill="#8892b0" text-anchor="middle" transform="rotate(-90,18,135)">Expected Return</text>
+      <text x="480" y="255" font-size="11" fill="#8892b0" text-anchor="end">Beta (β)</text>
+
+      <!-- SML line -->
+      <line x1="50" y1="215" x2="490" y2="35" stroke="#6c63ff" stroke-width="2.5"/>
+      <text x="460" y="32" font-size="11" fill="#a09cff" font-weight="bold">SML</text>
+
+      <!-- Rf intercept -->
+      <circle cx="50" cy="215" r="5" fill="#00d4aa"/>
+      <text x="56" y="220" font-size="10" fill="#00d4aa">Rƒ</text>
+
+      <!-- beta=1 market point -->
+      <circle cx="270" cy="128" r="6" fill="#ffd166"/>
+      <line x1="270" y1="240" x2="270" y2="128" stroke="#2e3350" stroke-dasharray="4,3" stroke-width="1"/>
+      <text x="262" y="255" font-size="10" fill="#ffd166" text-anchor="middle">β=1</text>
+      <text x="278" y="125" font-size="10" fill="#ffd166">M  E(Rₘ)</text>
+
+      <!-- underpriced stock (above SML) -->
+      <circle cx="200" cy="90" r="6" fill="#06d6a0"/>
+      <text x="210" y="88" font-size="10" fill="#06d6a0">Underpriced ↑</text>
+      <text x="210" y="100" font-size="9" fill="#8892b0">(actual return > fair)</text>
+
+      <!-- overpriced stock (below SML) -->
+      <circle cx="340" cy="175" r="6" fill="#ff6b6b"/>
+      <text x="350" y="173" font-size="10" fill="#ff6b6b">Overpriced ↓</text>
+      <text x="350" y="185" font-size="9" fill="#8892b0">(actual return &lt; fair)</text>
+
+      <!-- beta=0 -->
+      <text x="50" y="255" font-size="10" fill="#8892b0" text-anchor="middle">β=0</text>
+    </svg>
+    <div class="caption">The SML: every security should plot ON this line in equilibrium. Securities above are underpriced (good buys), securities below are overpriced.</div>
+  </div>
+
+  <div class="example">
+    <div class="ex-title">CAPM Worked Example</div>
+    <p style="font-size:0.9rem;margin-bottom:12px;">Given: Rƒ = 3.5%, E(Rₘ) = 10%, β = 1.2 (company shares)</p>
+    <div class="formula-box" style="margin:0;">
+      <div class="eq">E(R) = 3.5% + 1.2 × (10% − 3.5%)</div>
+      <div class="eq">     = 3.5% + 1.2 × 6.5%</div>
+      <div class="eq">     = 3.5% + 7.8% = <strong>11.3%</strong></div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--muted);margin-top:12px;">This 11.3% is the minimum return shareholders require for bearing this level of market risk.</p>
+  </div>
+
+  <div class="callout warn">
+    <div class="emoji">⚠️</div>
+    <div class="body">
+      <strong>Does CAPM hold perfectly?</strong> Studies show high-beta portfolios do earn more than low-beta ones, but the difference is <em>smaller</em> than CAPM predicts. This led to the development of multi-factor models.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH8: APT & FF ══════════════ -->
+<div id="apt" class="chapter ch2">
+  <h2>CH8 · APT &amp; Fama-French 3-Factor Model</h2>
+  <p class="sub">CAPM uses one factor (market beta). What if other risk factors matter too?</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🔬</span> Arbitrage Pricing Theory (APT)</h3>
+  <p>Stephen Ross (1976) proposed that <strong>multiple macroeconomic factors</strong> drive returns, not just market risk:</p>
+
+  <div class="formula-box">
+    <span class="label">APT Formula</span>
+    <div class="eq">E(Rᵢ) = Rƒ + β₁·RP₁ + β₂·RP₂ + … + βₙ·RPₙ</div>
+    <div class="vars">
+      βₙ   = sensitivity of the security to factor n<br>
+      RPₙ = risk premium for factor n (e.g., GDP growth, inflation, interest rates)
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">3️⃣</span> Fama-French 3-Factor Model</h3>
+  <p>Eugene Fama &amp; Kenneth French (1992) identified three specific risk factors that empirically explain stock returns better than CAPM alone:</p>
+
+  <div class="card-grid">
+    <div class="card" style="border-color: var(--accent1);">
+      <h4>Factor 1 · Market Risk</h4>
+      <div class="value" style="font-size:1.1rem;">Rₘ − Rƒ</div>
+      <p>The classic market risk premium. Still the most important factor.</p>
+    </div>
+    <div class="card" style="border-color: var(--accent4);">
+      <h4>Factor 2 · Size (SMB)</h4>
+      <div class="value" style="font-size:1.1rem;color:var(--accent4);">Small – Big</div>
+      <p>Small-cap stocks historically outperform large-cap stocks. Bearing size risk earns an extra premium.</p>
+    </div>
+    <div class="card" style="border-color: var(--accent3);">
+      <h4>Factor 3 · Value (HML)</h4>
+      <div class="value" style="font-size:1.1rem;color:var(--accent3);">High – Low B/M</div>
+      <p>Value stocks (high book-to-market ratio) historically outperform growth stocks.</p>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="label">Fama-French 3-Factor Formula</span>
+    <div class="eq">E(Rᵢ) = Rƒ + β₁(Rₘ−Rƒ) + β₂·SMB + β₃·HML</div>
+    <div class="vars">
+      SMB = Small Minus Big (size premium)<br>
+      HML = High Minus Low book-to-market (value premium)<br>
+      Each β measures the sensitivity of the stock to that specific factor
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="emoji">💡</div>
+    <div class="body">
+      <strong>Why does value outperform growth?</strong> Value companies (old, cheap stocks trading below book value) are riskier businesses facing financial distress — investors demand a higher return to own them. It's not a "free lunch" but compensation for a hidden risk.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH9: COE ══════════════ -->
+<div id="ch9" class="chapter">
+  <h2>CH9 · Cost of Equity (COE)</h2>
+  <p class="sub">The Cost of Equity is the return that shareholders require for investing in the company's stock. It is estimated using the SML (CAPM).</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">💰</span> Calculating COE with CAPM</h3>
+
+  <div class="formula-box">
+    <span class="label">Cost of Equity</span>
+    <div class="eq">COE = Rƒ + β × (E(Rₘ) − Rƒ)</div>
+    <div class="vars">
+      Rƒ          = risk-free rate → use 10-year government bond yield<br>
+      β           = beta of the company's stock (from regression)<br>
+      E(Rₘ)      = expected market return<br>
+      E(Rₘ) − Rƒ = market risk premium (typically 5–7%)
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-title">COE Example — Standard CAPM</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>10-year government bond (Rƒ)</td><td><strong>3.5%</strong></td></tr>
+          <tr><td>Expected market return E(Rₘ)</td><td><strong>10.0%</strong></td></tr>
+          <tr><td>Market risk premium</td><td><strong>6.5%</strong></td></tr>
+          <tr><td>Beta of company (β)</td><td><strong>1.2</strong></td></tr>
+          <tr><td>Security risk premium = 1.2 × 6.5%</td><td><strong>7.8%</strong></td></tr>
+          <tr><td style="background:rgba(0,212,170,0.08);"><strong>Required COE = 3.5% + 7.8%</strong></td><td style="background:rgba(0,212,170,0.08);"><strong style="color:var(--accent2);">11.3%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-title">COE with Small-Firm Premium (F&amp;F)</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>Market risk premium = 1.2 × 6.5%</td><td><strong>7.8%</strong></td></tr>
+          <tr><td>Additional size premium (small firm)</td><td><strong>1.0%</strong></td></tr>
+          <tr><td style="background:rgba(255,214,102,0.06);"><strong>Required COE = 3.5% + 7.8% + 1.0%</strong></td><td style="background:rgba(255,214,102,0.06);"><strong style="color:var(--accent4);">12.3%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.85rem;color:var(--muted);margin-top:8px;">If this is a small company, investors demand an extra 1% for the size risk, raising the required return to 12.3%.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="emoji">🌍</div>
+    <div class="body">
+      <strong>Damodaran's 2022 global data:</strong> Median Cost of Equity across all industries globally = <strong>7.12%</strong>. Varies hugely — from ~5% for utilities to 12%+ for emerging market tech. You can look up sector-specific COE estimates on Damodaran's NYU website.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CH9: WACC ══════════════ -->
+<div id="wacc" class="chapter ch2">
+  <h2>CH9 · WACC — Weighted Average Cost of Capital</h2>
+  <p class="sub">A company is funded by both equity holders and debt holders. WACC blends their required returns into a single company-wide hurdle rate.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🏗️</span> WACC Formula</h3>
+
+  <div class="formula-box" style="border-color:var(--accent4);">
+    <span class="label" style="color:var(--accent4);">WACC Formula</span>
+    <div class="eq">WACC = (E/V)·rₑ + (D/V)·r_d·(1−t)</div>
+    <div class="vars">
+      E   = market value of equity<br>
+      D   = market value of debt<br>
+      V   = E + D = total firm value<br>
+      rₑ  = cost of equity (from CAPM/SML)<br>
+      r_d = cost of debt (yield on company's bonds or from financial statements)<br>
+      t   = corporate tax rate<br>
+      (1−t) = tax shield on debt — interest is tax-deductible, reducing real cost of debt
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="emoji">🏦</div>
+    <div class="body">
+      <strong>Why is debt multiplied by (1−t)?</strong> Interest payments on debt are tax-deductible. If you pay 5% interest but your tax rate is 25%, the government effectively subsidizes 1.25% of it — your real after-tax cost of debt is only 3.75%. This tax shield makes debt cheaper than equity, which is why companies use leverage.
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="emoji">💡</div>
+    <div class="body">
+      <strong>Extended WACC</strong> — if the company also has mezzanine/hybrid financing (M), just add another term:<br><br>
+      WACC = (E/V)·rₑ + (D/V)·r_d·(1−t) + (M/V)·r_m
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🔽</span> Managing &amp; Minimizing WACC</h3>
+  <p>A lower WACC directly increases company value (higher NPV for the same projects). Management can influence WACC:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Lever</th><th>How It Reduces WACC</th><th>Caution</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Add Leverage</strong></td>
+          <td>Debt is cheaper than equity (after-tax). Shifting the capital structure toward debt reduces average cost.</td>
+          <td><span class="tag red">Up to a point</span> — too much debt raises financial distress risk, increasing both r_d and rₑ.</td>
+        </tr>
+        <tr>
+          <td><strong>Reduce Equity Risk</strong></td>
+          <td>Lower beta → lower COE → lower WACC. Achieved through stable cash flows, diversification, hedging.</td>
+          <td><span class="tag yellow">Limited control</span> — beta is partly driven by industry.</td>
+        </tr>
+        <tr>
+          <td><strong>Renegotiate Debt</strong></td>
+          <td>Refinance at lower rates during low interest rate environments.</td>
+          <td><span class="tag green">Highly actionable</span> when rates fall.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    <div class="emoji">🎯</div>
+    <div class="body">
+      <strong>WACC is the hurdle rate.</strong> If a project returns more than WACC, it creates value. If it returns less, it destroys value. This is the direct link between risk measurement and investment decision-making — the whole purpose of Part 2 of corporate finance.
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="emoji">🌐</div>
+    <div class="body">
+      <strong>Damodaran's 2022 global data:</strong> Median WACC across all industries globally = <strong>6.33%</strong> (slightly below the median COE of 7.12%, as expected since debt is cheaper). WACC for high-risk industries can exceed 10–12%.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ WORKED EXAMPLE ══════════════ -->
+<div id="example" class="chapter ch3">
+  <h2>Full Worked Example · AB InBev WACC</h2>
+  <p class="sub">Let's apply everything step by step using real-world data for the world's largest brewer.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">📋</span> Given Information</h3>
+
+  <div class="example">
+    <div class="ex-title">AB InBev — Input Data</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>Risk-free rate (Rƒ)</td><td><strong>3.0%</strong></td></tr>
+          <tr><td>Beta (β)</td><td><strong>1.32</strong></td></tr>
+          <tr><td>Expected market return E(Rₘ)</td><td><strong>8.0%</strong></td></tr>
+          <tr><td>Market risk premium E(Rₘ) − Rƒ</td><td><strong>5.0%</strong></td></tr>
+          <tr><td>Debt / (Debt + Equity) — D/(D+E)</td><td><strong>42%</strong></td></tr>
+          <tr><td>Equity / (Debt + Equity) — E/(D+E)</td><td><strong>58%</strong></td></tr>
+          <tr><td>Cost of Debt (r_d)</td><td><strong>4.65%</strong></td></tr>
+          <tr><td>Marginal Tax Rate (t)</td><td><strong>25%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <strong>Calculate Cost of Equity (COE) using CAPM</strong>
+        <div class="formula-box" style="margin:8px 0 0;">
+          <div class="eq">COE = 3.0% + 1.32 × 5.0% = 3.0% + 6.6% = <strong>9.6%</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <strong>Calculate After-Tax Cost of Debt</strong>
+        <div class="formula-box" style="margin:8px 0 0;">
+          <div class="eq">r_d × (1−t) = 4.65% × (1−0.25) = 4.65% × 0.75 = <strong>3.4875%</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <strong>Calculate WACC</strong>
+        <div class="formula-box" style="margin:8px 0 0;">
+          <div class="eq">WACC = 0.58 × 9.6% + 0.42 × 3.4875%</div>
+          <div class="eq">     = 5.568% + 1.4648%</div>
+          <div class="eq">     ≈ <strong>7.03%</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="body">
+        <strong>Apply the Results</strong>
+        <p>Use <strong>9.6%</strong> as the discount rate when valuing AB InBev shares (e.g., in a DDM model — equity investor perspective).</p>
+        <p>Use <strong>7.03%</strong> as the hurdle rate when evaluating AB InBev's own investment projects (e.g., building a new brewery — whole company perspective).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RECAP ══════════════ -->
+<div id="recap" class="chapter">
+  <h2>Recap &amp; Cheat Sheet</h2>
+  <p class="sub">Everything you need on one page.</p>
+</div>
+
+<div class="section">
+  <h3><span class="icon">📖</span> All Key Formulas</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Concept</th><th>Formula</th><th>What It Gives You</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Expected Return<br>(single asset)</strong></td>
+          <td><code>E(R) = Σ Pᵢ × Rᵢ</code></td>
+          <td>Average return weighted by probability</td>
+        </tr>
+        <tr>
+          <td><strong>Standard Deviation<br>(single asset)</strong></td>
+          <td><code>σ = √[Σ Pᵢ(Rᵢ − E(R))²]</code></td>
+          <td>Spread of returns around the mean = risk</td>
+        </tr>
+        <tr>
+          <td><strong>Portfolio Return</strong></td>
+          <td><code>E(Rₚ) = Σ wᵢ × E(Rᵢ)</code></td>
+          <td>Weighted average of individual returns</td>
+        </tr>
+        <tr>
+          <td><strong>Portfolio Variance<br>(2 assets)</strong></td>
+          <td><code>σ²ₚ = w₁²σ²₁ + w₂²σ²₂ + 2w₁w₂σ₁σ₂ρ</code></td>
+          <td>Portfolio risk — lower than average when ρ &lt; 1</td>
+        </tr>
+        <tr>
+          <td><strong>Beta</strong></td>
+          <td><code>β = Cov(Rᵢ,Rₘ) / Var(Rₘ)</code></td>
+          <td>Sensitivity to market movements</td>
+        </tr>
+        <tr>
+          <td><strong>Sharpe Ratio</strong></td>
+          <td><code>S = (R − Rƒ) / σ</code></td>
+          <td>Return per unit of risk</td>
+        </tr>
+        <tr>
+          <td><strong>CAPM (SML)</strong></td>
+          <td><code>E(Rᵢ) = Rƒ + βᵢ(E(Rₘ)−Rƒ)</code></td>
+          <td>Fair required return for a security</td>
+        </tr>
+        <tr>
+          <td><strong>Fama-French</strong></td>
+          <td><code>E(R) = Rƒ + β₁MRP + β₂SMB + β₃HML</code></td>
+          <td>Required return including size &amp; value risk</td>
+        </tr>
+        <tr>
+          <td><strong>WACC</strong></td>
+          <td><code>WACC = (E/V)rₑ + (D/V)r_d(1−t)</code></td>
+          <td>Company hurdle rate for investment projects</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">🗺️</span> The Conceptual Map</h3>
+
+  <div class="graph-box">
+    <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',system-ui,sans-serif;">
+
+      <!-- box helper -->
+      <!-- Risk Free Rate -->
+      <rect x="10" y="135" width="110" height="44" rx="8" fill="#21253a" stroke="#2e3350"/>
+      <text x="65" y="153" font-size="10" fill="#00d4aa" text-anchor="middle" font-weight="bold">Risk-Free Rate</text>
+      <text x="65" y="167" font-size="9" fill="#8892b0" text-anchor="middle">Gov. Bond Yield</text>
+      <line x1="120" y1="157" x2="168" y2="157" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- Beta -->
+      <rect x="10" y="235" width="110" height="44" rx="8" fill="#21253a" stroke="#2e3350"/>
+      <text x="65" y="253" font-size="10" fill="#6c63ff" text-anchor="middle" font-weight="bold">Beta (β)</text>
+      <text x="65" y="267" font-size="9" fill="#8892b0" text-anchor="middle">Market Sensitivity</text>
+      <line x1="120" y1="257" x2="168" y2="205" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- Market Premium -->
+      <rect x="10" y="35" width="110" height="44" rx="8" fill="#21253a" stroke="#2e3350"/>
+      <text x="65" y="53" font-size="10" fill="#ffd166" text-anchor="middle" font-weight="bold">Market Premium</text>
+      <text x="65" y="67" font-size="9" fill="#8892b0" text-anchor="middle">E(Rₘ) − Rƒ</text>
+      <line x1="120" y1="57" x2="168" y2="110" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- CAPM/COE box -->
+      <rect x="170" y="120" width="130" height="60" rx="10" fill="#1a1d27" stroke="#6c63ff" stroke-width="2"/>
+      <text x="235" y="144" font-size="12" fill="#a09cff" text-anchor="middle" font-weight="bold">CAPM</text>
+      <text x="235" y="158" font-size="10" fill="#8892b0" text-anchor="middle">E(R) = Rƒ + β·MRP</text>
+      <text x="235" y="170" font-size="10" fill="#00d4aa" text-anchor="middle">→ Cost of Equity</text>
+      <line x1="300" y1="150" x2="348" y2="150" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- Cost of Debt box -->
+      <rect x="170" y="240" width="130" height="44" rx="8" fill="#21253a" stroke="#2e3350"/>
+      <text x="235" y="257" font-size="10" fill="#ff6b6b" text-anchor="middle" font-weight="bold">Cost of Debt r_d</text>
+      <text x="235" y="271" font-size="9" fill="#8892b0" text-anchor="middle">Bond yield × (1−tax)</text>
+      <line x1="300" y1="262" x2="348" y2="200" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- Weights box -->
+      <rect x="170" y="35" width="130" height="44" rx="8" fill="#21253a" stroke="#2e3350"/>
+      <text x="235" y="53" font-size="10" fill="#ffd166" text-anchor="middle" font-weight="bold">Capital Structure</text>
+      <text x="235" y="67" font-size="9" fill="#8892b0" text-anchor="middle">E/V and D/V weights</text>
+      <line x1="300" y1="57" x2="348" y2="120" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- WACC box -->
+      <rect x="350" y="105" width="140" height="80" rx="12" fill="#1a1d27" stroke="#00d4aa" stroke-width="2.5"/>
+      <text x="420" y="130" font-size="14" fill="#00d4aa" text-anchor="middle" font-weight="bold">WACC</text>
+      <text x="420" y="148" font-size="9" fill="#8892b0" text-anchor="middle">(E/V)·rₑ + (D/V)·r_d·(1−t)</text>
+      <text x="420" y="162" font-size="9" fill="#ffd166" text-anchor="middle">Company hurdle rate</text>
+      <text x="420" y="176" font-size="9" fill="#ff6b6b" text-anchor="middle">NPV discount rate</text>
+
+      <!-- NPV -->
+      <line x1="490" y1="145" x2="538" y2="145" stroke="#2e3350" stroke-width="1.5" marker-end="url(#a)"/>
+      <rect x="540" y="120" width="55" height="50" rx="8" fill="#21253a" stroke="#06d6a0"/>
+      <text x="567" y="142" font-size="11" fill="#06d6a0" text-anchor="middle" font-weight="bold">NPV</text>
+      <text x="567" y="157" font-size="9" fill="#8892b0" text-anchor="middle">Project</text>
+      <text x="567" y="168" font-size="9" fill="#8892b0" text-anchor="middle">valuation</text>
+
+      <defs>
+        <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#2e3350"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="caption">How all the pieces connect: from market data → CAPM → Cost of Equity → WACC → Project Valuation.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h3><span class="icon">✅</span> Quick Self-Check</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Concept</th><th>Can You Answer This?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Expected Return</td><td>If Stock A returns +20% (prob 40%) or −5% (prob 60%), what is E(R)?</td></tr>
+        <tr><td>Standard Deviation</td><td>Which is riskier: E(R) = 10%, σ = 8% or E(R) = 12%, σ = 20%?</td></tr>
+        <tr><td>Diversification</td><td>Why does adding a negatively correlated asset reduce portfolio risk?</td></tr>
+        <tr><td>Beta</td><td>A stock with β = 2.0: if the market falls 3%, how much does this stock fall?</td></tr>
+        <tr><td>CAPM</td><td>Rƒ = 4%, E(Rₘ) = 10%, β = 0.8 → what is the required return?</td></tr>
+        <tr><td>WACC</td><td>60% equity (COE = 11%), 40% debt (r_d = 5%), t = 30% → WACC = ?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip" style="margin-top:20px;">
+    <div class="emoji">🎓</div>
+    <div class="body">
+      <strong>Answers:</strong><br>
+      • E(R) = 0.4×20% + 0.6×(−5%) = 8% − 3% = <strong>5%</strong><br>
+      • Second stock is riskier (σ=20% vs 8%)<br>
+      • Losses in one asset are offset by gains in the other → combined σ is lower<br>
+      • Falls approximately 2×3% = <strong>6%</strong><br>
+      • CAPM: 4% + 0.8×(10%−4%) = 4% + 4.8% = <strong>8.8%</strong><br>
+      • WACC: 0.6×11% + 0.4×5%×0.7 = 6.6% + 1.4% = <strong>8.0%</strong>
+    </div>
+  </div>
+</div>
+
+</div> <!-- /wrapper -->
+
+<footer>
+  <div class="wrapper">
+    Study guide based on CH7–9 course slides (McGraw-Hill) | Corporate Finance
+  </div>
+</footer>
+
+</body>
+</html>
