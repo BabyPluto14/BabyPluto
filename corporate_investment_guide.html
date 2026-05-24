@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Corporate Investment Decision Tools — Study Guide</title>
+  <style>
+    /* ───── Reset & Base ───── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6fb;
+      color: #23272f;
+      line-height: 1.7;
+    }
+
+    /* ───── Layout ───── */
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    /* ───── Header ───── */
+    .hero {
+      background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 48px 40px 40px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+    .hero p  { font-size: 1.1rem; opacity: 0.88; max-width: 680px; }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.82rem;
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ───── Table of Contents ───── */
+    .toc {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .toc h2 { font-size: 1.1rem; color: #3949ab; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 6px 0; }
+    .toc a  { color: #3949ab; text-decoration: none; font-weight: 500; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ───── Chapter Banners ───── */
+    .chapter-banner {
+      border-radius: 12px;
+      padding: 20px 28px;
+      margin: 48px 0 28px;
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .ch5 { background: linear-gradient(90deg, #1a237e, #3949ab); }
+    .ch6 { background: linear-gradient(90deg, #00695c, #00897b); }
+
+    /* ───── Section Cards ───── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #3949ab;
+    }
+    .card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 16px 0 6px;
+      color: #555;
+    }
+    .card p, .card li { font-size: 0.97rem; margin-bottom: 8px; }
+    .card ul, .card ol { padding-left: 20px; }
+
+    /* ───── Icon Circles ───── */
+    .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .icon-blue  { background: #e8eaf6; }
+    .icon-green { background: #e0f2f1; }
+    .icon-red   { background: #fce4ec; }
+    .icon-amber { background: #fff8e1; }
+
+    /* ───── Alert / Callout Boxes ───── */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .callout.info    { background: #e8eaf6; border-left: 4px solid #3949ab; }
+    .callout.success { background: #e0f2f1; border-left: 4px solid #00897b; }
+    .callout.warning { background: #fff8e1; border-left: 4px solid #f9a825; }
+    .callout.danger  { background: #fce4ec; border-left: 4px solid #e53935; }
+
+    /* ───── Formula Boxes ───── */
+    .formula-box {
+      background: #1a237e;
+      color: #fff;
+      border-radius: 10px;
+      padding: 18px 24px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 1.05rem;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .formula-box .label {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.78rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    /* ───── Tables ───── */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.91rem;
+    }
+    th {
+      background: #3949ab;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #eef0f8;
+    }
+    tr:nth-child(even) td { background: #f7f8fd; }
+    tr:hover td { background: #eef0f8; }
+    td.num { text-align: right; font-family: 'Courier New', monospace; }
+    .positive { color: #00897b; font-weight: 700; }
+    .negative { color: #e53935; font-weight: 700; }
+
+    /* ───── Step-by-step ───── */
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      background: #3949ab;
+      color: #fff;
+      border-radius: 50%;
+      min-width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ───── Comparison Grid ───── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .compare-card {
+      border-radius: 10px;
+      padding: 16px 18px;
+      border: 1px solid #dde0f0;
+    }
+    .compare-card .title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+    .compare-card .verdict {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .verdict-bad   { background: #fce4ec; color: #c62828; }
+    .verdict-ok    { background: #fff8e1; color: #f57f17; }
+    .verdict-good  { background: #e0f2f1; color: #00695c; }
+
+    /* ───── Timeline / Flow ───── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+    .flow-box {
+      background: #e8eaf6;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .flow-arrow {
+      font-size: 1.4rem;
+      color: #3949ab;
+      padding: 0 6px;
+    }
+
+    /* ───── Badge Pills ───── */
+    .pill {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 2px;
+    }
+    .pill-blue  { background: #e8eaf6; color: #1a237e; }
+    .pill-green { background: #e0f2f1; color: #00695c; }
+    .pill-red   { background: #fce4ec; color: #b71c1c; }
+
+    /* ───── Psychology Bias Cards ───── */
+    .bias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .bias-card {
+      background: #fce4ec;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+    }
+    .bias-card .b-title { font-weight: 700; color: #b71c1c; margin-bottom: 4px; }
+
+    /* ───── Example Box ───── */
+    .example-box {
+      background: #f3f4fd;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      border-left: 4px solid #7986cb;
+    }
+    .example-box .ex-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #3949ab;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    /* ───── FCF Diagram ───── */
+    .fcf-row {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin: 4px 0;
+      font-size: 0.92rem;
+    }
+    .fcf-row .label { flex: 1; }
+    .fcf-row .sign  { font-size: 1.2rem; font-weight: 800; color: #3949ab; margin-right: 10px; }
+    .fcf-add  { background: #e0f2f1; }
+    .fcf-sub  { background: #fce4ec; }
+    .fcf-total{ background: #1a237e; color: #fff; font-weight: 700; }
+
+    /* ───── Dividers ───── */
+    hr.section { border: none; border-top: 2px solid #e8eaf6; margin: 32px 0; }
+
+    /* ───── Footer ───── */
+    footer {
+      text-align: center;
+      padding: 32px 0 0;
+      font-size: 0.82rem;
+      color: #888;
+    }
+
+    /* ───── Print ───── */
+    @media print {
+      body { background: #fff; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <div class="hero">
+    <div class="badge">Corporate Finance · CH5 &amp; CH6</div>
+    <h1>Corporate Investment Decision Tools</h1>
+    <p>A complete visual study guide — from psychological traps to NPV, IRR, capital rationing, and real-world project analysis.</p>
+  </div>
+
+  <!-- ═══════════════════════════ TOC ═══════════════════════════ -->
+  <div class="toc">
+    <h2>What's Inside</h2>
+    <ol>
+      <li><a href="#why-fail">Why Do Corporate Investments Fail?</a></li>
+      <li><a href="#psych">Psychological Biases</a></li>
+      <li><a href="#rules">Rules of Thumb</a> — Book RoR · Break-even · Payback</li>
+      <li><a href="#npv">NPV — The Gold Standard</a></li>
+      <li><a href="#irr">IRR / Rate of Return</a></li>
+      <li><a href="#caprat">Capital Rationing &amp; WAPI</a></li>
+      <li><a href="#eac">Equivalent Annual Cash Flow (EAC)</a></li>
+      <li><a href="#fcf">How to Build a Project's Free Cash Flows</a></li>
+      <li><a href="#imc">Case Study: IM&amp;C Fertilizer Project</a></li>
+      <li><a href="#upp">Case Study: UPP Cattle Food Project</a></li>
+      <li><a href="#mob">Case Study: Make-or-Buy Decision</a></li>
+      <li><a href="#summary">Quick-Reference Summary</a></li>
+    </ol>
+  </div>
+
+  <!-- ════════════════ CHAPTER 5 BANNER ════════════════ -->
+  <div class="chapter-banner ch5" id="ch5">CH5 — NPV vs. Other Investment Criteria</div>
+
+  <!-- ─── 1. WHY FAIL ─── -->
+  <div class="card" id="why-fail">
+    <h2><span class="icon icon-red">💥</span> Why Do Corporate Investments Fail?</h2>
+    <p>Even some of the world's largest companies make catastrophically bad investment decisions. Here are real examples from your textbook:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>What Went Wrong</th></tr></thead>
+        <tbody>
+          <tr><td>AOL – Time Warner</td><td>2000</td><td class="num">$165 bn</td><td>Dot-com bubble overvaluation; massive write-downs after merger</td></tr>
+          <tr><td>Daimler – Chrysler</td><td>1998</td><td class="num">$37 bn</td><td>Cultural/operational mismatch; split in 2007 at huge loss</td></tr>
+          <tr><td>HP – Autonomy</td><td>2011</td><td class="num">$11.7 bn</td><td>Alleged accounting fraud; $8.8 bn write-down just 1 year later</td></tr>
+          <tr><td>Google – Motorola</td><td>2012</td><td class="num">$12.5 bn</td><td>Sold to Lenovo 2 years later for $2.9 bn</td></tr>
+          <tr><td>Microsoft – Nokia</td><td>2014</td><td class="num">$7.2 bn</td><td>Mobile strategy failed; written off in 2015</td></tr>
+          <tr><td>RFS Holding – ABN Amro</td><td>2007</td><td class="num">€7.1 bn</td><td>Timed right before the financial crisis; devastating for RBS</td></tr>
+          <tr><td>Northvolt</td><td>2024</td><td class="num">€13 bn</td><td>Battery gigafactory — manufacturing cost overruns, bankruptcy filed</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div><strong>The lesson:</strong> Bad investments destroy billions in shareholder value. Choosing the <em>right decision tool</em> — and using it correctly — is not optional, it's survival.</div>
+    </div>
+  </div>
+
+  <!-- ─── 2. PSYCHOLOGY ─── -->
+  <div class="card" id="psych">
+    <h2><span class="icon icon-red">🧠</span> Psychological Biases — The Hidden Enemy</h2>
+    <p>Your textbook notes that bad investments are often not the result of bad data — they are the result of <strong>human psychology overriding rational analysis</strong>. Gu &amp; Lev (2011) found that managers of overvalued firms tend to make ill-advised acquisitions to "justify" the high share price.</p>
+    <div class="bias-grid">
+      <div class="bias-card">
+        <div class="b-title">Overconfidence / Hubris</div>
+        <div>"Our team can make any deal work." CEOs systematically overestimate their ability to create value.</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Anchoring</div>
+        <div>Fixating on an early number (e.g., the asking price) even when new data says it's too high.</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Mental Accounting</div>
+        <div>Treating money differently based on its source — e.g., spending "windfall" profits recklessly.</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Loss Aversion</div>
+        <div>Holding onto failing projects too long to avoid "booking" a loss (sunk-cost fallacy).</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Confirmation Bias</div>
+        <div>Seeking information that confirms the deal is good; ignoring red flags.</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Herd Behavior</div>
+        <div>"Everyone in our industry is doing acquisitions, so we should too." Groupthink in the boardroom.</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Hindsight Bias</div>
+        <div>After a failure: "We should have known." This distorts learning for future decisions.</div>
+      </div>
+      <div class="bias-card">
+        <div class="b-title">Gambler's Fallacy</div>
+        <div>"Our last three investments failed — this one is due to succeed." Past outcomes don't change probability.</div>
+      </div>
+    </div>
+    <div class="callout success">
+      <div class="callout-icon">✅</div>
+      <div><strong>The solution:</strong> Use rigorous, objective decision tools — particularly NPV — to anchor decisions in numbers rather than intuition.</div>
+    </div>
+  </div>
+
+  <!-- ─── 3. RULES OF THUMB ─── -->
+  <div class="card" id="rules">
+    <h2><span class="icon icon-amber">📏</span> Rules of Thumb — Simple but Flawed</h2>
+    <p>Before exploring the gold-standard NPV, it helps to understand the simpler tools that many companies still use — and <strong>why each one falls short</strong>.</p>
+
+    <!-- 3a Book RoR -->
+    <h3>Rule 1 — Book Rate of Return (BRR)</h3>
+    <p>This measures a project's annual profit as a percentage of the book (accounting) value of the asset.</p>
+    <div class="formula-box">
+      <div class="label">Formula</div>
+      Book Rate of Return = Annual Profit from Project ÷ Book Value of Asset
+    </div>
+    <div class="example-box">
+      <div class="ex-label">Simple Example</div>
+      <p>A machine costs <strong>$100,000</strong> (book value). It generates <strong>$12,000</strong> net profit per year.</p>
+      <p><strong>BRR = $12,000 / $100,000 = 12%</strong></p>
+      <p>Compare to a "hurdle rate" — if 12% &gt; hurdle, accept. But the hurdle is arbitrary!</p>
+    </div>
+    <div class="callout danger">
+      <div class="callout-icon">❌</div>
+      <div><strong>Problem:</strong> Book value is distorted by whichever depreciation method is chosen. The same physical asset can show very different book values depending on accounting policy — meaning the BRR number is not reliable.</div>
+    </div>
+
+    <!-- 3b Break-Even -->
+    <h3>Rule 2 — Break-Even Analysis</h3>
+    <p>This tells you <strong>how many units you must sell</strong> (or how much revenue you must generate) before you cover all your costs — i.e., before you stop losing money.</p>
+    <div class="formula-box">
+      <div class="label">Formulas</div>
+      Unit Contribution Margin = Price per Unit − Variable Cost per Unit<br/><br/>
+      Break-Even Units = Fixed Costs ÷ Unit Contribution Margin
+    </div>
+    <div class="example-box">
+      <div class="ex-label">Step-by-step Example</div>
+      <p>A company sells a product at <strong>€50/unit</strong>. Variable costs = <strong>€30/unit</strong>. Fixed costs = <strong>€200,000/year</strong>.</p>
+      <ul class="steps">
+        <li>Contribution margin = €50 − €30 = <strong>€20 per unit</strong></li>
+        <li>Break-even = €200,000 ÷ €20 = <strong>10,000 units</strong></li>
+        <li>If you can realistically sell &gt;10,000 units, proceed. If not, rethink the project.</li>
+      </ul>
+    </div>
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div><strong>Problem:</strong> Break-even only tells you when you stop making a loss — it says nothing about how much <em>value</em> you create. A project that just breaks even creates zero value for shareholders. It also ignores the time value of money.</div>
+    </div>
+
+    <!-- 3c Payback -->
+    <h3>Rule 3 &amp; 4 — Payback Period &amp; Discounted Payback Period</h3>
+    <p>The payback period counts how many years it takes for cumulative cash inflows to equal the initial investment.</p>
+    <div class="formula-box">
+      <div class="label">Concept</div>
+      Keep adding up cash flows year by year until they equal the initial outlay → that's the payback period
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Project</th><th>C₀</th><th>C₁</th><th>C₂</th><th>C₃</th><th>Payback Period</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td class="num negative">–2,000</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">2 years</td></tr>
+          <tr><td>B</td><td class="num negative">–2,000</td><td class="num">500</td><td class="num">500</td><td class="num">5,000</td><td class="num">3 years*</td></tr>
+          <tr><td>C</td><td class="num negative">–2,000</td><td class="num">500</td><td class="num">1,800</td><td class="num">0</td><td class="num">2.8 years</td></tr>
+          <tr><td>D</td><td class="num negative">–2,000</td><td class="num">1,800</td><td class="num">500</td><td class="num">0</td><td class="num">2.2 years</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><em>*Project B has a huge payout in year 3 that simple payback essentially ignores!</em></p>
+    <p>The <strong>discounted payback period</strong> is the same idea but uses present values of each cash flow (at a given discount rate, e.g. 5%).</p>
+    <div class="callout danger">
+      <div class="callout-icon">❌</div>
+      <div><strong>Problems with both:</strong>
+        <ul style="margin-top:6px;">
+          <li>Neither focuses on <em>value creation</em> — a fast payback project can still destroy value.</li>
+          <li>Regular payback ignores time value of money entirely.</li>
+          <li>Both ignore cash flows that occur <em>after</em> payback (Project B's $5,000 in year 3!).</li>
+          <li>The "desired payback period" cutoff is arbitrary — where does it come from?</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Summary Comparison -->
+    <h3>Scorecard: Rules of Thumb vs. Good Criteria</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="title">Book Rate of Return</div>
+        <span class="verdict verdict-bad">WEAK</span>
+        <p style="font-size:0.85rem;">Distorted by depreciation choices. Not cash-based.</p>
+      </div>
+      <div class="compare-card">
+        <div class="title">Break-Even Analysis</div>
+        <span class="verdict verdict-ok">PARTIAL</span>
+        <p style="font-size:0.85rem;">Useful for feasibility check. Ignores value creation &amp; TVM.</p>
+      </div>
+      <div class="compare-card">
+        <div class="title">Payback Period</div>
+        <span class="verdict verdict-bad">WEAK</span>
+        <p style="font-size:0.85rem;">No TVM. Ignores post-payback cash flows.</p>
+      </div>
+      <div class="compare-card">
+        <div class="title">Discounted Payback</div>
+        <span class="verdict verdict-ok">PARTIAL</span>
+        <p style="font-size:0.85rem;">Accounts for TVM. Still ignores post-payback flows.</p>
+      </div>
+      <div class="compare-card">
+        <div class="title">NPV ✓</div>
+        <span class="verdict verdict-good">BEST</span>
+        <p style="font-size:0.85rem;">Accounts for all cash flows + TVM + directly measures value creation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 4. NPV ─── -->
+  <div class="card" id="npv">
+    <h2><span class="icon icon-green">💎</span> NPV — The Value-Creating Rule</h2>
+    <p>NPV stands for <strong>Net Present Value</strong>. It is the single most important concept in corporate finance. It directly measures <em>how much financial value a project creates for the firm</em>.</p>
+
+    <h3>The Core Idea in Plain English</h3>
+    <p>A dollar today is worth more than a dollar tomorrow — because you can invest today's dollar and earn a return. NPV takes all future cash flows of a project, adjusts each one for how far in the future it is (by discounting at the company's cost of capital), and adds them all up. If the total is positive, the project creates value. If negative, it destroys value.</p>
+
+    <div class="formula-box">
+      <div class="label">The NPV Formula</div>
+      NPV = −C₀ + C₁/(1+r)¹ + C₂/(1+r)² + C₃/(1+r)³ + … + Cₙ/(1+r)ⁿ
+    </div>
+    <p>Where: <strong>C₀</strong> = upfront investment (negative), <strong>Cₜ</strong> = cash flow in year t, <strong>r</strong> = cost of capital (discount rate), <strong>n</strong> = project lifespan</p>
+
+    <h3>Three Ingredients You Need</h3>
+    <ul class="steps">
+      <li><strong>Forecast all future cash flows</strong> — revenues minus costs, year by year (incremental flows only)</li>
+      <li><strong>Choose the right discount rate</strong> — the company's weighted average cost of capital (WACC), reflecting investor expectations</li>
+      <li><strong>Calculate and compare to zero</strong> — NPV &gt; 0 → accept; NPV &lt; 0 → reject</li>
+    </ul>
+
+    <h3>NPV Example from the Textbook</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Project</th><th>C₀</th><th>C₁</th><th>C₂</th><th>C₃</th><th>NPV @ 10%</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>A</td><td class="num negative">–2,000</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">1,000</td>
+            <td class="num positive">+487</td><td>✅ Accept</td>
+          </tr>
+          <tr>
+            <td>B</td><td class="num negative">–2,000</td><td class="num">500</td><td class="num">500</td><td class="num">5,000</td>
+            <td class="num positive">+2,847</td><td>✅ Accept</td>
+          </tr>
+          <tr>
+            <td>C</td><td class="num negative">–2,000</td><td class="num">500</td><td class="num">1,800</td><td class="num">0</td>
+            <td class="num negative">–200</td><td>❌ Reject</td>
+          </tr>
+          <tr>
+            <td>D</td><td class="num negative">–2,000</td><td class="num">1,800</td><td class="num">500</td><td class="num">0</td>
+            <td class="num negative">–115</td><td>❌ Reject</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.85rem;color:#666;margin-top:-8px;">Notice: Project B has the longest payback period but by far the highest NPV. This is why payback rules miss the big picture.</p>
+
+    <div class="callout success">
+      <div class="callout-icon">✅</div>
+      <div><strong>NPV Rule:</strong> Accept all projects with NPV &gt; 0 (if projects are independent). If projects are mutually exclusive, choose the one with the highest NPV.</div>
+    </div>
+  </div>
+
+  <!-- ─── 5. IRR ─── -->
+  <div class="card" id="irr">
+    <h2><span class="icon icon-blue">📈</span> IRR — Internal Rate of Return</h2>
+    <p>The IRR is the discount rate that makes a project's NPV exactly equal to zero. In other words, it's the rate of return the project itself earns. The rule: <strong>accept if IRR &gt; cost of capital (r)</strong>.</p>
+
+    <div class="formula-box">
+      <div class="label">IRR Definition</div>
+      Find IRR such that: 0 = −C₀ + C₁/(1+IRR)¹ + C₂/(1+IRR)² + … + Cₙ/(1+IRR)ⁿ
+    </div>
+
+    <h3>Textbook Example</h3>
+    <div class="example-box">
+      <div class="ex-label">Turbo Machine Tool — IRR Calculation</div>
+      <p>Purchase price: <strong>$4,000</strong>. Cash flows: Year 1 = <strong>$2,000</strong>, Year 2 = <strong>$4,000</strong>.</p>
+      <p>Solve for IRR in:&nbsp; 0 = −4,000 + 2,000/(1+IRR) + 4,000/(1+IRR)²</p>
+      <p style="margin-top:8px;"><strong>IRR = 28.08%</strong></p>
+      <p>If the company's cost of capital is, say, 10% → IRR (28%) &gt; r (10%) → <strong>Accept the project</strong>.</p>
+    </div>
+
+    <h3>When IRR and NPV Agree</h3>
+    <p>For a standard project (one upfront outflow, then positive inflows), IRR and NPV always agree:</p>
+    <div class="flow" style="justify-content:center; gap:8px; margin:16px 0;">
+      <div class="flow-box">NPV &gt; 0</div>
+      <div class="flow-arrow">⟺</div>
+      <div class="flow-box">IRR &gt; r</div>
+    </div>
+
+    <h3>When IRR Breaks Down ⚠️</h3>
+    <p>IRR can give misleading or impossible results in these situations:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Situation</th><th>Project</th><th>C₀</th><th>C₁</th><th>IRR</th><th>NPV@10%</th><th>Problem</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Lending vs. Borrowing</strong></td>
+            <td>A (lending)</td><td class="num negative">–1,000</td><td class="num">+1,500</td>
+            <td class="num">50%</td><td class="num positive">+364</td>
+            <td rowspan="2" style="vertical-align:middle; font-size:0.85rem;">Both have IRR = 50% but A is great (you earn 50%), B is terrible (you pay 50%!) — NPV correctly distinguishes them.</td>
+          </tr>
+          <tr>
+            <td><strong>Lending vs. Borrowing</strong></td>
+            <td>B (borrowing)</td><td class="num">+1,000</td><td class="num negative">–1,500</td>
+            <td class="num">50%</td><td class="num negative">–364</td>
+          </tr>
+          <tr>
+            <td><strong>No / Multiple IRRs</strong></td>
+            <td>C</td><td class="num negative">–1,000</td><td class="num">+3,000</td>
+            <td class="num">None</td><td class="num positive">+339</td>
+            <td style="font-size:0.85rem;">Cash flow reversal can produce 0 or 2+ IRRs — the rule becomes meaningless.</td>
+          </tr>
+          <tr>
+            <td><strong>Different Life-spans</strong></td>
+            <td>F vs G</td><td colspan="2" style="font-size:0.85rem; text-align:center;">Projects with unequal lives</td>
+            <td class="num">33% vs 20%</td>
+            <td class="num">$3,592 vs $9,000</td>
+            <td style="font-size:0.85rem;">Higher IRR ≠ more value. G creates far more total value despite lower IRR.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div><strong>Takeaway:</strong> IRR is intuitive and easy to communicate ("our project returns 28%"), but use NPV to make the final call whenever cash flows are irregular, projects have different lifespans, or when choosing between mutually exclusive projects.</div>
+    </div>
+  </div>
+
+  <!-- ─── 6. CAPITAL RATIONING ─── -->
+  <div class="card" id="caprat">
+    <h2><span class="icon icon-blue">🏦</span> Capital Rationing &amp; WAPI</h2>
+    <p>In a perfect world, a company would fund every project with a positive NPV. In practice, <strong>capital is often limited</strong> — you have a fixed budget and must choose which combination of projects to fund.</p>
+
+    <h3>The Problem with Simply Ranking by NPV</h3>
+    <p>If your budget is $300,000 and Project A needs $200,000 (NPV $230k) while Project B needs $125,000 (NPV $141k), taking A and B together costs $325,000 — over budget. You need a smarter allocation rule.</p>
+
+    <h3>Step 1 — Profitability Index (PI)</h3>
+    <div class="formula-box">
+      <div class="label">Profitability Index</div>
+      PI = NPV ÷ Investment Required
+    </div>
+    <p>PI measures how much value you get per dollar invested. Higher is better when capital is scarce.</p>
+
+    <h3>Step 2 — WAPI (Weighted Average Profitability Index)</h3>
+    <div class="formula-box">
+      <div class="label">WAPI Formula</div>
+      WAPI = Σ [ PIᵢ × (Investmentᵢ ÷ Total Budget) ]
+    </div>
+    <p>Choose the <strong>combination of projects</strong> that maximises the WAPI — this gives you the most total NPV per dollar of budget used.</p>
+
+    <h3>Worked Example (from textbook)</h3>
+    <p>Budget = <strong>$300,000</strong>. Available projects:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Project</th><th>Investment</th><th>NPV</th><th>PI = NPV/Inv</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td class="num">$200,000</td><td class="num positive">$230,000</td><td class="num">1.15</td></tr>
+          <tr><td>B</td><td class="num">$125,000</td><td class="num positive">$141,250</td><td class="num">1.13</td></tr>
+          <tr><td>C</td><td class="num">$175,000</td><td class="num positive">$194,250</td><td class="num">1.11</td></tr>
+          <tr><td>D</td><td class="num">$150,000</td><td class="num positive">$162,000</td><td class="num">1.08</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="example-box">
+      <div class="ex-label">Which combination wins?</div>
+      <p><strong>Option 1: A + B</strong> → Cost = $325k ❌ (over budget)</p>
+      <p><strong>Option 2: A + D</strong> → Cost = $350k ❌ (over budget)</p>
+      <p><strong>Option 3: B + C</strong> → Cost = $300k ✅ → Total NPV = $141,250 + $194,250 = <strong>$335,500</strong></p>
+      <p><strong>Option 4: B + D</strong> → Cost = $275k ✅ → Total NPV = $141,250 + $162,000 = <strong>$303,250</strong></p>
+      <p><strong>Option 5: C + D</strong> → Cost = $325k ❌ (over budget)</p>
+      <p style="margin-top:10px;">WAPI for B+C = 1.13×(125/300) + 1.11×(175/300) = 0.471 + 0.648 = <strong>1.119</strong></p>
+      <p><strong>Best choice: B + C</strong> — highest WAPI and fits within budget.</p>
+    </div>
+  </div>
+
+  <!-- ─── 7. EAC ─── -->
+  <div class="card" id="eac">
+    <h2><span class="icon icon-green">🔄</span> Equivalent Annual Cash Flow (EAC)</h2>
+    <p>How do you compare two projects (or machines) that have <strong>different lifespans</strong>? A 2-year machine vs. a 3-year machine can't be compared directly by NPV — the 3-year machine has more time to generate value.</p>
+
+    <h3>The Solution: Convert NPV into an Annual Annuity</h3>
+    <p>The EAC converts a project's total NPV into an equivalent fixed annual amount. This puts projects with different lifespans on the same footing.</p>
+    <div class="formula-box">
+      <div class="label">EAC Formula</div>
+      EAC = NPV ÷ Annuity Factor(t, r)
+      <br/><br/>
+      where Annuity Factor(t, r) = [1 − (1+r)⁻ᵗ] ÷ r
+    </div>
+    <p>Once you have the EAC for each project, <strong>choose the project with the higher EAC</strong> (for revenue projects) or <strong>lower EAC cost</strong> (for cost-minimization projects like choosing between machines).</p>
+
+    <h3>Textbook Machine Example (cost of capital = 6%)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Machine</th><th>Year 0</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>NPV @6%</th><th>Annuity Factor</th><th>EAC</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>A</strong></td>
+            <td class="num negative">–15</td><td class="num negative">–5</td><td class="num negative">–5</td><td class="num negative">–5</td>
+            <td class="num negative">–28.37</td><td class="num">2.673</td><td class="num negative">–10.62/yr</td>
+          </tr>
+          <tr>
+            <td><strong>B</strong></td>
+            <td class="num negative">–10</td><td class="num negative">–6</td><td class="num negative">–6</td><td>—</td>
+            <td class="num negative">–21.00</td><td class="num">1.833</td><td class="num negative">–11.46/yr</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout success">
+      <div class="callout-icon">✅</div>
+      <div><strong>Decision:</strong> Machine A costs –$10.62/year in equivalent annual terms vs. Machine B's –$11.46/year. <strong>Choose Machine A</strong> — it is cheaper on an annualised basis despite a higher upfront cost.</div>
+    </div>
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div><strong>Why not just compare NPVs?</strong> Machine A's NPV looks worse (–28.37 vs –21.00) but it lasts 3 years vs 2 years for B. Direct NPV comparison would unfairly penalise A. EAC corrects this.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════ CHAPTER 6 BANNER ════════════════ -->
+  <div class="chapter-banner ch6" id="ch6">CH6 — Corporate Investments in Practice</div>
+
+  <!-- ─── 8. FCF ─── -->
+  <div class="card" id="fcf">
+    <h2><span class="icon icon-green">📊</span> Building a Project's Free Cash Flows</h2>
+    <p>NPV only works if you feed it the <em>right</em> cash flows. In practice this means constructing a bottom-up model from a projected Profit &amp; Loss statement and adjusting carefully.</p>
+
+    <h3>The Master Formula</h3>
+    <div class="formula-box">
+      <div class="label">Project Free Cash Flow (FCF)</div>
+      FCF = Operational Cash Flow − ΔNWC − CAPEX
+    </div>
+    <p>Where <strong>ΔNWC</strong> = change in net working capital, <strong>CAPEX</strong> = capital expenditure</p>
+
+    <h3>How to Get Operational Cash Flow from a P&amp;L</h3>
+    <div style="max-width:560px; margin:16px auto;">
+      <div class="fcf-row fcf-add"><span class="sign">+</span><span class="label">Sales Revenue</span></div>
+      <div class="fcf-row fcf-sub"><span class="sign">−</span><span class="label">Cost of Goods Sold (COGS)</span></div>
+      <div class="fcf-row fcf-sub"><span class="sign">−</span><span class="label">Other Operating Costs</span></div>
+      <div class="fcf-row fcf-sub"><span class="sign">−</span><span class="label">Taxes on Operating Profit</span></div>
+      <div class="fcf-row" style="background:#e8eaf6; font-weight:600;"><span class="sign" style="color:#3949ab;">=</span><span class="label">Operational Cash Flow (OCF)</span></div>
+      <div class="fcf-row fcf-sub"><span class="sign">−</span><span class="label">Change in Net Working Capital (ΔNWC)</span></div>
+      <div class="fcf-row fcf-sub"><span class="sign">−</span><span class="label">Capital Investment (CAPEX)</span></div>
+      <div class="fcf-row fcf-add"><span class="sign">+</span><span class="label">Salvage Value (end of project)</span></div>
+      <div class="fcf-row fcf-total"><span class="sign" style="color:#fff;">= </span><span class="label">FREE CASH FLOW</span></div>
+    </div>
+    <p style="font-size:0.85rem; color:#555; text-align:center;">Note: Depreciation does NOT appear here. It's a non-cash item. Its impact is felt only through the tax shield.</p>
+
+    <h3>What to Include — and What to Exclude</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>Include?</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Incremental revenues &amp; costs</td><td>✅ Yes</td><td>These are directly caused by the project</td></tr>
+          <tr><td>Working capital changes (ΔNWC)</td><td>✅ Yes</td><td>Cash tied up in inventory, receivables etc. is a real outflow</td></tr>
+          <tr><td>Opportunity costs</td><td>✅ Yes</td><td>E.g. a building you could rent out but instead use for the project</td></tr>
+          <tr><td>Salvage / terminal value</td><td>✅ Yes</td><td>Cash recovered when the project ends and assets are sold</td></tr>
+          <tr><td>Sunk costs</td><td>❌ No</td><td>Already spent; they don't change based on your decision today</td></tr>
+          <tr><td>Allocated overhead</td><td>❌ No</td><td>Central costs that exist regardless of this project</td></tr>
+          <tr><td>Depreciation (direct)</td><td>❌ No</td><td>Non-cash; only its tax impact (tax shield) matters</td></tr>
+          <tr><td>Interest payments</td><td>❌ No</td><td>Captured in the discount rate (WACC) — don't double count</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The Depreciation Tax Shield — Why Your Depreciation Schedule Matters</h3>
+    <p>Even though depreciation is non-cash, <strong>higher depreciation → lower taxable profit → lower taxes → more cash left over</strong>. This is the "depreciation tax shield."</p>
+    <div class="formula-box">
+      <div class="label">Depreciation Tax Shield</div>
+      Tax Shield = Tax Rate × Annual Depreciation Charge
+    </div>
+    <p>The US tax system (and many others) allows <strong>accelerated depreciation</strong> — you write off more in early years. Front-loading depreciation pushes the tax savings earlier, and since earlier cash flows are worth more (TVM), the NPV improves.</p>
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div>MACRS (Modified Accelerated Cost Recovery System) in the US allows 5-year, 7-year, etc. schedules with higher depreciation percentages in year 1-2. Choosing the fastest allowed schedule legally increases a project's NPV.</div>
+    </div>
+  </div>
+
+  <!-- ─── 9. IMC CASE ─── -->
+  <div class="card" id="imc">
+    <h2><span class="icon icon-blue">🌱</span> Case Study 1 — IM&amp;C Fertilizer Project</h2>
+    <p>This is the core worked example from the textbook. IM&amp;C is considering building a fertilizer plant that requires a $10 million capital investment plus initial working capital.</p>
+
+    <h3>Project Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Initial CAPEX</td><td class="num">$10,000k</td></tr>
+          <tr><td>Initial Working Capital outflow</td><td class="num">($2,600k) + tax credit</td></tr>
+          <tr><td>Project lifespan</td><td>6 operating years + disposal</td></tr>
+          <tr><td>Discount rate (cost of capital)</td><td class="num">20%</td></tr>
+          <tr><td>Tax rate</td><td class="num">35%</td></tr>
+          <tr><td>Depreciation (base case)</td><td>Straight-line over 6 years</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Abbreviated FCF Table (Straight-Line Depreciation)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Year</th><th>Sales</th><th>COGS</th><th>Other Costs</th><th>Taxes</th><th>OCF</th><th>ΔNWC</th><th>CAPEX/Disposal</th><th>FCF</th><th>PV @20%</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>—</td><td>—</td><td>—</td><td class="num">+1,400</td><td class="num">—</td><td class="num negative">–2,600</td><td class="num negative">–10,000</td><td class="num negative">–12,600</td><td class="num negative">–12,600</td></tr>
+          <tr><td>1</td><td class="num">523</td><td class="num">837</td><td class="num">2,200</td><td class="num negative">–1,434</td><td class="num negative">–1,080</td><td class="num negative">–550</td><td>—</td><td class="num negative">–1,630</td><td class="num negative">–1,358</td></tr>
+          <tr><td>2</td><td class="num">12,887</td><td class="num">7,729</td><td class="num">1,210</td><td class="num">828</td><td class="num">3,120</td><td class="num negative">–739</td><td>—</td><td class="num">2,381</td><td class="num">1,654</td></tr>
+          <tr><td>3</td><td class="num">32,610</td><td class="num">19,552</td><td class="num">1,331</td><td class="num">3,550</td><td class="num">8,177</td><td class="num negative">–1,972</td><td>—</td><td class="num">6,205</td><td class="num">3,591</td></tr>
+          <tr><td>4</td><td class="num">48,901</td><td class="num">29,345</td><td class="num">1,464</td><td class="num">5,778</td><td class="num">12,314</td><td class="num negative">–1,629</td><td>—</td><td class="num">10,685</td><td class="num">5,153</td></tr>
+          <tr><td>5</td><td class="num">35,834</td><td class="num">21,492</td><td class="num">1,611</td><td class="num">3,902</td><td class="num">8,829</td><td class="num">+1,307</td><td>—</td><td class="num">10,136</td><td class="num">4,074</td></tr>
+          <tr><td>6</td><td class="num">19,717</td><td class="num">11,830</td><td class="num">1,772</td><td class="num">1,586</td><td class="num">4,529</td><td class="num">+1,581</td><td class="num">+2,002</td><td class="num">8,112</td><td class="num">2,718</td></tr>
+          <tr style="background:#e0f2f1; font-weight:700;"><td colspan="9">NPV @ 20% (Straight-Line)</td><td class="num positive">+3,521</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.85rem; color:#666;">All values in $000s. Project creates <strong>$3.52 million</strong> in value for IM&amp;C.</p>
+
+    <h3>Effect of Accelerated (5-Year MACRS) Depreciation</h3>
+    <p>By switching from straight-line to the US 5-year MACRS schedule, depreciation is front-loaded — more written off in years 1-2, less in years 5-6. This shifts the tax shield earlier in time, increasing NPV.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Depreciation Scheme</th><th>NPV @ 20%</th><th>Value Created</th></tr></thead>
+        <tbody>
+          <tr><td>Straight-line (6 years)</td><td class="num">$3,521k</td><td class="num">$3.52 million</td></tr>
+          <tr style="background:#e0f2f1;"><td><strong>5-Year MACRS (accelerated)</strong></td><td class="num positive"><strong>$3,802k</strong></td><td class="num positive"><strong>$3.80 million</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout success">
+      <div class="callout-icon">✅</div>
+      <div><strong>Key insight:</strong> Simply by choosing the most accelerated depreciation schedule allowed by tax law, IM&amp;C created an extra <strong>$281,000 of value</strong> — without changing the physical project at all. Front-loading depreciation = lower early taxes = higher NPV.</div>
+    </div>
+  </div>
+
+  <!-- ─── 10. UPP CASE ─── -->
+  <div class="card" id="upp">
+    <h2><span class="icon icon-green">🐄</span> Case Study 2 — UPP Cattle Food Project</h2>
+    <p>UPP wants to launch a new line of cattle food. This case is a rich exercise in identifying <em>all</em> incremental cash flows — including opportunity costs and working capital dynamics.</p>
+
+    <h3>Project Parameters</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Building (opportunity cost)</td><td>Currently rented out; rent = $100k/yr growing at 4%/yr inflation → <strong>must be included as an opportunity cost</strong></td></tr>
+          <tr><td>CAPEX</td><td>$1,200,000 production line, straight-line depreciation over 10 years</td></tr>
+          <tr><td>Project lifespan</td><td>8 years (terminated before asset is fully depreciated)</td></tr>
+          <tr><td>Terminal / Salvage value</td><td>Infrastructure resold at $400,000 at end of year 8</td></tr>
+          <tr><td>Initial Working Capital</td><td>$350,000 upfront injection</td></tr>
+          <tr><td>Ongoing Working Capital</td><td>10% of annual sales (varies each year)</td></tr>
+          <tr><td>Year 1 Sales</td><td>$4,200,000, growing 5%/year</td></tr>
+          <tr><td>Direct Production Costs</td><td>90% of sales</td></tr>
+          <tr><td>Tax Rate</td><td>25%</td></tr>
+          <tr><td>Cost of Capital</td><td>12%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key Learning Points from This Case</h3>
+    <ul class="steps">
+      <li><strong>Opportunity cost is real:</strong> The foregone rent ($100k growing at 4%) is NOT in the accounting records but must be in your FCF model. If you use the building, you give up real cash.</li>
+      <li><strong>Working capital is dynamic:</strong> It starts at $350k but then tracks 10% of sales — so as sales grow, so does WC. Each year-on-year change in WC is a cash flow. At year 8, all WC is recovered.</li>
+      <li><strong>Mid-project asset disposal:</strong> The depreciation schedule runs 10 years but the project ends at 8. The book value at year 8 = $1,200k − 8×$120k = $240k. If sold for $400k, the gain = $160k taxable at 25% → after-tax salvage = $400k − 25%×$160k = <strong>$360k</strong>.</li>
+      <li><strong>Tax payments are based on accounting profit</strong> (including depreciation), not on cash profit.</li>
+    </ul>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div><strong>General Approach:</strong> Build a P&amp;L → compute tax → reconstruct OCF by adding back depreciation (non-cash) → subtract ΔNWC and CAPEX → discount at 12% → if NPV &gt; 0, invest.</div>
+    </div>
+  </div>
+
+  <!-- ─── 11. MAKE OR BUY ─── -->
+  <div class="card" id="mob">
+    <h2><span class="icon icon-amber">⚙️</span> Case Study 3 — Make-or-Buy Decision</h2>
+    <p>A machine manufacturer currently buys 200,000 supply parts at $2/piece from an external supplier. They're considering producing them in-house at $1.5/piece plus a $150k capital investment.</p>
+
+    <h3>The Incremental Analysis Framework</h3>
+    <p>A make-or-buy decision is analysed by looking at the <em>incremental</em> cash flows of switching from buy to make. What changes?</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>Current (Buy)</th><th>Alternative (Make)</th><th>Incremental Change</th></tr></thead>
+        <tbody>
+          <tr><td>Annual supply cost</td><td class="num">200k × $2 = $400k</td><td class="num">200k × $1.5 = $300k</td><td class="num positive">Save $100k/yr</td></tr>
+          <tr><td>Capital Investment</td><td class="num">$0</td><td class="num">$150,000</td><td class="num negative">–$150,000 upfront</td></tr>
+          <tr><td>Working Capital</td><td class="num">$0</td><td class="num">+$30,000</td><td class="num negative">–$30,000 (recovered at end)</td></tr>
+          <tr><td>Tax impact of depreciation</td><td class="num">$0</td><td>Depends on scheme</td><td>Tax shield on depreciation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>How Depreciation Scheme Changes the Answer</h3>
+    <p>The problem asks you to compare three depreciation treatments for the $150k investment:</p>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="title">Immediate Full Write-off</div>
+        <span class="verdict verdict-good">BEST NPV</span>
+        <p style="font-size:0.85rem;">Entire $150k written off in Year 0 → tax refund immediately → maximum front-loading of tax shield.</p>
+      </div>
+      <div class="compare-card">
+        <div class="title">Linear (10-yr)</div>
+        <span class="verdict verdict-ok">MEDIUM NPV</span>
+        <p style="font-size:0.85rem;">$15k/yr depreciation → steady small tax shield across 10 years.</p>
+      </div>
+      <div class="compare-card">
+        <div class="title">7-Year MACRS</div>
+        <span class="verdict verdict-ok">MEDIUM NPV</span>
+        <p style="font-size:0.85rem;">Front-loaded but less extreme than immediate expensing. NPV lies between the two above.</p>
+      </div>
+    </div>
+
+    <h3>Worked NPV Sketch (Immediate Write-off, r = 15%, tax = 21%)</h3>
+    <ul class="steps">
+      <li>Year 0 cash: CAPEX –$150k + WC –$30k + Tax refund from immediate depreciation: +21% × $150k = +$31.5k → <strong>Net Year 0 = –$148.5k</strong></li>
+      <li>Annual savings: $100k/yr. Tax on savings: 21% × $100k = $21k. <strong>After-tax savings = $79k/yr</strong> for 10 years.</li>
+      <li>Year 10 recovery: +$30k WC returned. After-tax = +$30k (no tax on WC recovery).</li>
+      <li>NPV = –$148.5k + $79k × AF(10, 15%) + $30k/(1.15)¹⁰ ≈ –$148.5k + $79k×5.019 + $7.4k ≈ <strong>+$255.4k → MAKE!</strong></li>
+    </ul>
+    <div class="callout success">
+      <div class="callout-icon">✅</div>
+      <div>Under all depreciation schemes, making in-house has a positive NPV — the company should <strong>MAKE</strong> the supplies itself. The immediate write-off scheme maximises the NPV due to the upfront tax shield.</div>
+    </div>
+  </div>
+
+  <!-- ─── 12. SUMMARY ─── -->
+  <div class="card" id="summary">
+    <h2><span class="icon icon-blue">📋</span> Quick-Reference Summary</h2>
+
+    <h3>Decision Tools at a Glance</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Formula / Rule</th>
+            <th>Accounts for TVM?</th>
+            <th>Measures Value?</th>
+            <th>Use When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Book Rate of Return</strong></td>
+            <td>Profit ÷ Book Value</td>
+            <td>❌</td><td>❌</td>
+            <td>Quick accounting check only</td>
+          </tr>
+          <tr>
+            <td><strong>Break-Even Analysis</strong></td>
+            <td>FC ÷ (P − VC)</td>
+            <td>❌</td><td>❌</td>
+            <td>Feasibility / minimum volume check</td>
+          </tr>
+          <tr>
+            <td><strong>Payback Period</strong></td>
+            <td>Years until ΣCF = C₀</td>
+            <td>❌</td><td>❌</td>
+            <td>Liquidity / cash recovery focus</td>
+          </tr>
+          <tr>
+            <td><strong>Discounted Payback</strong></td>
+            <td>Years until ΣPV(CF) = C₀</td>
+            <td>✅</td><td>❌</td>
+            <td>Liquidity focus with TVM awareness</td>
+          </tr>
+          <tr style="background:#e0f2f1;">
+            <td><strong>NPV ⭐</strong></td>
+            <td>Σ Ct/(1+r)ᵗ</td>
+            <td>✅</td><td>✅</td>
+            <td><strong>All investment decisions — primary tool</strong></td>
+          </tr>
+          <tr>
+            <td><strong>IRR</strong></td>
+            <td>Rate where NPV = 0</td>
+            <td>✅</td><td>Indirect</td>
+            <td>Supplement to NPV; communication with investors</td>
+          </tr>
+          <tr>
+            <td><strong>PI / WAPI</strong></td>
+            <td>NPV ÷ Investment</td>
+            <td>✅</td><td>✅</td>
+            <td>Capital rationing — limited budget allocation</td>
+          </tr>
+          <tr>
+            <td><strong>EAC</strong></td>
+            <td>NPV ÷ Annuity Factor</td>
+            <td>✅</td><td>✅</td>
+            <td>Comparing projects with <em>different lifespans</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The FCF Construction Checklist</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+      <div>
+        <p style="font-weight:700; color:#00695c; margin-bottom:6px;">✅ Always Include</p>
+        <ul style="font-size:0.9rem; padding-left:16px;">
+          <li>Incremental revenues &amp; costs</li>
+          <li>Taxes on operating profit</li>
+          <li>Change in working capital (ΔNWC)</li>
+          <li>Capital expenditure (CAPEX)</li>
+          <li>Salvage / terminal value</li>
+          <li>Opportunity costs (foregone income)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight:700; color:#c62828; margin-bottom:6px;">❌ Never Include</p>
+        <ul style="font-size:0.9rem; padding-left:16px;">
+          <li>Sunk costs (already spent)</li>
+          <li>Allocated overhead (not incremental)</li>
+          <li>Depreciation (non-cash — only tax shield matters)</li>
+          <li>Interest payments (in WACC already)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Key Formulae Reference Card</h3>
+    <div class="formula-box" style="text-align:left; font-size:0.92rem; line-height:2;">
+      NPV = −C₀ + Σ[Cₜ / (1+r)ᵗ]  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accept if NPV > 0<br/>
+      IRR: NPV = 0  ⟺  Σ[Cₜ/(1+IRR)ᵗ] = 0 &nbsp;&nbsp;&nbsp;&nbsp; Accept if IRR > r<br/>
+      Break-even units = Fixed Costs / (Price − Variable Cost per unit)<br/>
+      PI = NPV / Investment &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Higher is better (capital rationing)<br/>
+      WAPI = Σ [PIᵢ × (Investᵢ / Budget)] &nbsp;&nbsp;&nbsp;&nbsp; Maximise this<br/>
+      EAC = NPV / AF(t, r) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Annuity Factor = [1−(1+r)⁻ᵗ] / r<br/>
+      FCF = OCF − ΔNWC − CAPEX<br/>
+      Tax Shield = Tax Rate × Depreciation &nbsp;&nbsp; Front-load to maximise NPV
+    </div>
+  </div>
+
+  <footer>
+    <p>Study guide based on CH5 &amp; CH6 of your Corporate Finance course (Brealey, Myers &amp; Allen framework). Prepared for personal study use.</p>
+    <br/>
+  </footer>
+
+</div>
+</body>
+</html>
