@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CH10 · Capita Selecta — Corporate Finance Study Guide</title>
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #2563eb;
+      --indigo:  #4f46e5;
+      --violet:  #7c3aed;
+      --green:   #16a34a;
+      --amber:   #d97706;
+      --red:     #dc2626;
+      --slate:   #1e293b;
+      --light:   #f8fafc;
+      --muted:   #64748b;
+      --border:  #e2e8f0;
+      --radius:  12px;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f1f5f9;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    /* ── Layout ── */
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    /* ── Header ── */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 50%, #7c3aed 100%);
+      border-radius: var(--radius);
+      color: #fff;
+      padding: 48px 40px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+    .hero p  { font-size: 1.05rem; opacity: 0.85; max-width: 600px; }
+
+    /* ── Table of contents ── */
+    .toc {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .toc-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: var(--slate);
+      transition: all .2s;
+    }
+    .toc-pill:hover { border-color: var(--blue); color: var(--blue); }
+    .toc-pill .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* ── Section card ── */
+    .section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 28px 32px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+    }
+    .section-header h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+    .section-header p  { color: var(--muted); font-size: 0.93rem; }
+    .section-body { padding: 32px; }
+
+    /* ── Subsection ── */
+    .sub { margin-bottom: 36px; }
+    .sub:last-child { margin-bottom: 0; }
+    .sub h3 {
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sub h3::before {
+      content: '';
+      display: inline-block; width: 4px; height: 1.1rem;
+      border-radius: 2px; background: currentColor; opacity: 0.7;
+    }
+    .sub p, .sub ul, .sub ol { font-size: 0.95rem; color: #334155; }
+    .sub ul, .sub ol { padding-left: 22px; }
+    .sub li { margin-bottom: 6px; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 18px 0;
+      display: flex; gap: 14px; align-items: flex-start;
+      font-size: 0.93rem;
+    }
+    .callout .icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .callout.blue   { background: #eff6ff; border-left: 4px solid var(--blue); }
+    .callout.green  { background: #f0fdf4; border-left: 4px solid var(--green); }
+    .callout.amber  { background: #fffbeb; border-left: 4px solid var(--amber); }
+    .callout.violet { background: #f5f3ff; border-left: 4px solid var(--violet); }
+    .callout.red    { background: #fef2f2; border-left: 4px solid var(--red); }
+    .callout strong { display: block; margin-bottom: 4px; }
+
+    /* ── Concept grid ── */
+    .grid { display: grid; gap: 16px; margin: 18px 0; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .card {
+      border-radius: 10px;
+      padding: 20px;
+      font-size: 0.92rem;
+    }
+    .card h4 { font-size: 0.97rem; font-weight: 700; margin-bottom: 8px; }
+
+    /* ── Option positions table ── */
+    .opt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .opt-card {
+      border-radius: 10px;
+      padding: 18px;
+      font-size: 0.9rem;
+    }
+    .opt-card .tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .opt-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .opt-card p  { line-height: 1.6; }
+
+    /* ── Formula box ── */
+    .formula {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.97rem;
+      margin: 18px 0;
+      overflow-x: auto;
+    }
+    .formula .comment { color: #94a3b8; font-style: italic; }
+
+    /* ── Steps / process ── */
+    .steps { margin: 18px 0; }
+    .step {
+      display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start;
+    }
+    .step-num {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.9rem; flex-shrink: 0; color: #fff;
+    }
+    .step-body h4 { font-weight: 700; margin-bottom: 4px; font-size: 0.97rem; }
+    .step-body p  { font-size: 0.92rem; color: #334155; }
+
+    /* ── Decision tree visual ── */
+    .tree-wrap {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 18px 0;
+      overflow-x: auto;
+    }
+    .tree {
+      display: flex; align-items: center; gap: 0;
+      min-width: 520px;
+    }
+    .tree-node {
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .tree-node .box {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 8px;
+      line-height: 1.4;
+    }
+    .tree-node.decision .box  { background: #eff6ff; border: 2px solid var(--blue); color: var(--blue); }
+    .tree-node.chance   .box  { background: #f5f3ff; border: 2px solid var(--violet); color: var(--violet); border-radius: 50%; padding: 12px; }
+    .tree-node.outcome-good .box { background: #f0fdf4; border: 2px solid var(--green); color: var(--green); }
+    .tree-node.outcome-bad  .box { background: #fef2f2; border: 2px solid var(--red);   color: var(--red); }
+    .tree-line {
+      height: 2px; background: var(--border); flex: 1;
+    }
+    .tree-branch {
+      display: flex; flex-direction: column; gap: 12px; justify-content: center;
+    }
+    .tree-branch-row { display: flex; align-items: center; gap: 0; }
+    .branch-label {
+      font-size: 0.75rem; color: var(--muted); white-space: nowrap;
+      padding: 0 6px;
+    }
+
+    /* ── EMH spectrum ── */
+    .emh-bar {
+      margin: 20px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .emh-row {
+      display: flex; align-items: stretch;
+      border-bottom: 1px solid var(--border);
+    }
+    .emh-row:last-child { border-bottom: none; }
+    .emh-label {
+      width: 170px; flex-shrink: 0;
+      padding: 16px 18px;
+      font-weight: 700; font-size: 0.88rem;
+      display: flex; align-items: center;
+    }
+    .emh-content {
+      flex: 1; padding: 14px 18px;
+      font-size: 0.88rem; color: #334155;
+      border-left: 1px solid var(--border);
+      display: flex; align-items: center;
+    }
+    .emh-row.weak   .emh-label { background: #dbeafe; color: #1e40af; }
+    .emh-row.semi   .emh-label { background: #ede9fe; color: #4c1d95; }
+    .emh-row.strong .emh-label { background: #fce7f3; color: #9d174d; }
+
+    /* ── Capital structure visual ── */
+    .cs-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .cs-side {
+      border-radius: 10px;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+    .cs-side h4 { font-weight: 700; margin-bottom: 12px; font-size: 0.97rem; }
+    .cs-side ul { padding-left: 18px; }
+    .cs-side li { margin-bottom: 6px; }
+
+    /* ── Leverage example table ── */
+    .lev-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 18px 0;
+    }
+    .lev-table th {
+      background: var(--slate);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .lev-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .lev-table tr:last-child td { border-bottom: none; }
+    .lev-table tr:nth-child(even) td { background: #f8fafc; }
+    .pos { color: var(--green); font-weight: 700; }
+    .neg { color: var(--red); font-weight: 700; }
+
+    /* ── Key takeaway strip ── */
+    .takeaway {
+      background: linear-gradient(135deg, #1e3a8a, #4f46e5);
+      color: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0 0;
+      font-size: 0.93rem;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .takeaway .icon { font-size: 1.4rem; flex-shrink: 0; }
+    .takeaway strong { display: block; margin-bottom: 4px; font-size: 1rem; }
+
+    /* ── Sources ── */
+    .sources {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 32px;
+      margin-top: 48px;
+    }
+    .sources h3 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--muted); }
+    .sources ul { list-style: none; padding: 0; }
+    .sources li { margin-bottom: 8px; font-size: 0.85rem; }
+    .sources a  { color: var(--blue); text-decoration: none; }
+    .sources a:hover { text-decoration: underline; }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero h1     { font-size: 1.7rem; }
+      .opt-grid    { grid-template-columns: 1fr; }
+      .cs-compare  { grid-template-columns: 1fr; }
+      .section-body { padding: 20px; }
+      .section-header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <div class="hero">
+    <div class="badge">Corporate Finance · Chapter 10</div>
+    <h1>Capita Selecta</h1>
+    <p>A plain-English guide to Options, Market Efficiency, and Debt Policy — the three big ideas that round out your corporate finance toolkit.</p>
+  </div>
+
+  <!-- ═══════════════ TOC ═══════════════ -->
+  <div class="toc">
+    <a href="#options"  class="toc-pill"><span class="dot" style="background:#2563eb"></span>1 · Options</a>
+    <a href="#emh"      class="toc-pill"><span class="dot" style="background:#7c3aed"></span>2 · Market Efficiency</a>
+    <a href="#debt"     class="toc-pill"><span class="dot" style="background:#16a34a"></span>3 · Debt Policy</a>
+  </div>
+
+
+  <!-- ═══════════════ SECTION 1 — OPTIONS ═══════════════ -->
+  <div class="section" id="options">
+    <div class="section-header">
+      <div class="section-icon" style="background:#eff6ff;">📊</div>
+      <div>
+        <h2 style="color:#1e40af;">Topic 1 · Options</h2>
+        <p>Financial options give you the <em>right</em> without the obligation. Real options give your investment projects the same flexibility.</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- 1A. What is an option -->
+      <div class="sub">
+        <h3 style="color:#1e40af;">What is a Financial Option?</h3>
+        <p>An option is a <strong>derivative contract</strong> — its value is derived from an underlying asset (usually a stock). The key word is <em>right, not obligation</em>: you can choose to use it or walk away.</p>
+
+        <div class="callout blue">
+          <span class="icon">💡</span>
+          <div><strong>Everyday analogy</strong>
+          Think of a cinema ticket refund policy. You <em>buy a ticket</em> (pay a premium). If the film is great you go (exercise the option). If reviews are terrible you can get a refund (let it expire). You never lose more than the ticket price.</div>
+        </div>
+
+        <div class="opt-grid">
+          <div class="opt-card" style="background:#eff6ff;">
+            <span class="tag" style="background:#bfdbfe;color:#1e40af;">CALL option</span>
+            <h4>The right to BUY</h4>
+            <p>You profit when the asset price rises above your agreed strike price.<br><br>
+            <strong>Long call (buy):</strong> You believe the price will rise — hedge against rising costs.<br>
+            <strong>Short call (sell/write):</strong> You believe the price will stay flat or fall.</p>
+          </div>
+          <div class="opt-card" style="background:#fef3c7;">
+            <span class="tag" style="background:#fde68a;color:#92400e;">PUT option</span>
+            <h4>The right to SELL</h4>
+            <p>You profit when the asset price falls below your agreed strike price.<br><br>
+            <strong>Long put (buy):</strong> You believe the price will fall — hedge against falling revenues.<br>
+            <strong>Short put (sell/write):</strong> You believe the price will stay flat or rise.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 1B. 4 positions -->
+      <div class="sub">
+        <h3 style="color:#1e40af;">The 4 Positions at a Glance</h3>
+        <div class="grid grid-2">
+          <div class="card" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+            <h4>✅ Long Call — buy a call</h4>
+            <p>You pay a small premium now to lock in the right to buy later. <br>Maximum loss: the premium paid. Upside: unlimited.</p>
+          </div>
+          <div class="card" style="background:#fef2f2; border:1px solid #fecaca;">
+            <h4>⚠️ Short Call — sell a call</h4>
+            <p>You collect the premium but take on the risk that the buyer will exercise. <br>Maximum gain: the premium. Downside: unlimited.</p>
+          </div>
+          <div class="card" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+            <h4>✅ Long Put — buy a put</h4>
+            <p>You pay a premium to protect yourself against falling prices. <br>Like insurance for your assets.</p>
+          </div>
+          <div class="card" style="background:#fef2f2; border:1px solid #fecaca;">
+            <h4>⚠️ Short Put — sell a put</h4>
+            <p>You earn the premium but must buy the asset at the strike price if the buyer exercises — risky if prices crash.</p>
+          </div>
+        </div>
+
+        <div class="callout amber">
+          <span class="icon">🔗</span>
+          <div><strong>Combination Strategy: Long Straddle</strong>
+          Buy a call AND a put on the same asset, same expiry. You profit if the price moves strongly in <em>either</em> direction. An import/export firm uses this to hedge currency risk — they don't know whether their home currency will strengthen or weaken, so they protect both ways. The counterpart (short straddle) bets on low volatility.</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 1C. Black Scholes -->
+      <div class="sub">
+        <h3 style="color:#1e40af;">Valuing Options: the Black-Scholes Model</h3>
+        <p>Developed by economists Fischer Black and Myron Scholes (Nobel Prize 1997), this formula tells us the <strong>fair price of a European call option</strong> on a non-dividend-paying stock.</p>
+
+        <div class="formula">
+C = S · N(d₁) − K · e<sup>−rT</sup> · N(d₂)
+<br><br>
+d₁ = [ ln(S/K) + (r + σ²/2) · T ] / (σ · √T)
+d₂ = d₁ − σ · √T
+<br><br>
+<span class="comment">
+Where:
+  S = current stock price
+  K = strike price
+  T = time to expiration (in years)
+  r = risk-free interest rate
+  σ = volatility (standard deviation of stock returns)
+  N(·) = cumulative normal distribution
+</span>
+        </div>
+
+        <p style="margin-bottom:14px;">You do not need to memorise this formula, but you must understand <strong>what drives option prices</strong>:</p>
+
+        <div class="grid grid-3">
+          <div class="card" style="background:#f8fafc; border:1px solid var(--border);">
+            <h4>📈 Stock Price (S) ↑</h4>
+            <p>Call option becomes more valuable (closer to or above strike price).</p>
+          </div>
+          <div class="card" style="background:#f8fafc; border:1px solid var(--border);">
+            <h4>🎯 Strike Price (K) ↑</h4>
+            <p>Call option becomes less valuable (harder to beat a higher target).</p>
+          </div>
+          <div class="card" style="background:#f8fafc; border:1px solid var(--border);">
+            <h4>⏳ Time (T) ↑</h4>
+            <p>More time = more chance something good happens = more valuable.</p>
+          </div>
+          <div class="card" style="background:#f8fafc; border:1px solid var(--border);">
+            <h4>💰 Risk-free Rate (r) ↑</h4>
+            <p>Higher rates reduce the present value of the strike price you'd pay, making calls more valuable.</p>
+          </div>
+          <div class="card" style="background:#fef9c3; border:1px solid #fef08a;">
+            <h4>🌪️ Volatility (σ) ↑</h4>
+            <p><strong>Both</strong> calls and puts become more valuable. Higher uncertainty = more upside potential.</p>
+          </div>
+          <div class="card" style="background:#f8fafc; border:1px solid var(--border);">
+            <h4>⚠️ Limitation</h4>
+            <p>Black-Scholes is for European options only. American options (exercisable any time) need more complex models.</p>
+          </div>
+        </div>
+
+        <div class="callout blue">
+          <span class="icon">🔑</span>
+          <div><strong>Key insight — "Law of One Price"</strong>
+          The model works by imagining a <em>replicating portfolio</em>: a combination of stock and risk-free borrowing that perfectly mimics the option's payoff. In an efficient market, these two things must have the same price — otherwise arbitrage profits would exist and be instantly traded away.</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 1D. Real options -->
+      <div class="sub">
+        <h3 style="color:#1e40af;">Real Options in Capital Budgeting</h3>
+
+        <div class="callout violet">
+          <span class="icon">🛩️</span>
+          <div><strong>The Boeing 737 MAX case</strong>
+          When serious technical problems emerged, Boeing faced a three-way choice: stop manufacturing entirely, wait and resume later, or invest in fixing the problems and scale up. Traditional NPV gave a single yes/no answer. Real options analysis recognised these as <em>valuable choices</em> that management could make as more information came in.</div>
+        </div>
+
+        <p style="margin-bottom:14px;">Standard NPV is a <strong>"one-shot" decision</strong> — it assumes all information is known upfront and managers are passive. In reality, managers adapt. A <strong>real option</strong> is the ability to adjust an investment decision as new information arrives.</p>
+
+        <div class="grid grid-2">
+          <div class="card" style="background:#f5f3ff; border:1px solid #ddd6fe;">
+            <h4>📋 Types of Real Options</h4>
+            <ul style="padding-left:16px; font-size:0.9rem;">
+              <li><strong>Option to delay</strong> — wait for better market conditions</li>
+              <li><strong>Option to expand</strong> — invest more if successful</li>
+              <li><strong>Option to scale down</strong> — reduce exposure if struggling</li>
+              <li><strong>Option to abandon</strong> — cut losses and exit</li>
+              <li><strong>Option to switch</strong> — pivot to a different use</li>
+            </ul>
+          </div>
+          <div class="card" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+            <h4>💎 Why They Add Value</h4>
+            <p style="margin-bottom:8px;">Real options always add positive value to a project because you only exercise them when it is beneficial.</p>
+            <p style="margin-bottom:8px;"><strong>The key rule:</strong> the more uncertainty there is, the more valuable the real options become — the opposite of what standard NPV implies!</p>
+            <p>NPV with real options = Standard NPV + Option Value</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decision tree -->
+      <div class="sub">
+        <h3 style="color:#1e40af;">Decision Tree Analysis — The Meghan Flea Market Example</h3>
+        <p style="margin-bottom:16px;">A booth costs <strong>$500</strong>. Good weather (75% probability) yields $1,500 profit. Bad weather (25%) causes $100 loss. No time value of money.</p>
+
+        <div class="grid grid-2" style="margin-bottom:16px;">
+          <div class="card" style="background:#fef2f2; border:1px solid #fecaca;">
+            <h4>❌ Naive Approach (no real option)</h4>
+            <p>Meghan goes regardless of weather.</p>
+            <p style="margin-top:10px;">Expected value = 0.75×($1,500) + 0.25×(−$100) − $500<br>= $1,125 − $25 − $500 = <strong>$600</strong></p>
+          </div>
+          <div class="card" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+            <h4>✅ Real Option Approach (option to wait)</h4>
+            <p>Meghan only goes if the weather is good.</p>
+            <p style="margin-top:10px;">Expected value = 0.75×($1,500) − $500<br>= $1,125 − $500 = <strong>$625</strong></p>
+            <p style="margin-top:8px;color:var(--green);font-weight:700;">Value of real option = $625 − $600 = +$25</p>
+          </div>
+        </div>
+
+        <div class="tree-wrap">
+          <div style="font-size:0.8rem; color:var(--muted); margin-bottom:16px; font-weight:600;">📐 Decision Tree Diagram</div>
+          <div style="display:flex; flex-direction:column; gap:8px; min-width:480px;">
+            <!-- Row 1 -->
+            <div style="display:flex; align-items:center; gap:0;">
+              <div class="tree-node decision"><div class="box">🔷 Decision<br>Go or Stay?</div></div>
+              <div class="tree-line" style="flex:0.5;"></div>
+              <div class="tree-node chance"><div class="box">🎲</div></div>
+              <div style="display:flex; flex-direction:column; gap:20px; flex:1;">
+                <div style="display:flex; align-items:center; gap:0;">
+                  <div class="tree-line"></div>
+                  <span class="branch-label">☀️ 75%</span>
+                  <div class="tree-node outcome-good"><div class="box">Profit = $1,500<br>Net = +$1,000</div></div>
+                </div>
+                <div style="display:flex; align-items:center; gap:0;">
+                  <div class="tree-line"></div>
+                  <span class="branch-label">🌧️ 25%</span>
+                  <div class="tree-node outcome-bad"><div class="box">Loss = −$100<br>Net = −$600</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:12px 16px; background:#f5f3ff; border-radius:8px; font-size:0.82rem; color:#4c1d95; margin-top:8px;">
+              <strong>Real Option:</strong> Wait for weather forecast first → only go if sunny → eliminate the bad-weather branch entirely.
+            </div>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div style="font-weight:700; margin-bottom:14px; font-size:0.97rem;">🗝️ Manager's 3-Step Real Options Playbook</div>
+          <div class="step">
+            <div class="step-num" style="background:#2563eb;">1</div>
+            <div class="step-body">
+              <h4>Identify the uncertainty</h4>
+              <p>Ask: "What is the main variable we cannot control or know upfront?" (Meghan: weather. A pharma firm: clinical trial outcomes. An oil company: oil price.)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#7c3aed;">2</div>
+            <div class="step-body">
+              <h4>Design interim decision points</h4>
+              <p>Structure the project so that management can <em>react</em> once the uncertainty is resolved — before full commitment. This is where the real option "lives".</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#16a34a;">3</div>
+            <div class="step-body">
+              <h4>Recalculate NPV including option value</h4>
+              <p>Add the value of the real option to your standard NPV. Even a previously negative-NPV project can become worth pursuing once you include the option to abandon or scale up.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <span class="icon">🏆</span>
+          <div>
+            <strong>Big Idea — Options &amp; Uncertainty</strong>
+            Financial options and real options share the same surprising property: <em>more risk = more value</em>. Volatility is the enemy of a standard investor, but it is the friend of anyone holding an option. This is why startups and R&amp;D projects — high uncertainty by nature — can be worth far more than their expected cash flows suggest.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /section-body -->
+  </div><!-- /section options -->
+
+
+  <!-- ═══════════════ SECTION 2 — MARKET EFFICIENCY ═══════════════ -->
+  <div class="section" id="emh">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f5f3ff;">📉</div>
+      <div>
+        <h2 style="color:#4c1d95;">Topic 2 · Market Efficiency</h2>
+        <p>Can you consistently beat the stock market? The Efficient Market Hypothesis says it is much harder than you think.</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- 2A. Random walk -->
+      <div class="sub">
+        <h3 style="color:#4c1d95;">The Random Walk — Price Patterns Don't Exist</h3>
+        <p>A classic experiment: show analysts a chart of a stock's 5-year price history and a chart generated by <em>repeated coin flips</em>. They are indistinguishable. Why?</p>
+
+        <div class="callout violet">
+          <span class="icon">🎲</span>
+          <div><strong>The logic of efficient markets</strong>
+          If there were a recognisable pattern in past prices that predicted future prices, rational traders would immediately exploit it. Their trading would push prices to the level that <em>removes</em> the predictable profit — and the pattern would disappear. Therefore, in equilibrium, prices must already reflect all information, and future moves must be unpredictable (a "random walk").</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 2B. 3 forms -->
+      <div class="sub">
+        <h3 style="color:#4c1d95;">The 3 Forms of Market Efficiency</h3>
+        <p style="margin-bottom:16px;">Economist Eugene Fama (Nobel Prize 2013) proposed three levels of efficiency, each building on the previous one:</p>
+
+        <div class="emh-bar">
+          <div class="emh-row weak">
+            <div class="emh-label">Weak Form</div>
+            <div class="emh-content">
+              Prices reflect all <strong>historical trading data</strong> (past prices, volumes). <br>
+              Implication: <em>Technical analysis</em> (chart patterns) cannot generate consistent excess returns. Fundamental analysis may still work.
+            </div>
+          </div>
+          <div class="emh-row semi">
+            <div class="emh-label">Semi-Strong Form</div>
+            <div class="emh-content">
+              Prices reflect all <strong>publicly available information</strong> (earnings reports, news, economic data). <br>
+              Implication: Neither technical nor fundamental analysis can consistently beat the market. Only insider information could do so.
+            </div>
+          </div>
+          <div class="emh-row strong">
+            <div class="emh-label">Strong Form</div>
+            <div class="emh-content">
+              Prices reflect <strong>all information</strong> — public and private (insider). <br>
+              Implication: Even insider trading cannot produce abnormal returns. This form is widely considered too extreme to hold in practice.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout green">
+          <span class="icon">✅</span>
+          <div><strong>What economists broadly agree on</strong>
+          Most developed markets are at least <em>weak-form</em> efficient, and probably <em>semi-strong</em> efficient most of the time. Strong-form efficiency is almost certainly violated — that is why insider trading laws exist and why insiders are legally required to disclose trades.</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 2C. Anomalies -->
+      <div class="sub">
+        <h3 style="color:#4c1d95;">But Wait — Anomalies Do Exist</h3>
+        <p style="margin-bottom:14px;">Evidence shows that markets are not perfectly efficient. Known anomalies include:</p>
+
+        <div class="grid grid-3">
+          <div class="card" style="background:#fef3c7; border:1px solid #fde68a;">
+            <h4>📅 January Effect</h4>
+            <p>Stocks (especially small caps) tend to rise in January, possibly due to tax-loss selling in December and re-buying in the new year.</p>
+          </div>
+          <div class="card" style="background:#fce7f3; border:1px solid #f9a8d4;">
+            <h4>🏠 Home Bias</h4>
+            <p>Investors systematically overweight domestic stocks despite diversification benefits of holding international assets.</p>
+          </div>
+          <div class="card" style="background:#ffe4e6; border:1px solid #fda4af;">
+            <h4>📦 Disposition Effect</h4>
+            <p>Investors tend to sell winning stocks too early and hold losing stocks too long — irrational behaviour driven by psychology, not information.</p>
+          </div>
+          <div class="card" style="background:#ecfdf5; border:1px solid #a7f3d0;">
+            <h4>🎮 GameStop Squeeze</h4>
+            <p>In 2021, retail investors coordinated on Reddit to short-squeeze GameStop stock far beyond fundamental value — a clear price dislocation.</p>
+          </div>
+          <div class="card" style="background:#f0f9ff; border:1px solid #bae6fd;">
+            <h4>🖼️ NFT Mania (2021)</h4>
+            <p>Digital assets with no cash flows traded for millions. A textbook speculative bubble driven by narrative and FOMO, not fundamentals.</p>
+          </div>
+          <div class="card" style="background:#f5f3ff; border:1px solid #ddd6fe;">
+            <h4>🤖 AI Bubble?</h4>
+            <p>As of 2024-26, some analysts argue AI-related stocks are priced beyond fundamentals — potentially another efficiency test in real time.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 2D. Active vs passive -->
+      <div class="sub">
+        <h3 style="color:#4c1d95;">Active vs Passive Investing</h3>
+
+        <div class="cs-compare">
+          <div class="cs-side" style="background:#eff6ff; border:1px solid #bfdbfe;">
+            <h4 style="color:#1e40af;">🎯 Active Investing</h4>
+            <ul>
+              <li>Fund managers pick individual stocks and try to beat the benchmark (e.g. S&amp;P 500)</li>
+              <li>Requires belief in market inefficiencies</li>
+              <li>Higher fees eat into returns</li>
+              <li>Most active funds underperform passive over the long run</li>
+            </ul>
+          </div>
+          <div class="cs-side" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+            <h4 style="color:#166534;">📊 Passive Investing</h4>
+            <ul>
+              <li>Index funds simply replicate market benchmarks (e.g. S&amp;P 500 ETF)</li>
+              <li>Assumes markets are sufficiently efficient</li>
+              <li>Very low fees</li>
+              <li>Majority of active managers fail to beat index funds over 10+ years</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout amber">
+          <span class="icon">⚠️</span>
+          <div><strong>A new concern: Is passive investing making markets LESS efficient?</strong>
+          As trillions of dollars flow into passive index funds, fewer investors are doing fundamental analysis to set prices. Research from the LSE (2024) and others suggests that index-driven buying may weaken the price discovery mechanism and increase co-movement of stocks — potentially creating new inefficiencies.</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 2E. Alternatives -->
+      <div class="sub">
+        <h3 style="color:#4c1d95;">Interesting Alternatives to the EMH</h3>
+
+        <div class="grid grid-2">
+          <div class="card" style="background:#fef9c3; border:1px solid #fde047;">
+            <h4>🧠 Behavioral Finance</h4>
+            <p style="margin-bottom:10px;">Developed by Kahneman &amp; Thaler (both Nobel laureates), behavioral finance documents that <em>humans are not rational</em>. Common biases include:</p>
+            <ul style="font-size:0.87rem; padding-left:16px;">
+              <li><strong>Overconfidence</strong> — we overestimate our own knowledge</li>
+              <li><strong>Loss aversion</strong> — losses hurt ~2× more than equivalent gains feel good</li>
+              <li><strong>Herding</strong> — we follow the crowd even against our own information</li>
+              <li><strong>Anchoring</strong> — we fixate on irrelevant reference numbers</li>
+            </ul>
+          </div>
+          <div class="card" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+            <h4>🦎 Adaptive Market Hypothesis (AMH)</h4>
+            <p style="margin-bottom:10px;">Proposed by MIT Professor Andrew Lo, the AMH applies <em>evolutionary biology</em> to finance:</p>
+            <ul style="font-size:0.87rem; padding-left:16px;">
+              <li>Investors are like organisms: they <em>learn, adapt, and compete</em></li>
+              <li>Markets are neither always efficient nor always irrational — they evolve</li>
+              <li>In periods of "calm", markets approach EMH. In crises, biases dominate</li>
+              <li>Strategies that worked yesterday may stop working as competitors copy them — and <em>then</em> work again later</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <span class="icon">🏆</span>
+        <div>
+          <strong>Big Idea — Degrees of Efficiency</strong>
+          Markets are not perfectly efficient, but they are competitive enough that beating them consistently is very hard. The practical lesson: be skeptical of anyone claiming to have found a reliable way to predict stock prices — if it were truly reliable, traders would have already arbitraged it away.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ SECTION 3 — DEBT POLICY ═══════════════ -->
+  <div class="section" id="debt">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f0fdf4;">🏦</div>
+      <div>
+        <h2 style="color:#166534;">Topic 3 · Debt Policy &amp; Capital Structure</h2>
+        <p>How much debt should a firm take on? The answer is surprisingly complex — and gets you straight to the heart of corporate finance.</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- 3A. MM1 -->
+      <div class="sub">
+        <h3 style="color:#166534;">Modigliani &amp; Miller Proposition I (MM I) — Capital Structure is Irrelevant</h3>
+
+        <div class="callout green">
+          <span class="icon">⚖️</span>
+          <div><strong>The Irrelevance Proposition (1958)</strong>
+          In a perfect world (no taxes, no bankruptcy costs, no transaction costs, efficient markets), the <em>total value of a firm does not depend on how it is financed</em>. Whether you fund with 10% debt or 90% debt, firm value is the same: V<sub>U</sub> = V<sub>L</sub>.</div>
+        </div>
+
+        <p style="margin-bottom:14px;"><strong>Why?</strong> Shareholders can replicate any leverage decision the firm makes on their own account (using personal borrowing). The firm creates no value by doing something investors can do themselves for free. Any "arbitrage opportunity" from mispricing would be traded away instantly.</p>
+
+        <div class="callout blue">
+          <span class="icon">🔓</span>
+          <div><strong>The real-world twist</strong>
+          Remove even one MM assumption and the financing decision suddenly matters. Taxes? Bankruptcy? Information asymmetry? Each one means the way you finance the firm affects its value — and that's where the interesting theories begin.</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 3B. MM II leverage -->
+      <div class="sub">
+        <h3 style="color:#166534;">Modigliani &amp; Miller Proposition II (MM II) — Leverage Increases Shareholder Returns</h3>
+
+        <div class="formula">
+r_e  =  r_a  +  (r_a − r_d) × (D / E)
+<br><br>
+<span class="comment">
+Where:
+  r_e = expected return on equity (what shareholders demand)
+  r_a = return on firm's assets (unlevered cost of capital)
+  r_d = cost of debt (interest rate)
+  D/E = debt-to-equity ratio (leverage)
+</span>
+        </div>
+
+        <p style="margin-bottom:16px;">As debt increases, shareholders demand a <em>higher return</em> — because they bear more financial risk. This is perfectly rational: leverage amplifies both gains AND losses.</p>
+
+        <div style="overflow-x:auto;">
+          <table class="lev-table">
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Financing</th>
+                <th>Period 0 (invest)</th>
+                <th>Period 1 (+25% ↑)</th>
+                <th>Period 1 (−25% ↓)</th>
+                <th>ROE ↑</th>
+                <th>ROE ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>No Leverage</strong></td>
+                <td>100% equity</td>
+                <td>€100,000</td>
+                <td>€125,000</td>
+                <td>€75,000</td>
+                <td class="pos">+25%</td>
+                <td class="neg">−25%</td>
+              </tr>
+              <tr>
+                <td><strong>50% Leverage</strong></td>
+                <td>50% debt + 50% equity</td>
+                <td>€50,000 own</td>
+                <td>€75,000 → pay debt → <strong>€25,000</strong></td>
+                <td>€25,000 → pay debt → <strong>€25,000 loss</strong></td>
+                <td class="pos">+50%</td>
+                <td class="neg">−50%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout amber">
+          <span class="icon">⚔️</span>
+          <div><strong>Debt is a double-edged sword</strong>
+          Leverage magnifies returns in good times but magnifies losses in bad times. This is why the 2008 financial crisis was so severe: banks and households were heavily leveraged. When house prices fell, losses were amplified across the entire financial system — subprime mortgage delinquencies triggered a global cascade.</div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 3C. Two theories -->
+      <div class="sub">
+        <h3 style="color:#166534;">Two Competing Capital Structure Theories</h3>
+        <p style="margin-bottom:16px;">Once we accept that the real world has taxes and financial distress costs, two main theories explain how firms should choose their debt level:</p>
+
+        <div class="cs-compare">
+          <div class="cs-side" style="background:#eff6ff; border:2px solid #93c5fd;">
+            <h4 style="color:#1e40af;">⚖️ Trade-Off Theory</h4>
+            <p style="margin-bottom:10px;font-size:0.88rem;">Find the optimal debt level by <strong>balancing two forces:</strong></p>
+            <ul>
+              <li>
+                <strong>Tax shield benefit (+):</strong>
+                Interest payments are tax-deductible. The more debt, the less tax you pay.<br>
+                <em>Tax Shield = t<sub>c</sub> × D × r<sub>d</sub></em>
+              </li>
+              <li style="margin-top:10px;">
+                <strong>Financial distress cost (−):</strong>
+                Too much debt raises the probability of bankruptcy — costly for everyone (legal fees, lost customers, fire-sale assets).
+              </li>
+            </ul>
+            <div style="margin-top:14px; padding:12px; background:#dbeafe; border-radius:8px; font-size:0.85rem;">
+              <strong>Optimal debt:</strong> the point where the marginal benefit of the next euro of debt (tax shield) equals its marginal cost (distress risk).
+            </div>
+          </div>
+
+          <div class="cs-side" style="background:#f5f3ff; border:2px solid #c4b5fd;">
+            <h4 style="color:#4c1d95;">📋 Pecking Order Theory</h4>
+            <p style="margin-bottom:10px;font-size:0.88rem;">Firms don't have an "optimal" target — they just follow a <strong>cost-of-capital hierarchy:</strong></p>
+            <ol style="font-size:0.9rem; padding-left:18px;">
+              <li style="margin-bottom:8px;"><strong>Internal funds first</strong> (retained earnings)<br><em>Cheapest: no new investor communication needed</em></li>
+              <li style="margin-bottom:8px;"><strong>External debt second</strong><br><em>More expensive: lenders price in default risk</em></li>
+              <li><strong>External equity last</strong><br><em>Most expensive: signals to market that management thinks shares are overvalued</em></li>
+            </ol>
+            <div style="margin-top:14px; padding:12px; background:#ede9fe; border-radius:8px; font-size:0.85rem;">
+              <strong>Driver:</strong> Information asymmetry — management knows more than outside investors, making external capital costly.
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:16px;">
+          <div class="card" style="background:#f0fdf4; border:1px solid #86efac; font-size:0.88rem;">
+            <h4>Trade-Off Theory — What You'd Observe</h4>
+            <ul style="padding-left:16px;">
+              <li>Firms in high-tax environments use more debt</li>
+              <li>Firms with stable, tangible assets (utilities, real estate) use more debt</li>
+              <li>Firms with volatile cash flows (tech startups) use less debt</li>
+            </ul>
+          </div>
+          <div class="card" style="background:#f5f3ff; border:1px solid #c4b5fd; font-size:0.88rem;">
+            <h4>Pecking Order — What You'd Observe</h4>
+            <ul style="padding-left:16px;">
+              <li>Profitable firms use less debt (self-fund via retained earnings)</li>
+              <li>Firms issue equity only as a last resort</li>
+              <li>No clearly defined "target" debt ratio across time</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 3D. How much is too much -->
+      <div class="sub">
+        <h3 style="color:#166534;">How Much Debt is Too Much?</h3>
+
+        <div class="callout red">
+          <span class="icon">⚠️</span>
+          <div><strong>Macro-level warning — the 2008 Financial Crisis</strong>
+          The Global Financial Crisis began with excessive debt at every level: individual households took on mortgages they couldn't afford; banks leveraged 30:1 on these mortgages; investors bought opaque derivatives on top of those. When US house prices fell just 5–10%, the entire leveraged system unravelled. The lesson: <em>what seems individually manageable becomes systemically catastrophic when everyone is over-leveraged simultaneously.</em></div>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:16px;">
+          <div class="card" style="background:#fef9c3; border:1px solid #fde047; font-size:0.88rem;">
+            <h4>📊 Debt Capacity Signals</h4>
+            <ul style="padding-left:14px;">
+              <li>Interest coverage ratio</li>
+              <li>Debt-to-EBITDA ratio</li>
+              <li>Credit rating</li>
+              <li>Free cash flow vs. debt service</li>
+            </ul>
+          </div>
+          <div class="card" style="background:#ffe4e6; border:1px solid #fda4af; font-size:0.88rem;">
+            <h4>🚨 Distress Warning Signs</h4>
+            <ul style="padding-left:14px;">
+              <li>Rising credit spreads</li>
+              <li>Covenant breaches</li>
+              <li>Inability to refinance maturing debt</li>
+              <li>Declining operating cash flows</li>
+            </ul>
+          </div>
+          <div class="card" style="background:#f0fdf4; border:1px solid #86efac; font-size:0.88rem;">
+            <h4>✅ Safe Practices</h4>
+            <ul style="padding-left:14px;">
+              <li>Match debt maturity to asset life</li>
+              <li>Maintain liquidity buffers</li>
+              <li>Stress-test at higher interest rates</li>
+              <li>Keep refinancing risk low</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <span class="icon">🏆</span>
+        <div>
+          <strong>Big Idea — Financing Does (and Doesn't) Matter</strong>
+          MM proved that in a perfect world, how you finance a firm is irrelevant. The real world — with taxes, bankruptcy, and information gaps — breaks that irrelevance. Trade-off theory finds an optimal debt level; pecking order theory says firms follow a financing hierarchy driven by cost. Neither theory is complete on its own, and the right capital structure depends heavily on the firm's industry, profitability, and risk profile.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ SUMMARY CHEAT SHEET ═══════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fef9c3;">📝</div>
+      <div>
+        <h2>Chapter Summary — One-Page Cheat Sheet</h2>
+        <p>The three big ideas and their core logic in a single view.</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid grid-3">
+        <div class="card" style="background:linear-gradient(135deg,#eff6ff,#e0e7ff); border:1px solid #c7d2fe;">
+          <h4 style="color:#1e40af;">📊 Options</h4>
+          <p style="font-size:0.87rem; margin-bottom:10px;">A right without obligation. Call = right to buy. Put = right to sell.</p>
+          <p style="font-size:0.87rem; margin-bottom:10px;"><strong>Black-Scholes:</strong> Option value driven by S, K, T, r, σ. Volatility always adds value.</p>
+          <p style="font-size:0.87rem;"><strong>Real options:</strong> Embed flexibility into capital projects. More uncertainty → more real option value. Standard NPV undervalues projects with real options.</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe); border:1px solid #c4b5fd;">
+          <h4 style="color:#4c1d95;">📉 Market Efficiency</h4>
+          <p style="font-size:0.87rem; margin-bottom:10px;">Prices reflect available information. Three forms: weak → semi-strong → strong.</p>
+          <p style="font-size:0.87rem; margin-bottom:10px;"><strong>Implication:</strong> Beating the market consistently is very hard. Most active managers fail to outperform index funds.</p>
+          <p style="font-size:0.87rem;"><strong>But:</strong> Anomalies exist. Behavioral finance and the Adaptive Market Hypothesis explain why markets are not perfectly rational.</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7); border:1px solid #86efac;">
+          <h4 style="color:#166534;">🏦 Debt Policy</h4>
+          <p style="font-size:0.87rem; margin-bottom:10px;">MM I: In a perfect world, capital structure is irrelevant. MM II: leverage amplifies both returns and risk.</p>
+          <p style="font-size:0.87rem; margin-bottom:10px;"><strong>Trade-off theory:</strong> Optimal debt balances tax shield vs. distress costs.</p>
+          <p style="font-size:0.87rem;"><strong>Pecking order:</strong> Firms prefer internal funds → debt → equity. Driven by information asymmetry costs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ SOURCES ═══════════════ -->
+  <div class="sources">
+    <h3>Sources &amp; Further Reading</h3>
+    <ul>
+      <li>📘 Course PDF: <em>CH10 Capita Selecta</em> — your lecture slides (primary source for all content above)</li>
+      <li>🔗 <a href="https://www.sofi.com/learn/content/what-is-the-black-scholes-model/" target="_blank">Black-Scholes Model Explained — SoFi</a></li>
+      <li>🔗 <a href="https://carta.com/learn/startups/equity-management/black-scholes-model/" target="_blank">Black-Scholes &amp; Stock Option Valuation — Carta</a></li>
+      <li>🔗 <a href="https://finacco.org/2024/10/19/real-options-examples-and-applications/" target="_blank">Real Options: Examples and Applications — FinAcco</a></li>
+      <li>🔗 <a href="https://analystprep.com/cfa-level-1-exam/corporate-issuers/types-of-real-options/" target="_blank">Types of Real Options — AnalystPrep (CFA Level 1)</a></li>
+      <li>🔗 <a href="https://www.wallstreetprep.com/knowledge/efficient-market-hypothesis-emh/" target="_blank">Efficient Market Hypothesis — Wall Street Prep</a></li>
+      <li>🔗 <a href="https://corporatefinanceinstitute.com/resources/career-map/sell-side/capital-markets/efficient-markets-hypothesis/" target="_blank">Efficient Markets Hypothesis — Corporate Finance Institute</a></li>
+      <li>🔗 <a href="https://en.wikipedia.org/wiki/Adaptive_market_hypothesis" target="_blank">Adaptive Market Hypothesis — Wikipedia</a></li>
+      <li>🔗 <a href="https://www.lse.ac.uk/finance/news/2024/Research-Showcase-PassiveInvesting" target="_blank">Passive Investing Research — LSE Finance (2024)</a></li>
+      <li>🔗 <a href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model" target="_blank">Black-Scholes Model — Wikipedia</a></li>
+    </ul>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
