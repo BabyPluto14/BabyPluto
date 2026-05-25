@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAPM — Deep Dive Study Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #0f1117;
+      --surface:  #1a1d27;
+      --card:     #21253a;
+      --border:   #2e3350;
+      --p:        #6c63ff;   /* purple  */
+      --t:        #00d4aa;   /* teal    */
+      --y:        #ffd166;   /* yellow  */
+      --r:        #ff6b6b;   /* red     */
+      --g:        #06d6a0;   /* green   */
+      --o:        #f4a261;   /* orange  */
+      --text:     #e8eaf0;
+      --muted:    #8892b0;
+      --codebg:   #161b2e;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.75; }
+
+    /* ── wrapper ── */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px 100px; }
+
+    /* ── hero ── */
+    .hero { background: linear-gradient(135deg,#12152a,#0f1117); border-bottom: 1px solid var(--border); padding: 64px 24px 52px; text-align: center; }
+    .hero h1 { font-size: 2.8rem; font-weight: 900; line-height: 1.15; }
+    .hero h1 em { font-style: normal; color: var(--p); }
+    .hero p { margin: 16px auto 0; max-width: 620px; color: var(--muted); font-size: 1.05rem; }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 26px; }
+    .badge { background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 6px 18px; font-size: 0.8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── TOC ── */
+    .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 32px; margin: 44px 0; }
+    .toc h2 { font-size: 0.85rem; font-weight: 800; color: var(--t); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px; }
+    .toc ol { padding-left: 22px; }
+    .toc li { margin: 7px 0; font-size: 0.95rem; }
+    .toc a { color: var(--text); }
+    .toc a:hover { color: var(--t); }
+
+    /* ── chapter banner ── */
+    .chap { margin-top: 70px; padding: 26px 30px; border-radius: 16px; background: var(--surface); border-left: 6px solid var(--p); }
+    .chap.teal   { border-color: var(--t); }
+    .chap.yellow { border-color: var(--y); }
+    .chap.red    { border-color: var(--r); }
+    .chap.green  { border-color: var(--g); }
+    .chap h2 { font-size: 1.55rem; font-weight: 800; }
+    .chap p  { color: var(--muted); margin-top: 6px; font-size: 0.95rem; }
+
+    /* ── section ── */
+    .sec { margin-top: 38px; }
+    .sec h3 { font-size: 1.15rem; font-weight: 700; color: var(--t); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .sec h3 .ic { background: rgba(0,212,170,.12); border-radius: 8px; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .sec p { margin-bottom: 14px; }
+    .sec ul, .sec ol { padding-left: 22px; margin-bottom: 14px; }
+    .sec li { margin: 6px 0; }
+
+    /* ── formula box ── */
+    .fbox {
+      background: var(--codebg); border: 1px solid var(--border); border-left: 5px solid var(--p);
+      border-radius: 10px; padding: 22px 26px; margin: 18px 0; font-family: 'Courier New', monospace; overflow-x: auto;
+    }
+    .fbox.teal  { border-left-color: var(--t); }
+    .fbox.yellow{ border-left-color: var(--y); }
+    .fbox.red   { border-left-color: var(--r); }
+    .fbox .lbl  { display: block; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--p); margin-bottom: 12px; }
+    .fbox.teal  .lbl { color: var(--t); }
+    .fbox.yellow .lbl { color: var(--y); }
+    .fbox.red   .lbl { color: var(--r); }
+    .fbox .eq   { color: var(--t); font-size: 1.08rem; line-height: 2.2; }
+    .fbox .note { margin-top: 14px; font-size: 0.82rem; color: var(--muted); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.85; }
+
+    /* ── callout ── */
+    .box { border-radius: 10px; padding: 16px 20px; margin: 18px 0; display: flex; gap: 14px; align-items: flex-start; }
+    .box.info   { background: rgba(0,212,170,.07);  border: 1px solid rgba(0,212,170,.28); }
+    .box.warn   { background: rgba(255,214,102,.07); border: 1px solid rgba(255,214,102,.28); }
+    .box.tip    { background: rgba(108,99,255,.07);  border: 1px solid rgba(108,99,255,.28); }
+    .box.danger { background: rgba(255,107,107,.07); border: 1px solid rgba(255,107,107,.28); }
+    .box.green  { background: rgba(6,214,160,.07);   border: 1px solid rgba(6,214,160,.28); }
+    .box .em { font-size: 1.5rem; flex-shrink: 0; line-height: 1; padding-top: 2px; }
+    .box .bd { font-size: 0.93rem; }
+    .box .bd strong { font-weight: 700; }
+
+    /* ── highlight strip ── */
+    .hl {
+      background: linear-gradient(135deg, rgba(108,99,255,.13), rgba(0,212,170,.08));
+      border: 1px solid rgba(108,99,255,.3); border-radius: 12px;
+      padding: 20px 26px; margin: 20px 0; font-size: 1.08rem; font-weight: 700;
+      text-align: center; line-height: 1.55;
+    }
+
+    /* ── cards ── */
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); margin: 18px 0; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .card h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+    .card .val { font-size: 1.5rem; font-weight: 800; color: var(--t); }
+    .card p { font-size: 0.88rem; margin-top: 8px; color: var(--muted); margin-bottom: 0; }
+
+    /* ── table ── */
+    .tw { overflow-x: auto; margin: 18px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.91rem; }
+    thead tr { background: var(--card); }
+    th { padding: 12px 16px; text-align: left; font-weight: 700; color: var(--muted); text-transform: uppercase; font-size: 0.76rem; letter-spacing: .07em; border-bottom: 2px solid var(--border); }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    .tag { display: inline-block; padding: 2px 10px; border-radius: 100px; font-size: 0.76rem; font-weight: 600; }
+    .tag.g { background: rgba(6,214,160,.15);  color: var(--g); }
+    .tag.r { background: rgba(255,107,107,.15); color: var(--r); }
+    .tag.p { background: rgba(108,99,255,.15);  color: #a09cff; }
+    .tag.y { background: rgba(255,214,102,.15); color: var(--y); }
+
+    /* ── worked example box ── */
+    .ex { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin: 22px 0; }
+    .ex .ex-title { font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--y); margin-bottom: 16px; }
+    .ex .given { background: var(--codebg); border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; font-size: 0.9rem; }
+    .ex .given span { color: var(--muted); display: block; line-height: 2; }
+    .ex .given strong { color: var(--t); }
+
+    /* ── steps ── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 18px 0; }
+    .step { display: flex; gap: 16px; position: relative; }
+    .step:not(:last-child)::after { content:''; position:absolute; left:19px; top:44px; bottom:-10px; width:2px; background:var(--border); }
+    .step .num { width:40px; height:40px; border-radius:50%; background:var(--p); color:#fff; font-weight:800; font-size:0.95rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; z-index:1; }
+    .step .bd  { padding-top:8px; padding-bottom:24px; flex:1; }
+    .step .bd strong { display:block; margin-bottom:6px; font-size:1rem; }
+    .step .bd p { font-size:0.9rem; color:var(--muted); margin-bottom:0; }
+
+    /* ── answer reveal ── */
+    .ans { background: rgba(0,212,170,.06); border: 1px solid rgba(0,212,170,.25); border-radius: 10px; padding: 16px 20px; margin-top: 14px; font-family: 'Courier New', monospace; font-size: 0.95rem; color: var(--t); line-height: 2; }
+
+    /* ── graph svg box ── */
+    .gbox { background: var(--codebg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin: 22px 0; }
+    .gbox svg { display: block; width: 100%; height: auto; }
+    .gcap { text-align: center; font-size: 0.82rem; color: var(--muted); margin-top: 10px; }
+
+    /* ── beta meter ── */
+    .brow { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
+    .bc { flex:1 1 130px; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 16px; text-align:center; }
+    .bc .bv { font-size:1.55rem; font-weight:800; }
+    .bc .bl { font-size:0.8rem; color:var(--muted); margin-top:4px; }
+    .bc.def .bv { color: var(--g); }
+    .bc.neu .bv { color: var(--t); }
+    .bc.agg .bv { color: var(--r); }
+
+    /* ── quiz box ── */
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 26px 30px; margin: 22px 0; }
+    .quiz .qtitle { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--o); margin-bottom: 18px; }
+    .quiz .q { margin-bottom: 22px; }
+    .quiz .q p { font-weight: 600; margin-bottom: 10px; }
+
+    /* ── divider ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── footer ── */
+    footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; color: var(--muted); font-size: 0.82rem; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <h1>Understanding <em>CAPM</em><br>From Zero to Exam-Ready</h1>
+    <p>A complete step-by-step breakdown of the Capital Asset Pricing Model — what it is, why it exists, how to compute it, and how it connects to COE and WACC.</p>
+    <div class="badges">
+      <div class="badge">What is CAPM?</div>
+      <div class="badge">Beta explained</div>
+      <div class="badge">CML vs SML</div>
+      <div class="badge">10+ worked examples</div>
+      <div class="badge">COE &amp; WACC</div>
+      <div class="badge">Exam cheat sheet</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- TOC -->
+<div class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#why">Why does CAPM exist? The problem it solves</a></li>
+    <li><a href="#build">Building up to CAPM step by step</a></li>
+    <li><a href="#beta">Beta — the heart of CAPM</a></li>
+    <li><a href="#cml">The Capital Market Line (CML)</a></li>
+    <li><a href="#sml">The Security Market Line (SML) — this IS CAPM</a></li>
+    <li><a href="#compute">How to compute CAPM — worked examples</a></li>
+    <li><a href="#graph">Reading the SML graph</a></li>
+    <li><a href="#coe">Applying CAPM to Cost of Equity (COE)</a></li>
+    <li><a href="#wacc">From COE to WACC</a></li>
+    <li><a href="#exam">Exam cheat sheet &amp; practice questions</a></li>
+  </ol>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 1 — WHY DOES CAPM EXIST?
+═══════════════════════════════════════════ -->
+<div id="why" class="chap">
+  <h2>Part 1 — Why Does CAPM Exist?</h2>
+  <p>The problem CAPM was built to solve.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">❓</span> The Problem</h3>
+  <p>You want to invest in a stock. You know it's risky. But <strong>how much return should you demand for that risk?</strong></p>
+  <p>Before CAPM (1964), there was no agreed formula. Everyone just guessed. CAPM gave the world a precise, mathematical answer:</p>
+
+  <div class="hl">
+    "The return you should demand on any investment = Risk-Free Rate + Compensation for the Risk You Cannot Avoid"
+  </div>
+
+  <div class="box info">
+    <div class="em">💡</div>
+    <div class="bd">
+      <strong>The key insight:</strong> Not all risk deserves compensation. If you can eliminate a risk for free by diversifying, the market won't pay you for bearing it. CAPM identifies exactly which risk the market <em>does</em> pay you for — and prices it precisely.
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">🎯</span> The Two Types of Risk (recap)</h3>
+
+  <div class="grid">
+    <div class="card" style="border-color:var(--t)">
+      <h4>Unique / Idiosyncratic Risk</h4>
+      <div class="val" style="font-size:1.1rem;">Diversifiable</div>
+      <p>Risk specific to one company (bad CEO, product failure). You can make it disappear by holding many stocks. <strong>Market pays you ZERO for this.</strong></p>
+    </div>
+    <div class="card" style="border-color:var(--r)">
+      <h4>Market / Systematic Risk</h4>
+      <div class="val" style="font-size:1.1rem;color:var(--r);">Non-Diversifiable</div>
+      <p>Economy-wide risk (recessions, rate hikes, wars). No matter how many stocks you hold, this stays. <strong>Market MUST pay you for this.</strong></p>
+    </div>
+  </div>
+
+  <p>CAPM measures market risk using <strong>Beta (β)</strong> and tells you exactly how much return to demand for it.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 2 — BUILDING UP TO CAPM
+═══════════════════════════════════════════ -->
+<div id="build" class="chap teal">
+  <h2>Part 2 — Building Up to CAPM Step by Step</h2>
+  <p>CAPM doesn't appear from nowhere. It's the result of a logical 3-step journey.</p>
+</div>
+
+<div class="sec">
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="bd">
+        <strong>Start: You have N stocks → Efficient Frontier</strong>
+        <p>By combining stocks in different weights, you get millions of possible portfolios. The efficient frontier is the upper-left edge — the best return for each level of risk. Every rational investor should be ON this frontier.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="bd">
+        <strong>Add the Risk-Free Asset → Capital Market Line (CML)</strong>
+        <p>You can now also invest in a risk-free asset (government bond, rate = Rƒ). This changes everything. You can mix the risk-free asset with <strong>one special portfolio M</strong> (the Market Portfolio) to beat the efficient frontier. This combination creates a straight line: the CML.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="bd">
+        <strong>Apply to Individual Securities → Security Market Line (SML) = CAPM</strong>
+        <p>The SML translates the logic of the CML to <em>individual stocks</em>. Instead of using total risk (σ), it uses <strong>Beta (β)</strong> — the only risk the market pays for. This gives us the CAPM formula.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <div class="em">🗺️</div>
+    <div class="bd">
+      <strong>The journey in one line:</strong><br>
+      Many Stocks → Efficient Frontier → Add Risk-Free Asset → CML → Apply to Individual Stocks → <strong>SML (CAPM)</strong>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 3 — BETA
+═══════════════════════════════════════════ -->
+<div id="beta" class="chap yellow">
+  <h2>Part 3 — Beta (β): The Heart of CAPM</h2>
+  <p>Before you can use CAPM, you must deeply understand Beta.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">β</span> What Beta Means — Plain English</h3>
+
+  <p>Beta answers one question: <strong>"If the market moves by 1%, how much does this stock move?"</strong></p>
+
+  <div class="fbox yellow">
+    <span class="lbl">Beta Definition</span>
+    <div class="eq">β = Cov(Rᵢ, Rₘ) / Var(Rₘ)</div>
+    <div class="note">
+      Rᵢ = return on the stock<br>
+      Rₘ = return on the market (e.g. S&amp;P 500, MSCI World)<br>
+      In practice: Beta = slope of regression line (stock returns vs market returns)<br>
+      Market portfolio always has β = 1 by definition
+    </div>
+  </div>
+
+  <div class="brow">
+    <div class="bc def">
+      <div class="bv">β &lt; 1</div>
+      <div class="bl">Defensive<br><small>Less volatile than market<br>e.g. utilities, pharma, food</small></div>
+    </div>
+    <div class="bc neu">
+      <div class="bv">β = 1</div>
+      <div class="bl">Moves with market<br><small>Same risk as market<br>e.g. index ETF</small></div>
+    </div>
+    <div class="bc agg">
+      <div class="bv">β &gt; 1</div>
+      <div class="bl">Aggressive<br><small>More volatile than market<br>e.g. tech, biotech, crypto</small></div>
+    </div>
+    <div class="bc">
+      <div class="bv" style="color:var(--muted)">β &lt; 0</div>
+      <div class="bl">Counter-cyclical<br><small>Moves opposite market<br>e.g. gold, inverse ETFs</small></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">📐</span> Beta in Action — Intuition Examples</h3>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>Stock / Asset</th><th>Typical β</th><th>If market falls 10%…</th><th>If market rises 10%…</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Water utility company</td><td><strong>0.4</strong></td><td>Falls ~4% <span class="tag g">Less pain</span></td><td>Rises ~4% <span class="tag r">Less gain</span></td></tr>
+        <tr><td>Large bank</td><td><strong>1.0</strong></td><td>Falls ~10%</td><td>Rises ~10%</td></tr>
+        <tr><td>Tesla / Growth tech</td><td><strong>1.8</strong></td><td>Falls ~18% <span class="tag r">More pain</span></td><td>Rises ~18% <span class="tag g">More gain</span></td></tr>
+        <tr><td>Gold ETF</td><td><strong>−0.1</strong></td><td>Rises ~1% (safe haven)</td><td>Falls ~1%</td></tr>
+        <tr><td>AB InBev (from slides)</td><td><strong>1.32</strong></td><td>Falls ~13.2%</td><td>Rises ~13.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <div class="em">⚡</div>
+    <div class="bd">
+      <strong>Key exam point:</strong> A high beta stock demands a <em>higher required return</em>. If you bear more market risk, you must be compensated with more expected return. This is the whole logic of CAPM.
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">🧮</span> How to Calculate Beta — Worked Example</h3>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 1 — Computing Beta from Data</div>
+    <div class="given">
+      <span>Monthly returns for Stock ABC and the market over 5 months:</span>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Month</th><th>Market Return (Rₘ)</th><th>Stock ABC Return (Rᵢ)</th></tr></thead>
+        <tbody>
+          <tr><td>Jan</td><td>+2%</td><td>+3%</td></tr>
+          <tr><td>Feb</td><td>−1%</td><td>−2%</td></tr>
+          <tr><td>Mar</td><td>+4%</td><td>+7%</td></tr>
+          <tr><td>Apr</td><td>−2%</td><td>−4%</td></tr>
+          <tr><td>May</td><td>+3%</td><td>+5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.9rem;margin:12px 0 6px;color:var(--muted);">Notice the pattern: when market goes up 1%, ABC goes up roughly 1.7–2%. That means beta is roughly around 1.7–2. Let's confirm:</p>
+    <p style="font-size:0.9rem;color:var(--muted);">In practice you'd run a regression. The slope of the line "ABC return = α + β × Market return" gives you beta. From this data, β ≈ <strong>1.75</strong> — meaning ABC is an aggressive stock, moving ~1.75× the market.</p>
+
+    <div class="box tip" style="margin-top:14px;">
+      <div class="em">💡</div>
+      <div class="bd"><strong>Exam shortcut:</strong> If the question says "beta = X" — just use it directly in the CAPM formula. You don't always need to compute it from scratch.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">📊</span> Beta of a Portfolio</h3>
+  <p>Good news: portfolio beta IS just the weighted average of individual betas (unlike portfolio risk).</p>
+
+  <div class="fbox">
+    <span class="lbl">Portfolio Beta</span>
+    <div class="eq">βₚ = w₁·β₁ + w₂·β₂ + … + wₙ·βₙ</div>
+    <div class="note">wᵢ = weight of stock i in portfolio | βᵢ = beta of stock i</div>
+  </div>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 2 — Portfolio Beta</div>
+    <div class="given">
+      <span>You hold: 40% in Stock A (β = 0.6), 35% in Stock B (β = 1.2), 25% in Stock C (β = 1.8)</span>
+    </div>
+    <div class="ans">
+      βₚ = 0.40 × 0.6  +  0.35 × 1.2  +  0.25 × 1.8<br>
+         = 0.24         +  0.42         +  0.45<br>
+         = <strong>1.11</strong>
+    </div>
+    <p style="font-size:0.88rem;color:var(--muted);margin-top:10px;">Your portfolio is slightly more aggressive than the market (β slightly above 1).</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 4 — CML
+═══════════════════════════════════════════ -->
+<div id="cml" class="chap">
+  <h2>Part 4 — The Capital Market Line (CML)</h2>
+  <p>For portfolios — the best possible risk/return combinations when you add a risk-free asset.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">📈</span> What the CML Shows</h3>
+  <p>When you can lend or borrow at the risk-free rate Rƒ, you can combine Rƒ with the <strong>Market Portfolio M</strong> in any proportion. This gives you a straight line that is BETTER than the efficient frontier alone.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Lending (Conservative)</h4>
+      <p>Put SOME money in stocks (Portfolio M) and lend the rest at Rƒ. You're between Rƒ and M on the line.</p>
+    </div>
+    <div class="card">
+      <h4>Market Portfolio M</h4>
+      <p>100% invested in the market portfolio. This is the <strong>tangency point</strong> — the highest Sharpe ratio possible.</p>
+    </div>
+    <div class="card">
+      <h4>Borrowing (Aggressive)</h4>
+      <p>Borrow money at Rƒ and invest MORE than 100% in M. Amplifies both returns and risk — you're to the right of M.</p>
+    </div>
+  </div>
+
+  <div class="fbox teal">
+    <span class="lbl">CML Formula — for Portfolios</span>
+    <div class="eq">E(Rₚ) = Rƒ  +  [(E(Rₘ) − Rƒ) / σₘ]  ×  σₚ</div>
+    <div class="note">
+      Rƒ          = risk-free rate<br>
+      E(Rₘ)      = expected return of the market portfolio<br>
+      σₘ          = standard deviation of the market portfolio<br>
+      σₚ          = standard deviation of YOUR portfolio<br>
+      (E(Rₘ)−Rƒ)/σₘ = Sharpe ratio of the market — this is the "price of risk"
+    </div>
+  </div>
+
+  <div class="gbox">
+    <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="50" y1="20" x2="50" y2="245" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="50" y1="245" x2="520" y2="245" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="18" y="140" font-size="11" fill="#8892b0" text-anchor="middle" transform="rotate(-90,18,140)">E(R)</text>
+      <text x="510" y="260" font-size="11" fill="#8892b0" text-anchor="end">Risk σ</text>
+
+      <!-- Efficient frontier curve -->
+      <path d="M 100,210 Q 90,165 115,120 Q 140,78 200,52 Q 265,30 330,52 Q 385,74 390,125" stroke="#6c63ff" stroke-width="2" fill="none" opacity="0.5"/>
+      <text x="340" y="46" font-size="10" fill="#8892b0">Efficient Frontier</text>
+
+      <!-- CML line -->
+      <line x1="50" y1="232" x2="510" y2="30" stroke="#00d4aa" stroke-width="2.5"/>
+      <text x="480" y="26" font-size="12" fill="#00d4aa" font-weight="bold">CML</text>
+
+      <!-- Rf point -->
+      <circle cx="50" cy="232" r="5" fill="#00d4aa"/>
+      <text x="56" y="232" font-size="11" fill="#00d4aa">Rƒ</text>
+
+      <!-- Market portfolio M (tangency) -->
+      <circle cx="220" cy="128" r="8" fill="#ffd166"/>
+      <text x="230" y="124" font-size="11" fill="#ffd166" font-weight="bold">M</text>
+      <line x1="220" y1="245" x2="220" y2="128" stroke="#2e3350" stroke-dasharray="4,3" stroke-width="1"/>
+
+      <!-- Lending zone -->
+      <rect x="52" y="130" width="166" height="114" rx="0" fill="rgba(0,212,170,0.04)"/>
+      <text x="130" y="200" font-size="9" fill="#00d4aa" text-anchor="middle">LENDING ZONE</text>
+      <text x="130" y="212" font-size="9" fill="#8892b0" text-anchor="middle">(part Rƒ + part M)</text>
+
+      <!-- Borrowing zone -->
+      <rect x="222" y="30" width="286" height="215" rx="0" fill="rgba(255,107,107,0.04)"/>
+      <text x="360" y="200" font-size="9" fill="#ff6b6b" text-anchor="middle">BORROWING ZONE</text>
+      <text x="360" y="212" font-size="9" fill="#8892b0" text-anchor="middle">(borrow at Rƒ, invest more in M)</text>
+    </svg>
+    <div class="gcap">CML: The straight line through Rƒ and M. Portfolio M has the highest possible Sharpe ratio.</div>
+  </div>
+
+  <div class="box info">
+    <div class="em">🎯</div>
+    <div class="bd">
+      <strong>CML is for portfolios only.</strong> It uses total risk (σ) on the x-axis. But when we want to price an <em>individual stock</em> (not a full portfolio), we need a different line — the SML. That is CAPM.
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 5 — SML = CAPM
+═══════════════════════════════════════════ -->
+<div id="sml" class="chap red">
+  <h2>Part 5 — The Security Market Line (SML) = CAPM</h2>
+  <p>This is the formula you use in exams, in practice, for pricing any individual asset.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">⭐</span> The CAPM Formula — Memorise This</h3>
+
+  <div class="fbox red" style="font-size:1.1rem;">
+    <span class="lbl">CAPM / Security Market Line (SML)</span>
+    <div class="eq" style="font-size:1.25rem; color:#ff9999;">E(Rᵢ) = Rƒ  +  βᵢ × (E(Rₘ) − Rƒ)</div>
+    <div class="note" style="font-size:0.9rem;">
+      E(Rᵢ)      = required/expected return on security i  ← <strong>THIS IS WHAT YOU SOLVE FOR</strong><br>
+      Rƒ          = risk-free rate (10-year government bond yield)<br>
+      βᵢ          = beta of security i (its market risk sensitivity)<br>
+      E(Rₘ)      = expected return on the market portfolio<br>
+      E(Rₘ) − Rƒ = <strong>market risk premium</strong> (typically 5–7% historically)
+    </div>
+  </div>
+
+  <div class="hl">
+    Required Return = What you get for waiting (Rƒ)  +  What you get for taking risk (β × Market Premium)
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">🧩</span> Breaking Down Each Piece</h3>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Component</th><th>What It Is</th><th>Typical Value</th><th>Where to Get It</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Rƒ</strong><br>Risk-free rate</td>
+          <td>Return with zero risk. The baseline everyone gets.</td>
+          <td>2–5% (varies)</td>
+          <td>10-year government bond yield (e.g. German Bund, US Treasury)</td>
+        </tr>
+        <tr>
+          <td><strong>β</strong><br>Beta</td>
+          <td>How much market risk this specific stock carries.</td>
+          <td>0.4 to 2.0 for most stocks</td>
+          <td>Calculated from regression, or looked up (Bloomberg, Yahoo Finance)</td>
+        </tr>
+        <tr>
+          <td><strong>E(Rₘ)</strong><br>Market return</td>
+          <td>What the whole market is expected to return.</td>
+          <td>8–10% historically</td>
+          <td>Historical average of market index (S&amp;P 500, MSCI World)</td>
+        </tr>
+        <tr>
+          <td><strong>E(Rₘ) − Rƒ</strong><br>Market risk premium</td>
+          <td>The extra return you get for holding stocks vs bonds.</td>
+          <td>5–7%</td>
+          <td>Calculated as E(Rₘ) − Rƒ. Often just given in the exam.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">📊</span> The SML Graph</h3>
+
+  <div class="gbox">
+    <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- axes -->
+      <line x1="60" y1="20" x2="60" y2="255" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="60" y1="255" x2="520" y2="255" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="22" y="140" font-size="11" fill="#8892b0" text-anchor="middle" transform="rotate(-90,22,140)">E(R) — Required Return</text>
+      <text x="510" y="272" font-size="11" fill="#8892b0" text-anchor="end">Beta (β)</text>
+
+      <!-- SML line -->
+      <line x1="60" y1="228" x2="500" y2="42" stroke="#ff6b6b" stroke-width="2.5"/>
+      <text x="468" y="36" font-size="12" fill="#ff6b6b" font-weight="bold">SML</text>
+
+      <!-- Rf intercept -->
+      <circle cx="60" cy="228" r="5" fill="#00d4aa"/>
+      <text x="67" y="233" font-size="11" fill="#00d4aa">Rƒ</text>
+      <line x1="60" y1="228" x2="12" y2="228" stroke="#2e3350" stroke-dasharray="3,3" stroke-width="1"/>
+      <text x="10" y="232" font-size="9" fill="#8892b0" text-anchor="end">e.g. 3.5%</text>
+
+      <!-- beta=1 market point -->
+      <circle cx="280" cy="135" r="7" fill="#ffd166"/>
+      <line x1="280" y1="255" x2="280" y2="135" stroke="#2e3350" stroke-dasharray="4,3" stroke-width="1"/>
+      <line x1="60" y1="135" x2="280" y2="135" stroke="#2e3350" stroke-dasharray="4,3" stroke-width="1"/>
+      <text x="272" y="272" font-size="10" fill="#ffd166" text-anchor="middle">β=1</text>
+      <text x="14" y="139" font-size="9" fill="#ffd166" text-anchor="end">E(Rₘ)</text>
+      <text x="290" y="132" font-size="11" fill="#ffd166">Market M</text>
+
+      <!-- β=0 label -->
+      <text x="60" y="272" font-size="10" fill="#8892b0" text-anchor="middle">β=0</text>
+
+      <!-- Underpriced stock above line -->
+      <circle cx="180" cy="80" r="7" fill="#06d6a0"/>
+      <text x="192" y="78" font-size="10" fill="#06d6a0" font-weight="bold">UNDERPRICED</text>
+      <text x="192" y="91" font-size="9" fill="#8892b0">Actual return &gt; required</text>
+      <text x="192" y="102" font-size="9" fill="#8892b0">→ Good buy! Price will rise.</text>
+      <line x1="180" y1="87" x2="180" y2="155" stroke="#2e3350" stroke-dasharray="3,3" stroke-width="1"/>
+
+      <!-- Overpriced stock below line -->
+      <circle cx="370" cy="200" r="7" fill="#ff6b6b"/>
+      <text x="382" y="198" font-size="10" fill="#ff6b6b" font-weight="bold">OVERPRICED</text>
+      <text x="382" y="211" font-size="9" fill="#8892b0">Actual return &lt; required</text>
+      <text x="382" y="222" font-size="9" fill="#8892b0">→ Avoid! Price will fall.</text>
+      <line x1="370" y1="192" x2="370" y2="133" stroke="#2e3350" stroke-dasharray="3,3" stroke-width="1"/>
+
+      <!-- On the line stock -->
+      <circle cx="280" cy="135" r="7" fill="#ffd166"/>
+      <text x="12" y="52" font-size="9" fill="#8892b0">β=0.5</text>
+      <text x="12" y="195" font-size="9" fill="#8892b0">β=1.5</text>
+    </svg>
+    <div class="gcap">
+      The SML: x-axis = Beta, y-axis = Required Return.<br>
+      Stocks ON the line are fairly priced. Above = underpriced (buy). Below = overpriced (sell/avoid).
+    </div>
+  </div>
+
+  <div class="box info">
+    <div class="em">🔑</div>
+    <div class="bd">
+      <strong>CML vs SML — the key difference:</strong><br><br>
+      CML → x-axis = <strong>total risk (σ)</strong> → used for <strong>portfolios</strong><br>
+      SML → x-axis = <strong>beta (β)</strong> → used for <strong>individual securities</strong><br><br>
+      In exams, you almost always use the <strong>SML (CAPM formula)</strong>.
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 6 — COMPUTING CAPM
+═══════════════════════════════════════════ -->
+<div id="compute" class="chap green">
+  <h2>Part 6 — Computing CAPM: Worked Examples</h2>
+  <p>Step-by-step calculations from simple to complex.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">1️⃣</span> Basic CAPM — Standard Calculation</h3>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 3 — Basic CAPM (from your slides)</div>
+    <div class="given">
+      <span><strong>Risk-free rate (Rƒ):</strong> 3.5%</span>
+      <span><strong>Expected market return E(Rₘ):</strong> 10%</span>
+      <span><strong>Beta of the company (β):</strong> 1.2</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Calculate the Market Risk Premium</strong>
+          <div class="ans">Market Risk Premium = E(Rₘ) − Rƒ = 10% − 3.5% = <strong>6.5%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Calculate the Security's Risk Premium</strong>
+          <div class="ans">Security Risk Premium = β × Market Risk Premium = 1.2 × 6.5% = <strong>7.8%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="bd">
+          <strong>Add the Risk-Free Rate</strong>
+          <div class="ans">E(R) = Rƒ + Security Risk Premium = 3.5% + 7.8% = <strong>11.3%</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box green" style="margin-top:0;">
+      <div class="em">✅</div>
+      <div class="bd"><strong>Answer: 11.3%</strong> — Shareholders require a minimum return of 11.3% for bearing this level of market risk.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">2️⃣</span> Defensive Stock (Low Beta)</h3>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 4 — Defensive Company (e.g. Water Utility)</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 3%, <strong>E(Rₘ):</strong> 9%, <strong>β:</strong> 0.5</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Market Risk Premium</strong>
+          <div class="ans">9% − 3% = <strong>6%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Security Risk Premium</strong>
+          <div class="ans">0.5 × 6% = <strong>3%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="bd">
+          <strong>Required Return</strong>
+          <div class="ans">E(R) = 3% + 3% = <strong>6%</strong></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--muted);margin-top:8px;">Low risk → low required return (6%). Makes sense for a stable utility company.</p>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">3️⃣</span> Aggressive Stock (High Beta)</h3>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 5 — Tech / Growth Company</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 3%, <strong>E(Rₘ):</strong> 9%, <strong>β:</strong> 2.0</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Market Risk Premium</strong>
+          <div class="ans">9% − 3% = <strong>6%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Security Risk Premium</strong>
+          <div class="ans">2.0 × 6% = <strong>12%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="bd">
+          <strong>Required Return</strong>
+          <div class="ans">E(R) = 3% + 12% = <strong>15%</strong></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--muted);margin-top:8px;">High risk → high required return (15%). Same inputs as Example 4, but β=2 instead of 0.5. See how much beta matters!</p>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">4️⃣</span> Solving for Beta (Reverse CAPM)</h3>
+  <p>Sometimes the exam gives you the required return and asks you to find beta. Just rearrange the formula.</p>
+
+  <div class="fbox">
+    <span class="lbl">Rearranged CAPM — solving for Beta</span>
+    <div class="eq">β = (E(Rᵢ) − Rƒ)  /  (E(Rₘ) − Rƒ)</div>
+  </div>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 6 — Find Beta</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 4%, <strong>E(Rₘ):</strong> 10%, <strong>Required return E(R):</strong> 13%</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Market Risk Premium</strong>
+          <div class="ans">10% − 4% = <strong>6%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Apply rearranged formula</strong>
+          <div class="ans">β = (13% − 4%) / 6% = 9% / 6% = <strong>1.5</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">5️⃣</span> Solving for Market Return (Another Reverse)</h3>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 7 — Find E(Rₘ)</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 2%, <strong>β:</strong> 1.4, <strong>Required return E(R):</strong> 12.8%</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Rearrange CAPM for E(Rₘ)</strong>
+          <div class="ans">E(R) = Rƒ + β(E(Rₘ) − Rƒ)<br>12.8% = 2% + 1.4 × (E(Rₘ) − 2%)<br>10.8% = 1.4 × (E(Rₘ) − 2%)<br>E(Rₘ) − 2% = 10.8% / 1.4 = 7.71%<br>E(Rₘ) = <strong>9.71%</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">6️⃣</span> AB InBev — Full Real-World Example (from your slides)</h3>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 8 — AB InBev CAPM</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 3% (10-year government bond)</span>
+      <span><strong>E(Rₘ):</strong> 8%</span>
+      <span><strong>β:</strong> 1.32</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Market Risk Premium</strong>
+          <div class="ans">E(Rₘ) − Rƒ = 8% − 3% = <strong>5%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Security Risk Premium</strong>
+          <div class="ans">β × MRP = 1.32 × 5% = <strong>6.6%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="bd">
+          <strong>Cost of Equity (= CAPM result)</strong>
+          <div class="ans">COE = 3% + 6.6% = <strong>9.6%</strong></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--muted);margin-top:8px;">AB InBev shareholders require a minimum return of 9.6%. If you're valuing AB InBev shares using a DDM model, you use <strong>9.6%</strong> as your discount rate.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 7 — READING THE GRAPH
+═══════════════════════════════════════════ -->
+<div id="graph" class="chap teal">
+  <h2>Part 7 — Reading the SML Graph in Exams</h2>
+  <p>Understanding what the graph tells you about whether a stock is fairly priced.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">🔍</span> Three Positions on the SML</h3>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Where the Stock Falls</th><th>What It Means</th><th>What Happens</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>ON the SML</strong></td>
+          <td>Actual return = required return (CAPM)</td>
+          <td>Stock is fairly priced — in equilibrium</td>
+          <td><span class="tag p">Hold</span></td>
+        </tr>
+        <tr>
+          <td><strong>ABOVE the SML</strong></td>
+          <td>Actual return > required return (CAPM)</td>
+          <td>Stock is <strong>underpriced</strong> — giving more than you should get for its risk. Investors will rush to buy it, pushing price up until return normalizes back to SML.</td>
+          <td><span class="tag g">BUY</span></td>
+        </tr>
+        <tr>
+          <td><strong>BELOW the SML</strong></td>
+          <td>Actual return &lt; required return (CAPM)</td>
+          <td>Stock is <strong>overpriced</strong> — giving less than fair compensation for its risk. Investors sell it, pushing price down until return rises back to SML.</td>
+          <td><span class="tag r">SELL / AVOID</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 9 — Is This Stock Fairly Priced?</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 4%,  <strong>E(Rₘ):</strong> 10%,  <strong>β:</strong> 1.5</span>
+      <span><strong>Stock's actual current expected return:</strong> 14%</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Calculate CAPM (fair) return</strong>
+          <div class="ans">E(R) = 4% + 1.5 × (10% − 4%) = 4% + 9% = <strong>13%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Compare actual vs fair return</strong>
+          <div class="ans">Actual return: 14%<br>CAPM (fair) return: 13%<br>Actual > Fair → Stock is ABOVE the SML → <strong>UNDERPRICED → BUY</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 10 — Another Pricing Check</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 3%,  <strong>E(Rₘ):</strong> 8%,  <strong>β:</strong> 0.8</span>
+      <span><strong>Stock's actual expected return:</strong> 6%</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Calculate CAPM (fair) return</strong>
+          <div class="ans">E(R) = 3% + 0.8 × (8% − 3%) = 3% + 4% = <strong>7%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Compare actual vs fair return</strong>
+          <div class="ans">Actual return: 6%<br>CAPM (fair) return: 7%<br>Actual &lt; Fair → Stock is BELOW the SML → <strong>OVERPRICED → SELL / AVOID</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 8 — COE
+═══════════════════════════════════════════ -->
+<div id="coe" class="chap yellow">
+  <h2>Part 8 — CAPM → Cost of Equity (COE)</h2>
+  <p>The CAPM result IS the Cost of Equity. Here is how it's used.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">💰</span> COE = CAPM Output</h3>
+  <p>The CAPM formula gives you the <strong>minimum return shareholders require</strong> for investing in the company's stock. This is called the <strong>Cost of Equity (COE)</strong>.</p>
+
+  <div class="fbox teal">
+    <span class="lbl">Cost of Equity</span>
+    <div class="eq">COE  =  rₑ  =  Rƒ  +  β  ×  (E(Rₘ) − Rƒ)</div>
+    <div class="note">
+      This is used as the discount rate when valuing equity cash flows (e.g. dividends in the DDM model).<br>
+      It's the opportunity cost for shareholders — what they could earn on an equally risky investment.
+    </div>
+  </div>
+
+  <div class="box warn">
+    <div class="em">📌</div>
+    <div class="bd">
+      <strong>With Fama-French Size Premium:</strong><br>
+      If the company is small, add a size premium (e.g. 1%) on top:<br><br>
+      COE = Rƒ + β × (E(Rₘ) − Rƒ) + <strong>Size Premium</strong><br>
+      = 3.5% + 7.8% + 1.0% = <strong>12.3%</strong> (from slide example)
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 9 — WACC
+═══════════════════════════════════════════ -->
+<div id="wacc" class="chap">
+  <h2>Part 9 — From COE to WACC</h2>
+  <p>Once you have COE from CAPM, you can calculate the company's overall cost of capital.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">🏗️</span> Why WACC?</h3>
+  <p>A company is funded by <strong>two groups</strong>: equity holders (shareholders) and debt holders (banks, bondholders). Each requires a different return. WACC blends them into one company-wide hurdle rate.</p>
+
+  <div class="fbox yellow">
+    <span class="lbl">WACC Formula</span>
+    <div class="eq">WACC  =  (E/V) × rₑ  +  (D/V) × r_d × (1 − t)</div>
+    <div class="note">
+      E   = market value of equity<br>
+      D   = market value of debt<br>
+      V   = E + D  (total firm value)<br>
+      rₑ  = Cost of Equity (= CAPM result)<br>
+      r_d = Cost of Debt (bond yield or interest rate)<br>
+      t   = corporate tax rate<br>
+      (1−t) = tax shield — interest is tax-deductible, so real cost of debt is lower
+    </div>
+  </div>
+
+  <div class="ex">
+    <div class="ex-title">Worked Example 11 — Full CAPM to WACC (AB InBev)</div>
+    <div class="given">
+      <span><strong>Rƒ:</strong> 3%  |  <strong>β:</strong> 1.32  |  <strong>E(Rₘ):</strong> 8%</span>
+      <span><strong>D/(D+E):</strong> 42%  |  <strong>E/(D+E):</strong> 58%</span>
+      <span><strong>Cost of Debt (r_d):</strong> 4.65%  |  <strong>Tax rate:</strong> 25%</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="bd">
+          <strong>Compute COE using CAPM</strong>
+          <div class="ans">COE = 3% + 1.32 × (8% − 3%)<br>    = 3% + 1.32 × 5%<br>    = 3% + 6.6%  =  <strong>9.6%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="bd">
+          <strong>Compute after-tax cost of debt</strong>
+          <div class="ans">r_d × (1 − t) = 4.65% × (1 − 0.25)<br>             = 4.65% × 0.75  =  <strong>3.4875%</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="bd">
+          <strong>Compute WACC</strong>
+          <div class="ans">WACC = 0.58 × 9.6%   +  0.42 × 3.4875%<br>     = 5.568%       +  1.465%<br>     =  <strong>7.03%</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="box info" style="margin-top:12px;">
+      <div class="em">🎯</div>
+      <div class="bd">
+        <strong>Use 9.6%</strong> when valuing AB InBev <em>shares</em> (equity investor perspective — COE).<br>
+        <strong>Use 7.03%</strong> when evaluating AB InBev <em>investment projects</em> (company perspective — WACC).
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PART 10 — EXAM CHEAT SHEET
+═══════════════════════════════════════════ -->
+<div id="exam" class="chap red">
+  <h2>Part 10 — Exam Cheat Sheet &amp; Practice</h2>
+  <p>Everything you need to walk into the exam confident.</p>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">📋</span> All CAPM Formulas at a Glance</h3>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>What you're solving</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Required Return (main CAPM)</strong></td><td><code>E(R) = Rƒ + β × (E(Rₘ) − Rƒ)</code></td></tr>
+        <tr><td><strong>Market Risk Premium</strong></td><td><code>MRP = E(Rₘ) − Rƒ</code></td></tr>
+        <tr><td><strong>Security Risk Premium</strong></td><td><code>SRP = β × MRP</code></td></tr>
+        <tr><td><strong>Finding Beta</strong></td><td><code>β = (E(R) − Rƒ) / (E(Rₘ) − Rƒ)</code></td></tr>
+        <tr><td><strong>Finding E(Rₘ)</strong></td><td><code>E(Rₘ) = Rƒ + (E(R) − Rƒ) / β</code></td></tr>
+        <tr><td><strong>COE with size premium</strong></td><td><code>COE = Rƒ + β × MRP + Size Premium</code></td></tr>
+        <tr><td><strong>Portfolio Beta</strong></td><td><code>βₚ = w₁β₁ + w₂β₂ + … + wₙβₙ</code></td></tr>
+        <tr><td><strong>WACC</strong></td><td><code>WACC = (E/V)·rₑ + (D/V)·r_d·(1−t)</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">⚡</span> The 5 Things That Raise Required Return</h3>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Change</th><th>Effect on E(R)</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Beta ↑</td><td><span class="tag r">E(R) ↑</span></td><td>More market risk → more compensation needed</td></tr>
+        <tr><td>Risk-free rate ↑</td><td><span class="tag r">E(R) ↑</span></td><td>Baseline return rises, so required return rises too</td></tr>
+        <tr><td>Market risk premium ↑</td><td><span class="tag r">E(R) ↑</span></td><td>Stocks generally riskier vs bonds → more premium needed</td></tr>
+        <tr><td>Beta ↓ (more defensive)</td><td><span class="tag g">E(R) ↓</span></td><td>Less market risk → less compensation required</td></tr>
+        <tr><td>Risk-free rate ↓</td><td><span class="tag g">E(R) ↓</span></td><td>Baseline falls → required return falls</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">✏️</span> Practice Questions</h3>
+
+  <div class="quiz">
+    <div class="qtitle">Try These — Answers Below</div>
+
+    <div class="q">
+      <p>Q1. Rƒ = 5%, E(Rₘ) = 12%, β = 0.75. What is the required return?</p>
+    </div>
+    <div class="q">
+      <p>Q2. Rƒ = 2%, E(Rₘ) = 9%, β = 1.6. What is the required return?</p>
+    </div>
+    <div class="q">
+      <p>Q3. Rƒ = 4%, E(Rₘ) = 10%, required return = 15.8%. What is beta?</p>
+    </div>
+    <div class="q">
+      <p>Q4. Portfolio: 50% in β=0.8 stock, 30% in β=1.5 stock, 20% in β=2.0 stock. What is portfolio beta?</p>
+    </div>
+    <div class="q">
+      <p>Q5. COE = 11%, r_d = 5%, tax = 30%, D/V = 40%, E/V = 60%. What is WACC?</p>
+    </div>
+    <div class="q" style="margin-bottom:0;">
+      <p>Q6. CAPM says a stock should return 9%. Its actual expected return is 7%. Is it underpriced or overpriced? Buy or sell?</p>
+    </div>
+  </div>
+
+  <div class="ex">
+    <div class="ex-title">Answers</div>
+    <div class="ans">
+      Q1: E(R) = 5% + 0.75 × (12%−5%) = 5% + 5.25% = <strong>10.25%</strong><br><br>
+      Q2: E(R) = 2% + 1.6 × (9%−2%) = 2% + 11.2% = <strong>13.2%</strong><br><br>
+      Q3: β = (15.8%−4%) / (10%−4%) = 11.8% / 6% = <strong>1.97</strong><br><br>
+      Q4: βₚ = 0.5×0.8 + 0.3×1.5 + 0.2×2.0 = 0.40 + 0.45 + 0.40 = <strong>1.25</strong><br><br>
+      Q5: WACC = 0.60×11% + 0.40×5%×0.70 = 6.6% + 1.4% = <strong>8.0%</strong><br><br>
+      Q6: Actual (7%) &lt; CAPM fair (9%) → BELOW SML → <strong>Overpriced → Sell / Avoid</strong>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <h3><span class="ic">🧠</span> Memory Hooks for the Exam</h3>
+
+  <div class="box tip"><div class="em">💜</div><div class="bd"><strong>CAPM in words:</strong> "What I get for doing nothing (Rƒ) + what I get for taking risk (β × market premium)"</div></div>
+  <div class="box info"><div class="em">🔵</div><div class="bd"><strong>Higher beta = steeper climb up the SML = higher required return.</strong> The SML is a reward ladder — more risk = higher rung.</div></div>
+  <div class="box warn"><div class="em">🟡</div><div class="bd"><strong>CML uses σ (total risk) → for portfolios.<br>SML uses β (market risk) → for individual stocks.</strong> In exams, you almost always use SML.</div></div>
+  <div class="box green"><div class="em">🟢</div><div class="bd"><strong>Above SML = underpriced = BUY. Below SML = overpriced = SELL.</strong><br>Think: if actual return beats what CAPM requires, it's a bargain.</div></div>
+  <div class="box danger"><div class="em">🔴</div><div class="bd"><strong>CAPM → COE → WACC is the chain.</strong><br>CAPM gives COE. COE feeds into WACC. WACC is the hurdle rate for all company projects.</div></div>
+</div>
+
+</div> <!-- /wrap -->
+
+<footer>
+  <div class="wrap">
+    CAPM Deep Dive · Based on CH7–9 Corporate Finance course slides (McGraw-Hill)
+  </div>
+</footer>
+
+</body>
+</html>
