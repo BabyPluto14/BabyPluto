@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Financial Options — Deep Dive Explainer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:        #2563eb;
+      --blue-dark:   #1e3a8a;
+      --blue-light:  #dbeafe;
+      --green:       #16a34a;
+      --green-light: #dcfce7;
+      --red:         #dc2626;
+      --red-light:   #fee2e2;
+      --amber:       #d97706;
+      --amber-light: #fef3c7;
+      --violet:      #7c3aed;
+      --violet-light:#ede9fe;
+      --slate-900:   #0f172a;
+      --slate-700:   #334155;
+      --slate-500:   #64748b;
+      --slate-200:   #e2e8f0;
+      --slate-100:   #f1f5f9;
+      --slate-50:    #f8fafc;
+      --white:       #ffffff;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #eef2f7;
+      color: var(--slate-700);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+    .page { max-width: 980px; margin: 0 auto; padding: 36px 20px 100px; }
+
+    /* TERM BADGES */
+    .term {
+      display: inline-block;
+      padding: 1px 8px; border-radius: 5px;
+      font-weight: 700; font-size: 0.92em; white-space: nowrap;
+    }
+    .t-blue   { background:#dbeafe; border:1px solid #93c5fd; color:#1e3a8a; }
+    .t-green  { background:#dcfce7; border:1px solid #86efac; color:#14532d; }
+    .t-red    { background:#fee2e2; border:1px solid #fca5a5; color:#7f1d1d; }
+    .t-amber  { background:#fef3c7; border:1px solid #fbbf24; color:#713f12; }
+    .t-violet { background:#ede9fe; border:1px solid #c4b5fd; color:#4c1d95; }
+    .t-slate  { background:#f1f5f9; border:1px solid #cbd5e1; color:#0f172a; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(140deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+      border-radius: 16px; color: #fff;
+      padding: 52px 48px; margin-bottom: 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content:''; position:absolute; top:-50px; right:-50px;
+      width:260px; height:260px; border-radius:50%;
+      background:rgba(255,255,255,0.05);
+    }
+    .hero .badge {
+      display:inline-block; background:rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.3); border-radius:30px;
+      padding:4px 16px; font-size:0.75rem; letter-spacing:.1em;
+      text-transform:uppercase; font-weight:600; margin-bottom:18px;
+    }
+    .hero h1 { font-size:2.6rem; font-weight:900; line-height:1.15; margin-bottom:14px; }
+    .hero p  { font-size:1rem; opacity:.82; max-width:600px; }
+
+    /* TOC */
+    .toc { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px; }
+    .toc a {
+      background:#fff; border:1px solid var(--slate-200);
+      border-radius:30px; padding:8px 18px;
+      font-size:0.85rem; font-weight:600;
+      text-decoration:none; color:var(--slate-900);
+      transition:all .15s;
+    }
+    .toc a:hover { border-color:var(--blue); color:var(--blue); }
+
+    /* CARD / SECTION */
+    .card-wrap {
+      background:#fff; border-radius:14px;
+      border:1px solid var(--slate-200);
+      box-shadow:0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+      margin-bottom:44px; overflow:hidden;
+    }
+    .card-head {
+      padding:28px 36px 24px;
+      border-bottom:1px solid var(--slate-100);
+      display:flex; align-items:flex-start; gap:18px;
+    }
+    .card-icon {
+      width:56px; height:56px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.7rem; flex-shrink:0;
+    }
+    .card-head h2 { font-size:1.55rem; font-weight:900; margin-bottom:5px; line-height:1.2; }
+    .card-head p  { font-size:0.92rem; color:var(--slate-500); }
+    .card-body { padding:36px; }
+
+    /* SECTION DIVIDER */
+    .ch { font-size:1.1rem; font-weight:800; margin:32px 0 14px;
+          padding-bottom:10px; border-bottom:2px solid var(--slate-100);
+          display:flex; align-items:center; gap:8px; }
+    hr.div { border:none; border-top:1px solid var(--slate-200); margin:30px 0; }
+
+    /* PROSE */
+    p  { margin-bottom:14px; font-size:0.95rem; }
+    p:last-child { margin-bottom:0; }
+    ul, ol { padding-left:22px; margin-bottom:14px; }
+    li { margin-bottom:8px; font-size:0.95rem; }
+
+    /* CALLOUT */
+    .callout {
+      border-radius:10px; padding:18px 22px;
+      margin:16px 0; display:flex; gap:14px;
+      font-size:0.93rem; line-height:1.75;
+    }
+    .callout .ci { font-size:1.45rem; flex-shrink:0; margin-top:1px; }
+    .callout strong { display:block; margin-bottom:5px; font-size:0.97rem; }
+    .c-blue   { background:#eff6ff; border-left:4px solid var(--blue); }
+    .c-green  { background:#f0fdf4; border-left:4px solid var(--green); }
+    .c-amber  { background:#fffbeb; border-left:4px solid var(--amber); }
+    .c-red    { background:#fef2f2; border-left:4px solid var(--red); }
+    .c-violet { background:#f5f3ff; border-left:4px solid var(--violet); }
+    .c-dark   { background:#1e293b; color:#e2e8f0; border-left:4px solid #6366f1; }
+    .c-dark strong { color:#fff; }
+
+    /* GRID */
+    .grid { display:grid; gap:16px; margin:16px 0; }
+    .g2 { grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+    .g3 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+    .g4 { grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); }
+    .gc { border-radius:10px; padding:20px; font-size:0.9rem; }
+    .gc h4 { font-size:0.97rem; font-weight:700; margin-bottom:10px; }
+    .gc p  { margin-bottom:8px; }
+    .gc ul { padding-left:16px; }
+    .gc li { margin-bottom:6px; }
+
+    /* EXAMPLE BOX */
+    .example {
+      background:var(--slate-50); border:2px solid var(--slate-200);
+      border-radius:10px; padding:24px; margin:16px 0;
+    }
+    .example .ex-title {
+      font-size:0.78rem; font-weight:800; letter-spacing:.08em;
+      text-transform:uppercase; margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .example .ex-title span {
+      background:var(--slate-900); color:#fff;
+      border-radius:5px; padding:2px 10px;
+    }
+    .example p  { font-size:0.93rem; }
+    .example ul { font-size:0.93rem; }
+
+    /* MATH BLOCK */
+    .math {
+      background:#0f172a; color:#e2e8f0;
+      border-radius:10px; padding:20px 24px;
+      font-family:'Courier New',monospace;
+      font-size:0.92rem; line-height:1.95;
+      margin:14px 0; overflow-x:auto;
+      border:1px solid #334155;
+    }
+    .math .cm  { color:#64748b; font-style:italic; }
+    .math .hi  { color:#93c5fd; font-weight:700; }
+    .math .hi2 { color:#86efac; font-weight:700; }
+    .math .hi3 { color:#fbbf24; font-weight:700; }
+
+    /* SCENARIO TABLE */
+    .tbl { width:100%; border-collapse:collapse; font-size:0.88rem; margin:14px 0; }
+    .tbl th {
+      background:var(--slate-900); color:#fff;
+      padding:11px 15px; text-align:left; font-weight:600;
+    }
+    .tbl td { padding:11px 15px; border-bottom:1px solid var(--slate-200); }
+    .tbl tr:last-child td { border-bottom:none; }
+    .tbl tr:nth-child(even) td { background:var(--slate-50); }
+    .pos { color:var(--green); font-weight:700; }
+    .neg { color:var(--red); font-weight:700; }
+    .neu { color:var(--slate-500); }
+
+    /* PAYOFF VISUAL */
+    .payoff-box {
+      background:var(--slate-50); border:1px solid var(--slate-200);
+      border-radius:10px; padding:20px; text-align:center;
+    }
+    .payoff-box h4 { font-weight:700; font-size:0.92rem; margin-bottom:16px; }
+    /* Simple SVG-like payoff lines using CSS borders */
+    .pf { position:relative; height:130px; margin-bottom:10px; overflow:visible; }
+    .pf-axis-x {
+      position:absolute; bottom:30px; left:0; right:0;
+      height:2px; background:var(--slate-300);
+    }
+    .pf-axis-y {
+      position:absolute; top:0; bottom:0; left:50%;
+      width:2px; background:var(--slate-300);
+    }
+    .pf-label {
+      position:absolute; font-size:0.72rem;
+      color:var(--slate-500); font-weight:600;
+    }
+    .pf-profit { top:4px; left:53%; color:var(--green); }
+    .pf-loss   { bottom:2px; left:53%; color:var(--red); }
+    .pf-strike { bottom:10px; left:46%; color:var(--slate-500); }
+
+    /* SCENARIO STEP-THROUGH */
+    .scenario-row {
+      display:flex; gap:0; border-radius:10px; overflow:hidden;
+      border:1px solid var(--slate-200); margin:12px 0;
+    }
+    .sc-left {
+      width:200px; flex-shrink:0; padding:18px 20px;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    .sc-right { flex:1; padding:18px 20px; border-left:1px solid var(--slate-200); font-size:0.91rem; }
+    .sc-right p { margin-bottom:8px; }
+    .sc-right p:last-child { margin-bottom:0; }
+    .sc-label { font-weight:800; font-size:0.95rem; margin-bottom:4px; }
+    .sc-sub   { font-size:0.8rem; color:var(--slate-500); }
+
+    /* STEP LIST */
+    .steps { margin:16px 0; }
+    .step  { display:flex; gap:14px; margin-bottom:20px; align-items:flex-start; }
+    .step:last-child { margin-bottom:0; }
+    .step-n {
+      width:34px; height:34px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; font-size:0.88rem; color:#fff; flex-shrink:0;
+      box-shadow:0 2px 8px rgba(0,0,0,.2);
+    }
+    .step-b h4 { font-weight:700; margin-bottom:4px; font-size:0.96rem; }
+    .step-b p  { font-size:0.91rem; }
+
+    /* TAKEAWAY */
+    .takeaway {
+      background:linear-gradient(135deg, #1e3a8a, #2563eb);
+      color:#fff; border-radius:10px;
+      padding:22px 26px; margin-top:24px;
+      display:flex; gap:14px; align-items:flex-start;
+    }
+    .takeaway .ti { font-size:1.5rem; flex-shrink:0; }
+    .takeaway strong { display:block; margin-bottom:5px; font-size:1rem; }
+    .takeaway p { font-size:0.92rem; opacity:.9; }
+
+    /* COMPARISON STRIP */
+    .vs { display:grid; grid-template-columns:1fr 1fr; gap:0;
+          border-radius:10px; overflow:hidden; border:1px solid var(--slate-200); margin:16px 0; }
+    .vs-side { padding:20px 24px; }
+    .vs-side h4 { font-weight:700; font-size:0.97rem; margin-bottom:12px; }
+    .vs-side ul { padding-left:18px; font-size:0.9rem; }
+    .vs-side li { margin-bottom:7px; }
+
+    /* MONEYNESS VISUAL */
+    .money-bar {
+      display:flex; height:54px; border-radius:10px;
+      overflow:hidden; margin:16px 0; border:1px solid var(--slate-200);
+    }
+    .m-otm  { flex:2; background:#fee2e2; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; color:#7f1d1d; }
+    .m-atm  { flex:1; background:#fef9c3; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; color:#713f12; border-left:2px dashed #fbbf24; border-right:2px dashed #fbbf24; }
+    .m-itm  { flex:2; background:#dcfce7; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; color:#14532d; }
+
+    @media(max-width:640px){
+      .hero h1 { font-size:1.8rem; }
+      .hero { padding:36px 24px; }
+      .card-body { padding:22px; }
+      .g2,.g3,.g4 { grid-template-columns:1fr; }
+      .vs { grid-template-columns:1fr; }
+      .scenario-row { flex-direction:column; }
+      .sc-left { width:100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="badge">Corporate Finance · Chapter 10 · Deep Dive</div>
+  <h1>Financial Options<br>Explained from Scratch</h1>
+  <p>A step-by-step breakdown with worked numerical examples for every single concept — from what an option is, to how it's priced, to when you'd use each position.</p>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="toc">
+  <a href="#s1">1 · What is an Option?</a>
+  <a href="#s2">2 · Call Options</a>
+  <a href="#s3">3 · Put Options</a>
+  <a href="#s4">4 · The 4 Positions</a>
+  <a href="#s5">5 · Moneyness</a>
+  <a href="#s6">6 · What Drives Price?</a>
+  <a href="#s7">7 · Black-Scholes</a>
+  <a href="#s8">8 · Hedging vs Speculation</a>
+  <a href="#s9">9 · Long Straddle</a>
+  <a href="#s10">10 · Common Mistakes</a>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 1 — WHAT IS AN OPTION?
+══════════════════════════════════ -->
+<div class="card-wrap" id="s1">
+  <div class="card-head">
+    <div class="card-icon" style="background:#eff6ff;">🎫</div>
+    <div>
+      <h2 style="color:#1e3a8a;">1 · What Exactly is a Financial Option?</h2>
+      <p>Start here. Every complexity builds on this one idea.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>An <span class="term t-blue">option</span> is a contract between two people. It gives the <strong>buyer</strong> the <em>right — but never the obligation</em> — to buy or sell something at a fixed price, before a fixed date. The <strong>seller</strong> (called the <span class="term t-blue">writer</span>) collects a fee and must fulfill the contract if the buyer chooses to use it.</p>
+
+    <p>That phrase — <em>right but not obligation</em> — is everything. It means the buyer can always walk away if the deal is bad for them. The worst they can lose is the fee they paid upfront. This fee is called the <span class="term t-blue">premium</span>.</p>
+
+    <div class="callout c-blue">
+      <span class="ci">🏠</span>
+      <div>
+        <strong>Real-Life Analogy — House Purchase Option</strong>
+        You find a house listed at €300,000. You're not sure yet whether to buy it — you're waiting for your job transfer to be confirmed. You pay the seller €5,000 to "reserve" the right to buy the house at €300,000 any time in the next 3 months.
+        <ul style="margin-top:10px; padding-left:18px; font-size:0.92rem;">
+          <li><strong>Good outcome:</strong> Your transfer is confirmed, house prices rise to €340,000. You exercise your right and buy at €300,000. You immediately have €40,000 in equity, minus the €5,000 premium = <span class="pos">+€35,000 gain</span>.</li>
+          <li><strong>Bad outcome:</strong> Your transfer falls through. You don't want the house. You simply don't exercise. You lose only the €5,000 premium. <span class="neg">−€5,000 max loss</span>.</li>
+          <li><strong>Key insight:</strong> The seller (writer) must sell at €300,000 if you demand it — even if the market price is now €340,000. They took on that obligation in exchange for your €5,000.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ch" style="color:#1e3a8a;">The 5 Things That Define Any Option</div>
+    <div class="grid g3">
+      <div class="gc" style="background:#f0f9ff; border:1px solid #bae6fd;">
+        <h4>1. Underlying Asset</h4>
+        <p>What the option is based on — a stock (e.g. Apple), an index (S&amp;P 500), a currency (EUR/USD), a commodity (oil). Options do not directly own the asset.</p>
+      </div>
+      <div class="gc" style="background:#f0fdf4; border:1px solid #86efac;">
+        <h4>2. Strike Price (K)</h4>
+        <p>The fixed price at which you have the right to buy or sell. Also called the <span class="term t-blue">exercise price</span>. Set when the contract is created.</p>
+      </div>
+      <div class="gc" style="background:#fef9c3; border:1px solid #fde047;">
+        <h4>3. Expiry Date (T)</h4>
+        <p>The deadline. After this date, the option is worthless. A <span class="term t-blue">European option</span> can only be exercised on this exact date. An <span class="term t-blue">American option</span> can be exercised any time before it.</p>
+      </div>
+      <div class="gc" style="background:#fef2f2; border:1px solid #fca5a5;">
+        <h4>4. Premium</h4>
+        <p>The upfront price paid by the buyer to the writer. This is the option's market value — what it costs to acquire the right. Non-refundable whether you exercise or not.</p>
+      </div>
+      <div class="gc" style="background:#f5f3ff; border:1px solid #c4b5fd;">
+        <h4>5. Type: Call or Put</h4>
+        <p>A <span class="term t-blue">call</span> gives the right to <strong>buy</strong>. A <span class="term t-amber">put</span> gives the right to <strong>sell</strong>. That is the entire difference between the two product types.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 2 — CALL OPTIONS
+══════════════════════════════════ -->
+<div class="card-wrap" id="s2">
+  <div class="card-head">
+    <div class="card-icon" style="background:#dbeafe;">📞</div>
+    <div>
+      <h2 style="color:#1e3a8a;">2 · Call Options — The Right to Buy</h2>
+      <p>A call gives you the right to purchase an asset at the strike price. You profit when prices rise.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>A <span class="term t-blue">call option</span> gives the holder the right to <strong>buy</strong> the underlying asset at the strike price (K) on or before the expiry date. You buy a call when you believe the asset's price will <em>rise</em>.</p>
+
+    <div class="ch" style="color:#1e3a8a;">Worked Example — Buying a Call (Long Call)</div>
+
+    <div class="example">
+      <div class="ex-title"><span>Example</span> Long Call on Apple Stock</div>
+      <p><strong>Setup:</strong> Apple stock currently trades at <strong>€150</strong>. You believe it will rise over the next 3 months. You buy 1 call option:</p>
+      <ul>
+        <li>Underlying: Apple (AAPL)</li>
+        <li>Strike price (K): <strong>€155</strong></li>
+        <li>Expiry: 3 months from now</li>
+        <li>Premium paid: <strong>€8 per share</strong> (each contract = 100 shares, so total cost = €800)</li>
+      </ul>
+    </div>
+
+    <p>Now let's walk through every possible outcome at expiry:</p>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#dcfce7;">
+        <div class="sc-label" style="color:#166534;">🚀 Scenario A</div>
+        <div class="sc-sub">Apple rises to €180</div>
+      </div>
+      <div class="sc-right">
+        <p><strong>You exercise the call.</strong> You have the right to buy at €155. The market price is €180.</p>
+        <p>Profit per share = €180 − €155 − €8 (premium) = <span class="pos">+€17 per share</span></p>
+        <p>On a 100-share contract: <span class="pos">+€1,700 profit</span>. Your €800 investment grew to €2,500.</p>
+        <p><em>Note: you don't have to physically buy the shares — in practice you just receive the cash difference.</em></p>
+      </div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#fef9c3;">
+        <div class="sc-label" style="color:#713f12;">😐 Scenario B</div>
+        <div class="sc-sub">Apple stays at €160</div>
+      </div>
+      <div class="sc-right">
+        <p><strong>You exercise the call</strong> — barely profitable to do so.</p>
+        <p>Profit per share = €160 − €155 − €8 = <span class="neg">−€3 per share</span></p>
+        <p>Wait — shouldn't you exercise? You <em>technically</em> exercise to recover €5 (160−155), reducing your loss from €8 to €3. But still a net loss of <span class="neg">€300</span> on the contract.</p>
+        <p><strong>Breakeven price = Strike + Premium = €155 + €8 = €163.</strong> You only profit once the stock exceeds €163.</p>
+      </div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#fef2f2;">
+        <div class="sc-label" style="color:#7f1d1d;">📉 Scenario C</div>
+        <div class="sc-sub">Apple falls to €120</div>
+      </div>
+      <div class="sc-right">
+        <p><strong>You do NOT exercise.</strong> Why would you buy Apple at €155 when the market price is only €120? That would be irrational.</p>
+        <p>You let the option expire worthless. Loss = the premium only = <span class="neg">−€8 per share</span> = <span class="neg">−€800 total</span>.</p>
+        <p><strong>This is the power of options:</strong> No matter how far Apple falls — to €100, €50, €0 — your loss is capped at the €800 premium. You cannot lose more than what you paid.</p>
+      </div>
+    </div>
+
+    <div class="math">
+<span class="cm">── Long Call Profit Formula ──────────────────</span>
+<br>
+<span class="hi">Profit = max(S_T − K, 0) − Premium</span>
+<br><br>
+<span class="cm">Where S_T = stock price at expiry</span>
+<br><br>
+Example A: max(180 − 155, 0) − 8 = <span class="hi2">+17 per share</span>
+Example B: max(160 − 155, 0) − 8 = <span class="hi3">−3 per share</span>
+Example C: max(120 − 155, 0) − 8 = <span class="hi3">−8 per share</span>  (option expires worthless)
+<br><br>
+<span class="hi">Breakeven = Strike Price + Premium = 155 + 8 = 163</span>
+    </div>
+
+    <div class="callout c-green">
+      <span class="ci">✅</span>
+      <div>
+        <strong>The Long Call Summary</strong>
+        Max loss = premium paid (€800). Max gain = unlimited (stock could go to infinity). You need the stock to rise above the breakeven price (strike + premium) to make money. The position benefits from rising prices and higher volatility.
+      </div>
+    </div>
+
+    <div class="ch" style="color:#1e3a8a;">What About Selling a Call? (Short Call)</div>
+
+    <p>The <span class="term t-red">short call</span> is the other side of the same contract. You are the <em>writer</em> — you sold someone else the right to buy Apple from you at €155. You collected the €8 premium upfront.</p>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#dcfce7;">
+        <div class="sc-label" style="color:#166534;">📉 Best Case</div>
+        <div class="sc-sub">Apple stays below €163</div>
+      </div>
+      <div class="sc-right">
+        <p>The buyer doesn't exercise (it's not profitable for them). You keep the entire €8 premium per share as pure profit. <span class="pos">+€800 max gain</span>.</p>
+      </div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#fef2f2;">
+        <div class="sc-label" style="color:#7f1d1d;">🚀 Worst Case</div>
+        <div class="sc-sub">Apple rises to €200, €250...</div>
+      </div>
+      <div class="sc-right">
+        <p>The buyer exercises. You must sell Apple at €155 even though the market price is €200. You lose €200 − €155 = €45 per share, minus the €8 premium you received = <span class="neg">−€37 per share = −€3,700 on the contract</span>.</p>
+        <p>If Apple goes to €300, you lose €137 per share. There is <strong>no cap on the loss</strong>. This is why short call positions are extremely risky without owning the underlying stock.</p>
+      </div>
+    </div>
+
+    <div class="callout c-red">
+      <span class="ci">⚠️</span>
+      <div>
+        <strong>Short Call = Unlimited Risk</strong>
+        Selling a call is risky because your loss grows without limit as the stock price rises. Professional investors who sell calls typically own the underlying stock (a "covered call") to cap the risk. Naked call writing (selling calls without owning the stock) is one of the most dangerous strategies in finance.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 3 — PUT OPTIONS
+══════════════════════════════════ -->
+<div class="card-wrap" id="s3">
+  <div class="card-head">
+    <div class="card-icon" style="background:#fef3c7;">📤</div>
+    <div>
+      <h2 style="color:#92400e;">3 · Put Options — The Right to Sell</h2>
+      <p>A put gives you the right to sell an asset at the strike price. Think of it as insurance against falling prices.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>A <span class="term t-amber">put option</span> gives the holder the right to <strong>sell</strong> the underlying asset at the strike price (K) on or before the expiry date. You buy a put when you believe the asset's price will <em>fall</em>, or when you already own the asset and want to protect against a drop in its value.</p>
+
+    <div class="callout c-amber">
+      <span class="ci">🌾</span>
+      <div>
+        <strong>Intuition — The Farmer's Insurance</strong>
+        A wheat farmer will harvest 10,000 bushels in 6 months. Current price is €5/bushel. The farmer fears prices might fall by harvest time. He buys a put option with a strike of €4.80 — locking in the right to sell at €4.80 no matter what. If wheat crashes to €3, he exercises the put and still sells at €4.80. He's paid an insurance premium for that guarantee. If wheat rises to €6, he ignores the put and sells on the open market at €6.
+      </div>
+    </div>
+
+    <div class="ch" style="color:#92400e;">Worked Example — Buying a Put (Long Put)</div>
+
+    <div class="example">
+      <div class="ex-title"><span>Example</span> Long Put on a Stock You Own</div>
+      <p><strong>Setup:</strong> You own 100 shares of a company currently worth <strong>€80 each</strong> (total: €8,000). You're worried the stock might fall ahead of an earnings announcement. You buy a put option:</p>
+      <ul>
+        <li>Strike price (K): <strong>€75</strong></li>
+        <li>Expiry: 1 month from now</li>
+        <li>Premium paid: <strong>€4 per share</strong> (total cost: €400)</li>
+      </ul>
+      <p>This is called a <span class="term t-amber">protective put</span> — you're insuring your stock holding.</p>
+    </div>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#dcfce7;">
+        <div class="sc-label" style="color:#166534;">🚀 Scenario A</div>
+        <div class="sc-sub">Stock rises to €100</div>
+      </div>
+      <div class="sc-right">
+        <p><strong>You do NOT exercise the put.</strong> Why sell at €75 when the market pays €100?</p>
+        <p>Your shares are worth €10,000. Minus the €400 premium cost = <span class="pos">net gain of +€1,600</span> vs. your original €8,000 + €400 invested.</p>
+        <p>The put expires worthless, but you still benefited from the stock's rise. The €400 was the "insurance cost."</p>
+      </div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="sc-left" style="background:#fef2f2;">
+        <div class="sc-label" style="color:#7f1d1d;">📉 Scenario B</div>
+        <div class="sc-sub">Stock crashes to €50</div>
+      </div>
+      <div class="sc-right">
+        <p><strong>You exercise the put.</strong> You sell your 100 shares at €75 (the strike), even though the market price is only €50.</p>
+        <p>Without the put: your shares would be worth €5,000 — a loss of €3,000 on your €8,000 investment.</p>
+        <p>With the put: you sell at €75 × 100 = €7,500, minus €400 premium = net proceeds of <strong>€7,100</strong>. The put saved you from a €3,000 loss — you lost only €900 total (the €400 premium + the €500 gap between your entry price and the strike).</p>
+      </div>
+    </div>
+
+    <div class="math">
+<span class="cm">── Long Put Profit Formula ───────────────────</span>
+<br>
+<span class="hi">Profit = max(K − S_T, 0) − Premium</span>
+<br><br>
+If stock falls to 50: max(75 − 50, 0) − 4 = <span class="hi2">+21 per share</span>  (pure put profit)
+If stock stays at 80: max(75 − 80, 0) − 4 = <span class="hi3">−4 per share</span>  (option expires worthless)
+If stock rises to 100: max(75 − 100, 0) − 4 = <span class="hi3">−4 per share</span>
+<br><br>
+<span class="hi">Breakeven = Strike Price − Premium = 75 − 4 = 71</span>
+<span class="cm">(stock must fall below 71 for the put to be profitable on its own)</span>
+    </div>
+
+    <div class="callout c-amber">
+      <span class="ci">🛡️</span>
+      <div>
+        <strong>The Long Put Summary</strong>
+        Max loss = premium paid (€400 — this is your insurance cost). Max gain = strike price minus premium (€71 × 100 = €7,100 if the stock goes to zero). You need the stock to fall below the breakeven (strike − premium) to profit on the put itself. Used as portfolio insurance by virtually every institutional investor.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 4 — ALL 4 POSITIONS
+══════════════════════════════════ -->
+<div class="card-wrap" id="s4">
+  <div class="card-head">
+    <div class="card-icon" style="background:#f5f3ff;">🔢</div>
+    <div>
+      <h2 style="color:#4c1d95;">4 · The 4 Positions — Side by Side</h2>
+      <p>Every option trade is one of these four positions. Know them cold.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>Combining 2 products (call, put) × 2 sides (buy, sell) gives 4 fundamental positions. Here they are summarised with a concrete example for each, all using the same stock at €100 and a strike price of €100.</p>
+
+    <div class="grid g2">
+
+      <div class="gc" style="background:#eff6ff; border:2px solid #3b82f6;">
+        <h4 style="color:#1e40af;">📞 Position 1 — Long Call (Buy a Call)</h4>
+        <p><strong>What you do:</strong> Pay €7 premium. Gain the right to buy stock at €100.</p>
+        <p><strong>You want:</strong> Stock to rise above €107 (breakeven).</p>
+        <p><strong>Max loss:</strong> <span class="neg">−€7 (the premium)</span></p>
+        <p><strong>Max gain:</strong> <span class="pos">Unlimited</span></p>
+        <p><strong>Example:</strong> Stock rises to €130. Profit = €130 − €100 − €7 = <span class="pos">+€23</span></p>
+        <p><strong>Typical user:</strong> Investor believing the stock will rise, or a company hedging against rising input costs.</p>
+      </div>
+
+      <div class="gc" style="background:#fef2f2; border:2px solid #ef4444;">
+        <h4 style="color:#7f1d1d;">📞 Position 2 — Short Call (Sell/Write a Call)</h4>
+        <p><strong>What you do:</strong> Collect €7 premium. Take on the obligation to sell stock at €100 if exercised.</p>
+        <p><strong>You want:</strong> Stock to stay below €107 (breakeven).</p>
+        <p><strong>Max gain:</strong> <span class="pos">+€7 (the premium)</span></p>
+        <p><strong>Max loss:</strong> <span class="neg">Unlimited</span></p>
+        <p><strong>Example:</strong> Stock rises to €130. Loss = −(€130 − €100) + €7 = <span class="neg">−€23</span></p>
+        <p><strong>Typical user:</strong> Investor who owns the stock and wants to earn extra income ("covered call").</p>
+      </div>
+
+      <div class="gc" style="background:#fffbeb; border:2px solid #f59e0b;">
+        <h4 style="color:#713f12;">📤 Position 3 — Long Put (Buy a Put)</h4>
+        <p><strong>What you do:</strong> Pay €6 premium. Gain the right to sell stock at €100.</p>
+        <p><strong>You want:</strong> Stock to fall below €94 (breakeven).</p>
+        <p><strong>Max loss:</strong> <span class="neg">−€6 (the premium)</span></p>
+        <p><strong>Max gain:</strong> <span class="pos">Up to €94 (if stock goes to zero)</span></p>
+        <p><strong>Example:</strong> Stock falls to €70. Profit = €100 − €70 − €6 = <span class="pos">+€24</span></p>
+        <p><strong>Typical user:</strong> Investor expecting a drop, or someone insuring an existing stock position.</p>
+      </div>
+
+      <div class="gc" style="background:#f0fdf4; border:2px solid #22c55e;">
+        <h4 style="color:#166534;">📤 Position 4 — Short Put (Sell/Write a Put)</h4>
+        <p><strong>What you do:</strong> Collect €6 premium. Take on the obligation to buy stock at €100 if exercised.</p>
+        <p><strong>You want:</strong> Stock to stay above €94 (breakeven).</p>
+        <p><strong>Max gain:</strong> <span class="pos">+€6 (the premium)</span></p>
+        <p><strong>Max loss:</strong> <span class="neg">Up to −€94 (if stock goes to zero)</span></p>
+        <p><strong>Example:</strong> Stock falls to €70. Loss = −(€100 − €70) + €6 = <span class="neg">−€24</span></p>
+        <p><strong>Typical user:</strong> Investor happy to buy the stock if it falls to the strike price — earns premium while waiting.</p>
+      </div>
+
+    </div>
+
+    <div class="ch" style="color:#4c1d95; margin-top:28px;">Complete Summary Table</div>
+    <div style="overflow-x:auto;">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>You pay/receive</th>
+            <th>Breakeven</th>
+            <th>Profit when…</th>
+            <th>Max Loss</th>
+            <th>Max Gain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Long Call</strong></td>
+            <td>PAY premium</td>
+            <td>K + premium</td>
+            <td>Stock rises above breakeven</td>
+            <td class="neg">Premium</td>
+            <td class="pos">Unlimited</td>
+          </tr>
+          <tr>
+            <td><strong>Short Call</strong></td>
+            <td>RECEIVE premium</td>
+            <td>K + premium</td>
+            <td>Stock stays below breakeven</td>
+            <td class="neg">Unlimited</td>
+            <td class="pos">Premium</td>
+          </tr>
+          <tr>
+            <td><strong>Long Put</strong></td>
+            <td>PAY premium</td>
+            <td>K − premium</td>
+            <td>Stock falls below breakeven</td>
+            <td class="neg">Premium</td>
+            <td class="pos">K − premium (stock → 0)</td>
+          </tr>
+          <tr>
+            <td><strong>Short Put</strong></td>
+            <td>RECEIVE premium</td>
+            <td>K − premium</td>
+            <td>Stock stays above breakeven</td>
+            <td class="neg">K − premium (stock → 0)</td>
+            <td class="pos">Premium</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-violet">
+      <span class="ci">🔑</span>
+      <div>
+        <strong>The Golden Rule of Options</strong>
+        Buyers (long positions) always have <strong>limited loss</strong> and <strong>asymmetric upside</strong>. Writers (short positions) have <strong>limited gain</strong> but <strong>large or unlimited risk</strong>. This asymmetry is why buyers pay a premium — they're buying protection and upside. Writers earn the premium as compensation for taking on the risk.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 5 — MONEYNESS
+══════════════════════════════════ -->
+<div class="card-wrap" id="s5">
+  <div class="card-head">
+    <div class="card-icon" style="background:#fef9c3;">💰</div>
+    <div>
+      <h2 style="color:#713f12;">5 · Moneyness — Is Your Option Worth Exercising Right Now?</h2>
+      <p>Moneyness tells you whether immediate exercise would be profitable.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p><span class="term t-amber">Moneyness</span> describes the relationship between the current stock price and the option's strike price. It answers the question: "If I exercised this option right now, would I gain anything?"</p>
+
+    <div class="ch" style="color:#713f12;">For a Call Option (right to buy)</div>
+    <div class="money-bar">
+      <div class="m-otm">OUT OF THE MONEY (OTM)<br>Stock price &lt; Strike<br>Don't exercise</div>
+      <div class="m-atm">AT THE<br>MONEY<br>S ≈ K</div>
+      <div class="m-itm">IN THE MONEY (ITM)<br>Stock price &gt; Strike<br>Exercise is profitable</div>
+    </div>
+    <p style="text-align:center; font-size:0.82rem; color:var(--slate-500); margin-bottom:16px;">← Stock price is low &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock price is high →</p>
+
+    <div class="ch" style="color:#713f12;">For a Put Option (right to sell)</div>
+    <div class="money-bar">
+      <div class="m-itm">IN THE MONEY (ITM)<br>Stock price &lt; Strike<br>Exercise is profitable</div>
+      <div class="m-atm">AT THE<br>MONEY<br>S ≈ K</div>
+      <div class="m-otm">OUT OF THE MONEY (OTM)<br>Stock price &gt; Strike<br>Don't exercise</div>
+    </div>
+    <p style="text-align:center; font-size:0.82rem; color:var(--slate-500); margin-bottom:20px;">← Stock price is low &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock price is high →</p>
+
+    <div class="example">
+      <div class="ex-title"><span>Example</span> Moneyness with Numbers</div>
+      <p>Stock price is currently <strong>€90</strong>. You have two options:</p>
+      <ul>
+        <li><strong>Call option, K = €100</strong> → OTM (you'd buy at €100, but market is only €90 — no benefit)</li>
+        <li><strong>Call option, K = €80</strong> → ITM (you'd buy at €80, immediately sell at €90 — €10 intrinsic value)</li>
+        <li><strong>Put option, K = €100</strong> → ITM (you'd sell at €100, but market is only €90 — €10 intrinsic value)</li>
+        <li><strong>Put option, K = €80</strong> → OTM (you'd sell at €80, but market is €90 — you'd rather sell on the market)</li>
+      </ul>
+    </div>
+
+    <div class="ch" style="color:#713f12; margin-top:24px;">Intrinsic Value vs Time Value</div>
+    <p>Every option's premium has two components:</p>
+    <div class="grid g2">
+      <div class="gc" style="background:#f0fdf4; border:1px solid #86efac;">
+        <h4>💎 Intrinsic Value</h4>
+        <p>The profit you'd make from exercising <em>right now</em>.</p>
+        <ul>
+          <li>Call: max(S − K, 0)</li>
+          <li>Put: max(K − S, 0)</li>
+        </ul>
+        <p style="margin-top:10px;">OTM options have <strong>zero</strong> intrinsic value. ITM options always have positive intrinsic value.</p>
+        <p><strong>Example:</strong> Call K=€100, Stock=€110 → Intrinsic value = €10</p>
+      </div>
+      <div class="gc" style="background:#eff6ff; border:1px solid #93c5fd;">
+        <h4>⏳ Time Value</h4>
+        <p>The extra premium above intrinsic value — the value of having time left before expiry.</p>
+        <p style="margin-top:10px;">Time value reflects the <em>possibility</em> that the stock moves further in your favour before expiry. It decays to zero at expiry — this is called <span class="term t-blue">theta decay</span>.</p>
+        <p><strong>Example:</strong> Same call trades at €14 in the market. Time value = €14 − €10 = <strong>€4</strong></p>
+      </div>
+    </div>
+
+    <p style="margin-top:8px;"><strong>Total Premium = Intrinsic Value + Time Value</strong></p>
+
+    <div class="callout c-blue">
+      <span class="ci">💡</span>
+      <div>
+        <strong>Why do OTM options still have value?</strong>
+        Even if an option is currently worthless to exercise (OTM), there is still time before expiry for the stock to move into profitable territory. You're paying for that <em>possibility</em>. This is time value. An option with 6 months to expiry is worth more than the same option with 1 week to expiry — there's more time for something good to happen.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 6 — WHAT DRIVES PRICE?
+══════════════════════════════════ -->
+<div class="card-wrap" id="s6">
+  <div class="card-head">
+    <div class="card-icon" style="background:#f5f3ff;">🔧</div>
+    <div>
+      <h2 style="color:#4c1d95;">6 · What Makes an Option More or Less Valuable?</h2>
+      <p>Five variables drive every option's price. Understand the logic behind each one.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>You don't need to memorise the Black-Scholes formula to understand what makes options more expensive or cheaper. There are 5 key variables — and the intuition behind each is straightforward.</p>
+
+    <div class="grid g2">
+
+      <div class="gc" style="background:var(--slate-50); border:1px solid var(--slate-200);">
+        <h4>1. Stock Price (S) ↑ → Call ↑, Put ↓</h4>
+        <p>As the stock price rises, a call option moves deeper into the money (more intrinsic value). The higher the stock price relative to the strike, the more valuable a call becomes — and the less valuable a put becomes.</p>
+        <p><strong>Example:</strong> A call with K=€100. When S=€90 it's OTM. When S=€110 it has €10 intrinsic value. When S=€130 it has €30 intrinsic value.</p>
+      </div>
+
+      <div class="gc" style="background:var(--slate-50); border:1px solid var(--slate-200);">
+        <h4>2. Strike Price (K) ↑ → Call ↓, Put ↑</h4>
+        <p>A higher strike makes it harder to profit from a call (the stock must rise higher before you're in the money). It makes a put more valuable (you get to sell at a higher price).</p>
+        <p><strong>Example:</strong> Two calls, both on the same stock at €100. Call A has K=€90 (already ITM, worth more). Call B has K=€120 (far OTM, cheaper).</p>
+      </div>
+
+      <div class="gc" style="background:var(--slate-50); border:1px solid var(--slate-200);">
+        <h4>3. Time to Expiry (T) ↑ → Both ↑</h4>
+        <p>More time = more opportunity for the stock to move in your favour = higher option value. This is why long-dated options are more expensive than short-dated ones.</p>
+        <p><strong>Example:</strong> A 6-month call is worth more than a 1-week call on the same stock. The 1-week option has very little time for the stock to rally above the strike.</p>
+      </div>
+
+      <div class="gc" style="background:var(--slate-50); border:1px solid var(--slate-200);">
+        <h4>4. Risk-Free Rate (r) ↑ → Call ↑, Put ↓</h4>
+        <p>Higher interest rates reduce the present value of the strike price you would pay (for a call). This makes calls more attractive (you effectively pay less in today's money). Puts work in reverse — higher rates reduce the PV of what you'd receive from selling.</p>
+        <p><strong>Example:</strong> When central banks raise interest rates sharply (as in 2022–23), call option values increased slightly, all else equal.</p>
+      </div>
+
+      <div class="gc" style="background:#fef9c3; border:2px solid #fbbf24; grid-column: span 2;">
+        <h4>⭐ 5. Volatility (σ) ↑ → BOTH Calls and Puts ↑ — The Most Important Driver</h4>
+        <p>This is the most important and most counterintuitive relationship in options. Higher volatility — meaning the stock price swings more wildly — makes <em>both</em> calls and puts more valuable. Here's the critical asymmetry:</p>
+        <ul style="margin-top:10px;">
+          <li><strong>If volatility helps:</strong> A highly volatile stock might rocket far above the strike — creating huge call profits.</li>
+          <li><strong>If volatility hurts:</strong> If the stock crashes, the call buyer just doesn't exercise. Loss stays capped at the premium.</li>
+          <li>Option holders benefit from big moves in either direction but don't suffer extra loss from the bad moves (because they can always just not exercise).</li>
+        </ul>
+        <div style="background:#fff; border-radius:8px; padding:14px; margin-top:14px; font-size:0.88rem;">
+          <strong>Numerical illustration:</strong><br>
+          Stock A: always stays near €100 (low volatility). A call at K=€110 is nearly worthless — stock never gets close.<br>
+          Stock B: swings between €70 and €140 (high volatility). Same call at K=€110 is very valuable — there's a real chance it hits €140.
+        </div>
+        <p style="margin-top:12px;">This is why options traders care enormously about <span class="term t-amber">implied volatility (IV)</span> — the market's forecast of future volatility, extracted from current option prices. High IV = expensive options. Low IV = cheap options. The <span class="term t-red">VIX</span> (S&amp;P 500 implied volatility) is called the "fear gauge" — when markets are fearful, volatility spikes and option prices jump.</p>
+      </div>
+
+    </div>
+
+    <div class="ch" style="color:#4c1d95; margin-top:8px;">Quick Reference Cheat Card</div>
+    <div style="overflow-x:auto;">
+      <table class="tbl">
+        <thead>
+          <tr><th>Variable</th><th>Goes UP</th><th>Effect on Call</th><th>Effect on Put</th><th>Key Reason</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Stock price (S)</td><td>↑</td><td class="pos">↑ More valuable</td><td class="neg">↓ Less valuable</td><td>Call moves toward/into the money</td></tr>
+          <tr><td>Strike price (K)</td><td>↑</td><td class="neg">↓ Less valuable</td><td class="pos">↑ More valuable</td><td>Harder target for call; better sell price for put</td></tr>
+          <tr><td>Time to expiry (T)</td><td>↑</td><td class="pos">↑ More valuable</td><td class="pos">↑ More valuable</td><td>More time for favourable moves</td></tr>
+          <tr><td>Risk-free rate (r)</td><td>↑</td><td class="pos">↑ More valuable</td><td class="neg">↓ Less valuable</td><td>Lower PV of strike price payment</td></tr>
+          <tr><td><strong>Volatility (σ)</strong></td><td>↑</td><td class="pos">↑ More valuable</td><td class="pos">↑ More valuable</td><td>Greater chance of large favourable moves; downside still capped</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 7 — BLACK-SCHOLES
+══════════════════════════════════ -->
+<div class="card-wrap" id="s7">
+  <div class="card-head">
+    <div class="card-icon" style="background:#1e293b; font-size:1.3rem;">📐</div>
+    <div>
+      <h2 style="color:#1e3a8a;">7 · The Black-Scholes Formula — Intuition Without the Math</h2>
+      <p>The formula looks complex. The idea behind it is simple. Let's break it apart piece by piece.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>In 1973, Fischer Black and Myron Scholes solved one of finance's biggest puzzles: how much should an option fairly cost? Before their work, pricing was guesswork. Their formula gives a single mathematical answer using just 5 inputs.</p>
+
+    <div class="callout c-dark">
+      <span class="ci">🔑</span>
+      <div>
+        <strong>The Core Idea — Replicating Portfolio</strong>
+        Black-Scholes works by asking: "What combination of the stock + a risk-free loan would perfectly mimic the option's payoff?" Because these two things produce identical outcomes, they must have the same price in an efficient market — otherwise traders would arbitrage the difference until it disappears. This is called the <span class="term t-blue">Law of One Price</span>.
+      </div>
+    </div>
+
+    <div class="math">
+<span class="cm">── The Black-Scholes Formula ─────────────────────────────</span>
+<br>
+<span class="hi">C = S · N(d₁)  −  K · e⁻ʳᵀ · N(d₂)</span>
+<br><br>
+<span class="hi2">d₁ = [ ln(S/K) + (r + σ²/2)·T ] / (σ·√T)</span>
+<span class="hi2">d₂ = d₁ − σ·√T</span>
+<br><br>
+<span class="cm">
+  S    = current stock price
+  K    = strike price
+  T    = time to expiry in years  (e.g. 6 months = 0.5)
+  r    = annual risk-free rate    (e.g. 5% = 0.05)
+  σ    = annual volatility        (e.g. 30% = 0.30)
+  N(·) = probability from standard normal distribution
+  e    = 2.718... (used to discount the future payment)
+</span>
+    </div>
+
+    <div class="ch" style="color:#1e3a8a;">Breaking the Formula into Plain English</div>
+
+    <p>The formula has two parts:</p>
+
+    <div class="grid g2">
+      <div class="gc" style="background:#eff6ff; border:2px solid #93c5fd;">
+        <h4 style="color:#1e40af;">Part 1: S · N(d₁)</h4>
+        <p>This is the <strong>expected benefit of receiving the stock</strong>.</p>
+        <p><em>S</em> = what the stock is worth today.<br>
+        <em>N(d₁)</em> = the probability (adjusted for risk) that you'll exercise and receive the stock.</p>
+        <p style="margin-top:8px;">Think of this as: "What is the expected value of the stock I'll receive, weighted by the chance I actually receive it?"</p>
+      </div>
+      <div class="gc" style="background:#fef2f2; border:2px solid #fca5a5;">
+        <h4 style="color:#7f1d1d;">Part 2: K · e⁻ʳᵀ · N(d₂)</h4>
+        <p>This is the <strong>present value of what you pay</strong>.</p>
+        <p><em>K</em> = strike price (what you pay to exercise).<br>
+        <em>e⁻ʳᵀ</em> = discount factor (future payment in today's money).<br>
+        <em>N(d₂)</em> = probability that you'll exercise the option.</p>
+        <p style="margin-top:8px;">Think of this as: "What is the present value of the strike price I'll pay, weighted by the probability I'll actually pay it?"</p>
+      </div>
+    </div>
+
+    <p style="margin-top:16px; font-weight:600; font-size:1rem;">Call Price = (Expected value of stock you receive) − (PV of what you pay)</p>
+    <p>This is the same logic as any financial asset: its value = what you get − what you pay, both adjusted for time and probability.</p>
+
+    <div class="ch" style="color:#1e3a8a; margin-top:24px;">Worked Numerical Example</div>
+
+    <div class="example">
+      <div class="ex-title"><span>Example</span> Calculating a Call Option Price with Black-Scholes</div>
+      <p><strong>Given:</strong></p>
+      <ul>
+        <li>Stock price S = <strong>€100</strong></li>
+        <li>Strike price K = <strong>€100</strong> (at the money)</li>
+        <li>Time to expiry T = <strong>1 year</strong></li>
+        <li>Risk-free rate r = <strong>5%</strong></li>
+        <li>Volatility σ = <strong>20%</strong></li>
+      </ul>
+      <p style="margin-top:12px;"><strong>Step 1 — Calculate d₁ and d₂:</strong></p>
+      <div class="math" style="font-size:0.85rem;">
+d₁ = [ln(100/100) + (0.05 + 0.20²/2) × 1] / (0.20 × √1)
+   = [0 + (0.05 + 0.02)] / 0.20
+   = 0.07 / 0.20 = <span class="hi">0.35</span>
+
+d₂ = 0.35 − 0.20 × 1 = <span class="hi">0.15</span>
+      </div>
+      <p><strong>Step 2 — Look up N(d₁) and N(d₂) from normal distribution table:</strong></p>
+      <ul>
+        <li>N(0.35) ≈ <strong>0.637</strong> (63.7% probability)</li>
+        <li>N(0.15) ≈ <strong>0.560</strong> (56.0% probability)</li>
+      </ul>
+      <p><strong>Step 3 — Apply the formula:</strong></p>
+      <div class="math" style="font-size:0.85rem;">
+C = 100 × 0.637 − 100 × e⁻⁰·⁰⁵ × 0.560
+  = 63.7 − 100 × 0.9512 × 0.560
+  = 63.7 − 53.27
+  = <span class="hi2">€10.45</span>
+      </div>
+      <p><strong>Interpretation:</strong> The fair value of this at-the-money call with 1 year to expiry is approximately <strong>€10.45</strong>. This is the premium a rational buyer should pay and writer should accept.</p>
+    </div>
+
+    <div class="callout c-amber">
+      <span class="ci">⚠️</span>
+      <div>
+        <strong>Important Limitations of Black-Scholes</strong>
+        <ul style="margin-top:8px; padding-left:18px; font-size:0.92rem;">
+          <li>Only valid for <span class="term t-blue">European options</span> (exercisable only at expiry)</li>
+          <li>Assumes volatility is <em>constant</em> over the option's life — in reality it changes (the "volatility smile" problem)</li>
+          <li>Assumes stock prices follow a smooth, continuous <em>log-normal distribution</em> — but real markets have sudden jumps and "fat tails"</li>
+          <li>Does not account for dividends in the basic form</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 8 — HEDGING vs SPECULATION
+══════════════════════════════════ -->
+<div class="card-wrap" id="s8">
+  <div class="card-head">
+    <div class="card-icon" style="background:#f0fdf4;">⚖️</div>
+    <div>
+      <h2 style="color:#166534;">8 · Hedging vs Speculation — Two Very Different Uses</h2>
+      <p>The same option contract can serve completely opposite purposes depending on who uses it and why.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="vs">
+      <div class="vs-side" style="background:#f0fdf4;">
+        <h4 style="color:#166534;">🛡️ Hedging — Reducing Risk You Already Have</h4>
+        <ul>
+          <li>You have an <em>existing</em> exposure to price risk</li>
+          <li>The option <em>offsets</em> an existing risk — like taking out insurance</li>
+          <li>The cost (premium) is a business expense, not a bet</li>
+          <li>You accept a smaller outcome in the good scenario to protect against the bad scenario</li>
+        </ul>
+        <p style="margin-top:12px; font-size:0.88rem;"><strong>Examples of hedgers:</strong><br>
+        Airlines buy call options on jet fuel — limits exposure to oil price spikes.<br>
+        Exporters buy put options on foreign currency — limits damage if their domestic currency strengthens.<br>
+        Investors buy put options on their stock portfolios — limits loss if markets crash.</p>
+      </div>
+      <div class="vs-side" style="background:#fef9c3;">
+        <h4 style="color:#713f12;">📈 Speculation — Taking on Risk for Profit</h4>
+        <ul>
+          <li>You have <em>no existing</em> exposure — you're creating a new position</li>
+          <li>You're making a directional bet on price movement</li>
+          <li>Options offer <em>leverage</em> — a small premium controls a large position</li>
+          <li>Potential for large gains on small investment — but also total loss of premium</li>
+        </ul>
+        <p style="margin-top:12px; font-size:0.88rem;"><strong>Examples of speculators:</strong><br>
+        A trader buying call options on NVIDIA before an earnings announcement.<br>
+        A hedge fund buying put options on bank stocks anticipating a rate crisis.<br>
+        A retail investor buying OTM call options ("lottery tickets") on a meme stock.</p>
+      </div>
+    </div>
+
+    <div class="example" style="margin-top:20px;">
+      <div class="ex-title"><span>Hedging Example</span> Car Manufacturer Buying Steel</div>
+      <p>A German car manufacturer needs 10,000 tonnes of steel in 6 months. Current price is €600/tonne. Total exposure: €6,000,000.</p>
+      <ul style="margin-top:10px;">
+        <li><strong>Fear:</strong> Steel prices rise to €800/tonne → extra cost of €2,000,000</li>
+        <li><strong>Hedge:</strong> Buy call options on steel with strike €620/tonne. Premium = €15/tonne = €150,000 total cost.</li>
+        <li><strong>If steel rises to €800:</strong> Exercise call options — buy at €620. Saving = (€800 − €620) × 10,000 = €1,800,000. Net gain from hedge = €1,800,000 − €150,000 premium = €1,650,000 saved.</li>
+        <li><strong>If steel stays at €600:</strong> Don't exercise. Lose only the €150,000 premium. This was the "insurance cost" for peace of mind.</li>
+      </ul>
+    </div>
+
+    <div class="example" style="margin-top:16px;">
+      <div class="ex-title"><span>Speculation Example</span> Trader Betting on an Earnings Surprise</div>
+      <p>A trader believes Company X will beat earnings estimates. Stock is at €50, earnings announcement in 2 weeks.</p>
+      <ul style="margin-top:10px;">
+        <li>Buying 100 shares directly costs €5,000. If stock rises to €60, gain = €1,000 (20% return).</li>
+        <li>Instead, buy call options: K=€52, premium = €2/share. Cost = €200 for a 100-share contract.</li>
+        <li><strong>If stock rises to €60:</strong> Option profit = €60 − €52 − €2 = €6 per share = <span class="pos">+€600 profit on a €200 investment = +300% return</span>.</li>
+        <li><strong>If stock falls to €45:</strong> Option expires worthless. Loss = €200 only. Compared to owning 100 shares: loss would have been €500.</li>
+      </ul>
+      <p style="margin-top:10px;">Options allow speculators to make larger bets with smaller capital — this is <span class="term t-amber">financial leverage</span>.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 9 — LONG STRADDLE
+══════════════════════════════════ -->
+<div class="card-wrap" id="s9">
+  <div class="card-head">
+    <div class="card-icon" style="background:#ede9fe;">🔀</div>
+    <div>
+      <h2 style="color:#4c1d95;">9 · The Long Straddle — Profiting from Uncertainty Itself</h2>
+      <p>What if you don't know which direction prices will move — but you know something big is coming?</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>A <span class="term t-violet">long straddle</span> involves buying <em>both</em> a call option and a put option on the same asset, with the same strike price and the same expiry date. You pay two premiums, but you profit if the price moves significantly in <em>either</em> direction.</p>
+
+    <div class="callout c-violet">
+      <span class="ci">🌍</span>
+      <div>
+        <strong>Intuition — The Brexit Vote Example</strong>
+        The night before the UK's Brexit referendum in June 2016, traders didn't know if the UK would vote Leave or Remain. But they knew the result would cause a large move in the British pound in one direction. A straddle on GBP/USD was ideal: if Leave won, the pound would crash (put profits). If Remain won, the pound would rally (call profits). The direction didn't matter — only the size of the move.
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-title"><span>Example</span> Long Straddle on Earnings Announcement</div>
+      <p><strong>Setup:</strong> Company reports earnings next week. Stock currently at <strong>€100</strong>. Big move expected but direction unknown.</p>
+      <ul>
+        <li>Buy call option: K=€100, premium = <strong>€6</strong></li>
+        <li>Buy put option: K=€100, premium = <strong>€5</strong></li>
+        <li><strong>Total cost = €11 per share</strong></li>
+        <li>Breakeven: stock must move above <strong>€111</strong> or below <strong>€89</strong></li>
+      </ul>
+    </div>
+
+    <div style="overflow-x:auto; margin:16px 0;">
+      <table class="tbl">
+        <thead>
+          <tr><th>Stock Price at Expiry</th><th>Call Payoff</th><th>Put Payoff</th><th>Net Profit/Loss</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>€130</td><td class="pos">+€30 − €6 = +€24</td><td class="neg">0 − €5 = −€5</td><td class="pos">+€19 ✅</td></tr>
+          <tr><td>€115</td><td class="pos">+€15 − €6 = +€9</td><td class="neg">0 − €5 = −€5</td><td class="pos">+€4 ✅</td></tr>
+          <tr><td>€111</td><td class="pos">+€11 − €6 = +€5</td><td class="neg">0 − €5 = −€5</td><td class="neu">€0 (breakeven)</td></tr>
+          <tr><td>€100</td><td class="neg">0 − €6 = −€6</td><td class="neg">0 − €5 = −€5</td><td class="neg">−€11 (max loss)</td></tr>
+          <tr><td>€89</td><td class="neg">0 − €6 = −€6</td><td class="pos">+€11 − €5 = +€6</td><td class="neu">€0 (breakeven)</td></tr>
+          <tr><td>€75</td><td class="neg">0 − €6 = −€6</td><td class="pos">+€25 − €5 = +€20</td><td class="pos">+€14 ✅</td></tr>
+          <tr><td>€60</td><td class="neg">0 − €6 = −€6</td><td class="pos">+€40 − €5 = +€35</td><td class="pos">+€29 ✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-blue">
+      <span class="ci">📖</span>
+      <div>
+        <strong>The Short Straddle — the opposite bet</strong>
+        Selling both a call and a put collects both premiums (+€11 in this example). The short straddle writer profits if the stock barely moves — they keep both premiums if the stock stays between €89 and €111. But if the stock moves dramatically in either direction, losses can be very large. This strategy is used by traders who believe a market event will cause less movement than other traders expect — essentially, selling insurance that they believe is overpriced.
+      </div>
+    </div>
+
+    <div class="callout c-green">
+      <span class="ci">🏢</span>
+      <div>
+        <strong>Corporate Use Case — Currency Risk Hedging</strong>
+        An international import-export company receives revenue in both USD and EUR. If EUR/USD rises, their USD revenue is worth less in euros. If EUR/USD falls, their EUR costs rise. They face risk in both directions — so a long straddle on EUR/USD protects them regardless of which way the exchange rate moves. The premium is a known, fixed hedging cost that caps their worst-case outcome.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SECTION 10 — COMMON MISTAKES
+══════════════════════════════════ -->
+<div class="card-wrap" id="s10">
+  <div class="card-head">
+    <div class="card-icon" style="background:#fef2f2;">🚫</div>
+    <div>
+      <h2 style="color:#7f1d1d;">10 · Common Mistakes &amp; Exam Traps</h2>
+      <p>The misconceptions that catch students out in exams — and in real life.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">✗</div>
+        <div class="step-b">
+          <h4>"An option is like buying a stock"</h4>
+          <p><strong>Why it's wrong:</strong> An option is a <em>right</em>, not an asset. Buying a stock means you own a piece of the company — you receive dividends and bear all gains/losses. Buying an option gives you a conditional right. You do not own the underlying stock unless you exercise. The payoff profiles are completely different.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">✗</div>
+        <div class="step-b">
+          <h4>"Higher volatility is bad for option holders"</h4>
+          <p><strong>Why it's wrong:</strong> This is the most common mistake. Volatility benefits option holders because their downside is capped (they just don't exercise) but their upside is uncapped. A rational option holder always benefits from more volatility. It is direct stockholders who fear volatility — not option holders.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">✗</div>
+        <div class="step-b">
+          <h4>"If the option is out of the money, I've lost all my money"</h4>
+          <p><strong>Why it's wrong:</strong> An OTM option still has <em>time value</em> as long as there is time before expiry. It can still become profitable if the stock moves. Only at expiry does an OTM option expire worthless. Before expiry, you can sell the option in the market and recover some of the premium.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">✗</div>
+        <div class="step-b">
+          <h4>"The option writer (seller) takes on limited risk"</h4>
+          <p><strong>Why it's wrong:</strong> The option <em>buyer</em> has limited risk (only the premium). The option <em>writer</em> has potentially unlimited risk (for calls) or very large risk (for puts). This asymmetry is the fundamental risk imbalance in options — the writer takes on the risk, the buyer pays for the protection.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">✗</div>
+        <div class="step-b">
+          <h4>"Black-Scholes works for all types of options"</h4>
+          <p><strong>Why it's wrong:</strong> Black-Scholes in its basic form is only valid for European options on non-dividend-paying stocks. It assumes constant volatility and continuous stock price movement — both simplifications. For American options (early exercise possible), dividend-paying stocks, or exotic options, different and more complex models are needed (binomial trees, Monte Carlo simulation, etc.).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">✗</div>
+        <div class="step-b">
+          <h4>"If an option is in the money, I must exercise it immediately"</h4>
+          <p><strong>Why it's wrong:</strong> For American options, early exercise is almost never optimal for calls on non-dividend-paying stocks. The option still has time value — you capture more total value by <em>selling</em> the option in the market than by exercising it early. You only lose the time value by exercising early. The exception: deeply ITM puts close to expiry, or calls on stocks about to pay a large dividend.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="ti">🏆</span>
+      <div>
+        <strong>Financial Options — The Core Principles to Remember</strong>
+        <p>1. An option is a <strong>right, not an obligation</strong> — the buyer can always walk away. Loss is capped at the premium.<br>
+        2. Calls profit from price <strong>rises</strong>. Puts profit from price <strong>falls</strong>.<br>
+        3. Buyers (long) have limited loss / asymmetric upside. Writers (short) collect premium but face large/unlimited loss.<br>
+        4. The 5 value drivers: S, K, T, r, σ. <strong>Volatility increases the value of both calls and puts</strong> — the most important and counterintuitive result.<br>
+        5. Black-Scholes prices a European call as: (expected stock gain) − (PV of strike price paid), each weighted by exercise probability.<br>
+        6. Options are used for <strong>hedging</strong> (reducing existing risk) or <strong>speculation</strong> (directional bets with leverage). Same contract, opposite purpose.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</div><!-- /page -->
+</body>
+</html>
