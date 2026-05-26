@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Real Options & Decision Trees — Plain English Explainer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:       #2563eb;
+      --blue-dark:  #1e3a8a;
+      --blue-light: #dbeafe;
+      --green:      #16a34a;
+      --green-light:#dcfce7;
+      --red:        #dc2626;
+      --red-light:  #fee2e2;
+      --amber:      #d97706;
+      --amber-light:#fef3c7;
+      --violet:     #7c3aed;
+      --violet-light:#ede9fe;
+      --orange:     #ea580c;
+      --slate-900:  #0f172a;
+      --slate-700:  #334155;
+      --slate-500:  #64748b;
+      --slate-200:  #e2e8f0;
+      --slate-100:  #f1f5f9;
+      --slate-50:   #f8fafc;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #eef2f7;
+      color: var(--slate-700);
+      line-height: 1.85;
+      font-size: 15px;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 36px 20px 100px; }
+
+    /* TERM BADGES */
+    .term {
+      display: inline-block; padding: 1px 8px;
+      border-radius: 5px; font-weight: 700;
+      font-size: 0.92em; white-space: nowrap;
+    }
+    .t-blue   { background:#dbeafe; border:1px solid #93c5fd; color:#1e3a8a; }
+    .t-green  { background:#dcfce7; border:1px solid #86efac; color:#14532d; }
+    .t-red    { background:#fee2e2; border:1px solid #fca5a5; color:#7f1d1d; }
+    .t-amber  { background:#fef3c7; border:1px solid #fbbf24; color:#713f12; }
+    .t-violet { background:#ede9fe; border:1px solid #c4b5fd; color:#4c1d95; }
+    .t-orange { background:#ffedd5; border:1px solid #fb923c; color:#7c2d12; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(140deg, #0f172a 0%, #1e3a8a 40%, #7c3aed 100%);
+      border-radius: 16px; color: #fff;
+      padding: 52px 48px; margin-bottom: 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content:''; position:absolute; top:-60px; right:-60px;
+      width:280px; height:280px; border-radius:50%;
+      background:rgba(255,255,255,0.04);
+    }
+    .hero .badge {
+      display:inline-block; background:rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.3); border-radius:30px;
+      padding:4px 16px; font-size:0.75rem; letter-spacing:.1em;
+      text-transform:uppercase; font-weight:600; margin-bottom:18px;
+    }
+    .hero h1 { font-size:2.5rem; font-weight:900; line-height:1.15; margin-bottom:14px; }
+    .hero p  { font-size:1rem; opacity:.82; max-width:580px; }
+
+    /* TOC */
+    .toc { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px; }
+    .toc a {
+      background:#fff; border:1px solid var(--slate-200);
+      border-radius:30px; padding:8px 18px;
+      font-size:0.85rem; font-weight:600;
+      text-decoration:none; color:var(--slate-900);
+      transition:all .15s;
+    }
+    .toc a:hover { border-color:var(--violet); color:var(--violet); }
+
+    /* CARD */
+    .card {
+      background:#fff; border-radius:14px;
+      border:1px solid var(--slate-200);
+      box-shadow:0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+      margin-bottom:44px; overflow:hidden;
+    }
+    .card-head {
+      padding:28px 36px 24px;
+      border-bottom:1px solid var(--slate-100);
+      display:flex; align-items:flex-start; gap:18px;
+    }
+    .card-icon {
+      width:56px; height:56px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem; flex-shrink:0;
+    }
+    .card-head h2 { font-size:1.5rem; font-weight:900; margin-bottom:5px; line-height:1.2; }
+    .card-head p  { font-size:0.92rem; color:var(--slate-500); }
+    .card-body { padding:36px; }
+
+    /* CHAPTER HEADING */
+    .ch {
+      font-size:1.08rem; font-weight:800;
+      margin:30px 0 12px;
+      padding-bottom:10px;
+      border-bottom:2px solid var(--slate-100);
+      display:flex; align-items:center; gap:8px;
+    }
+    hr.div { border:none; border-top:1px solid var(--slate-200); margin:28px 0; }
+
+    /* PROSE */
+    p   { margin-bottom:14px; font-size:0.95rem; }
+    p:last-child { margin-bottom:0; }
+    ul, ol { padding-left:22px; margin-bottom:14px; }
+    li  { margin-bottom:8px; font-size:0.95rem; }
+
+    /* CALLOUT */
+    .callout {
+      border-radius:10px; padding:18px 22px;
+      margin:16px 0; display:flex; gap:14px;
+      font-size:0.93rem; line-height:1.8;
+    }
+    .callout .ci { font-size:1.45rem; flex-shrink:0; margin-top:2px; }
+    .callout strong { display:block; margin-bottom:5px; font-size:0.97rem; }
+    .c-blue   { background:#eff6ff; border-left:4px solid var(--blue); }
+    .c-green  { background:#f0fdf4; border-left:4px solid var(--green); }
+    .c-amber  { background:#fffbeb; border-left:4px solid var(--amber); }
+    .c-red    { background:#fef2f2; border-left:4px solid var(--red); }
+    .c-violet { background:#f5f3ff; border-left:4px solid var(--violet); }
+    .c-orange { background:#fff7ed; border-left:4px solid var(--orange); }
+    .c-dark   { background:#1e293b; color:#e2e8f0; border-left:4px solid #6366f1; }
+    .c-dark strong { color:#fff; }
+
+    /* GRID */
+    .grid { display:grid; gap:16px; margin:16px 0; }
+    .g2   { grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); }
+    .g3   { grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); }
+    .gc   { border-radius:10px; padding:20px; font-size:0.91rem; }
+    .gc h4 { font-size:0.97rem; font-weight:700; margin-bottom:10px; }
+    .gc p  { margin-bottom:8px; }
+    .gc ul { padding-left:16px; }
+    .gc li { margin-bottom:6px; }
+
+    /* ════ DECISION TREE STYLES ════ */
+
+    /* Container */
+    .tree-container {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 32px 24px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .tree-title {
+      font-size: 0.78rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--slate-500); margin-bottom: 24px;
+    }
+
+    /* Node shapes */
+    .node-decision {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 110px; height: 60px;
+      background: #dbeafe; border: 2px solid var(--blue);
+      color: var(--blue-dark); font-weight: 700; font-size: 0.78rem;
+      border-radius: 8px; text-align: center; line-height: 1.3;
+      flex-shrink: 0;
+    }
+    .node-chance {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 60px; height: 60px;
+      background: #f5f3ff; border: 2px solid var(--violet);
+      color: var(--violet); font-weight: 700; font-size: 0.75rem;
+      border-radius: 50%; text-align: center; line-height: 1.3;
+      flex-shrink: 0;
+    }
+    .node-good {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 130px; padding: 10px 14px;
+      background: #dcfce7; border: 2px solid var(--green);
+      color: #14532d; font-weight: 600; font-size: 0.8rem;
+      border-radius: 8px; text-align: center; line-height: 1.4;
+    }
+    .node-bad {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 130px; padding: 10px 14px;
+      background: #fee2e2; border: 2px solid var(--red);
+      color: #7f1d1d; font-weight: 600; font-size: 0.8rem;
+      border-radius: 8px; text-align: center; line-height: 1.4;
+    }
+    .node-neutral {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 130px; padding: 10px 14px;
+      background: #fef9c3; border: 2px solid var(--amber);
+      color: #713f12; font-weight: 600; font-size: 0.8rem;
+      border-radius: 8px; text-align: center; line-height: 1.4;
+    }
+
+    /* Connectors */
+    .branch-line {
+      height: 2px; background: var(--slate-300);
+      flex: 1; min-width: 20px;
+    }
+    .branch-label {
+      font-size: 0.75rem; color: var(--slate-500);
+      font-weight: 600; white-space: nowrap;
+      padding: 0 6px;
+    }
+
+    /* Row layout helpers */
+    .tree-row { display: flex; align-items: center; gap: 0; }
+    .tree-branches { display: flex; flex-direction: column; gap: 18px; flex: 1; }
+    .tree-branch-row { display: flex; align-items: center; }
+
+    /* ════ CALCULATION BOX ════ */
+    .calc-box {
+      background: #0f172a; color: #e2e8f0;
+      border-radius: 10px; padding: 22px 26px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem; line-height: 2;
+      margin: 16px 0; overflow-x: auto;
+      border: 1px solid #334155;
+    }
+    .calc-box .cm  { color: #64748b; font-style: italic; }
+    .calc-box .hi  { color: #93c5fd; font-weight: 700; }
+    .calc-box .hi2 { color: #86efac; font-weight: 700; }
+    .calc-box .hi3 { color: #fbbf24; font-weight: 700; }
+    .calc-box .hi4 { color: #f9a8d4; font-weight: 700; }
+
+    /* ════ STEP-BY-STEP ════ */
+    .steps { margin: 16px 0; }
+    .step  { display: flex; gap: 16px; margin-bottom: 22px; }
+    .step:last-child { margin-bottom: 0; }
+    .step-n {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.88rem;
+      color: #fff; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .step-b h4 { font-weight: 700; margin-bottom: 5px; font-size: 0.96rem; }
+    .step-b p  { font-size: 0.91rem; }
+
+    /* ════ SCENARIO STRIPS ════ */
+    .scenario {
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--slate-200); margin: 12px 0;
+      display: flex;
+    }
+    .sc-tag {
+      width: 180px; flex-shrink: 0; padding: 18px 20px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .sc-tag .label { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; }
+    .sc-tag .sub   { font-size: 0.8rem; color: var(--slate-500); }
+    .sc-body { flex: 1; padding: 18px 22px; font-size: 0.91rem; border-left: 1px solid var(--slate-200); }
+    .sc-body p { margin-bottom: 8px; }
+    .sc-body p:last-child { margin-bottom: 0; }
+
+    /* ════ RESULT BOX ════ */
+    .result {
+      border-radius: 10px; padding: 20px 24px;
+      margin: 16px 0; font-size: 0.93rem;
+    }
+    .result h4 { font-weight: 800; font-size: 1rem; margin-bottom: 10px; }
+    .result ul  { padding-left: 20px; }
+    .result li  { margin-bottom: 7px; }
+
+    /* ════ TABLE ════ */
+    .tbl-wrap { overflow-x: auto; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th {
+      background: var(--slate-900); color: #fff;
+      padding: 11px 15px; text-align: left;
+      font-weight: 600;
+    }
+    td { padding: 11px 15px; border-bottom: 1px solid var(--slate-200); }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: var(--slate-50); }
+    .pos { color: var(--green); font-weight: 700; }
+    .neg { color: var(--red); font-weight: 700; }
+    .neu { color: var(--slate-500); }
+
+    /* ════ COMPARISON ════ */
+    .vs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--slate-200); margin: 16px 0;
+    }
+    .vs-side { padding: 22px 24px; }
+    .vs-side h4 { font-weight: 700; margin-bottom: 12px; font-size: 0.97rem; }
+    .vs-side ul { padding-left: 18px; font-size: 0.9rem; }
+    .vs-side li { margin-bottom: 7px; }
+
+    /* ════ TAKEAWAY ════ */
+    .takeaway {
+      background: linear-gradient(135deg, #1e3a8a, #7c3aed);
+      color: #fff; border-radius: 10px;
+      padding: 24px 28px; margin-top: 28px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .takeaway .ti { font-size: 1.6rem; flex-shrink: 0; }
+    .takeaway strong { display: block; margin-bottom: 6px; font-size: 1rem; }
+    .takeaway p { font-size: 0.92rem; opacity: .9; margin-bottom: 6px; }
+
+    /* ════ ANNOTATION ════ */
+    .annotation {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: #fffbeb; border: 1px solid #fde68a;
+      border-radius: 8px; padding: 12px 16px;
+      font-size: 0.87rem; margin: 10px 0;
+    }
+    .annotation .ai { font-size: 1.1rem; flex-shrink: 0; }
+
+    @media(max-width:640px){
+      .hero h1 { font-size:1.8rem; }
+      .hero { padding:36px 24px; }
+      .card-body { padding:22px; }
+      .g2,.g3 { grid-template-columns:1fr; }
+      .vs { grid-template-columns:1fr; }
+      .scenario { flex-direction:column; }
+      .sc-tag { width:100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="badge">Corporate Finance · Chapter 10 · Deep Dive</div>
+  <h1>Real Options &<br>Decision Trees</h1>
+  <p>A plain-English, step-by-step guide to understanding why flexibility has value in corporate investment — with full worked calculations for every example.</p>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="toc">
+  <a href="#s1">1 · The Problem with Standard NPV</a>
+  <a href="#s2">2 · What is a Real Option?</a>
+  <a href="#s3">3 · How to Read a Decision Tree</a>
+  <a href="#s4">4 · The Meghan Example — Full Walkthrough</a>
+  <a href="#s5">5 · A Bigger Example — Drug Trial</a>
+  <a href="#s6">6 · The 6 Types of Real Options</a>
+  <a href="#s7">7 · The Key Rules to Remember</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — THE PROBLEM WITH STANDARD NPV
+══════════════════════════════════════════ -->
+<div class="card" id="s1">
+  <div class="card-head">
+    <div class="card-icon" style="background:#fef2f2;">❌</div>
+    <div>
+      <h2 style="color:#7f1d1d;">1 · The Problem with Standard NPV</h2>
+      <p>Before we can understand real options, we need to understand what they fix.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>You already know the basic investment rule: calculate the <span class="term t-blue">Net Present Value (NPV)</span> of a project, and invest if it's positive. Simple enough. But there's a hidden assumption baked into every standard NPV calculation that is almost never true in real life:</p>
+
+    <div class="callout c-red">
+      <span class="ci">🚫</span>
+      <div>
+        <strong>Standard NPV assumes you make one decision, once, with all information already known — and then you do nothing.</strong>
+        It treats managers as completely passive. You decide "yes" or "no" today, you implement the project exactly as planned, and you never change course no matter what happens. In real life, this is almost never how it works.
+      </div>
+    </div>
+
+    <div class="callout c-blue">
+      <span class="ci">🧑‍💼</span>
+      <div>
+        <strong>Real-life analogy — Planning a Road Trip</strong>
+        Standard NPV is like planning every single stop of a road trip before you leave — and then following that plan even if it starts raining, even if a road is closed, even if you find something amazing along the way. Real managers are like a good driver: they adapt. They take detours, they stop early if conditions worsen, they extend the trip if things are going well. <strong>That ability to adapt is exactly what real options capture.</strong>
+      </div>
+    </div>
+
+    <div class="ch" style="color:#7f1d1d;">What Standard NPV Misses</div>
+
+    <div class="grid g2">
+      <div class="gc" style="background:#fef2f2; border:1px solid #fca5a5;">
+        <h4>❌ Ignored by Standard NPV</h4>
+        <ul>
+          <li>The ability to <strong>stop</strong> a project if early results are bad</li>
+          <li>The ability to <strong>expand</strong> if early results are good</li>
+          <li>The ability to <strong>wait</strong> for better information before committing</li>
+          <li>The ability to <strong>change direction</strong> as market conditions shift</li>
+          <li>The value of <strong>staging</strong> investments in phases</li>
+        </ul>
+      </div>
+      <div class="gc" style="background:#f0fdf4; border:1px solid #86efac;">
+        <h4>✅ Captured by Real Options Analysis</h4>
+        <ul>
+          <li>Every fork in the road where a manager can make a new decision</li>
+          <li>The asymmetric benefit of flexibility — you only exercise an option when it's good for you</li>
+          <li>The true value of projects with high uncertainty (which standard NPV undervalues)</li>
+          <li>The strategic value of "keeping options open"</li>
+          <li>A more accurate, higher project valuation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout c-dark">
+      <span class="ci">🔑</span>
+      <div>
+        <strong>The Key Formula</strong>
+        <strong>True Project Value = Standard NPV + Value of Real Options</strong><br><br>
+        Real options always add positive value because they give you choices — and you only ever make a choice when it benefits you. A project that looks barely worthwhile (or even slightly negative) under standard NPV might be clearly worth doing once you account for the flexibility built into it.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — WHAT IS A REAL OPTION?
+══════════════════════════════════════════ -->
+<div class="card" id="s2">
+  <div class="card-head">
+    <div class="card-icon" style="background:#ede9fe;">🔓</div>
+    <div>
+      <h2 style="color:#4c1d95;">2 · What Exactly is a Real Option?</h2>
+      <p>The concept in plain language — no formulas yet.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>A <span class="term t-violet">real option</span> is simply a <strong>choice that a manager can make in the future</strong> about a real investment (a factory, a product line, an R&amp;D project). The word "option" is used because — just like a financial option — it gives you the <em>right but not the obligation</em> to do something.</p>
+
+    <p>The "real" part just means it's about real assets and real business decisions, not financial instruments like stocks.</p>
+
+    <div class="callout c-violet">
+      <span class="ci">🏗️</span>
+      <div>
+        <strong>Simple Example — Building a Factory</strong>
+        A company is considering building a factory in a new country. Demand is uncertain. They have two approaches:<br><br>
+        <strong>Approach A (Standard NPV):</strong> Build the full factory now. Commit €50 million upfront. Hope demand is high.<br><br>
+        <strong>Approach B (Real Option):</strong> Build a small pilot factory first for €10 million. <em>Then</em>, if demand turns out to be high, exercise the option to expand and build the full factory. If demand is low, stay small — or exit.<br><br>
+        Approach B is more valuable because the company only fully commits once it has seen real evidence that demand is there. The pilot plant "buys" the option to expand later. That option has real, measurable value.
+      </div>
+    </div>
+
+    <div class="ch" style="color:#4c1d95;">Why the Word "Option" Makes Sense</div>
+    <p>Think back to financial options. A call option gives you the right — not the obligation — to buy a stock at a fixed price. If the stock does well, you exercise. If not, you walk away and only lose the premium.</p>
+
+    <div class="grid g2">
+      <div class="gc" style="background:#dbeafe; border:1px solid #93c5fd;">
+        <h4 style="color:#1e40af;">💹 Financial Call Option</h4>
+        <ul>
+          <li>Pay a small premium now</li>
+          <li>Gain the right to buy a stock later at a fixed price</li>
+          <li>If stock rises: exercise the option — profit</li>
+          <li>If stock falls: don't exercise — lose only the premium</li>
+          <li>You only commit fully when you see favourable conditions</li>
+        </ul>
+      </div>
+      <div class="gc" style="background:#ede9fe; border:1px solid #c4b5fd;">
+        <h4 style="color:#4c1d95;">🏭 Real Option (e.g. Pilot Factory)</h4>
+        <ul>
+          <li>Invest a small amount in a pilot project now</li>
+          <li>Gain the right to expand the investment later</li>
+          <li>If demand is high: expand — profit</li>
+          <li>If demand is low: don't expand — lose only the pilot cost</li>
+          <li>You only commit fully when you see favourable conditions</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:8px;">They are the same logic, applied to different contexts. The pilot factory investment <em>is</em> the "premium" you pay for the real option.</p>
+
+    <div class="callout c-amber">
+      <span class="ci">⭐</span>
+      <div>
+        <strong>The Most Important Insight About Real Options</strong>
+        The more uncertain and unpredictable the future is, the more valuable real options become. This is the opposite of what standard NPV says (standard NPV punishes uncertainty by using a higher discount rate). Real options analysis says: uncertainty is not only bad — it creates valuable choices. A highly uncertain project with built-in flexibility can be worth much more than a predictable but rigid one.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — HOW TO READ A DECISION TREE
+══════════════════════════════════════════ -->
+<div class="card" id="s3">
+  <div class="card-head">
+    <div class="card-icon" style="background:#fef9c3;">🌳</div>
+    <div>
+      <h2 style="color:#713f12;">3 · How to Read a Decision Tree</h2>
+      <p>Decision trees are the visual tool we use to map out real options. Let's learn the language before we calculate anything.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <p>A <span class="term t-amber">decision tree</span> is a diagram that maps out all the choices and uncertain events that could occur in a project — in the order they happen, from left to right. It looks like a tree branching out to the right.</p>
+
+    <p>There are only two types of nodes (the circles and squares on the diagram):</p>
+
+    <div class="grid g2" style="margin-bottom:24px;">
+      <div class="gc" style="background:#dbeafe; border:2px solid var(--blue);">
+        <h4 style="color:#1e40af;">🔷 Decision Node (Square)</h4>
+        <p>A point where <strong>the manager makes a choice</strong>. You are in control here. You pick the best option available to you.</p>
+        <p>Examples of choices at a decision node:</p>
+        <ul>
+          <li>Invest or don't invest?</li>
+          <li>Expand or stay the same?</li>
+          <li>Continue the project or abandon it?</li>
+          <li>Go to the flea market or stay home?</li>
+        </ul>
+        <p style="margin-top:10px; font-size:0.88rem; color:var(--slate-500);">At a decision node you always choose the <strong>highest-value option</strong>. You're rational.</p>
+      </div>
+      <div class="gc" style="background:#ede9fe; border:2px solid var(--violet);">
+        <h4 style="color:#4c1d95;">🔵 Chance Node (Circle)</h4>
+        <p>A point where <strong>nature decides</strong> — something uncertain happens that is outside anyone's control. You assign probabilities to each outcome.</p>
+        <p>Examples of uncertain events at a chance node:</p>
+        <ul>
+          <li>Good weather or bad weather?</li>
+          <li>Drug trial succeeds or fails?</li>
+          <li>Market demand is high or low?</li>
+          <li>Economic conditions improve or worsen?</li>
+        </ul>
+        <p style="margin-top:10px; font-size:0.88rem; color:var(--slate-500);">At a chance node you calculate the <strong>expected value</strong> = each outcome × its probability.</p>
+      </div>
+    </div>
+
+    <div class="ch" style="color:#713f12;">The Basic Structure</div>
+    <p>A decision tree is always read from <strong>left to right</strong> (oldest to newest events), but <strong>calculated from right to left</strong> (work backwards from the final outcomes). This backwards calculation is called <span class="term t-amber">backwards induction</span> or <span class="term t-amber">rolling back the tree</span>.</p>
+
+    <div class="tree-container">
+      <div class="tree-title">🌳 Anatomy of a Simple Decision Tree</div>
+      <div style="display:flex; align-items:center; gap:0; min-width:520px; flex-wrap:nowrap;">
+
+        <!-- Decision node -->
+        <div class="node-decision">🔷 DECISION<br>NODE<br>(your choice)</div>
+        <div class="branch-line" style="width:30px; flex:none;"></div>
+
+        <!-- Chance node -->
+        <div class="node-chance">🔵<br>CHANCE<br>NODE</div>
+
+        <!-- Branches -->
+        <div style="display:flex; flex-direction:column; gap:20px; margin-left:0; flex:1;">
+          <div class="tree-branch-row">
+            <div class="branch-line"></div>
+            <span class="branch-label">✅ Good outcome (e.g. 70%)</span>
+            <div class="node-good">OUTCOME A<br>Value = €X</div>
+          </div>
+          <div class="tree-branch-row">
+            <div class="branch-line"></div>
+            <span class="branch-label">❌ Bad outcome (e.g. 30%)</span>
+            <div class="node-bad">OUTCOME B<br>Value = €Y</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px; font-size:0.82rem; color:var(--slate-500);">
+        <strong>How to calculate:</strong> At the chance node → Expected Value = (70% × €X) + (30% × €Y). At the decision node → pick the action with the highest expected value.
+      </div>
+    </div>
+
+    <div class="ch" style="color:#713f12;">How to Calculate: The 3-Step Method</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n" style="background:#d97706;">1</div>
+        <div class="step-b">
+          <h4>Start at the far RIGHT — fill in the final payoffs</h4>
+          <p>At the end of every branch, write down what the outcome is worth in cash (profit or loss). These are the final numbers the whole tree is built upon.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#7c3aed;">2</div>
+        <div class="step-b">
+          <h4>Work BACKWARDS — calculate expected values at each chance node</h4>
+          <p>At every chance node (circle), multiply each outcome by its probability and add them up. This gives you the expected value at that node.</p>
+          <p><strong>Formula:</strong> EV = (probability of good) × (good payoff) + (probability of bad) × (bad payoff)</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#2563eb;">3</div>
+        <div class="step-b">
+          <h4>At every decision node — pick the BEST option</h4>
+          <p>At every decision node (square), compare all available choices and pick the one with the highest expected value. Cross out (or ignore) the inferior options. This is how the manager behaves rationally.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout c-blue">
+      <span class="ci">💡</span>
+      <div>
+        <strong>Why backwards? Because future decisions affect how you value today's choices.</strong>
+        You need to know what you'll do in the future before you can judge what today's decision is worth. Think of it like chess — you need to think several moves ahead before you decide your next move.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — MEGHAN EXAMPLE FULL WALKTHROUGH
+══════════════════════════════════════════ -->
+<div class="card" id="s4">
+  <div class="card-head">
+    <div class="card-icon" style="background:#dcfce7;">🛍️</div>
+    <div>
+      <h2 style="color:#166534;">4 · The Meghan Flea Market — Full Step-by-Step Walkthrough</h2>
+      <p>This is the exact example from your lecture slides. We'll go through it slowly, showing every single calculation.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="callout c-green">
+      <span class="ci">📋</span>
+      <div>
+        <strong>The Setup</strong>
+        Meghan wants to sell at a flea market. Here are all the facts:
+        <ul style="margin-top:10px; padding-left:18px; font-size:0.93rem;">
+          <li>A booth reservation costs <strong>€500</strong> (paid upfront, non-refundable)</li>
+          <li>If the weather is <strong>good</strong> (75% probability): she makes <strong>€1,500 in sales revenue</strong></li>
+          <li>If the weather is <strong>bad</strong> (25% probability): she makes <strong>−€100 loss</strong> (she still has to show up, pay for transportation, etc.)</li>
+          <li>No time value of money (we ignore discounting to keep things simple)</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- APPROACH 1 -->
+    <div class="ch" style="color:#7f1d1d;">❌ Approach 1: The Naive Method (Standard NPV — No Flexibility)</div>
+
+    <p>In the naive approach, Meghan makes <strong>one decision upfront</strong>: she books the booth and commits to going regardless of what the weather turns out to be. She has no flexibility — she goes whether it rains or shines.</p>
+
+    <div class="tree-container">
+      <div class="tree-title">🌳 Decision Tree — Naive Approach (No Real Option)</div>
+      <div style="display:flex; align-items:center; gap:0; min-width:500px;">
+        <div class="node-decision" style="width:120px;">🔷 GO to<br>flea market<br>(committed)</div>
+        <div class="branch-line" style="width:24px; flex:none;"></div>
+        <div class="node-chance">🔵<br>Weather?</div>
+        <div style="display:flex; flex-direction:column; gap:20px; flex:1;">
+          <div class="tree-branch-row">
+            <div class="branch-line"></div>
+            <span class="branch-label">☀️ 75% chance</span>
+            <div class="node-good">Revenue: €1,500<br>Net: +€1,000<br>(€1,500 − €500 booth)</div>
+          </div>
+          <div class="tree-branch-row">
+            <div class="branch-line"></div>
+            <span class="branch-label">🌧️ 25% chance</span>
+            <div class="node-bad">Revenue: −€100<br>Net: −€600<br>(−€100 − €500 booth)</div>
+          </div>
+        </div>
+      </div>
+      <div class="annotation" style="margin-top:20px;">
+        <span class="ai">💬</span>
+        <span>Here, there is only ONE decision node (go to the market) and ONE chance node (weather). Meghan has no option to change her mind after seeing the weather.</span>
+      </div>
+    </div>
+
+    <div class="ch" style="color:#7f1d1d; margin-top:24px;">Step-by-Step Calculation — Naive Approach</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">1</div>
+        <div class="step-b">
+          <h4>Write down the final payoffs (right side of tree)</h4>
+          <p>Good weather payoff: Revenue €1,500 − Booth €500 = <strong>+€1,000</strong></p>
+          <p>Bad weather payoff: Revenue −€100 − Booth €500 = <strong>−€600</strong></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">2</div>
+        <div class="step-b">
+          <h4>Calculate Expected Value at the chance node</h4>
+          <p>EV = (75% × €1,000) + (25% × −€600)</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">3</div>
+        <div class="step-b">
+          <h4>Do the arithmetic</h4>
+          <p>EV = €750 + (−€150) = <strong>€600</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-box">
+<span class="cm">── Naive Approach Calculation ──────────────────────────</span>
+
+Payoff if weather is GOOD (75%):
+  Revenue     = +€1,500
+  Booth cost  =  −€500
+  Net payoff  = <span class="hi2">+€1,000</span>
+
+Payoff if weather is BAD (25%):
+  Revenue     =  −€100
+  Booth cost  =  −€500
+  Net payoff  = <span class="hi3">−€600</span>
+
+Expected Value = (0.75 × €1,000) + (0.25 × −€600)
+              = €750 + (−€150)
+              = <span class="hi">€600</span>
+    </div>
+
+    <div class="result" style="background:#fef2f2; border:2px solid #fca5a5;">
+      <h4 style="color:#7f1d1d;">❌ Naive Approach Result: Expected Profit = €600</h4>
+      <ul>
+        <li>75% of the time she makes €1,000 — great!</li>
+        <li>25% of the time she loses €600 — painful!</li>
+        <li>Average expected outcome = €600</li>
+        <li>But she has <strong>no control</strong> — she must go regardless of weather</li>
+      </ul>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- APPROACH 2 -->
+    <div class="ch" style="color:#166534;">✅ Approach 2: The Real Option Method (Wait for Weather Forecast)</div>
+
+    <p>Now Meghan has a smarter idea. Instead of committing to go no matter what, she waits for the weather forecast <strong>before</strong> deciding whether to actually travel to the market. She still pays the €500 booth reservation upfront (non-refundable), but she now has the <strong>option to not go</strong> if the forecast is bad.</p>
+
+    <div class="annotation">
+      <span class="ai">💡</span>
+      <span><strong>The "real option" here</strong> is the ability to stay home if the weather is bad. She doesn't have to use it — but having that choice available has value.</span>
+    </div>
+
+    <div class="tree-container" style="margin-top:16px;">
+      <div class="tree-title">🌳 Decision Tree — Real Option Approach (Two Decision Points)</div>
+
+      <!-- Top row: chance node first -->
+      <div style="display:flex; align-items:center; gap:0; min-width:600px;">
+
+        <!-- First: see forecast -->
+        <div class="node-decision" style="width:120px; background:#ede9fe; border-color:var(--violet); color:#4c1d95;">🔷 Pay €500<br>booth fee.<br>See forecast</div>
+        <div class="branch-line" style="width:20px; flex:none;"></div>
+        <div class="node-chance">🔵<br>Weather<br>forecast?</div>
+
+        <!-- Branches after seeing forecast -->
+        <div style="display:flex; flex-direction:column; gap:28px; flex:1;">
+
+          <!-- Good weather branch -->
+          <div style="display:flex; align-items:center;">
+            <div class="branch-line"></div>
+            <span class="branch-label">☀️ 75%<br>Good</span>
+            <div class="node-decision" style="width:100px; font-size:0.73rem;">🔷 GO or<br>STAY HOME?</div>
+            <div class="branch-line" style="width:16px; flex:none;"></div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; gap:4px;">
+                <div class="branch-line" style="width:20px; flex:none;"></div>
+                <span style="font-size:0.73rem; color:var(--slate-500);">→ Go</span>
+                <div class="node-good" style="font-size:0.75rem; min-width:110px;">€1,500 − €500<br>= <strong>+€1,000</strong> ✅</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <div class="branch-line" style="width:20px; flex:none;"></div>
+                <span style="font-size:0.73rem; color:var(--slate-500);">→ Stay</span>
+                <div class="node-neutral" style="font-size:0.75rem; min-width:110px;">0 − €500<br>= <strong>−€500</strong> ❌</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bad weather branch -->
+          <div style="display:flex; align-items:center;">
+            <div class="branch-line"></div>
+            <span class="branch-label">🌧️ 25%<br>Bad</span>
+            <div class="node-decision" style="width:100px; font-size:0.73rem;">🔷 GO or<br>STAY HOME?</div>
+            <div class="branch-line" style="width:16px; flex:none;"></div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; gap:4px;">
+                <div class="branch-line" style="width:20px; flex:none;"></div>
+                <span style="font-size:0.73rem; color:var(--slate-500);">→ Go</span>
+                <div class="node-bad" style="font-size:0.75rem; min-width:110px;">−€100 − €500<br>= <strong>−€600</strong> ❌</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <div class="branch-line" style="width:20px; flex:none;"></div>
+                <span style="font-size:0.73rem; color:var(--slate-500);">→ Stay</span>
+                <div class="node-neutral" style="font-size:0.75rem; min-width:110px;">0 − €500<br>= <strong>−€500</strong></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="annotation" style="margin-top:20px;">
+        <span class="ai">💬</span>
+        <span>Now there are <strong>three decision nodes</strong> (in purple/blue). The first is paying the booth fee and waiting. The second and third are Meghan's choices after seeing the forecast — she can go OR stay home in each scenario.</span>
+      </div>
+    </div>
+
+    <div class="ch" style="color:#166534; margin-top:24px;">Step-by-Step Calculation — Real Option Approach</div>
+
+    <p>Remember: we work <strong>right to left</strong>, starting from the final outcomes.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n" style="background:#16a34a;">1</div>
+        <div class="step-b">
+          <h4>Step 1 — Identify the four final payoffs</h4>
+          <p>Good weather + Go = €1,500 − €500 = <strong>+€1,000</strong></p>
+          <p>Good weather + Stay home = €0 − €500 = <strong>−€500</strong></p>
+          <p>Bad weather + Go = −€100 − €500 = <strong>−€600</strong></p>
+          <p>Bad weather + Stay home = €0 − €500 = <strong>−€500</strong></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#16a34a;">2</div>
+        <div class="step-b">
+          <h4>Step 2 — Solve the decision nodes (what does Meghan choose?)</h4>
+          <p><strong>If weather is GOOD:</strong> Go (+€1,000) vs Stay home (−€500). She picks <span class="pos">GO → +€1,000</span>. Rational choice.</p>
+          <p><strong>If weather is BAD:</strong> Go (−€600) vs Stay home (−€500). She picks <span class="pos">STAY HOME → −€500</span>. Even though she still loses €500 (the booth fee), she avoids the extra €100 loss from going.</p>
+          <div class="annotation">
+            <span class="ai">💡</span>
+            <span>Key insight: When weather is bad, she <em>cannot recover the €500 booth fee</em> — that's already spent (it's a <span class="term t-amber">sunk cost</span>). Her only choice is: lose €600 by going, or lose €500 by staying. Staying is less bad.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#16a34a;">3</div>
+        <div class="step-b">
+          <h4>Step 3 — Simplify the tree with the decisions resolved</h4>
+          <p>Now we know Meghan's plan: go if good weather, stay if bad. The tree simplifies to:</p>
+          <ul>
+            <li>75% chance → she goes → <strong>+€1,000</strong></li>
+            <li>25% chance → she stays → <strong>−€500</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#16a34a;">4</div>
+        <div class="step-b">
+          <h4>Step 4 — Calculate the Expected Value</h4>
+          <p>EV = (75% × €1,000) + (25% × −€500)</p>
+          <p>EV = €750 + (−€125) = <strong>€625</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-box">
+<span class="cm">── Real Option Approach Calculation ────────────────────</span>
+
+STEP 1 — Final payoffs:
+  Good weather + Go:        €1,500 − €500 = <span class="hi2">+€1,000</span>
+  Good weather + Stay home:     €0 − €500 = <span class="hi3">−€500</span>
+  Bad weather  + Go:         −€100 − €500 = <span class="hi3">−€600</span>
+  Bad weather  + Stay home:     €0 − €500 = <span class="hi3">−€500</span>
+
+STEP 2 — Decision nodes (choose the best option):
+  If good weather: max(+€1,000, −€500) → <span class="hi2">GO → +€1,000</span>
+  If bad weather:  max(−€600,   −€500) → <span class="hi2">STAY HOME → −€500</span>
+
+STEP 3 — Simplified outcomes:
+  75% probability → +€1,000
+  25% probability → −€500
+
+STEP 4 — Expected Value:
+  EV = (0.75 × €1,000) + (0.25 × −€500)
+     = €750 + (−€125)
+     = <span class="hi">€625</span>
+    </div>
+
+    <div class="result" style="background:#f0fdf4; border:2px solid #86efac;">
+      <h4 style="color:#166534;">✅ Real Option Approach Result: Expected Profit = €625</h4>
+      <ul>
+        <li>75% of the time she goes to the market and earns €1,000</li>
+        <li>25% of the time she stays home and loses only €500 (the booth fee only)</li>
+        <li>Average expected outcome = <strong>€625</strong></li>
+        <li>She has <strong>full control</strong> to respond to the weather</li>
+      </ul>
+    </div>
+
+    <hr class="div"/>
+
+    <div class="ch" style="color:#713f12;">The Comparison — How Much Did the Real Option Add?</div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>Expected Value</th>
+            <th>Bad weather outcome</th>
+            <th>Flexibility?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Naive (Standard NPV)</strong></td>
+            <td><strong>€600</strong></td>
+            <td class="neg">−€600 (must go regardless)</td>
+            <td class="neg">None</td>
+          </tr>
+          <tr>
+            <td><strong>Real Option (Wait &amp; Decide)</strong></td>
+            <td><strong>€625</strong></td>
+            <td class="pos">−€500 (can stay home)</td>
+            <td class="pos">Full flexibility</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:var(--violet);">Value of the Real Option</td>
+            <td class="pos" style="font-size:1rem;">+€25</td>
+            <td colspan="2" style="color:var(--slate-500);">Saved €100 on the bad-weather outcome (25% of the time)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-violet">
+      <span class="ci">🔍</span>
+      <div>
+        <strong>Where does the €25 come from?</strong>
+        The real option saved Meghan €100 in the bad-weather scenario (she loses €500 instead of €600). But this saving only happens 25% of the time. So the expected saving = 25% × €100 = <strong>€25</strong>. That is the exact value of the real option — the ability to stay home when weather is bad is worth €25 in expected value terms.
+      </div>
+    </div>
+
+    <div class="callout c-amber">
+      <span class="ci">🧠</span>
+      <div>
+        <strong>What about the booth fee — isn't that wasted if she stays home?</strong>
+        Yes — the €500 booth fee is a <span class="term t-amber">sunk cost</span>. Once paid, it's gone whether she goes or stays. This is important: when Meghan decides whether to go on the day, she should <em>ignore</em> the €500 already spent. The only relevant comparison is: "Does going today give me more than staying home today?" Going = additional €1,500 revenue (good) or additional −€100 loss (bad). Staying = €0 additional. So in bad weather, the smart move is stay home regardless of the €500 already paid.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — BIGGER EXAMPLE: DRUG TRIAL
+══════════════════════════════════════════ -->
+<div class="card" id="s5">
+  <div class="card-head">
+    <div class="card-icon" style="background:#ffedd5;">💊</div>
+    <div>
+      <h2 style="color:#7c2d12;">5 · A Bigger Example — Pharmaceutical Drug Trial</h2>
+      <p>A two-stage real option with three decision points — showing how real options work in large corporate decisions.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="callout c-orange">
+      <span class="ci">🧪</span>
+      <div>
+        <strong>The Setup</strong>
+        A pharmaceutical company is developing a new drug. The development happens in two phases:
+        <ul style="margin-top:10px; padding-left:18px; font-size:0.93rem;">
+          <li><strong>Phase 1 trial:</strong> Costs <strong>€10 million</strong>. Tests basic safety. 60% chance of success, 40% chance of failure.</li>
+          <li>If Phase 1 succeeds → <strong>Phase 2 trial:</strong> Costs <strong>€40 million</strong>. Tests effectiveness. 50% chance of success, 50% chance of failure.</li>
+          <li>If Phase 2 succeeds → Drug launch brings <strong>€200 million</strong> revenue.</li>
+          <li>If Phase 1 fails → Company stops (pays nothing more). Gets €0.</li>
+          <li>If Phase 2 fails → Company stops (pays nothing more). Gets €0.</li>
+          <li>No time value of money for simplicity.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tree-container" style="margin-top:16px;">
+      <div class="tree-title">🌳 Two-Stage Drug Development Decision Tree</div>
+      <div style="display:flex; align-items:center; gap:0; min-width:680px;">
+
+        <!-- Phase 1 decision -->
+        <div class="node-decision" style="width:110px; font-size:0.73rem;">🔷 Run<br>Phase 1?<br>Cost: €10M</div>
+        <div class="branch-line" style="width:16px; flex:none;"></div>
+        <div class="node-chance" style="font-size:0.7rem;">🔵<br>P1<br>result</div>
+
+        <div style="display:flex; flex-direction:column; gap:30px; flex:1;">
+
+          <!-- Success branch -->
+          <div style="display:flex; align-items:center;">
+            <div class="branch-line"></div>
+            <span class="branch-label">✅ 60%<br>P1 success</span>
+            <div class="node-decision" style="width:100px; font-size:0.7rem;">🔷 Run<br>Phase 2?<br>Cost: €40M</div>
+            <div class="branch-line" style="width:12px; flex:none;"></div>
+            <div class="node-chance" style="width:52px; height:52px; font-size:0.68rem;">🔵<br>P2<br>result</div>
+            <div style="display:flex; flex-direction:column; gap:12px; flex:1;">
+              <div style="display:flex; align-items:center;">
+                <div class="branch-line"></div>
+                <span style="font-size:0.72rem; color:var(--slate-500); padding:0 5px; white-space:nowrap;">✅ 50% P2 success</span>
+                <div class="node-good" style="font-size:0.75rem; min-width:120px;">€200M − €40M − €10M<br>= <strong>+€150M</strong> 🎉</div>
+              </div>
+              <div style="display:flex; align-items:center;">
+                <div class="branch-line"></div>
+                <span style="font-size:0.72rem; color:var(--slate-500); padding:0 5px; white-space:nowrap;">❌ 50% P2 failure</span>
+                <div class="node-bad" style="font-size:0.75rem; min-width:120px;">€0 − €40M − €10M<br>= <strong>−€50M</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Failure branch -->
+          <div style="display:flex; align-items:center;">
+            <div class="branch-line"></div>
+            <span class="branch-label">❌ 40%<br>P1 failure</span>
+            <div class="node-bad" style="font-size:0.78rem; min-width:120px;">Stop. Loss = −€10M<br>(only Phase 1 cost)</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="ch" style="color:#7c2d12; margin-top:24px;">Step-by-Step Calculation</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n" style="background:#ea580c;">1</div>
+        <div class="step-b">
+          <h4>Step 1 — Write out all final payoffs (right side)</h4>
+          <p>Phase 2 success: Revenue €200M − Phase 2 cost €40M − Phase 1 cost €10M = <strong>+€150M</strong></p>
+          <p>Phase 2 failure: Revenue €0 − Phase 2 cost €40M − Phase 1 cost €10M = <strong>−€50M</strong></p>
+          <p>Phase 1 failure: Revenue €0 − Phase 1 cost €10M = <strong>−€10M</strong></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#ea580c;">2</div>
+        <div class="step-b">
+          <h4>Step 2 — Solve the Phase 2 decision node (work backwards)</h4>
+          <p>If Phase 1 succeeds, should the company run Phase 2?</p>
+          <p>Expected value of running Phase 2 = (50% × €150M) + (50% × −€50M) = €75M − €25M = <strong>+€50M</strong></p>
+          <p>Expected value of NOT running Phase 2 = €0 (but they've already spent €10M on Phase 1, which is a sunk cost at this point — so stopping means just losing the €10M already spent, no additional cost). Payoff = −€10M.</p>
+          <p>Since +€50M &gt; −€10M: <span class="pos">Run Phase 2 if Phase 1 succeeds.</span></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#ea580c;">3</div>
+        <div class="step-b">
+          <h4>Step 3 — Roll back to the Phase 1 chance node</h4>
+          <p>Now we know: if Phase 1 succeeds, the whole venture is worth +€50M from that point. If Phase 1 fails, the loss is −€10M.</p>
+          <p>Expected value at the Phase 1 chance node = (60% × +€50M) + (40% × −€10M)</p>
+          <p>= €30M + (−€4M) = <strong>+€26M</strong></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#ea580c;">4</div>
+        <div class="step-b">
+          <h4>Step 4 — Solve the Phase 1 decision node</h4>
+          <p>Should the company run Phase 1?</p>
+          <p>Run Phase 1: expected value = <strong>+€26M</strong></p>
+          <p>Don't run Phase 1: expected value = <strong>€0</strong></p>
+          <p>Since +€26M &gt; €0: <span class="pos">Yes, run Phase 1.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-box">
+<span class="cm">── Drug Trial Calculation (worked right to left) ──────────</span>
+
+<span class="cm">── STEP 1: Final payoffs ───────────────────────────────</span>
+P2 success:  €200M − €40M − €10M = <span class="hi2">+€150M</span>
+P2 failure:         €0 − €40M − €10M = <span class="hi3">−€50M</span>
+P1 failure:                    €0 − €10M = <span class="hi3">−€10M</span>
+
+<span class="cm">── STEP 2: Phase 2 decision node ──────────────────────</span>
+EV(run P2)   = (0.50 × +€150M) + (0.50 × −€50M)
+             = €75M − €25M
+             = <span class="hi2">+€50M</span>    ← company runs Phase 2 ✅
+
+<span class="cm">── STEP 3: Roll back to Phase 1 chance node ──────────</span>
+EV at P1 node = (0.60 × +€50M) + (0.40 × −€10M)
+              = €30M − €4M
+              = <span class="hi">+€26M</span>
+
+<span class="cm">── STEP 4: Phase 1 decision ──────────────────────────</span>
+Run P1:     EV = <span class="hi">+€26M</span>  ✅  →  Run the trial!
+Don't run:  EV = €0
+
+<span class="hi2">ANSWER: Run Phase 1. Expected project value = +€26 million.</span>
+    </div>
+
+    <div class="callout c-violet">
+      <span class="ci">🔍</span>
+      <div>
+        <strong>What makes this a "real option" problem?</strong>
+        The company does NOT have to decide on Phase 2 upfront. They <em>only</em> commit to Phase 2 after seeing Phase 1 results. This staged decision-making is the real option. The Phase 1 investment (€10M) essentially "buys" them the option to run Phase 2 — an option they will only exercise if Phase 1 succeeds. Without this flexibility, a naive calculation might estimate poor expected value (because you'd price in the probability of Phase 2 failure from the start without accounting for the decision to walk away). Real option analysis says: you don't have to run Phase 2 if Phase 1 fails — that choice alone adds enormous value.
+      </div>
+    </div>
+
+    <div class="callout c-amber">
+      <span class="ci">🧠</span>
+      <div>
+        <strong>What if the company had committed to both phases upfront (naive approach)?</strong>
+        If they committed to running both phases regardless: EV = (60% × 50% × €200M) − (€10M + €40M) = €60M − €50M = €10M. That's less than the real option value of €26M. The flexibility to stop after Phase 1 if it fails added €16M of value — and that value came purely from having the option to not proceed.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — THE 6 TYPES OF REAL OPTIONS
+══════════════════════════════════════════ -->
+<div class="card" id="s6">
+  <div class="card-head">
+    <div class="card-icon" style="background:#dbeafe;">📦</div>
+    <div>
+      <h2 style="color:#1e3a8a;">6 · The 6 Types of Real Options — With Simple Examples</h2>
+      <p>Any time a manager can make an adaptive decision about an investment, there's a real option involved. Here are the six most common ones.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="grid g2">
+
+      <div class="gc" style="background:#dbeafe; border:2px solid #3b82f6;">
+        <h4 style="color:#1e40af;">⏰ 1. Option to Delay (Wait)</h4>
+        <p><strong>What it is:</strong> The right to postpone an investment until you have better information — without losing the opportunity forever.</p>
+        <p><strong>Simple analogy:</strong> You're thinking of opening an umbrella shop. Instead of signing a 10-year lease now, you sign a 1-year lease with an option to renew. You see whether demand is good before fully committing.</p>
+        <p><strong>Corporate example:</strong> An oil company holds drilling rights on land. Oil prices are low right now. They wait until prices recover before starting to drill — preserving the option to invest when conditions are better.</p>
+        <p><strong>When it's valuable:</strong> When there is high uncertainty today that will be resolved in the near future.</p>
+      </div>
+
+      <div class="gc" style="background:#dcfce7; border:2px solid #22c55e;">
+        <h4 style="color:#166534;">📈 2. Option to Expand</h4>
+        <p><strong>What it is:</strong> The right to invest more money and scale up a project if it turns out to be successful. The initial investment buys you this option.</p>
+        <p><strong>Simple analogy:</strong> You open one small coffee shop as a test. If it works, you open 10 more. If it doesn't, you close the one.</p>
+        <p><strong>Corporate example:</strong> Netflix entered one new country as a test market before deciding whether to expand globally. The initial investment bought the option to expand.</p>
+        <p><strong>When it's valuable:</strong> High-growth industries, new market entries, product launches where initial scale is small but potential is large.</p>
+      </div>
+
+      <div class="gc" style="background:#fef9c3; border:2px solid #fbbf24;">
+        <h4 style="color:#713f12;">📉 3. Option to Scale Down</h4>
+        <p><strong>What it is:</strong> The right to reduce the scale of a project if conditions worsen — rather than running at full capacity and losing money.</p>
+        <p><strong>Simple analogy:</strong> A restaurant that opens with 100 seats can close half the dining room on slow weeknights to cut costs, rather than running full operations at a loss.</p>
+        <p><strong>Corporate example:</strong> A car manufacturer reducing production runs during a demand slump rather than continuing to produce cars that fill up unsold inventory.</p>
+        <p><strong>When it's valuable:</strong> Capital-intensive industries with variable demand.</p>
+      </div>
+
+      <div class="gc" style="background:#fee2e2; border:2px solid #ef4444;">
+        <h4 style="color:#7f1d1d;">🚪 4. Option to Abandon</h4>
+        <p><strong>What it is:</strong> The right to exit a project entirely and recover whatever salvage value remains — like exercising a put option on the project.</p>
+        <p><strong>Simple analogy:</strong> Meghan staying home when weather is bad. She abandons the plan of going to the market. Similarly, a startup that shuts down and sells its equipment rather than continuing to burn cash.</p>
+        <p><strong>Corporate example:</strong> Boeing considering stopping 737 MAX production entirely after the crashes — cutting losses rather than continuing to pour money into a grounded aircraft.</p>
+        <p><strong>When it's valuable:</strong> Projects with high downside risk where exiting early saves significant costs.</p>
+      </div>
+
+      <div class="gc" style="background:#f5f3ff; border:2px solid #8b5cf6;">
+        <h4 style="color:#4c1d95;">🔄 5. Option to Switch</h4>
+        <p><strong>What it is:</strong> The right to change the use of an asset — either switching inputs or switching what the asset produces — in response to changing prices.</p>
+        <p><strong>Simple analogy:</strong> A food truck that can serve burgers on weekdays and tacos on weekends depending on which customers show up.</p>
+        <p><strong>Corporate example:</strong> A power plant designed to burn either natural gas or coal — whichever is cheaper at any given time. The flexibility to switch fuels is a built-in real option with real economic value.</p>
+        <p><strong>When it's valuable:</strong> Industries with volatile input prices or demand patterns that vary by season or market.</p>
+      </div>
+
+      <div class="gc" style="background:#fce7f3; border:2px solid #ec4899;">
+        <h4 style="color:#831843;">🌱 6. Growth Option</h4>
+        <p><strong>What it is:</strong> An early investment that creates the possibility of much larger future investments. The initial investment is the "seed" that makes future growth possible.</p>
+        <p><strong>Simple analogy:</strong> Learning to code. You invest time and money now. This skill "buys" you the option to pursue many future career paths — software engineer, startup founder, data scientist — that wouldn't be available without it.</p>
+        <p><strong>Corporate example:</strong> Amazon's early investment in cloud infrastructure (AWS) was a growth option — it created the platform to build an entire cloud computing empire that now contributes most of Amazon's profits.</p>
+        <p><strong>When it's valuable:</strong> Technology, biotech, platform businesses — anywhere where early investments create disproportionate future opportunities.</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 7 — KEY RULES TO REMEMBER
+══════════════════════════════════════════ -->
+<div class="card" id="s7">
+  <div class="card-head">
+    <div class="card-icon" style="background:#fef9c3;">📌</div>
+    <div>
+      <h2 style="color:#713f12;">7 · The Key Rules to Remember</h2>
+      <p>These are the principles your exam will test you on. Know them cold.</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-n" style="background:#1e3a8a;">A</div>
+        <div class="step-b">
+          <h4>Real options ALWAYS add value — they can never subtract it</h4>
+          <p>An option is a right, not an obligation. You only exercise it when it's good for you. This means having an option is always better than not having it. Flexibility cannot hurt you, it can only help. Therefore: True Project Value ≥ Standard NPV always.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#7c3aed;">B</div>
+        <div class="step-b">
+          <h4>Higher uncertainty = more valuable real option</h4>
+          <p>This is the counterintuitive one. A highly uncertain project has a <em>more</em> valuable real option than a predictable one. Why? Because with high uncertainty, the option to stop, wait, or expand becomes more useful — the gap between the best and worst outcomes is larger, and your ability to react to either matters more. Standard NPV punishes uncertainty; real options thrive on it.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#16a34a;">C</div>
+        <div class="step-b">
+          <h4>Decision trees are solved RIGHT to LEFT (backwards induction)</h4>
+          <p>Always fill in the final payoffs first (far right). Then work backwards — at each chance node, calculate expected value (probability × payoff); at each decision node, pick the best option. Never try to solve left to right — you can't know what today's decision is worth until you know what tomorrow's decisions will be.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#d97706;">D</div>
+        <div class="step-b">
+          <h4>Sunk costs are irrelevant to future decisions</h4>
+          <p>Money already spent cannot be recovered, so it should not influence future choices. In the Meghan example, the €500 booth fee was irrelevant when she decided whether to go on the day — the only relevant question was whether the incremental benefit of going exceeded the incremental cost. This is one of the most common mistakes in real-world business decisions too.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#dc2626;">E</div>
+        <div class="step-b">
+          <h4>At a decision node, always choose the highest-value action</h4>
+          <p>Decision nodes represent rational managers. A rational manager will always choose the option with the highest expected value. This is an assumption baked into the model — we're treating the manager as perfectly logical, not subject to emotion or bias. This is also why you "cross out" the inferior branches when solving the tree.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n" style="background:#0f172a;">F</div>
+        <div class="step-b">
+          <h4>The 3-step manager playbook (from your lecture slides)</h4>
+          <p><strong>Step 1 — Identify the uncertainty:</strong> What is the main thing you don't know? (Weather, demand, trial results, oil price...)</p>
+          <p><strong>Step 2 — Design interim decision points:</strong> Structure the investment so you can react after the uncertainty resolves. Don't commit all money upfront.</p>
+          <p><strong>Step 3 — Recalculate NPV:</strong> Add the real option value to the standard NPV. The project may now be clearly worth doing.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="takeaway">
+      <span class="ti">🏆</span>
+      <div>
+        <strong>The Big Picture — Why Real Options Matter</strong>
+        <p>Standard NPV asks: "What is this project worth if everything goes according to plan and we never change course?" Real options analysis asks: "What is this project worth given that we're smart managers who will adapt as new information arrives?" The second question is always more accurate — and usually gives a higher, more correct valuation. The decision tree is simply the tool that makes those future choices visible and calculable.</p>
+        <p style="margin-top:8px;">In practice, the most valuable thing about real options is not just the numbers — it's the thinking it forces. By drawing a decision tree, managers are forced to ask: "Where exactly is the uncertainty? What will we do when it resolves? How do we structure this investment to preserve maximum flexibility?" That thinking alone is worth more than any formula.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</div><!-- /page -->
+</body>
+</html>
