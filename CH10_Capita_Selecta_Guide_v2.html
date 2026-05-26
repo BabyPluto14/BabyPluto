@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CH10 · Capita Selecta — Corporate Finance Deep-Dive Guide</title>
+  <style>
+    /* ─── Reset & Root ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:       #2563eb;
+      --blue-dark:  #1e3a8a;
+      --blue-light: #dbeafe;
+      --indigo:     #4f46e5;
+      --violet:     #7c3aed;
+      --violet-light:#ede9fe;
+      --green:      #16a34a;
+      --green-light:#dcfce7;
+      --amber:      #d97706;
+      --amber-light:#fef3c7;
+      --red:        #dc2626;
+      --red-light:  #fee2e2;
+      --pink:       #db2777;
+      --slate-900:  #0f172a;
+      --slate-800:  #1e293b;
+      --slate-700:  #334155;
+      --slate-500:  #64748b;
+      --slate-200:  #e2e8f0;
+      --slate-100:  #f1f5f9;
+      --slate-50:   #f8fafc;
+      --white:      #ffffff;
+      --radius-sm:  8px;
+      --radius:     14px;
+      --radius-lg:  20px;
+      --shadow:     0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #eef2f7;
+      color: var(--slate-700);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    /* ─── Layout ─── */
+    .page { max-width: 1020px; margin: 0 auto; padding: 36px 20px 100px; }
+
+    /* ─── KEY TERM HIGHLIGHT ─── */
+    .term {
+      display: inline-block;
+      background: #fef9c3;
+      border: 1px solid #fde047;
+      color: #713f12;
+      border-radius: 5px;
+      padding: 0px 7px;
+      font-weight: 700;
+      font-size: 0.93em;
+      white-space: nowrap;
+    }
+    .term.blue   { background: #dbeafe; border-color: #93c5fd; color: #1e3a8a; }
+    .term.violet { background: #ede9fe; border-color: #c4b5fd; color: #4c1d95; }
+    .term.green  { background: #dcfce7; border-color: #86efac; color: #14532d; }
+    .term.red    { background: #fee2e2; border-color: #fca5a5; color: #7f1d1d; }
+    .term.pink   { background: #fce7f3; border-color: #f9a8d4; color: #831843; }
+    .term.slate  { background: #f1f5f9; border-color: #cbd5e1; color: #0f172a; }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(140deg, #0f172a 0%, #1e3a8a 45%, #4f46e5 80%, #7c3aed 100%);
+      border-radius: var(--radius-lg);
+      color: #fff;
+      padding: 56px 48px;
+      margin-bottom: 44px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content:'';position:absolute;top:-60px;right:-60px;
+      width:320px;height:320px;border-radius:50%;
+      background:rgba(255,255,255,0.04);
+    }
+    .hero::after {
+      content:'';position:absolute;bottom:-80px;left:30%;
+      width:240px;height:240px;border-radius:50%;
+      background:rgba(255,255,255,0.03);
+    }
+    .hero .badge {
+      display:inline-block;
+      background:rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:30px; padding:5px 16px;
+      font-size:0.75rem; letter-spacing:0.1em;
+      text-transform:uppercase; font-weight:600;
+      margin-bottom:20px;
+    }
+    .hero h1 { font-size:2.8rem; font-weight:900; line-height:1.15; margin-bottom:16px; }
+    .hero .subtitle { font-size:1.05rem; opacity:0.8; max-width:620px; margin-bottom:28px; }
+    .hero .pills { display:flex; flex-wrap:wrap; gap:10px; }
+    .hero .pill {
+      background:rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:30px; padding:6px 18px;
+      font-size:0.85rem; font-weight:600;
+    }
+
+    /* ─── TOC ─── */
+    .toc-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:14px; margin-bottom:44px;
+    }
+    .toc-card {
+      background:var(--white); border-radius:var(--radius);
+      border:1px solid var(--slate-200);
+      padding:20px 22px;
+      text-decoration:none; color:var(--slate-800);
+      display:flex; align-items:center; gap:14px;
+      box-shadow:var(--shadow);
+      transition:transform .15s, box-shadow .15s;
+    }
+    .toc-card:hover { transform:translateY(-2px); box-shadow:0 4px 24px rgba(0,0,0,.12); }
+    .toc-card .num {
+      width:42px; height:42px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.3rem; flex-shrink:0;
+    }
+    .toc-card h3 { font-size:0.95rem; font-weight:700; margin-bottom:2px; }
+    .toc-card p  { font-size:0.8rem; color:var(--slate-500); }
+
+    /* ─── SECTION ─── */
+    .section {
+      background:var(--white);
+      border-radius:var(--radius);
+      border:1px solid var(--slate-200);
+      margin-bottom:48px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .section-banner {
+      padding:32px 36px 28px;
+      display:flex; align-items:flex-start; gap:20px;
+      border-bottom:1px solid var(--slate-200);
+    }
+    .section-icon {
+      width:60px; height:60px; border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem; flex-shrink:0;
+    }
+    .section-banner h2 { font-size:1.75rem; font-weight:900; margin-bottom:6px; line-height:1.2; }
+    .section-banner .desc { color:var(--slate-500); font-size:0.95rem; max-width:580px; }
+    .section-body { padding:36px; }
+
+    /* ─── CONTENT BLOCKS ─── */
+    .block { margin-bottom:44px; }
+    .block:last-child { margin-bottom:0; }
+    .block-title {
+      font-size:1.2rem; font-weight:800;
+      margin-bottom:14px;
+      padding-bottom:10px;
+      border-bottom:2px solid var(--slate-100);
+      display:flex; align-items:center; gap:10px;
+    }
+    .block p { margin-bottom:14px; font-size:0.95rem; }
+    .block p:last-child { margin-bottom:0; }
+    .block ul, .block ol { padding-left:22px; margin-bottom:14px; }
+    .block li { margin-bottom:8px; font-size:0.95rem; }
+
+    /* ─── CALLOUT ─── */
+    .callout {
+      border-radius:var(--radius-sm); padding:18px 22px;
+      margin:18px 0; display:flex; gap:14px;
+      font-size:0.93rem; line-height:1.7;
+    }
+    .callout .ci { font-size:1.5rem; flex-shrink:0; margin-top:1px; }
+    .callout strong { display:block; margin-bottom:5px; font-size:0.97rem; }
+    .callout.info   { background:#eff6ff; border-left:4px solid var(--blue); }
+    .callout.tip    { background:#f0fdf4; border-left:4px solid var(--green); }
+    .callout.warn   { background:#fffbeb; border-left:4px solid var(--amber); }
+    .callout.danger { background:#fef2f2; border-left:4px solid var(--red); }
+    .callout.purple { background:#f5f3ff; border-left:4px solid var(--violet); }
+    .callout.dark   { background:var(--slate-800); color:#e2e8f0; border-left:4px solid #6366f1; }
+    .callout.dark strong { color:#fff; }
+
+    /* ─── GRID CARDS ─── */
+    .grid { display:grid; gap:16px; margin:16px 0; }
+    .grid-2 { grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+    .grid-3 { grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+    .grid-4 { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+    .card {
+      border-radius:var(--radius-sm); padding:20px;
+      font-size:0.9rem; line-height:1.65;
+    }
+    .card h4 { font-size:0.97rem; font-weight:700; margin-bottom:10px; }
+    .card ul  { padding-left:16px; }
+    .card li  { margin-bottom:6px; }
+    .card p   { margin-bottom:8px; }
+    .card p:last-child { margin-bottom:0; }
+
+    /* ─── FORMULA BOX ─── */
+    .formula {
+      background:#0f172a; color:#e2e8f0;
+      border-radius:var(--radius-sm);
+      padding:22px 28px; margin:16px 0;
+      font-family:'Courier New',monospace;
+      font-size:0.93rem; line-height:1.9;
+      overflow-x:auto; border:1px solid #334155;
+    }
+    .formula .comment { color:#64748b; font-style:italic; }
+    .formula .hi  { color:#93c5fd; font-weight:700; }
+    .formula .hi2 { color:#86efac; font-weight:700; }
+
+    /* ─── TABLE ─── */
+    .tbl-wrap { overflow-x:auto; margin:16px 0; }
+    table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    th {
+      background:var(--slate-800); color:#fff;
+      padding:11px 16px; text-align:left;
+      font-weight:600; font-size:0.85rem; letter-spacing:.03em;
+    }
+    td { padding:11px 16px; border-bottom:1px solid var(--slate-200); }
+    tr:last-child td { border-bottom:none; }
+    tr:nth-child(even) td { background:var(--slate-50); }
+    .pos { color:var(--green); font-weight:700; }
+    .neg { color:var(--red); font-weight:700; }
+    .neutral { color:var(--slate-500); }
+
+    /* ─── STEPS ─── */
+    .steps { margin:16px 0; }
+    .step { display:flex; gap:16px; margin-bottom:22px; align-items:flex-start; }
+    .step:last-child { margin-bottom:0; }
+    .step-num {
+      width:36px; height:36px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; font-size:0.9rem; flex-shrink:0; color:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    }
+    .step-body h4 { font-weight:700; margin-bottom:5px; font-size:0.97rem; }
+    .step-body p  { font-size:0.92rem; color:var(--slate-700); }
+
+    /* ─── COMPARISON ─── */
+    .versus {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:0; border-radius:var(--radius-sm);
+      overflow:hidden; border:1px solid var(--slate-200);
+      margin:16px 0;
+    }
+    .versus-side { padding:22px 24px; }
+    .versus-side h4 { font-size:1rem; font-weight:700; margin-bottom:12px; }
+    .versus-side ul  { padding-left:18px; font-size:0.9rem; }
+    .versus-side li  { margin-bottom:8px; }
+    .versus-divider  {
+      width:1px; background:var(--slate-200);
+    }
+
+    /* ─── EMH LEVELS ─── */
+    .emh { border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--slate-200); margin:16px 0; }
+    .emh-row { display:flex; align-items:stretch; border-bottom:1px solid var(--slate-200); }
+    .emh-row:last-child { border-bottom:none; }
+    .emh-label {
+      width:180px; flex-shrink:0; padding:18px 20px;
+      font-weight:800; font-size:0.88rem;
+      display:flex; flex-direction:column; justify-content:center; gap:4px;
+    }
+    .emh-label small { font-weight:400; font-size:0.78rem; opacity:0.7; }
+    .emh-content { flex:1; padding:16px 20px; font-size:0.9rem; border-left:1px solid var(--slate-200); }
+    .emh-content strong { display:block; margin-bottom:6px; font-size:0.92rem; }
+    .emh-content ul { padding-left:18px; }
+    .emh-content li { margin-bottom:5px; }
+    .emh-row.w1 .emh-label { background:#dbeafe; color:#1e40af; }
+    .emh-row.w2 .emh-label { background:#ede9fe; color:#4c1d95; }
+    .emh-row.w3 .emh-label { background:#fce7f3; color:#9d174d; }
+
+    /* ─── PAYOFF DIAGRAM (CSS only) ─── */
+    .payoff-wrap {
+      display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;
+    }
+    .payoff {
+      background:var(--slate-50); border:1px solid var(--slate-200);
+      border-radius:var(--radius-sm); padding:20px; text-align:center;
+    }
+    .payoff h4 { font-size:0.9rem; font-weight:700; margin-bottom:14px; }
+    .payoff-chart {
+      position:relative; height:120px; margin-bottom:10px;
+    }
+    /* Long Call payoff shape */
+    .lc-line {
+      position:absolute; bottom:20px; left:0; right:0;
+      height:2px; background:var(--slate-200);
+    }
+    .lc-flat {
+      position:absolute; bottom:20px; left:0; width:50%;
+      height:2px; background:var(--blue);
+    }
+    .lc-up {
+      position:absolute; bottom:20px; left:50%;
+      width:50%; height:2px;
+      background:var(--blue);
+      transform-origin:left bottom;
+      transform:rotate(-35deg);
+    }
+    .payoff-label {
+      font-size:0.75rem; color:var(--slate-500);
+      position:absolute;
+    }
+    .axis-x { bottom:4px; left:50%; transform:translateX(-50%); }
+    .axis-profit { top:4px; left:4px; color:var(--green); }
+    .axis-loss   { bottom:4px; left:4px; color:var(--red); }
+
+    /* ─── LEVERAGE VISUAL ─── */
+    .lev-bars { display:flex; gap:14px; margin:16px 0; align-items:flex-end; }
+    .lev-bar-wrap { flex:1; text-align:center; }
+    .lev-bar { border-radius:var(--radius-sm) var(--radius-sm) 0 0; margin:0 auto; transition:height .3s; }
+    .lev-bar-label { font-size:0.8rem; margin-top:6px; font-weight:600; }
+
+    /* ─── WATERFALL ─── */
+    .waterfall { display:flex; align-items:flex-end; gap:4px; height:160px; margin:16px 0; padding:0 8px; }
+    .wf-bar { flex:1; border-radius:4px 4px 0 0; display:flex; align-items:flex-end; justify-content:center; }
+    .wf-label { font-size:0.75rem; font-weight:600; padding-bottom:6px; color:#fff; writing-mode:vertical-lr; transform:rotate(180deg); }
+
+    /* ─── GLOSSARY ─── */
+    .glossary { columns:2; column-gap:28px; font-size:0.88rem; }
+    .glossary dt { font-weight:700; color:var(--blue-dark); margin-top:12px; }
+    .glossary dd { margin-left:0; margin-bottom:4px; color:var(--slate-700); }
+
+    /* ─── TAKEAWAY ─── */
+    .takeaway {
+      background:linear-gradient(135deg, #1e3a8a, #4f46e5, #7c3aed);
+      color:#fff; border-radius:var(--radius-sm);
+      padding:24px 28px; margin-top:28px;
+      display:flex; gap:16px; align-items:flex-start;
+    }
+    .takeaway .ti { font-size:1.6rem; flex-shrink:0; }
+    .takeaway strong { display:block; margin-bottom:6px; font-size:1.05rem; }
+    .takeaway p { font-size:0.93rem; opacity:0.9; }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; font-size:0.85rem; }
+    .progress-label { width:160px; font-weight:600; flex-shrink:0; }
+    .progress-bar { flex:1; height:10px; background:var(--slate-200); border-radius:10px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:10px; }
+
+    /* ─── SECTION DIVIDER ─── */
+    hr.div { border:none; border-top:1px solid var(--slate-200); margin:32px 0; }
+
+    /* ─── SOURCES ─── */
+    .sources {
+      background:var(--white); border:1px solid var(--slate-200);
+      border-radius:var(--radius); padding:28px 36px;
+      margin-top:48px; box-shadow:var(--shadow);
+    }
+    .sources h3 { font-size:0.95rem; font-weight:700; color:var(--slate-500); margin-bottom:16px; text-transform:uppercase; letter-spacing:.08em; }
+    .sources ul { list-style:none; padding:0; columns:2; column-gap:24px; }
+    .sources li { margin-bottom:10px; font-size:0.85rem; break-inside:avoid; }
+    .sources a  { color:var(--blue); text-decoration:none; }
+    .sources a:hover { text-decoration:underline; }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:680px){
+      .hero h1 { font-size:1.8rem; }
+      .hero { padding:36px 24px; }
+      .section-body { padding:22px; }
+      .section-banner { padding:22px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
+      .versus  { grid-template-columns:1fr; }
+      .payoff-wrap { grid-template-columns:1fr; }
+      .glossary { columns:1; }
+      .sources ul { columns:1; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<div class="hero">
+  <div class="badge">Corporate Finance · Chapter 10</div>
+  <h1>Capita Selecta</h1>
+  <p class="subtitle">A deep-dive study guide covering Options, Market Efficiency, and Capital Structure — with full explanations, worked examples, and highlighted key terminology.</p>
+  <div class="pills">
+    <span class="pill">📊 Options &amp; Derivatives</span>
+    <span class="pill">📉 Efficient Markets</span>
+    <span class="pill">🏦 Debt &amp; Capital Structure</span>
+    <span class="pill">🔑 Key Terms Highlighted</span>
+  </div>
+</div>
+
+<!-- ══════════════════ TOC ══════════════════ -->
+<div class="toc-grid">
+  <a href="#options" class="toc-card">
+    <div class="num" style="background:#eff6ff;">📊</div>
+    <div>
+      <h3>Topic 1 — Options</h3>
+      <p>Financial options, Black-Scholes, Real options, Decision trees</p>
+    </div>
+  </a>
+  <a href="#emh" class="toc-card">
+    <div class="num" style="background:#f5f3ff;">📉</div>
+    <div>
+      <h3>Topic 2 — Market Efficiency</h3>
+      <p>EMH forms, anomalies, behavioral finance, AMH</p>
+    </div>
+  </a>
+  <a href="#debt" class="toc-card">
+    <div class="num" style="background:#f0fdf4;">🏦</div>
+    <div>
+      <h3>Topic 3 — Debt Policy</h3>
+      <p>MM theorems, trade-off theory, pecking order, WACC</p>
+    </div>
+  </a>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — OPTIONS
+══════════════════════════════════════════ -->
+<div class="section" id="options">
+  <div class="section-banner">
+    <div class="section-icon" style="background:#eff6ff;">📊</div>
+    <div>
+      <h2 style="color:#1e3a8a;">Topic 1 · Options</h2>
+      <p class="desc">Options are powerful financial contracts that give the holder a <em>right without an obligation</em>. Understanding them unlocks both risk management in finance and strategic thinking in corporate investment.</p>
+    </div>
+  </div>
+  <div class="section-body">
+
+
+    <!-- ─ 1.1 What is an option ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#1e3a8a;">1.1 · What is a Financial Option?</div>
+
+      <p>A <span class="term blue">financial option</span> is a <span class="term blue">derivative contract</span> — meaning its value is <em>derived from</em> an underlying asset, most commonly a stock. The option gives the <span class="term blue">option holder</span> (buyer) the <strong>right, but not the obligation</strong>, to buy or sell the underlying asset at a predetermined price called the <span class="term blue">strike price</span> (or exercise price), on or before a specific date called the <span class="term blue">expiry date</span>.</p>
+
+      <p>In return for granting this right, the holder pays an upfront cost called the <span class="term blue">option premium</span>. The person who sells (writes) the option is called the <span class="term blue">option writer</span> or counterparty. The writer collects the premium but takes on the obligation to fulfill the contract if the holder exercises their right.</p>
+
+      <div class="callout info">
+        <span class="ci">💡</span>
+        <div>
+          <strong>Everyday Analogy — The Concert Ticket</strong>
+          Imagine you pay €20 for the option to buy a festival ticket at €100 any time in the next 3 months. If the festival sells out and resale prices hit €200, you exercise your option and profit. If the festival gets cancelled and tickets drop to €40, you simply don't exercise — you lose only the €20 premium. This is the core logic of every option: <em>limited downside, asymmetric upside.</em>
+        </div>
+      </div>
+
+      <p>Options are used for two broad purposes: <span class="term green">hedging</span> (reducing existing risk) and <span class="term">speculation</span> (taking a position on future price direction).</p>
+
+      <div class="grid grid-2">
+        <div class="card" style="background:#f0fdf4; border:1px solid #86efac;">
+          <h4>🛡️ Hedging — Risk Reduction</h4>
+          <p>A company <em>already exposed</em> to price risk uses options to limit the damage if prices move against them. The cost (premium) is like paying for insurance.</p>
+          <p><strong>Example:</strong> An airline that needs to buy jet fuel in 6 months buys a call option on oil. If oil prices spike, the option profits offset the higher fuel costs.</p>
+        </div>
+        <div class="card" style="background:#fef9c3; border:1px solid #fde047;">
+          <h4>📈 Speculation — Directional Bets</h4>
+          <p>A trader with no underlying exposure uses options to bet on price direction, using less capital than buying the asset outright (this is called <span class="term">leverage</span>).</p>
+          <p><strong>Example:</strong> A trader who believes Tesla stock will rise buys call options rather than the actual shares, risking only the premium while keeping upside potential.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 1.2 Calls and Puts ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#1e3a8a;">1.2 · Calls and Puts — The 2 Products, 4 Positions</div>
+
+      <p>There are only two types of options — <span class="term blue">call options</span> and <span class="term blue">put options</span>. Each can be held from two sides (buyer or seller), creating four fundamental positions.</p>
+
+      <div class="grid grid-2" style="margin-bottom:20px;">
+        <div class="card" style="background:#eff6ff; border:2px solid #93c5fd;">
+          <h4 style="color:#1e40af;">📞 CALL Option — The Right to BUY</h4>
+          <p>A call gives the <strong>holder the right to purchase</strong> the underlying asset at the strike price. You benefit when the market price rises <em>above</em> the strike price.</p>
+          <p style="margin-top:10px;"><strong>Profit formula (at expiry):</strong><br>
+          Payoff = max(S<sub>T</sub> − K, 0) − Premium</p>
+          <p style="margin-top:8px; font-size:0.85rem; color:var(--slate-500);">Where S<sub>T</sub> = stock price at expiry, K = strike price</p>
+        </div>
+        <div class="card" style="background:#fef3c7; border:2px solid #fbbf24;">
+          <h4 style="color:#92400e;">📤 PUT Option — The Right to SELL</h4>
+          <p>A put gives the <strong>holder the right to sell</strong> the underlying asset at the strike price. You benefit when the market price falls <em>below</em> the strike price.</p>
+          <p style="margin-top:10px;"><strong>Profit formula (at expiry):</strong><br>
+          Payoff = max(K − S<sub>T</sub>, 0) − Premium</p>
+          <p style="margin-top:8px; font-size:0.85rem; color:var(--slate-500);">A long put is essentially portfolio insurance against price declines.</p>
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Action</th>
+              <th>You profit when…</th>
+              <th>Max Loss</th>
+              <th>Max Gain</th>
+              <th>Typical Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Long Call</strong></td>
+              <td>Buy a call option</td>
+              <td>Price rises above strike + premium</td>
+              <td class="neg">Premium paid</td>
+              <td class="pos">Unlimited</td>
+              <td>Hedge rising input costs / bullish speculation</td>
+            </tr>
+            <tr>
+              <td><strong>Short Call</strong></td>
+              <td>Write/sell a call option</td>
+              <td>Price stays flat or falls</td>
+              <td class="neg">Unlimited</td>
+              <td class="pos">Premium received</td>
+              <td>Generate income on existing stock holdings</td>
+            </tr>
+            <tr>
+              <td><strong>Long Put</strong></td>
+              <td>Buy a put option</td>
+              <td>Price falls below strike − premium</td>
+              <td class="neg">Premium paid</td>
+              <td class="pos">Strike price − premium</td>
+              <td>Hedge against falling asset prices / bearish speculation</td>
+            </tr>
+            <tr>
+              <td><strong>Short Put</strong></td>
+              <td>Write/sell a put option</td>
+              <td>Price stays flat or rises</td>
+              <td class="neg">Strike price − premium</td>
+              <td class="pos">Premium received</td>
+              <td>Willing to buy asset cheaply if it falls</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="ci">⚠️</span>
+        <div>
+          <strong>Risk asymmetry is the most important concept in options</strong>
+          When you <em>buy</em> an option (long position), your downside is always capped at the premium you paid. When you <em>write</em> an option (short position), you collect a small premium but face potentially massive — even unlimited — losses. This is why large financial institutions have strict position limits for option writers.
+        </div>
+      </div>
+
+      <div class="block-title" style="color:#1e3a8a; font-size:1rem; margin-top:24px; margin-bottom:12px;">Option Moneyness</div>
+      <p>The relationship between the current stock price and the strike price is called <span class="term blue">moneyness</span>:</p>
+      <div class="grid grid-3">
+        <div class="card" style="background:#f0fdf4; border:1px solid #86efac;">
+          <h4>✅ In-the-Money (ITM)</h4>
+          <p>Call: Stock price <strong>above</strong> strike (S &gt; K)<br>Put: Stock price <strong>below</strong> strike (S &lt; K)</p>
+          <p style="margin-top:8px;">Has <span class="term green">intrinsic value</span> — immediate profit if exercised now.</p>
+        </div>
+        <div class="card" style="background:#fef9c3; border:1px solid #fde047;">
+          <h4>➖ At-the-Money (ATM)</h4>
+          <p>Stock price equals (or is very close to) the strike price (S ≈ K)</p>
+          <p style="margin-top:8px;">Intrinsic value ≈ 0. Value consists only of <span class="term">time value</span>.</p>
+        </div>
+        <div class="card" style="background:#fef2f2; border:1px solid #fca5a5;">
+          <h4>❌ Out-of-the-Money (OTM)</h4>
+          <p>Call: Stock price <strong>below</strong> strike (S &lt; K)<br>Put: Stock price <strong>above</strong> strike (S &gt; K)</p>
+          <p style="margin-top:8px;">No intrinsic value. Cheaper — but requires a larger price move to profit.</p>
+        </div>
+      </div>
+
+      <div class="callout purple" style="margin-top:20px;">
+        <span class="ci">🔗</span>
+        <div>
+          <strong>Combination: The Long Straddle</strong>
+          Buying a call AND a put simultaneously on the same asset, same strike, same expiry. You profit from <em>large moves in either direction</em>. Used by import/export companies to hedge <span class="term violet">currency risk</span> when they do not know whether their home currency will strengthen or weaken. The short straddle (selling both) bets on low volatility and earns both premiums — but faces losses in both directions if prices move significantly.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 1.3 Black-Scholes ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#1e3a8a;">1.3 · The Black-Scholes-Merton Model — Pricing an Option</div>
+
+      <p>Before 1973, there was no agreed-upon way to price options. In 1973, economists Fischer Black and Myron Scholes published a formula that solved this problem, earning Myron Scholes (and colleague Robert Merton) the Nobel Prize in Economics in 1997. The <span class="term blue">Black-Scholes model</span> gives the theoretical fair price of a <span class="term blue">European call option</span> on a non-dividend-paying stock.</p>
+
+      <div class="callout info">
+        <span class="ci">📖</span>
+        <div>
+          <strong>European vs American Options</strong>
+          A <span class="term blue">European option</span> can only be exercised on the exact expiry date. An <span class="term blue">American option</span> can be exercised any time up to and including the expiry date. Black-Scholes is only correct for European options. American options require more complex models (like the binomial tree) because the "early exercise" feature adds value.
+        </div>
+      </div>
+
+      <div class="formula">
+<span class="hi">C = S · N(d₁) − K · e<sup>−rT</sup> · N(d₂)</span>
+<br><br>
+d₁ = [ ln(S/K) + (r + σ²/2) · T ] / (σ · √T)
+d₂ = d₁ − σ · √T
+<br><br>
+<span class="comment">
+─────────────────────────────────────────────
+ S  = current stock price
+ K  = strike price (the agreed purchase price)
+ T  = time to expiry (in years, e.g. 6m = 0.5)
+ r  = risk-free interest rate (e.g. gov't bond rate)
+ σ  = volatility (annualised standard deviation of returns)
+ N(·) = cumulative standard normal distribution
+ e   = Euler's number ≈ 2.718 (used for discounting)
+─────────────────────────────────────────────
+</span>
+      </div>
+
+      <p><strong>Intuition behind the formula:</strong></p>
+      <p>The formula can be read as two parts. The first part, <code>S · N(d₁)</code>, is the <em>expected benefit</em> of receiving the stock (the upside). The second part, <code>K · e<sup>−rT</sup> · N(d₂)</code>, is the <em>present value of what you pay</em> (the strike price), adjusted by the probability you'll actually exercise. The option's value is the difference between what you expect to gain and what you expect to pay.</p>
+
+      <div class="block-title" style="color:#1e3a8a; font-size:1rem; margin-top:24px; margin-bottom:12px;">The 5 Value Drivers of an Option</div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Variable</th><th>Description</th><th>Effect on Call Price</th><th>Effect on Put Price</th><th>Why?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>S — Stock Price ↑</strong></td>
+              <td>Current market price of underlying</td>
+              <td class="pos">↑ Increases</td>
+              <td class="neg">↓ Decreases</td>
+              <td>Call moves closer to or into the money</td>
+            </tr>
+            <tr>
+              <td><strong>K — Strike Price ↑</strong></td>
+              <td>The agreed exercise price</td>
+              <td class="neg">↓ Decreases</td>
+              <td class="pos">↑ Increases</td>
+              <td>Higher hurdle to beat (call); easier to exceed (put)</td>
+            </tr>
+            <tr>
+              <td><strong>T — Time to Expiry ↑</strong></td>
+              <td>More time remaining on the contract</td>
+              <td class="pos">↑ Increases</td>
+              <td class="pos">↑ Increases</td>
+              <td>More time = more chance of a favourable price move (<span class="term">time value</span>)</td>
+            </tr>
+            <tr>
+              <td><strong>r — Risk-Free Rate ↑</strong></td>
+              <td>Government bond yield</td>
+              <td class="pos">↑ Increases</td>
+              <td class="neg">↓ Decreases</td>
+              <td>Higher rates reduce the PV of the strike price you'd pay</td>
+            </tr>
+            <tr>
+              <td><strong>σ — Volatility ↑</strong></td>
+              <td>How wildly the stock price swings</td>
+              <td class="pos">↑ Increases</td>
+              <td class="pos">↑ Increases</td>
+              <td>More volatility = more chance of large favourable moves (option holder gains from big moves, not harmed by direction)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout danger" style="margin-top:16px;">
+        <span class="ci">🌪️</span>
+        <div>
+          <strong>Volatility (σ) is the single most important driver — and the most surprising</strong>
+          Unlike a direct stock investor who fears volatility, the option holder <em>loves</em> volatility. If the stock moves wildly upward, the call option profits enormously. If it moves wildly downward, the call holder simply doesn't exercise — losing only the small premium. This asymmetry means volatility only creates upside for the option holder. In markets, this measure of implied future volatility is traded directly — it is called the <span class="term red">VIX (Volatility Index)</span>, often nicknamed the "fear gauge."
+        </div>
+      </div>
+
+      <div class="block-title" style="color:#1e3a8a; font-size:1rem; margin-top:24px; margin-bottom:12px;">Option Greeks — Sensitivity Measures</div>
+      <p>Traders use <span class="term blue">the Greeks</span> to measure how sensitive an option's price is to changes in each input:</p>
+      <div class="grid grid-4">
+        <div class="card" style="background:var(--slate-50); border:1px solid var(--slate-200); font-size:0.85rem;">
+          <h4>Δ Delta</h4>
+          <p>How much the option price moves for each €1 move in the stock. Range 0–1 for calls. Delta = 0.6 means: stock rises €1 → option rises €0.60.</p>
+        </div>
+        <div class="card" style="background:var(--slate-50); border:1px solid var(--slate-200); font-size:0.85rem;">
+          <h4>Θ Theta</h4>
+          <p>The daily <span class="term slate">time decay</span> — how much value the option loses each day as it approaches expiry, all else equal. Always negative for buyers.</p>
+        </div>
+        <div class="card" style="background:var(--slate-50); border:1px solid var(--slate-200); font-size:0.85rem;">
+          <h4>V Vega</h4>
+          <p>Sensitivity to volatility. How much the option price rises for a 1% increase in σ. High vega = highly sensitive to changes in market uncertainty.</p>
+        </div>
+        <div class="card" style="background:var(--slate-50); border:1px solid var(--slate-200); font-size:0.85rem;">
+          <h4>ρ Rho</h4>
+          <p>Sensitivity to changes in the risk-free interest rate. Generally a small effect compared to delta and vega.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 1.4 Real Options ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#1e3a8a;">1.4 · Real Options — Embedding Flexibility into Investment Projects</div>
+
+      <p>The same logic that makes financial options valuable applies directly to corporate investment decisions. A <span class="term blue">real option</span> is the <em>right, but not the obligation</em>, to take a specific managerial action regarding a real (non-financial) asset. Just as a call option lets you buy a stock at a fixed price in the future, a real option lets a company — for example — delay a factory investment, or expand a product line, or abandon a failing project.</p>
+
+      <div class="callout purple">
+        <span class="ci">✈️</span>
+        <div>
+          <strong>The Boeing 737 MAX Case Study</strong>
+          In 2019, Boeing's 737 MAX aircraft was grounded worldwide after two fatal crashes. Boeing faced three distinct real options: (1) <em>Option to abandon</em> — stop all 737 MAX production permanently; (2) <em>Option to wait/delay</em> — halt production, wait for regulatory clarity, and resume later; (3) <em>Option to expand</em> — invest heavily in fixing all issues and scale up production to meet backlogged orders. Standard NPV analysis would struggle to capture these choices. Real options analysis revealed that the option to wait and eventually resume had substantial positive value — which is broadly what Boeing chose.
+        </div>
+      </div>
+
+      <div class="block-title" style="color:#1e3a8a; font-size:1rem; margin-top:24px; margin-bottom:12px;">Why Standard NPV Falls Short</div>
+
+      <p>The <span class="term blue">Net Present Value (NPV)</span> rule says: invest if the present value of future cash flows exceeds the initial cost. This is the correct framework, but the standard version has a critical flaw — it assumes managers are <em>passive</em>. It is a "one-shot decision": commit now, observe outcomes, do nothing to adapt. Real-world managers are not passive. They observe new information and adjust course. Standard NPV <strong>systematically undervalues</strong> projects that contain embedded flexibility.</p>
+
+      <div class="callout tip">
+        <span class="ci">🔑</span>
+        <div>
+          <strong>The expanded NPV formula</strong>
+          <strong>Expanded NPV = Standard NPV + Value of Real Options</strong><br>
+          A project with a negative standard NPV can still be worth undertaking if the embedded real options (e.g. the option to expand if successful) have positive value that more than compensates. This is why many early-stage investments — R&amp;D projects, pilot programmes, small exploration wells — have value even when their expected cash flows alone do not justify the cost.
+        </div>
+      </div>
+
+      <div class="block-title" style="color:#1e3a8a; font-size:1rem; margin-top:24px; margin-bottom:12px;">The Six Types of Real Options</div>
+
+      <div class="grid grid-2">
+        <div class="card" style="background:#eff6ff; border:1px solid #bfdbfe; font-size:0.9rem;">
+          <h4 style="color:#1e40af;">⏰ Option to Delay (Wait)</h4>
+          <p>Defer a capital commitment until uncertainty is reduced. Like holding a financial option before expiry — you preserve the right to invest later without having to commit now.</p>
+          <p><strong>Example:</strong> An oil company holds land rights but delays drilling until oil prices recover above a profitable threshold.</p>
+        </div>
+        <div class="card" style="background:#f0fdf4; border:1px solid #86efac; font-size:0.9rem;">
+          <h4 style="color:#166534;">📈 Option to Expand</h4>
+          <p>If a pilot project or Phase 1 succeeds, scale up by investing more. The initial investment "buys" the option to expand.</p>
+          <p><strong>Example:</strong> A retailer opens one store in a new country as a pilot. Success triggers a roll-out of 50 stores.</p>
+        </div>
+        <div class="card" style="background:#fef9c3; border:1px solid #fde047; font-size:0.9rem;">
+          <h4 style="color:#713f12;">📉 Option to Scale Down</h4>
+          <p>If conditions deteriorate, reduce scale to limit losses rather than continue at full speed.</p>
+          <p><strong>Example:</strong> A semiconductor manufacturer reduces production runs when chip prices fall.</p>
+        </div>
+        <div class="card" style="background:#fef2f2; border:1px solid #fca5a5; font-size:0.9rem;">
+          <h4 style="color:#7f1d1d;">🚪 Option to Abandon</h4>
+          <p>Exit the project entirely and salvage remaining value — like exercising a put option on the project.</p>
+          <p><strong>Example:</strong> A pharmaceutical company abandons a drug in Phase 2 trials after poor efficacy results, recovering remaining R&amp;D budget.</p>
+        </div>
+        <div class="card" style="background:#f5f3ff; border:1px solid #c4b5fd; font-size:0.9rem;">
+          <h4 style="color:#4c1d95;">🔄 Option to Switch</h4>
+          <p>Alter the use of assets or inputs in response to changing prices or market conditions.</p>
+          <p><strong>Example:</strong> A power plant designed to burn either gas or coal can switch fuels based on which is cheaper at any given time.</p>
+        </div>
+        <div class="card" style="background:#fce7f3; border:1px solid #f9a8d4; font-size:0.9rem;">
+          <h4 style="color:#831843;">🌱 Growth Option</h4>
+          <p>Early investments "plant a seed" that creates the option for future, larger investments. Common in technology and life sciences.</p>
+          <p><strong>Example:</strong> A tech startup's Series A investment buys the option to raise Series B if the product achieves user growth targets.</p>
+        </div>
+      </div>
+
+      <div class="block-title" style="color:#1e3a8a; font-size:1rem; margin-top:28px; margin-bottom:12px;">Decision Tree Analysis — The Meghan Flea Market Example</div>
+
+      <p>A <span class="term blue">decision tree</span> is a visual tool that maps out all future decisions and uncertain outcomes. It contains two types of nodes: <span class="term blue">decision nodes</span> (squares) where managers choose, and <span class="term blue">chance nodes</span> (circles) where nature resolves uncertainty.</p>
+
+      <p>Meghan wants to rent a flea market booth for <strong>€500</strong>. There is a 75% chance of good weather (profit €1,500) and 25% chance of bad weather (loss €100).</p>
+
+      <div class="grid grid-2">
+        <div class="card" style="background:#fef2f2; border:2px solid #fca5a5;">
+          <h4 style="color:#7f1d1d;">❌ Naive Approach — No Flexibility</h4>
+          <p>Meghan commits regardless and goes in all weather.</p>
+          <div style="background:#fff; border-radius:6px; padding:12px; margin-top:12px; font-size:0.87rem; font-family:monospace;">
+            E[Value] = (0.75 × €1,500) + (0.25 × −€100) − €500<br>
+            = €1,125 − €25 − €500<br>
+            = <strong>€600</strong>
+          </div>
+          <p style="margin-top:10px; font-size:0.87rem;">In 25% of cases she loses €600 total (€100 loss + €500 booth).</p>
+        </div>
+        <div class="card" style="background:#f0fdf4; border:2px solid #86efac;">
+          <h4 style="color:#166534;">✅ Real Option Approach — Wait for Forecast</h4>
+          <p>She waits for the weather forecast. Only goes if sunny.</p>
+          <div style="background:#fff; border-radius:6px; padding:12px; margin-top:12px; font-size:0.87rem; font-family:monospace;">
+            E[Value] = (0.75 × €1,500) − €500<br>
+            = €1,125 − €500<br>
+            = <strong>€625</strong>
+          </div>
+          <p style="margin-top:10px; font-size:0.87rem; color:var(--green); font-weight:700;">Option value = €625 − €600 = +€25</p>
+          <p style="font-size:0.87rem;">She avoids the €600 bad-weather loss entirely.</p>
+        </div>
+      </div>
+
+      <div class="steps" style="margin-top:24px;">
+        <div style="font-weight:800; margin-bottom:16px; font-size:1rem;">🗝️ The Manager's Real Options Framework — 3 Steps</div>
+        <div class="step">
+          <div class="step-num" style="background:#2563eb;">1</div>
+          <div class="step-body">
+            <h4>Identify the key uncertainty</h4>
+            <p>Ask: "What is the single biggest unknown in this project?" Frame it explicitly. In Meghan's case it is the weather. In a drug trial it is clinical efficacy. In a new market entry it is consumer demand. Once named, you can design around it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#7c3aed;">2</div>
+          <div class="step-body">
+            <h4>Design interim decision points (staging)</h4>
+            <p>Break the investment into stages so management can react once uncertainty resolves. Do not commit all capital upfront. Each stage "buys" information and the option to proceed or stop. This is standard practice in venture capital, R&amp;D, and oil exploration.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#16a34a;">3</div>
+          <div class="step-body">
+            <h4>Recalculate NPV — add the option value</h4>
+            <p>Revised NPV = Standard NPV + Value of Real Options. Use decision tree analysis or option pricing models. A project that looked marginal or even negative under standard NPV may become clearly attractive once real option value is recognised.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info" style="margin-top:8px;">
+        <span class="ci">🔗</span>
+        <div>
+          <strong>The surprising connection between financial and real options</strong>
+          Both share the same fundamental property: <em>the higher the uncertainty, the more valuable the option</em>. A volatile stock → a more valuable financial option. An uncertain market → a more valuable real option to delay, expand, or abandon. This is the counterintuitive insight: <strong>uncertainty is an asset when you hold an option</strong>. Managers who recognise this avoid over-committing early and instead actively preserve flexibility.
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <span class="ti">🏆</span>
+        <div>
+          <strong>Topic 1 Core Takeaway</strong>
+          <p>Options — financial or real — give you asymmetric payoffs: limited downside, unlimited (or large) upside. Their value comes from flexibility in the face of uncertainty. Black-Scholes tells us the fair price of a financial option using 5 inputs, with volatility being the most important. Real options tell corporate managers to build flexibility into projects, stage investments, and never treat a capital decision as irreversible.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — MARKET EFFICIENCY
+══════════════════════════════════════════ -->
+<div class="section" id="emh">
+  <div class="section-banner">
+    <div class="section-icon" style="background:#f5f3ff;">📉</div>
+    <div>
+      <h2 style="color:#4c1d95;">Topic 2 · The Efficient Market Hypothesis</h2>
+      <p class="desc">The EMH is one of the most tested and debated theories in economics. It asks a simple but profound question: <em>can you consistently make more money in the stock market than the average investor, by being smarter?</em></p>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- ─ 2.1 The Random Walk ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#4c1d95;">2.1 · The Random Walk — Why Stock Charts Look Like Coin Flips</div>
+
+      <p>A classic experiment asks experienced traders to distinguish between two charts: one showing 5 years of actual S&amp;P 500 prices, and one generated by flipping a coin (heads = price up, tails = price down). Subjects consistently fail to tell them apart. This is not a coincidence — it is the signature of a <span class="term violet">random walk</span>.</p>
+
+      <div class="callout purple">
+        <span class="ci">🎲</span>
+        <div>
+          <strong>The self-destroying pattern — the logic of market efficiency</strong>
+          Suppose someone discovers a reliable pattern in past stock prices: "every time stock X rises 5 days in a row, it falls on day 6." What happens? Rational traders immediately start <em>short-selling</em> the stock on day 5, pushing the price down earlier. This trading continues until the pattern no longer produces excess profit — at which point the pattern has <em>destroyed itself</em>. In equilibrium, no exploitable pattern can survive. Prices must reflect all available information, and future moves must be unpredictable.
+        </div>
+      </div>
+
+      <p>This is the essence of the <span class="term violet">Efficient Market Hypothesis (EMH)</span>, formalized by Nobel laureate Eugene Fama in 1970. The EMH states that <strong>asset prices fully and instantly reflect all available information</strong>. Any attempt to earn above-average returns using publicly available information will fail because the information is already priced in.</p>
+
+      <div class="callout info">
+        <span class="ci">🔗</span>
+        <div>
+          <strong>Connection to the Law of One Price and Arbitrage</strong>
+          Market efficiency is enforced by <span class="term blue">arbitrage</span> — the simultaneous buying and selling of equivalent assets to profit from price discrepancies. In efficient markets, arbitrage opportunities are exploited so quickly by professional traders that they disappear almost instantly. This rapid arbitrage is what keeps prices aligned with fundamental value.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 2.2 Three Forms ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#4c1d95;">2.2 · The Three Forms of Market Efficiency</div>
+
+      <p>Fama identified three distinct "levels" of efficiency, each corresponding to a different information set being reflected in prices. They are nested — each stronger form includes all the information of weaker forms.</p>
+
+      <div class="emh">
+        <div class="emh-row w1">
+          <div class="emh-label">
+            Weak Form
+            <small>Level 1</small>
+          </div>
+          <div class="emh-content">
+            <strong>Prices reflect all <span class="term blue">historical market data</span> — past prices, trading volumes, and returns.</strong>
+            <ul>
+              <li><span class="term blue">Technical analysis</span> (chart patterns, moving averages, momentum indicators) cannot generate consistent excess returns. If past patterns predicted the future, they would already be traded away.</li>
+              <li><span class="term blue">Fundamental analysis</span> (studying earnings, balance sheets, valuations) <em>may</em> still yield superior returns because it uses information not captured by price history alone.</li>
+              <li><strong>Evidence:</strong> Strong empirical support in developed markets. Most academic studies confirm that past price trends do not reliably predict future returns after accounting for transaction costs.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="emh-row w2">
+          <div class="emh-label">
+            Semi-Strong Form
+            <small>Level 2</small>
+          </div>
+          <div class="emh-content">
+            <strong>Prices reflect all <span class="term violet">publicly available information</span> — financial statements, earnings announcements, news, economic data, analyst reports.</strong>
+            <ul>
+              <li>Neither technical analysis NOR fundamental analysis can consistently outperform the market. By the time a public announcement is made, the price has already moved to reflect it.</li>
+              <li>Studies of <span class="term violet">event studies</span> (e.g. earnings surprises, M&amp;A announcements) consistently show that prices adjust to new public information within minutes or even seconds.</li>
+              <li><strong>Implication:</strong> Passive index investing (which makes no attempt to pick stocks) is likely to outperform the average active manager after fees.</li>
+              <li><strong>Evidence:</strong> Broadly supported in developed markets, though some anomalies persist (see Section 2.3).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="emh-row w3">
+          <div class="emh-label">
+            Strong Form
+            <small>Level 3</small>
+          </div>
+          <div class="emh-content">
+            <strong>Prices reflect <span class="term pink">all information</span> — including private, non-public (insider) information.</strong>
+            <ul>
+              <li>Even corporate insiders with access to confidential information about their own company cannot consistently earn abnormal returns.</li>
+              <li>This form is considered <strong>too strong to hold in practice</strong>. Empirical evidence shows that insiders <em>do</em> earn abnormal returns on their trades — which is exactly why <span class="term pink">insider trading laws</span> exist in most countries.</li>
+              <li>The existence of insider trading regulations is itself an implicit acknowledgement that markets are not strong-form efficient.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="ci">✅</span>
+        <div>
+          <strong>Academic Consensus</strong>
+          Most financial economists agree that developed markets (e.g. NYSE, London Stock Exchange, Euronext) are at least <em>weak-form efficient</em> and largely <em>semi-strong-form efficient</em>. Strong-form efficiency is generally rejected. Emerging markets tend to be less efficient — offering more potential opportunities but also more risk.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 2.3 Anomalies ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#4c1d95;">2.3 · Market Anomalies — Where Efficiency Breaks Down</div>
+
+      <p>Despite its theoretical elegance, the EMH has been challenged by documented <span class="term violet">anomalies</span> — patterns that appear to offer abnormal returns and persist even after they become well-known. These anomalies are important because they reveal the limits of purely rational market models.</p>
+
+      <div class="grid grid-2">
+        <div class="card" style="background:#fef9c3; border:1px solid #fde047;">
+          <h4>📅 The January Effect</h4>
+          <p>Stocks — especially small-cap stocks — tend to earn higher returns in January than in any other month. Likely explanation: investors sell losing stocks in December to realize tax losses, then reinvest in January. The predictable selling pressure depresses prices in December and the buying creates a January rebound.</p>
+          <p style="margin-top:8px; font-size:0.85rem;"><strong>Challenge to EMH:</strong> If this is predictable, why hasn't arbitrage eliminated it? Possibly transaction costs and limits to arbitrage prevent full correction.</p>
+        </div>
+        <div class="card" style="background:#fce7f3; border:1px solid #f9a8d4;">
+          <h4>🏠 Home Bias</h4>
+          <p>Investors systematically overweight their domestic stocks and underweight international stocks, even though international diversification would reduce portfolio risk without reducing expected returns. This violates the rational, utility-maximizing investor assumption at the core of EMH.</p>
+          <p style="margin-top:8px; font-size:0.85rem;"><strong>Cause:</strong> Familiarity bias, perceived currency risk, differential information costs.</p>
+        </div>
+        <div class="card" style="background:#ffe4e6; border:1px solid #fda4af;">
+          <h4>📤 The Disposition Effect</h4>
+          <p>Investors tend to <em>sell winning stocks too early</em> (to lock in gains) and <em>hold losing stocks too long</em> (to avoid realizing losses). This is irrational — tax considerations actually argue for the opposite. Described by behavioral economists Shefrin and Statman, it stems from <span class="term red">loss aversion</span>.</p>
+        </div>
+        <div class="card" style="background:#eff6ff; border:1px solid #93c5fd;">
+          <h4>📊 Momentum Effect</h4>
+          <p>Stocks that have performed well over the past 3–12 months tend to continue outperforming over the next few months (<span class="term blue">price momentum</span>). This directly contradicts weak-form EMH, which says past prices cannot predict future returns. First documented by Jegadeesh and Titman (1993), it remains one of the most robust anomalies.</p>
+        </div>
+        <div class="card" style="background:#ecfdf5; border:1px solid #6ee7b7;">
+          <h4>🎮 GameStop Short Squeeze (2021)</h4>
+          <p>Retail investors on Reddit's WallStreetBets coordinated to buy heavily shorted stocks like GameStop (GME), forcing short-sellers to buy back shares at rising prices (a <span class="term green">short squeeze</span>). GME shares rose 1,700% in two weeks — far beyond any fundamental justification. A clear case of a price driven by coordination and narrative, not information.</p>
+        </div>
+        <div class="card" style="background:#f5f3ff; border:1px solid #c4b5fd;">
+          <h4>🏗️ Evergrande &amp; China Real Estate</h4>
+          <p>Evergrande, China's second-largest property developer, accumulated over $300bn in liabilities. Rating agencies, auditors, and investors missed or ignored the systemic risk for years. When the crisis broke in 2021, contagion spread rapidly. A potential example of semi-strong inefficiency — publicly available leverage data was not correctly priced.</p>
+        </div>
+      </div>
+
+      <div class="callout warn" style="margin-top:16px;">
+        <span class="ci">🤖</span>
+        <div>
+          <strong>AI and Market Efficiency — Current Debate (2025–26)</strong>
+          A major concern in financial markets today: AI-related stocks (NVIDIA, Palantir, Microsoft) have been trading at extremely high valuation multiples. Some analysts draw parallels to the dot-com bubble of 1999-2000 — when "story stocks" disconnected from fundamentals. The question is whether this is rational pricing of genuinely transformative technology, or a speculative bubble. This is an EMH test playing out in real time.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 2.4 Active vs Passive ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#4c1d95;">2.4 · Active vs Passive Investing — The Practical Debate</div>
+
+      <p>The EMH has a direct, practical implication for investors: if prices reflect all available information, it is impossible to consistently "beat the market." This is the intellectual foundation for <span class="term violet">passive investing</span> (index funds). The opposing view — that skilled analysis can identify mispriced securities — underpins <span class="term violet">active investing</span>.</p>
+
+      <div class="versus">
+        <div class="versus-side" style="background:#eff6ff;">
+          <h4 style="color:#1e40af;">🎯 Active Investing</h4>
+          <ul>
+            <li>Fund managers select individual securities and try to beat a benchmark (e.g. S&amp;P 500)</li>
+            <li>Requires belief that markets contain mispricing that skilled analysts can identify</li>
+            <li>Higher <span class="term blue">management fees</span> (typically 0.5%–2% p.a.)</li>
+            <li>Higher portfolio <span class="term blue">turnover</span> = higher transaction costs and tax drag</li>
+            <li>Most studies show ~85% of active funds underperform their benchmark after fees over 10 years (S&amp;P SPIVA report)</li>
+            <li>Surviving funds suffer from <span class="term blue">survivorship bias</span> — underperformers are merged/closed</li>
+          </ul>
+        </div>
+        <div class="versus-side" style="background:#f0fdf4;">
+          <h4 style="color:#166534;">📊 Passive Investing (Index Funds / ETFs)</h4>
+          <ul>
+            <li>Mechanically replicates the composition of a market index (e.g. S&amp;P 500, MSCI World)</li>
+            <li>No stock selection, minimal portfolio turnover</li>
+            <li>Very low fees (e.g. 0.03%–0.20% p.a.)</li>
+            <li>By definition captures the <span class="term green">market return</span> (beta) before fees; beats the average active fund after fees</li>
+            <li>Championed by Jack Bogle (Vanguard founder) and Warren Buffett for retail investors</li>
+            <li>$10+ trillion now held in US index funds (2025)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="ci">⚠️</span>
+        <div>
+          <strong>The Passive Investing Paradox — Is Success Making Markets Less Efficient?</strong>
+          Here is the irony: passive investing works <em>because</em> active investors keep prices efficient. But as more money flows into passive funds (which do no price analysis), there are fewer active traders doing the price discovery work. Research from the LSE (2024) and others suggests that high passive fund ownership increases <span class="term">price co-movement</span>, reduces idiosyncratic price discovery, and may amplify market-wide sell-offs. Paradoxically, the more successful passive investing becomes, the more opportunity it creates for the remaining active investors — until equilibrium is found.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 2.5 Alternatives ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#4c1d95;">2.5 · Beyond the EMH — Alternative Theories</div>
+
+      <div class="grid grid-2">
+        <div class="card" style="background:var(--slate-50); border:1px solid var(--slate-200);">
+          <h4>🧠 Behavioral Finance</h4>
+          <p style="margin-bottom:12px;">Founded by Daniel Kahneman and Amos Tversky (Kahneman received the Nobel Prize in 2002), and extended by Richard Thaler (Nobel 2017), <span class="term slate">behavioral finance</span> documents that humans are <em>systematically irrational</em> in predictable ways. Key biases:</p>
+          <ul style="font-size:0.88rem;">
+            <li><span class="term">Overconfidence bias</span> — we overestimate the accuracy of our forecasts</li>
+            <li><span class="term">Loss aversion</span> — losses feel ~2.5× more painful than equivalent gains feel good (Prospect Theory)</li>
+            <li><span class="term">Anchoring</span> — we fixate on arbitrary reference points (e.g. the price we paid for a stock)</li>
+            <li><span class="term">Herding</span> — we mimic others' behavior, amplifying market movements</li>
+            <li><span class="term">Representativeness bias</span> — we over-extrapolate recent trends (e.g. assuming past winners will keep winning)</li>
+            <li><span class="term">Mental accounting</span> — treating money differently depending on its source or intended use</li>
+          </ul>
+        </div>
+        <div class="card" style="background:var(--slate-50); border:1px solid var(--slate-200);">
+          <h4>🦎 Adaptive Market Hypothesis (AMH)</h4>
+          <p style="margin-bottom:12px;">Proposed by MIT Professor Andrew Lo (2004), the <span class="term slate">Adaptive Market Hypothesis</span> reconciles the EMH with behavioral finance by applying evolutionary biology. Key ideas:</p>
+          <ul style="font-size:0.88rem;">
+            <li>Markets are <em>ecosystems</em> populated by competing financial species (retail investors, hedge funds, pension funds)</li>
+            <li>These agents learn, adapt, and compete — like organisms in a biological environment</li>
+            <li>Market efficiency is not a fixed state — it <em>varies over time</em> as conditions change and strategies evolve</li>
+            <li>Behavioral biases are not errors — they are <span class="term slate">heuristics</span> that evolved to work in certain environments and fail in others</li>
+            <li>Strategies that earned excess returns can stop working as competitors copy them — and then become profitable again later (evolutionary cycle)</li>
+            <li>In <em>stable periods</em>, markets approach EMH. In <em>crises</em>, fear and herding dominate</li>
+          </ul>
+          <p style="margin-top:12px; font-size:0.88rem;"><strong>Implication for managers:</strong> Don't ask "is the market efficient?" — ask "how efficient is this market right now, and in which asset class?" The answer determines your investment strategy.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="ti">🏆</span>
+      <div>
+        <strong>Topic 2 Core Takeaway</strong>
+        <p>Markets are not perfectly efficient, but they are competitive enough that consistently beating them is very difficult. The practical lesson: be deeply skeptical of anyone claiming a reliable way to predict stock prices — if it were truly reliable and risk-free, rational traders would already have arbitraged it away. The best evidence-based strategy for most investors is low-cost diversification via index funds, while recognising that behavioral biases and market conditions periodically create real opportunities for disciplined active managers.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — DEBT POLICY
+══════════════════════════════════════════ -->
+<div class="section" id="debt">
+  <div class="section-banner">
+    <div class="section-icon" style="background:#f0fdf4;">🏦</div>
+    <div>
+      <h2 style="color:#166534;">Topic 3 · Debt Policy &amp; Capital Structure</h2>
+      <p class="desc">How should a firm finance itself — with equity, debt, or some combination? This fundamental question in corporate finance connects daily financial decisions to macroeconomic stability.</p>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- ─ 3.1 Setting the scene ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#166534;">3.1 · Setting the Scene — The Financing Decision</div>
+
+      <p>Recall the fundamental distinction in corporate finance between the <span class="term green">investment decision</span> (which projects to undertake) and the <span class="term green">financing decision</span> (how to fund those projects). The investment decision determines what value is created. The financing decision determines how that value is divided between debt holders and equity holders — but does it also affect the <em>total</em> value created?</p>
+
+      <p>A firm's <span class="term green">capital structure</span> is the mix of financial instruments used to finance its assets — principally <span class="term green">debt</span> (bonds, bank loans) and <span class="term green">equity</span> (shares). The ratio of debt to total capital is called <span class="term green">leverage</span> or <span class="term green">gearing</span>.</p>
+
+      <div class="grid grid-3">
+        <div class="card" style="background:#f0fdf4; border:1px solid #86efac;">
+          <h4>🏛️ Equity Financing</h4>
+          <ul style="font-size:0.88rem;">
+            <li>Issue new shares to raise capital</li>
+            <li>No obligation to repay (permanent capital)</li>
+            <li>Shareholders receive <span class="term green">dividends</span> (discretionary)</li>
+            <li>Shareholders bear the residual risk — last in line if firm fails</li>
+            <li>Cost = <span class="term green">cost of equity (r<sub>e</sub>)</span> — typically highest</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#eff6ff; border:1px solid #93c5fd;">
+          <h4>📋 Debt Financing</h4>
+          <ul style="font-size:0.88rem;">
+            <li>Borrow via bonds, loans, or credit lines</li>
+            <li>Legal obligation to make fixed interest and principal payments</li>
+            <li>Interest payments are <span class="term blue">tax-deductible</span> (key advantage)</li>
+            <li>Debt holders are senior to equity — lower risk, lower return</li>
+            <li>Cost = <span class="term blue">cost of debt (r<sub>d</sub>)</span> — lower than equity</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#fef9c3; border:1px solid #fde047;">
+          <h4>🔄 WACC</h4>
+          <p style="font-size:0.88rem;">The blended cost of all financing sources is the <span class="term">Weighted Average Cost of Capital (WACC)</span>:</p>
+          <div style="background:#fff; border-radius:6px; padding:10px; margin-top:8px; font-family:monospace; font-size:0.83rem;">
+            WACC = r<sub>e</sub>×(E/V) + r<sub>d</sub>×(1−t<sub>c</sub>)×(D/V)
+          </div>
+          <p style="margin-top:8px; font-size:0.85rem;">Where V = D + E (total firm value). WACC is the firm's hurdle rate for investment decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 3.2 MM1 ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#166534;">3.2 · Modigliani &amp; Miller Proposition I — Capital Structure is Irrelevant (in a Perfect World)</div>
+
+      <p>In 1958, economists Franco Modigliani and Merton Miller published what became one of the most influential papers in financial economics, earning them both Nobel Prizes. Their <span class="term green">MM Proposition I</span> states:</p>
+
+      <div class="callout dark">
+        <span class="ci">⚖️</span>
+        <div>
+          <strong>MM Proposition I (No Taxes)</strong>
+          In perfect capital markets (no taxes, no bankruptcy costs, no transaction costs, symmetric information, efficient markets), the total value of a firm is <strong>independent of its capital structure</strong>. A firm worth €1 billion cannot increase or decrease that value simply by rearranging how it is financed.<br><br>
+          <strong>V<sub>U</sub> = V<sub>L</sub></strong> (Value of Unlevered firm = Value of Levered firm)
+        </div>
+      </div>
+
+      <p><strong>The intuitive explanation — "Homemade Leverage":</strong> Suppose you own shares in an all-equity firm. If the firm issues debt to repurchase shares (increasing leverage), does that change your wealth? No — because you can undo any leverage decision the firm makes by borrowing (or lending) on your own account. This ability to create <span class="term green">homemade leverage</span> means investors will not pay a premium for a leveraged firm, since they can replicate the same effect themselves. Any mispricing would be eliminated by arbitrage.</p>
+
+      <div class="callout warn">
+        <span class="ci">🔓</span>
+        <div>
+          <strong>Why MM I matters in practice</strong>
+          MM I does NOT say "financing decisions don't matter in the real world." It says: "if financing decisions do matter, it must be because one or more of the perfect market assumptions is violated." This tells you exactly where to look — taxes, financial distress, information asymmetry. Each violated assumption is a potential source of value from financing decisions.
+        </div>
+      </div>
+
+      <p>With the introduction of <span class="term green">corporate taxes</span>, MM I is modified. Interest payments on debt are tax-deductible, meaning the government effectively subsidizes debt financing:</p>
+
+      <div class="formula">
+<span class="hi">V<sub>L</sub> = V<sub>U</sub> + PV(Tax Shield)</span>
+<br>
+<span class="hi2">Tax Shield per year = t<sub>c</sub> × r<sub>d</sub> × D</span>
+<br><br>
+<span class="comment">
+  t<sub>c</sub> = corporate tax rate (e.g. 25%)
+  r<sub>d</sub> = interest rate on debt
+  D   = total debt outstanding
+  PV(Tax Shield) = t<sub>c</sub> × D (if debt is permanent)
+</span>
+      </div>
+
+      <p>Example: A firm with €10 million in permanent debt at 5% interest, with a 30% tax rate, saves €150,000 per year in taxes. The present value of this perpetual saving = 30% × €10m = <strong>€3 million</strong> in additional firm value — just from the tax benefit of debt.</p>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 3.3 MM2 ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#166534;">3.3 · Modigliani &amp; Miller Proposition II — Leverage Raises Shareholder Returns (and Risk)</div>
+
+      <p><span class="term green">MM Proposition II</span> is a direct consequence of Proposition I. If total firm value is unchanged by leverage, but debt holders get a fixed, low return, then equity holders must earn a <em>higher</em> return to compensate. Leverage is like using a physical lever — it amplifies both force and risk.</p>
+
+      <div class="formula">
+<span class="hi">r<sub>e</sub> = r<sub>a</sub> + (r<sub>a</sub> − r<sub>d</sub>) × (D/E)</span>
+<br><br>
+<span class="comment">
+  r<sub>e</sub> = required return on equity (what shareholders demand)
+  r<sub>a</sub> = return on firm's assets (unlevered cost of capital)
+  r<sub>d</sub> = cost of debt
+  D/E = debt-to-equity ratio
+</span>
+      </div>
+
+      <p>As D/E increases, r<sub>e</sub> increases linearly. This makes perfect sense from a risk-return perspective: shareholders of a levered firm face <span class="term green">financial risk</span> on top of <span class="term green">business risk</span>, and they rationally demand higher compensation.</p>
+
+      <div class="block-title" style="color:#166534; font-size:1rem; margin-top:24px; margin-bottom:12px;">Leverage Magnification — Worked Example</div>
+
+      <p>Consider a €100,000 investment that either increases to €125,000 (+25%) or falls to €75,000 (−25%):</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Financing</th>
+              <th>Own Capital Invested</th>
+              <th>Outcome: +25%</th>
+              <th>ROE: +25%</th>
+              <th>Outcome: −25%</th>
+              <th>ROE: −25%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>No Leverage</strong></td>
+              <td>100% equity</td>
+              <td>€100,000</td>
+              <td>€125,000</td>
+              <td class="pos">+25%</td>
+              <td>€75,000</td>
+              <td class="neg">−25%</td>
+            </tr>
+            <tr>
+              <td><strong>50% Leverage</strong></td>
+              <td>€50k debt + €50k equity</td>
+              <td>€50,000</td>
+              <td>€75,000 → repay €50k debt → <strong>€25,000 equity</strong></td>
+              <td class="pos">+50%</td>
+              <td>€25,000 → repay €50k → <strong>equity = €25,000 loss</strong></td>
+              <td class="neg">−50%</td>
+            </tr>
+            <tr>
+              <td><strong>90% Leverage</strong></td>
+              <td>€90k debt + €10k equity</td>
+              <td>€10,000</td>
+              <td>€35,000 → repay €90k → <strong>equity = −€55,000</strong> (default!)</td>
+              <td class="neg">Loss</td>
+              <td>€(15,000) → repay debt → deep default</td>
+              <td class="neg">Bankrupt</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout danger">
+        <span class="ci">⚔️</span>
+        <div>
+          <strong>Debt is a double-edged sword — micro and macro</strong>
+          At the individual level, leverage multiplies both gains and losses. At the macro level, the 2008 Global Financial Crisis illustrated catastrophic systemic risk from excessive leverage throughout the financial system. US households took on <span class="term red">subprime mortgages</span> they could not afford; banks held these mortgages with 30:1 leverage via complex <span class="term red">mortgage-backed securities (MBS)</span> and <span class="term red">collateralized debt obligations (CDOs)</span>; investors around the world bought these instruments. When US house prices fell just 5–10%, the leveraged amplification turned a housing correction into a global financial crisis.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 3.4 Trade-off theory ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#166534;">3.4 · The Trade-Off Theory — Finding the Optimal Capital Structure</div>
+
+      <p>The <span class="term green">trade-off theory</span> of capital structure says that firms choose their debt level by weighing the <em>benefits</em> of debt against the <em>costs</em> of debt. The optimal capital structure is at the point where marginal benefit equals marginal cost.</p>
+
+      <div class="grid grid-2">
+        <div class="card" style="background:#f0fdf4; border:2px solid #86efac;">
+          <h4 style="color:#166534;">✅ Benefits of Debt — Rising with D</h4>
+          <ul>
+            <li><strong>Tax shield:</strong> Interest payments are deducted before tax. Every euro of interest reduces taxable income by €1, saving t<sub>c</sub>×€1 in tax. This is a direct government subsidy on debt financing.</li>
+            <li><strong>Discipline effect:</strong> Debt forces managers to generate cash flows to service interest — reducing wasteful spending of <span class="term green">free cash flow</span> (<span class="term green">agency cost reduction</span>).</li>
+            <li><strong>Signal of confidence:</strong> Taking on debt signals that management believes future cash flows are strong enough to service the obligations.</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#fef2f2; border:2px solid #fca5a5;">
+          <h4 style="color:#7f1d1d;">❌ Costs of Debt — Rising with D</h4>
+          <ul>
+            <li><strong>Direct financial distress costs:</strong> Legal fees, restructuring costs, and administrative expenses if the firm cannot meet its debt obligations. Can represent 10–20% of firm value.</li>
+            <li><strong>Indirect financial distress costs:</strong> Lost business — customers avoid a firm that may not honour warranties; suppliers demand cash up front; talented employees leave for safer employers.</li>
+            <li><strong>Agency costs of debt:</strong> Shareholders may take excessive risks ("asset substitution") or pass up positive NPV projects ("debt overhang") when a firm is in distress — harming debt holders.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin:20px 0;">
+        <div style="background:#f8fafc; border:1px solid var(--slate-200); border-radius:10px; padding:20px;">
+          <div style="font-weight:700; margin-bottom:16px; font-size:0.93rem;">📊 Trade-Off Theory: Value vs. Leverage Level</div>
+          <div class="progress-row">
+            <span class="progress-label">Firm value (no debt)</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:50%; background:#64748b;"></div></div>
+            <span style="font-size:0.82rem; color:var(--slate-500);">Base (V<sub>U</sub>)</span>
+          </div>
+          <div class="progress-row">
+            <span class="progress-label">+ Tax shield value</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:70%; background:#16a34a;"></div></div>
+            <span style="font-size:0.82rem; color:var(--green);">↑ Increases with debt</span>
+          </div>
+          <div class="progress-row">
+            <span class="progress-label">− Distress costs</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:30%; background:#dc2626;"></div></div>
+            <span style="font-size:0.82rem; color:var(--red);">↑ Accelerates at high leverage</span>
+          </div>
+          <div class="progress-row" style="margin-top:6px; border-top:1px solid var(--slate-200); padding-top:12px;">
+            <span class="progress-label" style="font-weight:800;">= Optimal leverage</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:62%; background:#2563eb;"></div></div>
+            <span style="font-size:0.82rem; color:var(--blue); font-weight:700;">Maximizes firm value</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="ci">🎯</span>
+        <div>
+          <strong>Who uses more debt? Trade-Off Theory predictions</strong>
+          Firms with stable, predictable cash flows and tangible assets (utilities, real estate, infrastructure) can safely use more debt — lower distress risk, more tax shield benefit. Firms with volatile cash flows, many intangible assets, or high growth options (tech startups, biotech) should use less debt — distress costs are higher and tax shield is worth less when taxable income is uncertain.
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 3.5 Pecking Order ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#166534;">3.5 · The Pecking Order Theory — Financing Follows a Hierarchy</div>
+
+      <p>Proposed by Stewart Myers and Nicholas Majluf (1984), the <span class="term green">pecking order theory</span> says that firms do not have a target optimal capital structure. Instead, they follow a fixed hierarchy of financing preferences driven by <span class="term green">information asymmetry</span> — the fact that managers know more about the firm's true value than outside investors.</p>
+
+      <div class="callout purple">
+        <span class="ci">💭</span>
+        <div>
+          <strong>Why Information Asymmetry Matters</strong>
+          Imagine you are buying a used car from someone who knows its complete service history and you don't. You'd worry they're only selling because it has hidden problems — so you'd discount your offer price. The same logic applies when a firm issues new equity: outside investors worry that management would only issue shares if they believe the shares are <em>overvalued</em>. This concern means new equity issuance is always received skeptically by markets — typically, stock prices fall 2–3% when a new share issuance is announced. This "adverse selection" cost makes equity expensive.
+        </div>
+      </div>
+
+      <div class="steps">
+        <div style="font-weight:800; margin-bottom:16px; font-size:1rem;">The Pecking Order Hierarchy</div>
+        <div class="step">
+          <div class="step-num" style="background:#16a34a;">1st</div>
+          <div class="step-body">
+            <h4>Internal Funds — Retained Earnings &amp; Depreciation Cash Flows</h4>
+            <p>Cheapest source of capital — no new investors, no information asymmetry cost, no transaction costs. Firms always prefer to fund investment from internally generated cash first. The cost is the <span class="term green">opportunity cost</span> — the return shareholders could have earned by investing the cash themselves (i.e. the cost of equity).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#2563eb;">2nd</div>
+          <div class="step-body">
+            <h4>External Debt — Bank Loans, Bonds</h4>
+            <p>When internal funds are exhausted, firms turn to debt. Debt involves less information asymmetry than equity — creditors only care about whether the firm can make fixed payments, not about future upside. Rating agencies and covenants provide transparency. The cost is higher than internal funds but much lower than equity issuance.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#7c3aed;">3rd</div>
+          <div class="step-body">
+            <h4>External Equity — New Share Issues</h4>
+            <p>Used only as a last resort. The adverse selection discount (investors assume overvaluation), plus underwriting fees, makes equity the most expensive source of external capital. A firm that announces a new equity issue typically sees its share price fall immediately — a direct empirical confirmation of pecking order logic.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="ci">🔑</span>
+        <div>
+          <strong>Pecking Order Theory — Key Predictions</strong>
+          <ul style="margin-top:8px; padding-left:18px; font-size:0.92rem;">
+            <li>Profitable firms use less debt — they can self-fund</li>
+            <li>There is no well-defined "target" debt ratio — leverage fluctuates based on investment needs vs. available internal funds</li>
+            <li>Firms issue equity rarely, and only when debt capacity is exhausted or when shares are clearly overvalued</li>
+            <li>Large, profitable firms (e.g. Apple, Microsoft) accumulate huge cash reserves — consistent with preferring internal funds</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="div"/>
+
+    <!-- ─ 3.6 Comparison ─ -->
+    <div class="block">
+      <div class="block-title" style="color:#166534;">3.6 · Trade-Off vs. Pecking Order — Side-by-Side Comparison</div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Trade-Off Theory</th>
+              <th>Pecking Order Theory</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Core driver</strong></td>
+              <td>Tax shield vs. financial distress costs</td>
+              <td>Information asymmetry &amp; cost of capital hierarchy</td>
+            </tr>
+            <tr>
+              <td><strong>Target leverage?</strong></td>
+              <td class="pos">Yes — firms have an optimal D/E ratio</td>
+              <td class="neutral">No — leverage is a residual of financing needs</td>
+            </tr>
+            <tr>
+              <td><strong>Profitable firms use…</strong></td>
+              <td class="neutral">More debt (higher taxable income to shield)</td>
+              <td class="neg">Less debt (fund internally, less need to borrow)</td>
+            </tr>
+            <tr>
+              <td><strong>Equity issuance</strong></td>
+              <td class="neutral">Done when leverage is above target</td>
+              <td class="neg">Last resort — signals overvaluation</td>
+            </tr>
+            <tr>
+              <td><strong>Cash holdings</strong></td>
+              <td class="neutral">Minimal (excess cash = missed tax shield)</td>
+              <td class="pos">Large (buffer to avoid costly external financing)</td>
+            </tr>
+            <tr>
+              <td><strong>Best fits…</strong></td>
+              <td>Capital-intensive industries with stable cash flows</td>
+              <td>High-growth, information-intensive firms (tech, biotech)</td>
+            </tr>
+            <tr>
+              <td><strong>Nobel foundation</strong></td>
+              <td>MM (Modigliani 1985, Miller 1990)</td>
+              <td>Myers &amp; Majluf (1984), grounded in information economics</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="ci">🌏</span>
+        <div>
+          <strong>Neither theory is complete — the real world needs both</strong>
+          In practice, firms' capital structure decisions are influenced by <em>both</em> frameworks simultaneously, plus additional factors: market timing (issuing equity when share prices are high), managerial preferences, industry norms, and rating agency requirements. A truly complete capital structure theory does not yet exist — this remains one of the most actively researched areas in corporate finance.
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="ti">🏆</span>
+      <div>
+        <strong>Topic 3 Core Takeaway</strong>
+        <p>MM I proved that in a perfect, frictionless world, how you finance a firm is completely irrelevant — only the investment decisions matter. The real world breaks this irrelevance via taxes (creating the tax shield benefit of debt), bankruptcy costs (creating the cost of financial distress), and information asymmetry (creating the pecking order). Trade-off theory finds a value-maximizing optimal debt level. Pecking order theory says firms follow a cost hierarchy. Both offer genuine insights, and the right answer depends on the firm's specific situation. The overarching lesson: <em>debt is always a double-edged sword — powerful when used carefully, dangerous when misused.</em></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════ KEY TERMS GLOSSARY ══════════════════ -->
+<div class="section">
+  <div class="section-banner">
+    <div class="section-icon" style="background:#fef9c3;">📖</div>
+    <div>
+      <h2>Key Terms Glossary</h2>
+      <p class="desc">All highlighted terms from this guide, defined concisely for quick revision.</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <dl class="glossary">
+      <dt>Adaptive Market Hypothesis (AMH)</dt>
+      <dd>Markets as evolutionary ecosystems where agents adapt; efficiency varies over time.</dd>
+      <dt>Agency Cost</dt>
+      <dd>Cost arising from conflicts of interest between principals (shareholders) and agents (managers/debt holders).</dd>
+      <dt>Arbitrage</dt>
+      <dd>Risk-free profit from exploiting price discrepancies; its pursuit enforces market efficiency.</dd>
+      <dt>At-the-Money (ATM)</dt>
+      <dd>An option whose strike price equals the current market price of the underlying asset.</dd>
+      <dt>Behavioral Finance</dt>
+      <dd>Study of how systematic psychological biases affect financial decisions and asset prices.</dd>
+      <dt>Black-Scholes Model</dt>
+      <dd>Mathematical formula for pricing European call/put options on non-dividend-paying stocks.</dd>
+      <dt>Call Option</dt>
+      <dd>Contract giving the holder the right (not obligation) to buy an asset at the strike price.</dd>
+      <dt>Capital Structure</dt>
+      <dd>The mix of debt and equity a firm uses to finance its assets.</dd>
+      <dt>Cost of Equity (r<sub>e</sub>)</dt>
+      <dd>The return required by shareholders; increases with financial leverage (MM II).</dd>
+      <dt>Decision Tree</dt>
+      <dd>Graphical tool mapping future decisions (squares) and chance events (circles) in a project.</dd>
+      <dt>Delta (Δ)</dt>
+      <dd>Option Greek measuring option price sensitivity to a €1 change in the underlying stock price.</dd>
+      <dt>Derivative</dt>
+      <dd>A financial contract whose value is derived from an underlying asset, index, or rate.</dd>
+      <dt>Disposition Effect</dt>
+      <dd>Investors' tendency to sell winners too early and hold losers too long.</dd>
+      <dt>Efficient Market Hypothesis (EMH)</dt>
+      <dd>Asset prices fully and instantly reflect all available information; excess returns are not achievable.</dd>
+      <dt>European Option</dt>
+      <dd>An option exercisable only on its expiry date (vs. American, exercisable any time).</dd>
+      <dt>Financial Distress</dt>
+      <dd>State where a firm cannot (or may not be able to) meet its debt obligations; incurs direct and indirect costs.</dd>
+      <dt>Free Cash Flow</dt>
+      <dd>Operating cash flow minus capital expenditure; cash available to return to investors.</dd>
+      <dt>Greeks</dt>
+      <dd>Sensitivity measures for option prices: Delta, Gamma, Theta, Vega, Rho.</dd>
+      <dt>Hedging</dt>
+      <dd>Using financial instruments (options, futures) to reduce or eliminate an existing risk exposure.</dd>
+      <dt>Herding</dt>
+      <dd>Behavioral bias where investors follow the crowd rather than independent analysis.</dd>
+      <dt>Homemade Leverage</dt>
+      <dd>An investor's ability to replicate a firm's leverage decision using personal borrowing.</dd>
+      <dt>Information Asymmetry</dt>
+      <dd>Situation where managers have more/better information about the firm than outside investors.</dd>
+      <dt>In-the-Money (ITM)</dt>
+      <dd>Call: S &gt; K. Put: S &lt; K. Exercising immediately would generate a profit.</dd>
+      <dt>Intrinsic Value (option)</dt>
+      <dd>The immediate exercise value of an option: max(S−K, 0) for a call.</dd>
+      <dt>Leverage / Gearing</dt>
+      <dd>The use of debt to amplify potential returns (and risks) on equity capital.</dd>
+      <dt>Long Position</dt>
+      <dd>Buying an option (or asset) — you benefit from favourable price moves, maximum loss = premium paid.</dd>
+      <dt>Loss Aversion</dt>
+      <dd>Behavioral bias: losses feel approximately 2.5× more painful than equivalent gains feel good (Prospect Theory).</dd>
+      <dt>MM Proposition I</dt>
+      <dd>Firm value is independent of capital structure in perfect markets. V<sub>U</sub> = V<sub>L</sub>.</dd>
+      <dt>MM Proposition II</dt>
+      <dd>Cost of equity increases linearly with leverage; total WACC unchanged (in no-tax world).</dd>
+      <dt>Moneyness</dt>
+      <dd>The relationship between an option's strike price and the current price of the underlying asset.</dd>
+      <dt>NPV (Net Present Value)</dt>
+      <dd>Sum of discounted future cash flows minus initial investment; invest if NPV &gt; 0.</dd>
+      <dt>Option Premium</dt>
+      <dd>The price paid by the option buyer to the writer for granting the right.</dd>
+      <dt>Option to Abandon</dt>
+      <dd>Real option giving management the right to exit a project and recover salvage value.</dd>
+      <dt>Option to Delay</dt>
+      <dd>Real option giving management the right to defer an investment decision until uncertainty resolves.</dd>
+      <dt>Option to Expand</dt>
+      <dd>Real option giving management the right to increase scale of a project if it succeeds.</dd>
+      <dt>Out-of-the-Money (OTM)</dt>
+      <dd>Call: S &lt; K. Put: S &gt; K. Immediate exercise has no value.</dd>
+      <dt>Pecking Order Theory</dt>
+      <dd>Firms finance investment using internal funds first, then debt, then equity — driven by information asymmetry costs.</dd>
+      <dt>Put Option</dt>
+      <dd>Contract giving the holder the right (not obligation) to sell an asset at the strike price.</dd>
+      <dt>Random Walk</dt>
+      <dd>Theory that stock price movements are unpredictable; future moves are independent of past moves.</dd>
+      <dt>Real Option</dt>
+      <dd>The right (not obligation) to take a specific managerial action on a real investment project.</dd>
+      <dt>Semi-Strong Form EMH</dt>
+      <dd>Prices reflect all publicly available information; fundamental analysis cannot consistently beat the market.</dd>
+      <dt>Short Position</dt>
+      <dd>Selling/writing an option — you collect the premium but take on obligation; limited gain, large/unlimited loss.</dd>
+      <dt>Short Squeeze</dt>
+      <dd>Rapid price rise forcing short-sellers to buy back stock, further driving up the price (e.g. GameStop 2021).</dd>
+      <dt>Strike Price (K)</dt>
+      <dd>The agreed price at which an option holder can buy (call) or sell (put) the underlying asset.</dd>
+      <dt>Strong Form EMH</dt>
+      <dd>Prices reflect all information including private/insider information. Widely rejected in practice.</dd>
+      <dt>Tax Shield</dt>
+      <dd>The tax saving from deducting interest payments: t<sub>c</sub> × r<sub>d</sub> × D per year.</dd>
+      <dt>Theta (Θ)</dt>
+      <dd>Option Greek measuring daily time decay — how much value the option loses per passing day.</dd>
+      <dt>Time Value (option)</dt>
+      <dd>The portion of option premium attributable to time remaining — the chance something good happens before expiry.</dd>
+      <dt>Trade-Off Theory</dt>
+      <dd>Optimal capital structure balances the tax shield benefit of debt against financial distress costs.</dd>
+      <dt>VIX (Volatility Index)</dt>
+      <dd>Market-implied forecast of S&amp;P 500 volatility over the next 30 days; called the "fear gauge."</dd>
+      <dt>Vega (V)</dt>
+      <dd>Option Greek measuring price sensitivity to a 1% change in implied volatility.</dd>
+      <dt>Volatility (σ)</dt>
+      <dd>Standard deviation of an asset's returns; the key driver of option value in Black-Scholes.</dd>
+      <dt>WACC</dt>
+      <dd>Weighted Average Cost of Capital — blended cost of all financing; the firm's investment hurdle rate.</dd>
+      <dt>Weak Form EMH</dt>
+      <dd>Prices reflect all historical trading data; technical analysis cannot generate consistent excess returns.</dd>
+    </dl>
+  </div>
+</div>
+
+
+<!-- ══════════════════ CHEAT SHEET ══════════════════ -->
+<div class="section">
+  <div class="section-banner">
+    <div class="section-icon" style="background:#fef3c7;">⚡</div>
+    <div>
+      <h2>One-Page Exam Cheat Sheet</h2>
+      <p class="desc">Everything you need to remember, on one page.</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="grid grid-3">
+      <div class="card" style="background:linear-gradient(135deg,#eff6ff,#e0e7ff); border:1px solid #a5b4fc;">
+        <h4 style="color:#1e3a8a; font-size:1.05rem;">📊 Options</h4>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Financial:</strong> Call = right to buy. Put = right to sell. Long = buy (limited loss). Short = write (unlimited risk).</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>BS inputs:</strong> S↑→Call↑ · K↑→Call↓ · T↑→both↑ · σ↑→both↑ (most important)</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Real options:</strong> Delay, Expand, Scale down, Abandon, Switch, Growth</p>
+        <p style="font-size:0.84rem;"><strong>Key rule:</strong> Higher uncertainty → more valuable real option. Expanded NPV = Standard NPV + Option value.</p>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe); border:1px solid #c4b5fd;">
+        <h4 style="color:#4c1d95; font-size:1.05rem;">📉 Market Efficiency</h4>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Weak:</strong> Prices reflect historical data → technical analysis fails.</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Semi-strong:</strong> Prices reflect all public info → fundamental analysis also fails.</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Strong:</strong> Even insiders can't beat it → rejected in practice (insider laws exist for a reason).</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Anomalies:</strong> January effect, home bias, momentum, disposition effect, bubbles.</p>
+        <p style="font-size:0.84rem;"><strong>AMH:</strong> Markets adapt like ecosystems — efficiency varies by time and market.</p>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7); border:1px solid #86efac;">
+        <h4 style="color:#166534; font-size:1.05rem;">🏦 Debt Policy</h4>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>MM I:</strong> V<sub>U</sub> = V<sub>L</sub> in perfect markets. Only investments create value.</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>MM I + taxes:</strong> V<sub>L</sub> = V<sub>U</sub> + t<sub>c</sub>D (tax shield adds value).</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>MM II:</strong> r<sub>e</sub> = r<sub>a</sub> + (r<sub>a</sub>−r<sub>d</sub>)×D/E. More debt → higher equity return AND risk.</p>
+        <p style="font-size:0.84rem; margin-bottom:8px;"><strong>Trade-off:</strong> Optimal debt = max(Tax shield − Distress costs).</p>
+        <p style="font-size:0.84rem;"><strong>Pecking order:</strong> Internal funds → debt → equity. No target ratio; driven by info asymmetry.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ SOURCES ══════════════════ -->
+<div class="sources">
+  <h3>Sources &amp; Further Reading</h3>
+  <ul>
+    <li>📘 Primary Source: <em>CH10 Capita Selecta lecture slides</em> (course PDF)</li>
+    <li>🔗 <a href="https://www.sofi.com/learn/content/what-is-the-black-scholes-model/" target="_blank">Black-Scholes Model Explained — SoFi</a></li>
+    <li>🔗 <a href="https://carta.com/learn/startups/equity-management/black-scholes-model/" target="_blank">Black-Scholes &amp; Equity Valuation — Carta</a></li>
+    <li>🔗 <a href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model" target="_blank">Black-Scholes Model — Wikipedia</a></li>
+    <li>🔗 <a href="https://finacco.org/2024/10/19/real-options-examples-and-applications/" target="_blank">Real Options: Examples &amp; Applications — FinAcco (2024)</a></li>
+    <li>🔗 <a href="https://analystprep.com/cfa-level-1-exam/corporate-issuers/types-of-real-options/" target="_blank">Types of Real Options — AnalystPrep CFA Level 1</a></li>
+    <li>🔗 <a href="https://en.wikipedia.org/wiki/Real_options_valuation" target="_blank">Real Options Valuation — Wikipedia</a></li>
+    <li>🔗 <a href="https://www.wallstreetprep.com/knowledge/efficient-market-hypothesis-emh/" target="_blank">Efficient Market Hypothesis — Wall Street Prep</a></li>
+    <li>🔗 <a href="https://corporatefinanceinstitute.com/resources/career-map/sell-side/capital-markets/efficient-markets-hypothesis/" target="_blank">Efficient Markets Hypothesis — CFI</a></li>
+    <li>🔗 <a href="https://analystprep.com/cfa-level-1-exam/equity/forms-market-efficiency/" target="_blank">Forms of Market Efficiency — AnalystPrep</a></li>
+    <li>🔗 <a href="https://en.wikipedia.org/wiki/Adaptive_market_hypothesis" target="_blank">Adaptive Market Hypothesis — Wikipedia</a></li>
+    <li>🔗 <a href="https://www.lse.ac.uk/finance/news/2024/Research-Showcase-PassiveInvesting" target="_blank">Passive Investing Research — LSE Finance (2024)</a></li>
+    <li>🔗 <a href="https://fiveable.me/introduction-finance/unit-9/capital-structure-theories/study-guide/8SZHuPuFAtezE09G" target="_blank">Capital Structure Theories — Fiveable</a></li>
+    <li>🔗 <a href="https://prepnuggets.com/cfa-level-1-study-notes/corporate-issuers-study-notes/capital-investments/real-options/" target="_blank">Real Options Study Notes — PrepNuggets CFA</a></li>
+  </ul>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>
