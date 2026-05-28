@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Statistics — Multiple Linear Regression | Expanded Study Guide</title>
+<style>
+  /* ── Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #222;
+    background: #f7f8fa;
+  }
+  a { color: #2563eb; }
+
+  /* ── Layout ── */
+  .page-wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* ── Cover ── */
+  .cover {
+    background: #1e3a5f;
+    color: #fff;
+    border-radius: 10px;
+    padding: 52px 48px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .cover .subtitle { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: .7; margin-bottom: 10px; }
+  .cover h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 8px; }
+  .cover .tag { font-style: italic; font-size: 1.05rem; opacity: .85; }
+
+  /* ── Chapter headers ── */
+  .chapter-header {
+    border-radius: 8px;
+    padding: 20px 28px;
+    margin: 48px 0 28px;
+    color: #fff;
+  }
+  .chapter-header .ch-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: .8; margin-bottom: 4px; }
+  .chapter-header h2 { font-size: 1.85rem; font-weight: 700; }
+
+  .ch-a { background: #1e3a5f; }
+  .ch-b { background: #2d6a4f; }
+  .ch-c { background: #7b4f28; }
+  .ch-d { background: #5b3a8a; }
+
+  /* ── Section headings ── */
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 36px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid;
+  }
+  .ch-a-text { color: #1e3a5f; border-color: #1e3a5f; }
+  .ch-b-text { color: #2d6a4f; border-color: #2d6a4f; }
+  .ch-c-text { color: #7b4f28; border-color: #7b4f28; }
+  .ch-d-text { color: #5b3a8a; border-color: #5b3a8a; }
+
+  h4 { font-size: 1rem; font-weight: 700; margin: 22px 0 8px; color: #333; }
+
+  /* ── Boxes ── */
+  .box {
+    border-left: 5px solid;
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin: 18px 0;
+  }
+  .box-key   { background: #fff8e8; border-color: #f0a500; }
+  .box-formula { background: #eef6f0; border-color: #2d6a4f; }
+  .box-apply  { background: #fff3f3; border-color: #c0392b; }
+  .box-spss   { background: #f0f0fb; border-color: #5b3a8a; }
+  .box-pitfall { background: #fdf2f2; border-color: #c0392b; }
+  .box-example { background: #f0f6ff; border-color: #2563eb; }
+  .box-expand  { background: #f8f4ff; border-color: #9b59b6; }
+
+  .box-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .lbl-key     { color: #c07000; }
+  .lbl-formula { color: #2d6a4f; }
+  .lbl-apply   { color: #c0392b; }
+  .lbl-spss    { color: #5b3a8a; }
+  .lbl-pitfall { color: #c0392b; }
+  .lbl-example { color: #2563eb; }
+  .lbl-expand  { color: #7d3c98; }
+
+  /* ── Formula display ── */
+  .formula {
+    background: #f0f6f0;
+    border: 1px solid #c3dfc3;
+    border-radius: 6px;
+    padding: 14px 20px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1rem;
+    margin: 12px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #1e3a5f; color: #fff; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid #e0e0e0; }
+  tr:nth-child(even) td { background: #f5f7fa; }
+
+  /* ── Lists ── */
+  ul, ol { padding-left: 22px; margin: 10px 0; }
+  li { margin-bottom: 5px; }
+
+  /* ── Colour chips (legend) ── */
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .legend-chip {
+    border-left: 5px solid;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* ── Workflow diagram ── */
+  .workflow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  @media(max-width:680px){ .workflow { grid-template-columns: 1fr 1fr; } }
+  .wf-card {
+    border-radius: 8px;
+    padding: 16px 14px;
+    color: #fff;
+    font-size: 13.5px;
+  }
+  .wf-card .wf-step { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; opacity:.75; margin-bottom: 4px; }
+  .wf-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .wf-a { background: #1e3a5f; }
+  .wf-b { background: #2d6a4f; }
+  .wf-c { background: #7b4f28; }
+  .wf-d { background: #5b3a8a; }
+
+  /* ── Scheme tables ── */
+  .scheme-table th { background: #334155; }
+
+  /* ── Misc ── */
+  p { margin: 10px 0; }
+  .note { font-size: 13px; color: #555; font-style: italic; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  .summary-box {
+    background: #1e3a5f;
+    color: #fff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-top: 48px;
+    font-size: 1.05rem;
+    text-align: center;
+    line-height: 2;
+  }
+  .summary-box span { font-weight: 700; font-size: 1.2rem; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<!-- ══════════════════════════════════════════════
+     COVER
+══════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="subtitle">Statistics — Expanded Study Guide</div>
+  <h1>Multiple Linear Regression</h1>
+  <div class="tag">Part 1 of the exam &nbsp;·&nbsp; Four chapters &nbsp;·&nbsp; Concepts · Formulas · Interpretations · SPSS · Pitfalls</div>
+</div>
+
+<!-- Legend -->
+<div class="legend-grid">
+  <div class="legend-chip" style="border-color:#1e3a5f;background:#eef2f8;">MR_A &nbsp; Specification</div>
+  <div class="legend-chip" style="border-color:#2d6a4f;background:#eef6f0;">MR_B &nbsp; Estimation</div>
+  <div class="legend-chip" style="border-color:#7b4f28;background:#fdf3e9;">MR_C &nbsp; Goodness of fit</div>
+  <div class="legend-chip" style="border-color:#5b3a8a;background:#f5f0fb;">MR_D &nbsp; Assumptions</div>
+  <div class="legend-chip" style="border-color:#f0a500;background:#fff8e8;">Key idea</div>
+  <div class="legend-chip" style="border-color:#2d6a4f;background:#eef6f0;">Formula</div>
+  <div class="legend-chip" style="border-color:#c0392b;background:#fdf2f2;">Apply / interpret</div>
+  <div class="legend-chip" style="border-color:#5b3a8a;background:#f0f0fb;">SPSS</div>
+  <div class="legend-chip" style="border-color:#c0392b;background:#fdf2f2;">Pitfall</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HOW THE FOUR CHAPTERS FIT TOGETHER
+══════════════════════════════════════════════ -->
+<h2 style="font-size:1.5rem;margin:36px 0 12px;color:#1e3a5f;">How the Four Chapters Fit Together</h2>
+
+<p>Multiple linear regression is not a single calculation — it is a <strong>four-stage workflow</strong>. Each chapter of this guide answers one core question about the model you are building.</p>
+
+<div class="workflow">
+  <div class="wf-card wf-a">
+    <div class="wf-step">MR_A — Specify</div>
+    <h3>Model Specification</h3>
+    Which variables? Which functional form? Write the equation.
+  </div>
+  <div class="wf-card wf-b">
+    <div class="wf-step">MR_B — Estimate</div>
+    <h3>Estimation</h3>
+    Get b₀…bₖ via least squares. Test each βᵢ individually and jointly.
+  </div>
+  <div class="wf-card wf-c">
+    <div class="wf-step">MR_C — Judge</div>
+    <h3>Goodness of Fit</h3>
+    ANOVA, R², adjusted R². Does the whole model explain Y well?
+  </div>
+  <div class="wf-card wf-d">
+    <div class="wf-step">MR_D — Validate</div>
+    <h3>Assumptions</h3>
+    Check the 5 classical assumptions: residual plots, QMC, heteroskedasticity.
+  </div>
+</div>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Running Example — Hamburger Chain</div>
+  <p>Throughout this guide, a single dataset ties all concepts together:</p>
+  <ul>
+    <li><strong>Y</strong> = Monthly Sales (in 1000 $)</li>
+    <li><strong>x₁</strong> = Price per burger ($)</li>
+    <li><strong>x₂</strong> = Advertising expenditure (in 1000 $)</li>
+  </ul>
+  <p>Research question: <em>Does advertising raise sales enough to justify the cost?</em> We will revisit this dataset at every stage.</p>
+</div>
+
+<p style="margin-bottom:32px;">If validation in Chapter D reveals a problem — multicollinearity, heteroskedasticity, a missing variable, or a wrong functional form — you loop back to Chapter A and re-specify. A good model is <em>never</em> the product of one regression run.</p>
+
+<!-- ══════════════════════════════════════════════
+     CHAPTER A
+══════════════════════════════════════════════ -->
+<div class="chapter-header ch-a">
+  <div class="ch-label">Chapter A</div>
+  <h2>Model Specification</h2>
+</div>
+
+<!-- Scheme table A -->
+<table class="scheme-table">
+  <thead><tr><th>Section</th><th>Topic</th><th>You should be able to…</th></tr></thead>
+  <tbody>
+    <tr><td><strong>MR_A1</strong></td><td>Multiple linear regression model</td><td>Write the model, list the 5 classical assumptions, interpret β₀ and βᵢ, explain σ.</td></tr>
+    <tr><td><strong>MR_A2</strong></td><td>Non-linear relationships</td><td>Use log-log, log-linear, linear-log, polynomial transforms; interpret βᵢ in each.</td></tr>
+    <tr><td><strong>MR_A3</strong></td><td>Dummy variables</td><td>Code 0/1, pick a reference class, interpret coefficient, show parallel-shift graph.</td></tr>
+    <tr><td><strong>MR_A4</strong></td><td>Interaction variables</td><td>Build the product term, interpret quanti×quali and quali×quali interactions, draw them.</td></tr>
+    <tr><td><strong>MR_A5</strong></td><td>Choice of variables</td><td>Recognise omitted vs irrelevant variables, predict bias sign, decide whether to add a variable.</td></tr>
+  </tbody>
+</table>
+
+<!-- A.1 -->
+<div class="section-title ch-a-text">A.1 The Multiple Linear Regression Model</div>
+
+<p><strong>Simple linear regression</strong> (SLR) uses <em>one</em> explanatory variable. As soon as we believe two or more factors jointly drive the outcome, we move to <strong>multiple linear regression</strong> (MLR).</p>
+
+<p>Geometrically, SLR fits a <em>line</em> through a 2-D scatter. MLR with two predictors fits a <em>plane</em> through a 3-D scatter. With k&nbsp;>&nbsp;2 predictors the fitted surface is a <em>hyperplane</em> — we can't draw it, but the algebra is identical.</p>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Population Model (the true, unknown equation)</div>
+  <div class="formula">Y = β₀ + β₁x₁ + β₂x₂ + … + βₖxₖ + ε</div>
+  <ul>
+    <li><strong>Y</strong> — the dependent (response, outcome) variable.</li>
+    <li><strong>x₁ … xₖ</strong> — k explanatory (independent, predictor) variables.</li>
+    <li><strong>β₀</strong> — the intercept.</li>
+    <li><strong>β₁ … βₖ</strong> — the slope coefficients (one per predictor).</li>
+    <li><strong>ε</strong> — the random error term, capturing everything not explained by the x's.</li>
+  </ul>
+</div>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">Key idea — "Linear in the parameters"</div>
+  <p>The word <em>linear</em> does <strong>not</strong> mean the relationship between Y and x must be a straight line. It means the model is linear in the <em>parameters</em> β. You can include x², ln x, or x·D as regressors and the model is still "linear" — because the β's enter linearly. This is crucial for Section A.2.</p>
+</div>
+
+<h4>The two parts of the model</h4>
+<ul>
+  <li><strong>Systematic part:</strong> β₀ + β₁x₁ + … + βₖxₖ = E(Y|x) — the average value of Y given a specific combination of x-values.</li>
+  <li><strong>Random part:</strong> ε — the individual deviation of each observation from that average. σ = SD(ε) is called the <em>standard error of the model</em> and measures typical prediction error.</li>
+</ul>
+
+<!-- 5 assumptions -->
+<h4>The 5 Classical Assumptions (MEMORISE)</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">The Gauss–Markov Assumptions (A1–A4) + Normality (A5)</div>
+  <table>
+    <thead><tr><th>#</th><th>Assumption</th><th>What it means in plain language</th><th>What breaks if it fails</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>A1</strong></td>
+        <td>E(ε) = 0 for every x</td>
+        <td>The regression surface passes through the <em>average</em> of Y at every point. No systematic over- or under-prediction.</td>
+        <td>Biased estimates — your b's don't converge to the true β's.</td>
+      </tr>
+      <tr>
+        <td><strong>A2</strong></td>
+        <td>Var(ε) = σ² (constant)</td>
+        <td><strong>Homoskedasticity</strong>: the spread of errors around the regression surface is the same for all values of x. Think of uniform "bands" above and below the plane.</td>
+        <td>OLS is no longer BLUE; standard errors are wrong — tested in D.3.</td>
+      </tr>
+      <tr>
+        <td><strong>A3</strong></td>
+        <td>Cov(εᵢ, εⱼ) = 0 (i ≠ j)</td>
+        <td><strong>No autocorrelation</strong>: knowing that observation 5 is above the plane tells you nothing about whether observation 6 will also be above it. Critical for time-series data.</td>
+        <td>OLS is no longer BLUE; standard errors are wrong.</td>
+      </tr>
+      <tr>
+        <td><strong>A4</strong></td>
+        <td>x's non-random AND no exact linear relation among x's</td>
+        <td>No predictor can be written as a perfect linear combination of the others (<em>no exact multicollinearity</em>). Also, x is not correlated with ε (no endogeneity).</td>
+        <td>If exact MC: model cannot be estimated at all. If endogeneity: OLS is biased. If quasi-MC: see D.2.</td>
+      </tr>
+      <tr>
+        <td><strong>A5</strong></td>
+        <td>ε ~ Normal(0, σ²)</td>
+        <td>The errors are normally distributed. This is needed to justify t- and F-tests in <em>small samples</em>. By the Central Limit Theorem, large samples make this assumption less critical.</td>
+        <td>t- and F-tests are only approximate in small samples; checked with Q-Q plot in D.1.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Deeper explanation — why A1 implies E(Y|x) = β₀ + β₁x₁ + … + βₖxₖ</div>
+  <p>If E(ε) = 0, then taking expectations of both sides of the model:</p>
+  <div class="formula">E(Y|x) = β₀ + β₁x₁ + … + βₖxₖ + E(ε) = β₀ + β₁x₁ + … + βₖxₖ</div>
+  <p>This is why the systematic part <em>is</em> the conditional mean of Y. The error ε is the individual's departure from that mean — it averages to zero by assumption.</p>
+</div>
+
+<!-- Interpretation -->
+<h4>Interpreting the Parameters</h4>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">Interpretation template (use exactly this language in the exam)</div>
+  <p><strong>β₀ (intercept):</strong> The expected (average) value of Y when <em>all</em> explanatory variables simultaneously equal zero. Often not economically meaningful (a price of $0 makes no sense), but we keep the intercept regardless — dropping it forces the regression plane through the origin and can severely distort all other estimates.</p>
+  <p style="margin-top:10px;"><strong>βᵢ (slope of xᵢ):</strong> A one-unit increase in xᵢ is associated with a change of βᵢ units in the <em>expected</em> value of Y, <strong>ceteris paribus</strong> — holding all other explanatory variables constant.</p>
+  <p style="margin-top:10px;"><strong>Why "ceteris paribus" matters:</strong> In SLR you can't hold anything constant because there's only one x. In MLR, each slope isolates the <em>partial</em> effect of one variable while mathematically controlling for the rest. This is what makes regression so powerful compared to simple correlations.</p>
+</div>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Hamburger Chain — Parameter Interpretation</div>
+  <p>Suppose SPSS estimates: <code>Sales = 118.9 − 7.91·Price + 1.86·Advert</code></p>
+  <ul>
+    <li><strong>b₀ = 118.9:</strong> If both Price = 0 and Advert = 0, expected Sales = 118.9 (×1000 $). Not realistic, but mathematically necessary.</li>
+    <li><strong>b₁ = −7.91:</strong> Each extra dollar on the burger price is associated with a <em>decrease</em> of $7,910 in expected monthly sales, holding advertising fixed. The negative sign matches economic intuition (demand law).</li>
+    <li><strong>b₂ = 1.86:</strong> Each extra $1,000 spent on advertising is associated with an <em>increase</em> of $1,860 in expected monthly sales, holding price fixed.</li>
+  </ul>
+</div>
+
+<div class="box box-pitfall">
+  <div class="box-label lbl-pitfall">Common Pitfalls</div>
+  <ul>
+    <li><strong>"Association" not "causation":</strong> Regression coefficients measure statistical association. Without a randomised experiment, you cannot claim that changing x <em>causes</em> Y to change.</li>
+    <li><strong>Units matter:</strong> If you double the unit of xᵢ (e.g. from grams to kilograms), bᵢ halves. Always state units when interpreting.</li>
+    <li><strong>Don't omit the intercept</strong> unless you have a compelling theoretical reason. The intercept absorbs the mean of ε and keeps residuals centred at zero.</li>
+  </ul>
+</div>
+
+<!-- A.2 -->
+<div class="section-title ch-a-text">A.2 Non-Linear Relationships — Transformations</div>
+
+<p>Many real-world relationships are <em>not</em> straight lines: diminishing returns, exponential growth, U-shaped cost curves. Because MLR is linear in the <em>parameters</em> (not necessarily in the variables), we can capture these shapes by transforming Y and/or x <em>before</em> entering them into the regression.</p>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">Key rule — choose the transform based on theory, not R²</div>
+  <p>Ask: what economic story do I expect? Diminishing returns → polynomial or log. Constant elasticity → log-log. Percentage effects → log-linear. <em>Never</em> pick a transform just because it raises R².</p>
+</div>
+
+<h4>The Three Log Models — Interpretations Must Be Memorised</h4>
+
+<table>
+  <thead><tr><th>Model name</th><th>Equation</th><th>Interpretation of β₁</th><th>When to use</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Log-log</strong> (double-log / log-linear in both)</td>
+      <td><code>ln Y = β₀ + β₁ ln x + ε</code></td>
+      <td>A <strong>1% change</strong> in x leads on average to a <strong>β₁ %</strong> change in Y. β₁ is an <strong>elasticity</strong>.</td>
+      <td>Demand and production functions where both variables grow proportionally.</td>
+    </tr>
+    <tr>
+      <td><strong>Log-linear</strong> (semi-log, log on Y)</td>
+      <td><code>ln Y = β₀ + β₁ x + ε</code></td>
+      <td>A <strong>one-unit</strong> increase in x leads on average to approximately a <strong>β₁ × 100 %</strong> change in Y.</td>
+      <td>Exponential growth/decay; wage equations where the % return to an extra year of schooling is roughly constant.</td>
+    </tr>
+    <tr>
+      <td><strong>Linear-log</strong> (semi-log, log on x)</td>
+      <td><code>Y = β₀ + β₁ ln x + ε</code></td>
+      <td>A <strong>1% change</strong> in x leads on average to approximately a <strong>β₁ / 100</strong> unit change in Y.</td>
+      <td>Relationships with diminishing absolute returns to x (e.g. income and expenditure).</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Deeper explanation — where do these interpretations come from?</div>
+  <p><strong>Log-log:</strong> Differentiate both sides w.r.t. x. Since d(ln Y)/dx = (1/Y)·(dY/dx), rearranging gives dY/Y = β₁·(dx/x), i.e. the percentage change in Y equals β₁ times the percentage change in x. That is precisely the definition of an <em>elasticity</em>.</p>
+  <p><strong>Log-linear:</strong> Differentiate w.r.t. x: d(ln Y)/dx = β₁ → (1/Y)·(dY/dx) = β₁ → dY/Y ≈ β₁·dx. So a one-unit change in x changes Y by approximately 100·β₁ percent.</p>
+  <p><strong>Linear-log:</strong> Differentiate w.r.t. x: dY/dx = β₁·(1/x) → dY = β₁·(dx/x) = β₁ × (% change in x / 100). So a 1% change in x changes Y by approximately β₁/100 units.</p>
+  <p class="note">The "approximately" caveat: these are calculus (infinitesimal) approximations. For large discrete changes, the exact formula differs. On the exam, always state the approximate version.</p>
+</div>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Example — Wage Elasticity</div>
+  <p>Suppose you estimate: <code>ln(Wage) = 0.5 + 0.08·Education + ε</code> (log-linear)</p>
+  <p>Interpretation: each extra year of education is associated with approximately an <strong>8%</strong> increase in average wages, ceteris paribus. This is the classic Mincer wage equation.</p>
+</div>
+
+<!-- Polynomial -->
+<h4>Polynomial Models</h4>
+
+<p>A polynomial adds x² (and possibly x³, …) as a separate predictor. The key insight is that the marginal effect of x on Y is no longer constant — it changes as x changes.</p>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Quadratic (Polynomial) Model — Hamburger Example</div>
+  <div class="formula">Sales = β₀ + β₁ Price + β₂ Advert + β₃ Advert² + ε</div>
+  <p>The <strong>marginal effect</strong> of Advert on Sales is found by partially differentiating:</p>
+  <div class="formula">∂E(Sales) / ∂Advert = β₂ + 2β₃ · Advert</div>
+  <p><strong>Typical signs:</strong> β₂ &gt; 0 (more advertising helps), β₃ &lt; 0 (diminishing returns — each extra dollar buys less and less sales).</p>
+</div>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Hamburger numbers — computing marginal effects</div>
+  <p>Suppose β₂ = 12.15 and β₃ = −2.77.</p>
+  <ul>
+    <li>At Advert = $500: marginal effect = 12.15 + 2·(−2.77)·0.5 = 12.15 − 2.77 = <strong>9.38</strong> ($9,380 extra sales per extra $1,000 advertising). Very profitable.</li>
+    <li>At Advert = $2,000: marginal effect = 12.15 + 2·(−2.77)·2 = 12.15 − 11.08 = <strong>1.07</strong>. Still positive, but barely worth it.</li>
+  </ul>
+  <p>The turning point (maximum sales) is at Advert* = −β₂ / (2β₃) = −12.15 / (2×−2.77) ≈ $2,193. Spending more than that actually decreases expected sales.</p>
+</div>
+
+<div class="box box-pitfall">
+  <div class="box-label lbl-pitfall">Pitfalls with transformations</div>
+  <ul>
+    <li><strong>Collinearity from polynomial terms:</strong> Advert and Advert² are highly correlated by construction. This inflates standard errors (Chapter D.2). Centering Advert before squaring it (i.e. using (Advert − mean) and (Advert − mean)²) reduces this problem.</li>
+    <li><strong>Log of zero or negative values:</strong> ln(0) is undefined. Never take log of a variable that includes zeros without first checking. Common fix: use ln(x + 1).</li>
+    <li><strong>R² is not comparable across transformations of Y:</strong> You cannot compare the R² of a linear model (Y = …) with that of a log-linear model (ln Y = …) because the dependent variable is different in each.</li>
+    <li><strong>Use ln, not log₁₀ in SPSS:</strong> The economic interpretations above are derived using natural logarithms. SPSS's LN() function is correct; LOG() gives base-10.</li>
+  </ul>
+</div>
+
+<!-- A.3 -->
+<div class="section-title ch-a-text">A.3 Dummy Variables — Handling Qualitative Predictors</div>
+
+<h4>When Do You Need a Dummy?</h4>
+<p>Many important predictors are <em>qualitative</em>: gender, country, education level, season, brand. They have no natural numeric scale. Even if categories are encoded as numbers (1 = master, 2 = bachelor, 3 = high school), those codes imply false distances and a false ordering. You must <strong>recode</strong> qualitative variables into dummy (0/1 indicator) variables before regression.</p>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">The dummy variable rule</div>
+  <p>For a qualitative variable with <strong>M categories</strong>, create exactly <strong>M − 1 dummies</strong>. The omitted category is the <strong>reference group</strong>. Its expected outcome is captured by the intercept β₀. Each dummy coefficient measures the difference from that reference group.</p>
+  <p><strong>Why M − 1, not M?</strong> If you created M dummies, their sum would equal 1 for every observation — a perfect linear combination of the intercept column. This is <em>exact multicollinearity</em>, making estimation impossible. This is called the <em>dummy variable trap</em>.</p>
+</div>
+
+<h4>Two-Category Case (M = 2)</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">House Price Model with Neighbourhood Dummy</div>
+  <div class="formula">PRICE = β₀ + β₁ SQFT + β₂ D + ε</div>
+  <p>where D = 1 if the house is in a desirable neighbourhood, D = 0 otherwise (= reference group).</p>
+  <p><strong>Splitting by D:</strong></p>
+  <ul>
+    <li>D = 0: E(PRICE) = β₀ + β₁ SQFT</li>
+    <li>D = 1: E(PRICE) = (β₀ + β₂) + β₁ SQFT</li>
+  </ul>
+  <p><strong>Interpretation of β₂:</strong> A house in the desirable neighbourhood has an average price β₂ units higher than an otherwise equivalent house (same size) outside it. Graphically: two <em>parallel lines</em> with the same slope β₁ but vertically separated by β₂.</p>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Intuition — the dummy shifts the intercept, not the slope</div>
+  <p>Without the dummy, you would fit a single line through both groups, and the slope would be a mixture of both groups' slopes. Adding the dummy lets the model recognise that the two groups have different "base levels" of the outcome, while assuming the relationship between SQFT and PRICE has the same steepness in both groups. If the slopes should also differ, you need an <em>interaction</em> (Section A.4).</p>
+</div>
+
+<h4>Multiple-Category Case (M > 2)</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Diploma Example — 3 Education Levels</div>
+  <p>Categories: Master, Bachelor, High School. We choose High School as reference.</p>
+  <ul>
+    <li>D_B = 1 if Bachelor, 0 otherwise</li>
+    <li>D_M = 1 if Master, 0 otherwise</li>
+    <li>High school: D_B = D_M = 0</li>
+  </ul>
+  <div class="formula">Y = β₀ + β₁X₁ + β₂D_B + β₃D_M + ε</div>
+  <p><strong>Reading the coefficients:</strong></p>
+  <ul>
+    <li>β₂ = average difference in Y between a Bachelor and a High-School graduate, holding X₁ fixed.</li>
+    <li>β₃ = average difference between a Master and a High-School graduate, holding X₁ fixed.</li>
+    <li>β₃ − β₂ = average difference between a Master and a Bachelor. (Not directly estimated; compute from output.)</li>
+    <li>Graphically: <strong>three parallel lines</strong> with equal slope β₁, shifted vertically by 0, β₂, and β₃ respectively.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Choosing the reference category</div>
+  <p>Technically, any category can be the reference — the model fit is identical. Strategically, choose the reference that makes coefficients most interpretable. Common choices:</p>
+  <ul>
+    <li>The <strong>largest group</strong> (gives more stable estimates for the reference mean).</li>
+    <li>The <strong>natural baseline</strong> (e.g., "no treatment" in a medical study, "secondary education" in a wage study).</li>
+    <li>Avoid choosing a very small group as reference — the intercept becomes imprecisely estimated.</li>
+  </ul>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — Creating Dummy Variables</div>
+  <ol>
+    <li><strong>Transform → Create Dummy Variables</strong> (easiest; select the categorical variable, SPSS generates M − 1 dummies automatically, choosing the last category as reference by default).</li>
+    <li>Alternatively, <strong>Transform → Recode into Different Variables</strong> to manually define each dummy.</li>
+    <li>Place all M − 1 dummies (not the original categorical variable) in <strong>Analyze → Regression → Linear → Independent(s)</strong>.</li>
+    <li>Inspect the Coefficients table: each dummy's b coefficient is the difference from the reference group.</li>
+  </ol>
+</div>
+
+<!-- A.4 -->
+<div class="section-title ch-a-text">A.4 Interaction Variables</div>
+
+<h4>When Do You Need an Interaction?</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">Key idea — when the effect of one variable depends on another</div>
+  <p>A dummy variable shifts the intercept: all groups have the <em>same slope</em>. An interaction variable allows the <em>slope itself</em> to differ by group (or by the value of another variable).</p>
+  <p><strong>Visual diagnostic:</strong> Plot Y vs x separately for each category. If the lines are <em>clearly not parallel</em> — if the slope of one group is steeper than another — you need an interaction.</p>
+</div>
+
+<h4>Case 1: Quantitative × Qualitative Interaction</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">House Price — allowing slope to differ by neighbourhood</div>
+  <div class="formula">PRICE = β₀ + β₁ SQFT + β₂ D + β₃ (SQFT × D) + ε</div>
+  <p><strong>Splitting by D:</strong></p>
+  <ul>
+    <li>D = 0: E(PRICE) = β₀ + β₁ SQFT &nbsp; (slope = β₁)</li>
+    <li>D = 1: E(PRICE) = (β₀ + β₂) + (β₁ + β₃) SQFT &nbsp; (slope = β₁ + β₃)</li>
+  </ul>
+  <p><strong>Interpretation:</strong></p>
+  <ul>
+    <li>β₁ = slope of SQFT in the reference group (undesirable neighbourhood).</li>
+    <li>β₃ = <em>extra</em> slope of SQFT in the desirable neighbourhood. If β₃ &gt; 0, an extra square foot is worth more there.</li>
+    <li>β₂ = vertical gap between the two lines at SQFT = 0 (the "level shift"). Often not meaningful in isolation.</li>
+    <li>Total price difference between groups at a given size: β₂ + β₃ × SQFT — it depends on the house size!</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why you must always include the main effects</div>
+  <p>When you add the interaction term SQFT × D, you <strong>must</strong> also include both SQFT and D as separate predictors (the "main effects"). Dropping a main effect forces its coefficient to be zero, which is a restriction not supported by the data. The result is a misspecified model and biased estimates.</p>
+</div>
+
+<h4>Case 2: Qualitative × Qualitative Interaction</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Wages by Race × Gender</div>
+  <div class="formula">WAGE = β₀ + β₁ EDUC + δ₁ BLACK + δ₂ FEMALE + γ (BLACK × FEMALE) + ε</div>
+  <table>
+    <thead><tr><th>Group</th><th>Expected Wage (for given EDUC)</th></tr></thead>
+    <tbody>
+      <tr><td>White Male (reference)</td><td>β₀ + β₁ EDUC</td></tr>
+      <tr><td>Black Male</td><td>β₀ + δ₁ + β₁ EDUC</td></tr>
+      <tr><td>White Female</td><td>β₀ + δ₂ + β₁ EDUC</td></tr>
+      <tr><td>Black Female</td><td>β₀ + δ₁ + δ₂ + γ + β₁ EDUC</td></tr>
+    </tbody>
+  </table>
+  <p><strong>γ</strong> is the <em>interaction effect</em>: the extra wage disadvantage (if γ &lt; 0) of being <em>both</em> Black <em>and</em> Female, above and beyond the sum of the two individual disadvantages (δ₁ + δ₂). If γ = 0, the two group penalties are simply additive. If γ ≠ 0, the combination has a multiplicative (synergistic or antagonistic) component.</p>
+</div>
+
+<h4>Case 3: Quantitative × Quantitative Interaction (rare)</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Pizza Expenditure — Age × Income</div>
+  <div class="formula">PIZZA = β₀ + β₁ AGE + β₂ INCOME + β₃ (AGE × INCOME) + ε</div>
+  <p>The marginal propensity to spend on pizza is no longer constant:</p>
+  <div class="formula">∂E(PIZZA) / ∂INCOME = β₂ + β₃ · AGE</div>
+  <p>If β₃ &lt; 0: older individuals spend a <em>smaller</em> share of each extra dollar on pizza — realistic!</p>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — Creating an Interaction Term</div>
+  <ol>
+    <li><strong>Transform → Compute Variable</strong>: name the new variable (e.g., SQFT_D), then type <code>SQFT * D</code> in the Numeric Expression field.</li>
+    <li>Click OK — SPSS creates the product variable in the dataset.</li>
+    <li>Add both the interaction term <em>and</em> the original main effects to the Independent(s) list in the regression dialog.</li>
+  </ol>
+</div>
+
+<!-- A.5 -->
+<div class="section-title ch-a-text">A.5 Choice of Explanatory Variables</div>
+
+<p>Deciding <em>which</em> variables to include is the most judgment-intensive part of regression. Two types of error have opposite consequences:</p>
+
+<table>
+  <thead><tr><th></th><th>Omitted Variable (relevant variable left out)</th><th>Irrelevant Variable (useless variable included)</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Definition</strong></td>
+      <td>A variable that theoretically belongs in the model is excluded.</td>
+      <td>A variable whose true coefficient is 0 is included anyway.</td>
+    </tr>
+    <tr>
+      <td><strong>Consequence on bias</strong></td>
+      <td><strong>BIAS:</strong> The omitted variable hides inside ε and is correlated with the included x's. Assumption A4 breaks. OLS is no longer BLUE or unbiased.</td>
+      <td><strong>No bias:</strong> True coefficient is 0, so estimate is centred on 0.</td>
+    </tr>
+    <tr>
+      <td><strong>Consequence on efficiency</strong></td>
+      <td>Standard errors appear small (artificially) because the model doesn't know about the extra noise source.</td>
+      <td><strong>Efficiency loss:</strong> Standard errors GROW. Each included variable "uses up" one degree of freedom, leaving less information for the remaining estimates.</td>
+    </tr>
+    <tr>
+      <td><strong>Effect on t-tests</strong></td>
+      <td>t-ratios may be inflated — giving false confidence in an estimate that is biased.</td>
+      <td>t-ratios SHRINK — variables that were significant may become non-significant.</td>
+    </tr>
+    <tr>
+      <td><strong>Effect on R²</strong></td>
+      <td>R² is artificially low if a relevant variable is missing.</td>
+      <td>R² never falls (adding any variable can only increase or maintain it). Adjusted R² typically falls.</td>
+    </tr>
+    <tr>
+      <td><strong>Detection</strong></td>
+      <td>Hard — signs and magnitudes that contradict theory are a warning. Try adding plausible candidates.</td>
+      <td>Easier — fail the 4-question test below.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Sign of the Bias from an Omitted Variable</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Omitted Variable Bias Direction</div>
+  <div class="formula">sign(bias of B_in) = sign(β_om) × sign(r(X_in, X_om))</div>
+  <ul>
+    <li><strong>β_om</strong> = true effect of the omitted variable on Y.</li>
+    <li><strong>r(X_in, X_om)</strong> = correlation between the included and omitted variables.</li>
+  </ul>
+</div>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Worked example — Family Income</div>
+  <p><strong>True model:</strong> FAMINC = β₀ + β₁·HE + β₂·WE + ε (HE = husband's education, WE = wife's education)</p>
+  <p><strong>Misspecified model (omits WE):</strong> FAMINC = α₀ + α₁·HE + ε</p>
+  <ul>
+    <li>β₂ &gt; 0: wife's education raises family income (positive effect of omitted variable).</li>
+    <li>r(HE, WE) &gt; 0: educated people tend to marry educated partners (positive correlation between included and omitted variables).</li>
+    <li>Bias = (+) × (+) = <strong>positive</strong>: b₁ overestimates the true β₁ because it wrongly absorbs part of WE's effect.</li>
+  </ul>
+</div>
+
+<h4>The 4-Question Test — Should You Add a Variable?</h4>
+
+<table>
+  <thead><tr><th>#</th><th>Question</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Does economic theory or the academic literature say this variable is relevant?</td><td><strong>Must hold</strong> — if theory says no, don't include it regardless of the numbers.</td></tr>
+    <tr><td>2</td><td>Is its t-test coefficient significantly different from zero?</td><td><strong>Yes → keep</strong></td></tr>
+    <tr><td>3</td><td>Does adjusted R² increase when the variable is added?</td><td><strong>Yes → keep</strong></td></tr>
+    <tr><td>4</td><td>Do the other coefficients change substantially when this variable is added (suggesting omitted-variable bias)?</td><td><strong>Yes → keep</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="box box-pitfall">
+  <div class="box-label lbl-pitfall">Model Selection Pitfalls</div>
+  <ul>
+    <li><strong>Adjusted R² is a helpful guide but never the only criterion.</strong> Always anchor decisions in theory.</li>
+    <li><strong>Automated selection (forward, backward, stepwise)</strong> chooses variables by statistical criteria alone and can produce theoretically absurd models. Treat results as a starting point, not a final answer.</li>
+    <li><strong>Kitchen-sink approach:</strong> Throwing every available variable into the regression over-fits the sample, inflates standard errors, and usually produces a model that does not generalise.</li>
+    <li><strong>A wrong sign is a red flag:</strong> If a coefficient has the opposite sign from what theory predicts, suspect an omitted variable or multicollinearity.</li>
+  </ul>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — Automated Selection</div>
+  <p><strong>Analyze → Regression → Linear → Method</strong>: choose Forward, Backward, or Stepwise.</p>
+  <p>Always sanity-check the chosen model against theory before reporting. In an exam, justify each variable with a theoretical argument, not just a p-value.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CHAPTER B
+══════════════════════════════════════════════ -->
+<div class="chapter-header ch-b">
+  <div class="ch-label">Chapter B</div>
+  <h2>Estimating the Regression Parameters</h2>
+</div>
+
+<!-- Scheme table B -->
+<table class="scheme-table">
+  <thead><tr><th>Section</th><th>Topic</th><th>You should be able to…</th></tr></thead>
+  <tbody>
+    <tr><td><strong>MR_B1</strong></td><td>Model fit (least squares)</td><td>Write the fitted model, compute residuals, predicted values, s = standard error of the model.</td></tr>
+    <tr><td><strong>MR_B2</strong></td><td>Sampling distribution of estimators</td><td>State that Bᵢ ~ t-distributed, name the four ingredients of se(Bᵢ), state Gauss–Markov.</td></tr>
+    <tr><td><strong>MR_B3</strong></td><td>Inference on one parameter</td><td>Build a CI for βᵢ, run a t-test (1-sided &amp; 2-sided), draw the correct conclusion.</td></tr>
+    <tr><td><strong>MR_B4</strong></td><td>Joint F-test (restricted vs full)</td><td>Compare two nested models with an F-statistic via SSE or R², link to t-test and ANOVA F.</td></tr>
+  </tbody>
+</table>
+
+<!-- B.1 -->
+<div class="section-title ch-b-text">B.1 Model Fit — The Least Squares Principle</div>
+
+<p>Chapter A gave us the population model. We never observe it directly — we observe a sample of n observations. The job is to <em>estimate</em> the unknown β's using that sample. The estimator used throughout this course is <strong>Ordinary Least Squares (OLS / LS)</strong>.</p>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Population model vs fitted model</div>
+  <p><strong>Population (unknown, true):</strong></p>
+  <div class="formula">Y = β₀ + β₁x₁ + … + βₖxₖ + ε</div>
+  <p><strong>Fitted on the sample (what SPSS gives you):</strong></p>
+  <div class="formula">ŷᵢ = b₀ + b₁x₁ᵢ + … + bₖxₖᵢ</div>
+  <p><strong>Residual:</strong> eᵢ = yᵢ − ŷᵢ</p>
+  <p>The residual eᵢ is the sample equivalent of the unknown error εᵢ. It is what you actually observe after fitting the model.</p>
+</div>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">The Least Squares Objective</div>
+  <div class="formula">Minimise SSE = Σ(yᵢ − ŷᵢ)² = Σeᵢ²</div>
+  <p>OLS chooses b₀, b₁, …, bₖ to make the sum of <em>squared</em> residuals as small as possible.</p>
+  <p><strong>Why squared, not absolute?</strong></p>
+  <ul>
+    <li>Squaring makes positive and negative residuals both contribute positively (they don't cancel).</li>
+    <li>Squaring penalises large errors more heavily than small ones — a desirable property.</li>
+    <li>The mathematics of minimising a sum of squares leads to closed-form formulas (matrix algebra: b = (X'X)⁻¹X'Y), making computation straightforward.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Geometric intuition</div>
+  <p>Each observation yᵢ is a point in space. The fitted value ŷᵢ is its projection onto the regression hyperplane. The residual eᵢ is the vertical distance from the point to the plane. OLS tilts and positions the hyperplane to make those vertical distances (squared, summed) as small as possible.</p>
+</div>
+
+<h4>Standard Error of the Model</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Estimating σ (the typical error size)</div>
+  <div class="formula">s² = SSE / (n − k − 1)</div>
+  <div class="formula">s = √s² &nbsp; ← "Std. Error of the Estimate" in SPSS</div>
+  <ul>
+    <li><strong>n − k − 1</strong> = degrees of freedom of the residuals. We lose 1 df for the intercept and 1 for each of the k slopes.</li>
+    <li><strong>s</strong> estimates the typical prediction error of the model in the original units of Y.</li>
+    <li>In the Hamburger example: if s = 10, the model's predictions are typically off by about $10,000 in monthly sales.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why divide by n − k − 1, not n?</div>
+  <p>Dividing by n − k − 1 rather than n makes s² an <em>unbiased</em> estimator of σ². When we use the sample to estimate k + 1 parameters (β₀ through βₖ), we "use up" k + 1 degrees of freedom. What remains (n − k − 1) reflects the independent pieces of information about the error variance. Dividing by n instead would underestimate σ² systematically.</p>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS Output for B.1</div>
+  <ul>
+    <li><strong>Coefficients table, column 'B'</strong> → the estimated b₀, b₁, …, bₖ.</li>
+    <li><strong>Model Summary, 'Std. Error of the Estimate'</strong> → this is s.</li>
+    <li><strong>To save predicted values and residuals:</strong> in the regression dialog click <strong>Save → Predicted Values: Unstandardized</strong> and <strong>Residuals: Unstandardized</strong>. New columns appear in your dataset.</li>
+  </ul>
+</div>
+
+<!-- B.2 -->
+<div class="section-title ch-b-text">B.2 Sampling Distribution of the Estimators</div>
+
+<p>The OLS estimators b₀, b₁, …, bₖ are computed from a sample. If we repeated the study with a different sample from the same population, we would get different b's. This means the estimators B₀, B₁, …, Bₖ are <em>random variables</em> with their own sampling distributions.</p>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Distribution of the OLS estimator (under A1–A5)</div>
+  <div class="formula">Bᵢ ~ Normal(βᵢ, se(Bᵢ)²)</div>
+  <p>Standardising gives the test statistic:</p>
+  <div class="formula">T = (Bᵢ − βᵢ) / se(Bᵢ) &nbsp; ~ &nbsp; t(n − k − 1)</div>
+  <p>Under A1–A4 alone (no normality needed): by the Central Limit Theorem, the same t-distribution holds approximately for large n.</p>
+</div>
+
+<h4>The Gauss–Markov Theorem</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">Gauss–Markov: OLS is BLUE</div>
+  <p>Under assumptions A1–A4 (no normality required), the OLS estimators are <strong>BLUE</strong>:</p>
+  <ul>
+    <li><strong>B</strong>est — they have the smallest variance (most precise) among all linear unbiased estimators.</li>
+    <li><strong>L</strong>inear — each bᵢ is a linear function of the y-values.</li>
+    <li><strong>U</strong>nbiased — E(Bᵢ) = βᵢ for every i; on average they hit the target.</li>
+    <li><strong>E</strong>stimators — of the unknown population parameters β₀, …, βₖ.</li>
+  </ul>
+  <p><strong>What happens if an assumption fails?</strong></p>
+  <ul>
+    <li>If A1 fails (wrong functional form or omitted variable): OLS is <em>biased</em> — it no longer hits the target on average.</li>
+    <li>If A2 fails (heteroskedasticity): OLS is still unbiased but no longer "best" (it wastes information) and the reported se's are wrong.</li>
+    <li>If A3 fails (autocorrelation): same as A2 violation — unbiased but not BLUE, wrong se's.</li>
+    <li>If A4 fails (exact MC): OLS cannot even be computed. Quasi-MC inflates se's but leaves estimates unbiased.</li>
+  </ul>
+</div>
+
+<h4>What Drives the Size of se(Bᵢ)?</h4>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">Four ingredients of se(Bᵢ) — examiners love this list</div>
+  <table>
+    <thead><tr><th>Ingredient</th><th>Effect on se(Bᵢ)</th><th>Can you control it?</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>σ</strong> — the model's error standard deviation</td>
+        <td>Larger σ → larger se(Bᵢ). More noise in the data makes estimates less precise.</td>
+        <td>No — it reflects inherent randomness in Y not captured by the x's.</td>
+      </tr>
+      <tr>
+        <td><strong>sxᵢ</strong> — the spread (standard deviation) of xᵢ in the sample</td>
+        <td>More variation in xᵢ → smaller se(Bᵢ). Analogy: you get a more reliable slope estimate if the x-values are spread out.</td>
+        <td>Partially — by experimental design or sampling strategy.</td>
+      </tr>
+      <tr>
+        <td><strong>n</strong> — the sample size</td>
+        <td>Larger n → smaller se (by a factor of √n). The classic result of increasing precision with more data.</td>
+        <td>Yes — collect more observations.</td>
+      </tr>
+      <tr>
+        <td><strong>Correlation between xᵢ and other x's</strong></td>
+        <td>Stronger correlation among predictors → <em>larger</em> se(Bᵢ). This is quasi-multicollinearity (Chapter D.2).</td>
+        <td>Yes — remove or transform redundant predictors.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">The VIF formula embedded in se(Bᵢ)</div>
+  <p>More formally, the variance of bᵢ contains the term 1/(1 − Rᵢ²), where Rᵢ² is the R² from regressing xᵢ on all other predictors. This is exactly the <strong>Variance Inflation Factor (VIF)</strong> (see D.2). When Rᵢ² → 1 (xᵢ is nearly perfectly predicted by the other x's), se(Bᵢ) → ∞. The estimator exists but is uselessly imprecise.</p>
+</div>
+
+<!-- B.3 -->
+<div class="section-title ch-b-text">B.3 Inference About a Single Parameter</div>
+
+<h4>Confidence Interval for βᵢ</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">(1 − α) Confidence Interval for βᵢ</div>
+  <div class="formula">[ bᵢ − tₓ · se(Bᵢ) &nbsp; ; &nbsp; bᵢ + tₓ · se(Bᵢ) ]</div>
+  <ul>
+    <li><strong>tₓ</strong> = critical value from the t-distribution with <strong>n − k − 1</strong> degrees of freedom at confidence level (1 − α).</li>
+    <li>For 95% CI and large n: tₓ ≈ 1.96 (two-tailed); for small samples, use the exact t-table.</li>
+    <li><strong>Correct interpretation:</strong> "If we repeated this study many times under identical conditions, 95% of the intervals constructed this way would contain the true βᵢ." (The interval is random; the parameter is fixed.)</li>
+  </ul>
+</div>
+
+<div class="box box-pitfall">
+  <div class="box-label lbl-pitfall">Confidence interval interpretation trap</div>
+  <p>Do NOT say "there is a 95% probability that βᵢ lies in this interval." Once the interval is computed from your data, it either contains βᵢ or it doesn't — probability is 0 or 1. The 95% refers to the long-run frequency of the procedure, not to any one interval.</p>
+</div>
+
+<h4>Hypothesis Test on a Single βᵢ</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Two-sided t-test: H₀ : βᵢ = 0 vs H₁ : βᵢ ≠ 0</div>
+  <div class="formula">t = bᵢ / se(Bᵢ) &nbsp; ~ &nbsp; t(n − k − 1) under H₀</div>
+  <p><strong>Three equivalent decision rules (pick one, all agree):</strong></p>
+  <ol>
+    <li><strong>Critical-value rule:</strong> Reject H₀ if |t| &gt; tₓ (where tₓ is the two-tailed critical value).</li>
+    <li><strong>p-value rule:</strong> Reject H₀ if p-value &lt; α. In SPSS, the column labelled <strong>'Sig.'</strong> is the two-tailed p-value.</li>
+    <li><strong>CI rule:</strong> Reject H₀ if 0 is NOT contained in the (1 − α) confidence interval for βᵢ.</li>
+  </ol>
+</div>
+
+<h4>One-Sided vs Two-Sided Tests</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">When to use a one-sided test</div>
+  <p>Use a one-sided alternative when economic theory <em>predicts the direction</em> of the effect <em>before</em> you see the data:</p>
+  <ul>
+    <li>H₁ : βᵢ &gt; 0 if theory says xᵢ should have a <em>positive</em> effect on Y.</li>
+    <li>H₁ : βᵢ &lt; 0 if theory says xᵢ should have a <em>negative</em> effect on Y.</li>
+  </ul>
+  <p><strong>Adjustment rule for SPSS (which always prints two-sided p-values):</strong></p>
+  <ol>
+    <li>Check that bᵢ has the sign <em>consistent</em> with H₁.</li>
+    <li>If yes: one-sided p-value = (SPSS Sig.) / 2.</li>
+    <li>If no (bᵢ has the wrong sign): you cannot reject H₀ regardless of the p-value — the data contradict the direction of H₁.</li>
+  </ol>
+</div>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Hamburger Chain — Worked t-test</div>
+  <p>SPSS gives: b₂ = 1.85, se(B₂) = 0.45, n = 75, k = 2.</p>
+  <p><strong>Test H₀ : β₂ = 0 vs H₁ : β₂ &gt; 0 at α = 5%</strong> (one-sided, because advertising should raise sales).</p>
+  <ol>
+    <li>t = 1.85 / 0.45 ≈ <strong>4.11</strong></li>
+    <li>df = 75 − 2 − 1 = 72; one-sided critical value t₀.₀₅ ≈ 1.67</li>
+    <li>4.11 &gt; 1.67 → <strong>Reject H₀</strong></li>
+    <li>One-sided p-value ≈ 0.000 / 2 ≈ 0.000 &lt; 0.05 → same conclusion</li>
+  </ol>
+  <p><strong>Conclusion in plain language:</strong> "At a 5% significance level, we reject the null hypothesis that advertising has no effect on sales. There is sufficient evidence that advertising increases expected sales on average, holding price constant."</p>
+</div>
+
+<!-- B.4 -->
+<div class="section-title ch-b-text">B.4 Joint Hypothesis F-test (Restricted vs Full Model)</div>
+
+<p>A t-test handles <em>one</em> parameter at a time. Often we want to test whether a <em>group</em> of variables jointly matters — e.g., "do three dummies representing education level together explain wages?" For this we need the <strong>joint F-test</strong>.</p>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">The logic of the joint F-test</div>
+  <ul>
+    <li><strong>Full model:</strong> includes all k predictors.</li>
+    <li><strong>Restricted model:</strong> the full model with J of the variables removed (their coefficients forced to zero).</li>
+    <li>If the J restrictions are <em>true</em> (those variables really don't matter), the restricted model fits nearly as well → SSE increases only a little.</li>
+    <li>If the restrictions are <em>false</em>, forcing those coefficients to zero hurts fit badly → SSE increases sharply.</li>
+    <li>The F-statistic measures how much SSE increases relative to the residual noise level.</li>
+  </ul>
+</div>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Joint F-test — Two Equivalent Formulas</div>
+  <p><strong>Via SSE:</strong></p>
+  <div class="formula">F = [(SSEᵣ − SSE) / J] / [SSE / (n − k − 1)]</div>
+  <p><strong>Via R² (algebraically identical):</strong></p>
+  <div class="formula">F = [(R² − R²ᵣ) / J] / [(1 − R²) / (n − k − 1)]</div>
+  <p>Under H₀ (all J restrictions hold): <strong>F ~ F(J, n − k − 1)</strong></p>
+  <ul>
+    <li><strong>J</strong> = number of restrictions = number of parameters set to zero (numerator df).</li>
+    <li><strong>n − k − 1</strong> = residual df of the <em>full</em> model (denominator df).</li>
+    <li><strong>Always right-tailed:</strong> reject H₀ when F is large.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why is the F-test always one-tailed (right-tailed)?</div>
+  <p>Because the F-statistic is a ratio of squared quantities — it is always non-negative. Large F means the restrictions cause a big increase in SSE (bad fit with restrictions → restrictions are false). Small F means the restrictions barely hurt fit (restrictions plausible). We only ever reject in the right tail.</p>
+</div>
+
+<h4>Important Special Cases</h4>
+
+<table>
+  <thead><tr><th>Special case</th><th>What it becomes</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>J = 1 (testing a single coefficient)</td>
+      <td>The joint F-test is equivalent to the t-test: <strong>F = t²</strong>. The two-sided t-test critical value tₓ satisfies tₓ² = Fₓ.</td>
+    </tr>
+    <tr>
+      <td>J = k (testing ALL slopes simultaneously, i.e. H₀: β₁ = β₂ = … = βₖ = 0)</td>
+      <td>F = (SSR/k) / (SSE/(n−k−1)) = MSR / MSE. This is identical to the ANOVA F-test of Chapter C.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box box-example">
+  <div class="box-label lbl-example">Example — Testing Education Dummies Jointly</div>
+  <p>Suppose diploma has 4 levels (PhD, Master, Bachelor, High school) → 3 dummies. You want to test: "Does diploma level matter at all?"</p>
+  <ul>
+    <li>H₀: β_PhD = β_Master = β_Bachelor = 0 (J = 3 restrictions)</li>
+    <li>H₁: at least one of those coefficients ≠ 0</li>
+    <li>Compute F using the SSE formula with J = 3 and df_denom = n − k − 1.</li>
+    <li>Note: even if each individual t-test is non-significant (possible due to multicollinearity among the dummies), the joint F-test might still reject H₀.</li>
+  </ul>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — Running the Joint F-test (Block Method)</div>
+  <ol>
+    <li>Open <strong>Analyze → Regression → Linear</strong>.</li>
+    <li>In the <em>Independent(s)</em> panel, enter your restricted-model variables in <strong>Block 1</strong>.</li>
+    <li>Click <strong>Next</strong> to add a second block; enter the <em>additional</em> variables you want to test in <strong>Block 2</strong>.</li>
+    <li>Click <strong>Statistics</strong> and tick <strong>R squared change</strong>.</li>
+    <li>In the Model Summary output, read the <strong>F Change</strong>, <strong>df1</strong> (= J), <strong>df2</strong>, and <strong>Sig. F Change</strong> for Block 2. This is your joint F-test result.</li>
+  </ol>
+</div>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">How to report the F-test result on the exam</div>
+  <ol>
+    <li>State H₀ and H₁ in both words and symbols.</li>
+    <li>Compute (or read from SPSS) F and give the df pair (J, n−k−1).</li>
+    <li>State the critical value Fₓ or the p-value.</li>
+    <li>Conclude in plain language: <em>"We reject H₀ at the 5% level. As a group, the education dummies explain a statistically significant share of the variation in wages."</em></li>
+  </ol>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CHAPTER C
+══════════════════════════════════════════════ -->
+<div class="chapter-header ch-c">
+  <div class="ch-label">Chapter C</div>
+  <h2>Goodness of Fit</h2>
+</div>
+
+<!-- Scheme table C -->
+<table class="scheme-table">
+  <thead><tr><th>Section</th><th>Topic</th><th>You should be able to…</th></tr></thead>
+  <tbody>
+    <tr><td><strong>MR_C1</strong></td><td>ANOVA table — variance decomposition</td><td>Explain SST = SSR + SSE, the degrees of freedom, and the mean squares (MSR, MSE).</td></tr>
+    <tr><td><strong>MR_C2</strong></td><td>ANOVA F-test for the model</td><td>Read the overall model F-test and link it to the joint F-test of Chapter B.</td></tr>
+    <tr><td><strong>MR_C3</strong></td><td>R² and adjusted R²</td><td>Define, interpret, and compare R²; explain why adjusted R² is preferred for model comparison.</td></tr>
+  </tbody>
+</table>
+
+<p>Goodness of fit asks: <em>how much of the variation in Y is explained by the regression model?</em> The entire chapter flows from a single algebraic identity.</p>
+
+<!-- C.1 -->
+<div class="section-title ch-c-text">C.1 ANOVA Table — Decomposition of Variance</div>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">The Fundamental Decomposition Identity</div>
+  <div class="formula">SST = SSR + SSE</div>
+  <table>
+    <thead><tr><th>Term</th><th>Full name</th><th>Formula</th><th>What it measures</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>SST</strong></td>
+        <td>Total Sum of Squares</td>
+        <td>Σ(yᵢ − ȳ)²</td>
+        <td>Total variation of Y around its sample mean — what we want to explain. Fixed by the data.</td>
+      </tr>
+      <tr>
+        <td><strong>SSR</strong></td>
+        <td>Regression (Explained) Sum of Squares</td>
+        <td>Σ(ŷᵢ − ȳ)²</td>
+        <td>Variation explained by the regression model. Increases as the model improves.</td>
+      </tr>
+      <tr>
+        <td><strong>SSE</strong></td>
+        <td>Error (Residual) Sum of Squares</td>
+        <td>Σ(yᵢ − ŷᵢ)²</td>
+        <td>Variation not explained — the residuals. OLS minimises this directly.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why does SST = SSR + SSE hold exactly?</div>
+  <p>Write yᵢ − ȳ = (ŷᵢ − ȳ) + (yᵢ − ŷᵢ) — the deviation from the mean is the sum of the predicted deviation plus the residual. Squaring both sides and summing over all observations, the cross-product term ΣeᵢŷᵢΣ vanishes (one of the OLS normal equations guarantees that Σeᵢŷᵢ = 0). This is not an approximation — it is an exact algebraic identity that holds for any OLS regression with an intercept.</p>
+</div>
+
+<h4>The ANOVA Table (exactly as SPSS prints it)</h4>
+<table>
+  <thead><tr><th>Source</th><th>Sum of squares</th><th>df</th><th>Mean square</th><th>F</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Regression</strong></td><td>SSR = Σ(ŷᵢ − ȳ)²</td><td>k</td><td>MSR = SSR / k</td><td>MSR / MSE</td></tr>
+    <tr><td><strong>Residual</strong></td><td>SSE = Σ(yᵢ − ŷᵢ)²</td><td>n − k − 1</td><td>MSE = s²</td><td></td></tr>
+    <tr><td><strong>Total</strong></td><td>SST = Σ(yᵢ − ȳ)²</td><td>n − 1</td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">Reading the ANOVA table</div>
+  <ul>
+    <li><strong>Degrees of freedom:</strong> n − 1 = k + (n − k − 1). The total df split exactly between regression and residual, just like the sums of squares.</li>
+    <li><strong>MSE = s²:</strong> The mean square error is exactly the same as the variance estimate from B.1. The ANOVA table re-uses the same quantity — nothing new to compute.</li>
+    <li><strong>Mean squares are NOT additive:</strong> MST ≠ MSR + MSE (only the SS and df are additive). Don't try to add mean squares.</li>
+  </ul>
+</div>
+
+<!-- C.2 -->
+<div class="section-title ch-c-text">C.2 ANOVA F-test for Model Significance</div>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">ANOVA F-test for overall model significance</div>
+  <p><strong>H₀ : β₁ = β₂ = … = βₖ = 0</strong> (no predictor explains Y — the model is useless)</p>
+  <p><strong>H₁ : at least one βᵢ ≠ 0</strong> (the model explains something)</p>
+  <div class="formula">F = MSR / MSE = [SSR / k] / [SSE / (n − k − 1)] &nbsp; ~ &nbsp; F(k, n − k − 1) under H₀</div>
+  <ul>
+    <li>Right-tailed test: reject H₀ when F is large.</li>
+    <li>In SPSS: read the <strong>F</strong> and <strong>Sig.</strong> columns in the row labelled "Regression" in the ANOVA table.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Connection to the joint F-test (B.4)</div>
+  <p>The ANOVA F-test is the <em>special case</em> of the joint F-test where J = k (all slopes are tested simultaneously). The restricted model becomes "intercept only" (ŷ = b₀ = ȳ for every observation), so SSER = SST and R²R = 0. Substituting into the joint F formula gives exactly F = MSR / MSE — the ANOVA F.</p>
+</div>
+
+<div class="box box-pitfall">
+  <div class="box-label lbl-pitfall">Common confusions about the ANOVA F-test</div>
+  <ul>
+    <li><strong>Significant ANOVA F ≠ every variable is significant.</strong> It only means at least one of the βᵢ ≠ 0. Use individual t-tests to identify which ones.</li>
+    <li><strong>Non-significant ANOVA F → stop.</strong> If the overall model explains nothing, the individual t-tests and R² are meaningless — you are mining noise.</li>
+    <li><strong>High F does not imply high R².</strong> They are related but measure different things: F tests significance; R² measures the proportion explained.</li>
+  </ul>
+</div>
+
+<!-- C.3 -->
+<div class="section-title ch-c-text">C.3 R² and Adjusted R²</div>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">R² — Coefficient of Determination</div>
+  <div class="formula">R² = SSR / SST = 1 − SSE / SST</div>
+  <ul>
+    <li>Range: 0 ≤ R² ≤ 1.</li>
+    <li><strong>Interpretation:</strong> R² × 100% of the total variation in Y is explained by the regression model.</li>
+    <li>In multiple regression, R² also equals the square of the Pearson correlation between the observed Y and the fitted values Ŷ: R² = [Corr(Y, Ŷ)]².</li>
+    <li>R² = 0: the model explains nothing (all SSR = 0).</li>
+    <li>R² = 1: perfect fit (all observations exactly on the regression surface; SSE = 0).</li>
+  </ul>
+</div>
+
+<h4>Why R² Alone Is Not Enough</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">The R² problem — it never falls when you add variables</div>
+  <p>Adding any new variable — even a purely random column of numbers — can only <em>maintain or increase</em> R². Why? Because OLS minimises SSE over the expanded parameter space; the old coefficients remain available and the new variable just provides more freedom to reduce SSE further.</p>
+  <p>Consequence: if you use "maximise R²" as your model-selection rule, you will always choose the model with the most variables, regardless of whether they make economic sense. This is overfitting.</p>
+</div>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">Adjusted R² — Penalising Model Complexity</div>
+  <div class="formula">R̄² = 1 − [SSE / (n − k − 1)] / [SST / (n − 1)] = 1 − MSE / (SST / (n − 1))</div>
+  <p>Equivalently: &nbsp; R̄² = 1 − (1 − R²) · (n − 1) / (n − k − 1)</p>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">How adjusted R² penalises complexity</div>
+  <p>The numerator MSE = SSE/(n − k − 1) <em>increases</em> when an irrelevant variable is added because df falls (n − k − 1 shrinks) even though SSE barely moves. The denominator SST/(n − 1) is fixed by the data and never changes. Therefore R̄² can fall when a useless variable enters — exactly the behaviour we want for model selection.</p>
+  <p><strong>Key properties:</strong></p>
+  <ul>
+    <li>R̄² can be <em>negative</em> for very poor models (when MSE &gt; SST/(n−1)).</li>
+    <li>R̄² ≤ R² always. They are equal only when k = 0 (intercept only).</li>
+    <li>R̄² <strong>loses</strong> the "fraction of variation explained" interpretation. Use R² for storytelling; use R̄² for comparing models with different numbers of predictors.</li>
+  </ul>
+</div>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">How to use R² and adjusted R² in practice</div>
+  <ul>
+    <li><strong>Report R²</strong> to tell the audience how well the model fits: "The model explains 72% of the variation in monthly sales."</li>
+    <li><strong>Compare models with different predictors using adjusted R²:</strong> prefer the model with higher R̄².</li>
+    <li><strong>Do NOT choose the model based on R² or R̄² alone.</strong> Theory, economic logic, and the 4-question test always come first.</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CHAPTER D
+══════════════════════════════════════════════ -->
+<div class="chapter-header ch-d">
+  <div class="ch-label">Chapter D</div>
+  <h2>Checking the Assumptions</h2>
+</div>
+
+<!-- Scheme table D -->
+<table class="scheme-table">
+  <thead><tr><th>Section</th><th>Topic</th><th>You should be able to…</th></tr></thead>
+  <tbody>
+    <tr><td><strong>MR_D1</strong></td><td>Diagnostic plots</td><td>List the 5 classical assumptions, draw and read residual plots and normal Q-Q plot.</td></tr>
+    <tr><td><strong>MR_D2</strong></td><td>Quasi-multicollinearity (QMC)</td><td>Define QMC, list its consequences, detect with VIF / tolerance, give 5 possible remedies.</td></tr>
+    <tr><td><strong>MR_D3</strong></td><td>Heteroskedasticity</td><td>Define it, list consequences, run the White test (3 steps), give 4 possible remedies.</td></tr>
+  </tbody>
+</table>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">Which assumptions does Chapter D check?</div>
+  <p>Of the 5 classical assumptions from A.1:</p>
+  <ul>
+    <li><strong>A1</strong> (linearity / correct functional form) — checked by residual plots (D.1).</li>
+    <li><strong>A2</strong> (homoskedasticity) — checked by residual plots (D.1) and the White test (D.3).</li>
+    <li><strong>A4</strong> (no exact linear relation among x's → quasi-MC) — checked by VIF (D.2).</li>
+    <li><strong>A5</strong> (normality of ε) — checked by the normal Q-Q plot (D.1).</li>
+    <li><strong>A3</strong> (uncorrelated errors) and the endogeneity part of A4 are covered in Part 2: Time Series.</li>
+  </ul>
+</div>
+
+<!-- D.1 -->
+<div class="section-title ch-d-text">D.1 Diagnostic Plots — Visual Assumption Checks</div>
+
+<p>Always start assumption checking graphically. Formal tests confirm what the eye suspects — they don't replace the visual inspection.</p>
+
+<table>
+  <thead><tr><th>Plot</th><th>What it shows</th><th>What patterns mean</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Scatterplot: Y vs xᵢ</strong></td>
+      <td>Bivariate relationship between outcome and each predictor.</td>
+      <td>Roughly linear → current specification OK. Obvious curve → try log or polynomial transform (Chapter A.2). Wedge shape → potential heteroskedasticity.</td>
+    </tr>
+    <tr>
+      <td><strong>Residual plot: eᵢ vs ŷᵢ (or vs xᵢ)</strong></td>
+      <td>Residuals against fitted values (or against each predictor separately).</td>
+      <td><strong>Ideal:</strong> random cloud symmetrically around zero. <strong>Fan/funnel:</strong> heteroskedasticity (A2 fails). <strong>Clear curve:</strong> wrong functional form (A1 fails). <strong>Outliers:</strong> influential observations worth investigating.</td>
+    </tr>
+    <tr>
+      <td><strong>Normal Q-Q plot of residuals</strong></td>
+      <td>Quantiles of the residuals vs theoretical normal quantiles.</td>
+      <td><strong>Points on diagonal:</strong> normality (A5) roughly satisfied. <strong>S-shape:</strong> skewness. <strong>Bow tie / fat tails:</strong> heavy-tailed distribution. For large n, CLT makes small deviations tolerable.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why plot eᵢ vs ŷᵢ rather than eᵢ vs xᵢ?</div>
+  <p>The plot against ŷᵢ summarises all predictors in one graph — if any predictor is causing heteroskedasticity or nonlinearity, it will show up as a pattern. The plot against individual xᵢ helps pinpoint <em>which</em> predictor is responsible. In practice, do both.</p>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — Getting the Diagnostic Plots</div>
+  <ol>
+    <li>In <strong>Analyze → Regression → Linear → Save</strong>: tick <strong>Unstandardized residuals</strong> and <strong>Unstandardized predicted values</strong>. SPSS saves these as new columns (RES_1 and PRE_1).</li>
+    <li><strong>Residual plot:</strong> <strong>Graphs → Scatter/Dot → Simple Scatter</strong>; put RES_1 on Y-axis and PRE_1 (or any xᵢ) on X-axis.</li>
+    <li><strong>Q-Q plot:</strong> <strong>Analyze → Descriptive Statistics → Q-Q Plots</strong>; select RES_1, choose Normal distribution.</li>
+    <li>Alternatively, in the Regression dialog under <strong>Plots</strong>: put *ZRESID on Y and *ZPRED on X for a standardised residual plot.</li>
+  </ol>
+</div>
+
+<!-- D.2 -->
+<div class="section-title ch-d-text">D.2 Quasi-Multicollinearity (QMC)</div>
+
+<h4>Definition — Exact vs Quasi Multicollinearity</h4>
+
+<table>
+  <thead><tr><th></th><th>Exact Multicollinearity</th><th>Quasi-Multicollinearity (QMC)</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>What it is</strong></td>
+      <td>One predictor is a <em>perfect</em> linear combination of the others.</td>
+      <td>One predictor is <em>strongly but not perfectly</em> linearly related to the others.</td>
+    </tr>
+    <tr>
+      <td><strong>Consequence</strong></td>
+      <td>A4 fails completely. (X'X) matrix is singular — OLS cannot be computed at all.</td>
+      <td>OLS can be computed, but se(Bᵢ) blow up. Estimates are unbiased but imprecise.</td>
+    </tr>
+    <tr>
+      <td><strong>Example</strong></td>
+      <td>Including both a variable and its exact negative. Forgetting to drop one dummy (the dummy variable trap).</td>
+      <td>Including both household income and household spending (strongly correlated). Adding x, x², x³ without centering.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Consequences of QMC</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">The classic QMC fingerprint — the "frustrating combination"</div>
+  <ul>
+    <li>Standard errors of <em>affected</em> coefficients blow up → t-ratios shrink → individual t-tests become non-significant.</li>
+    <li>Yet R² and the ANOVA F-test can still be large and significant (the variables jointly explain Y, even if we can't separate their individual effects).</li>
+    <li>Estimates are unbiased <em>in expectation</em> — but highly sensitive to small changes in the data. Adding or removing one observation can flip a sign.</li>
+    <li>Prediction is unaffected as long as new observations have the same correlational structure as the sample.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why does correlation among predictors inflate se(Bᵢ)?</div>
+  <p>Intuitively: if x₁ and x₂ always move together, it is impossible to tell which one is driving Y. The data do not give us enough independent variation in each predictor to pin down their separate effects. Mathematically, Var(bᵢ) ∝ 1/(1 − Rᵢ²), where Rᵢ² is how well xᵢ is explained by the other predictors. As Rᵢ² → 1, Var(bᵢ) → ∞.</p>
+</div>
+
+<h4>Detection — VIF and Tolerance</h4>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">VIF (Variance Inflation Factor) for predictor xᵢ</div>
+  <div class="formula">VIFᵢ = 1 / (1 − Rᵢ²) &nbsp; ; &nbsp; Tolerance = 1 / VIFᵢ = 1 − Rᵢ²</div>
+  <p>where Rᵢ² is obtained by regressing xᵢ on all the <em>other</em> predictors.</p>
+  <table>
+    <thead><tr><th>VIF value</th><th>Tolerance</th><th>Severity</th></tr></thead>
+    <tbody>
+      <tr><td>VIF = 1</td><td>1.0</td><td>No collinearity — xᵢ is uncorrelated with all other x's.</td></tr>
+      <tr><td>1 &lt; VIF ≤ 5</td><td>0.2–1.0</td><td>Mild — generally acceptable.</td></tr>
+      <tr><td>5 &lt; VIF ≤ 10</td><td>0.1–0.2</td><td>Moderate — investigate further.</td></tr>
+      <tr><td>VIF &gt; 10</td><td>&lt; 0.1</td><td>Severe — take action (see remedies below).</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Some textbooks use the threshold VIF &gt; 5 as the warning level. This course uses VIF &gt; 5 (tolerance &lt; 0.2) as the rule of thumb.</p>
+</div>
+
+<div class="box box-pitfall">
+  <div class="box-label lbl-pitfall">Pairwise correlations are not enough</div>
+  <p>High pairwise correlation between two predictors is a warning sign, but QMC can arise from multivariate relationships: three predictors may each have moderate pairwise correlations, yet together be nearly perfectly collinear. VIF catches this; pairwise correlations do not.</p>
+</div>
+
+<h4>Five Possible Remedies for QMC</h4>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">Remedies — ordered from least to most disruptive</div>
+  <ol>
+    <li><strong>Do nothing</strong> — if the model's predictions and the joint F-test serve your purpose, and you don't need reliable individual t-tests, QMC may be tolerable. The joint F-test is unaffected by QMC.</li>
+    <li><strong>Drop a redundant variable</strong> — keep the predictor that theory supports best. Check that the remaining estimates are stable and their signs make sense.</li>
+    <li><strong>Combine or transform</strong> — replace two highly correlated x's with a composite (their sum, average, ratio, or difference). E.g. replace both husband's and wife's income with total household income.</li>
+    <li><strong>Collect more data</strong> — a larger n increases the variation in each xᵢ and lowers se(Bᵢ). Not always feasible.</li>
+    <li><strong>For dummy/interaction QMC:</strong>
+      <ul>
+        <li>Choose a <em>large</em> reference category for dummies.</li>
+        <li><em>Centre</em> quantitative variables before creating interaction or polynomial terms: use (xᵢ − x̄) instead of xᵢ. This dramatically reduces the correlation between xᵢ and xᵢ².</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — Getting VIF and Tolerance</div>
+  <p><strong>Analyze → Regression → Linear → Statistics</strong>: tick <strong>Collinearity diagnostics</strong>. Click Continue and run the regression. VIF and Tolerance appear in the rightmost columns of the <strong>Coefficients</strong> table.</p>
+</div>
+
+<!-- D.3 -->
+<div class="section-title ch-d-text">D.3 Heteroskedasticity</div>
+
+<h4>Definition</h4>
+
+<div class="box box-key">
+  <div class="box-label lbl-key">Homoskedasticity vs Heteroskedasticity</div>
+  <p><strong>Homoskedasticity (A2 holds):</strong> Var(εᵢ) = σ² for every observation. The spread of errors is the same regardless of the values of the predictors. Think: uniform bands around the regression surface.</p>
+  <p><strong>Heteroskedasticity (A2 fails):</strong> Var(εᵢ) = σᵢ² varies across observations — typically growing with the size of Y, with the size of one or more x's, or with the value of a grouping variable.</p>
+  <p><strong>Common sources:</strong></p>
+  <ul>
+    <li>Cross-sectional data where units differ greatly in scale (large vs small firms, rich vs poor households).</li>
+    <li>Richer people have more discretionary income → more variance in their spending decisions.</li>
+    <li>A missing variable whose effect grows with the level of xᵢ.</li>
+  </ul>
+</div>
+
+<h4>Consequences of Heteroskedasticity</h4>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">What heteroskedasticity does to OLS</div>
+  <ul>
+    <li><strong>OLS estimates remain unbiased</strong> — the estimates b₀, b₁, …, bₖ are still centred on the true β's. A1 is intact; only A2 fails.</li>
+    <li><strong>OLS is no longer BLUE</strong> — it is possible to find a more efficient estimator (weighted least squares) that uses the knowledge of which observations are more reliable.</li>
+    <li><strong>The standard errors reported by SPSS are WRONG</strong> — they can be either too small (overstating precision) or too large (understating it). Consequently, t-tests and F-tests and confidence intervals are all misleading.</li>
+    <li><strong>Practical conclusion:</strong> "My t-test looks significant, but with heteroskedasticity the reported se is unreliable — the true significance may be different."</li>
+  </ul>
+</div>
+
+<h4>Detection — Visual Check + the White Test</h4>
+
+<p><strong>Step 0 — Visual check:</strong> Look at the residual plot (eᵢ vs ŷᵢ or vs xᵢ). Heteroskedasticity typically shows as a <em>fan shape</em> (residuals spread out as ŷᵢ increases) or a <em>funnel shape</em> (residuals narrow as ŷᵢ increases).</p>
+
+<div class="box box-formula">
+  <div class="box-label lbl-formula">White Test — 3 Steps</div>
+  <p><strong>Step 1.</strong> Fit the original regression and save the (unstandardised) residuals eᵢ.</p>
+  <p><strong>Step 2.</strong> Run the <em>auxiliary regression</em> of eᵢ² on: all original predictors, their squares, and all pairwise cross-products:</p>
+  <div class="formula">eᵢ² = α₀ + α₁x₁ᵢ + … + αₖxₖᵢ + β₁x₁ᵢ² + … + βₖxₖᵢ² + γ₁x₁ᵢx₂ᵢ + … + γₘx(ₖ₋₁)ᵢxₖᵢ + u</div>
+  <p><strong>Step 3.</strong> Obtain R² from the auxiliary regression. The test statistic is:</p>
+  <div class="formula">W = n · R²_aux &nbsp; ~ &nbsp; χ²(number of non-intercept regressors in Step 2) under H₀</div>
+  <ul>
+    <li><strong>H₀ : homoskedasticity.</strong> Reject H₀ when W is large (right-tailed).</li>
+    <li>p-value rule: reject when p &lt; α.</li>
+  </ul>
+</div>
+
+<div class="box box-expand">
+  <div class="box-label lbl-expand">Why does the White test work?</div>
+  <p>Under homoskedasticity, eᵢ² should be unrelated to any of the x's — the squared residuals (which proxy σᵢ²) should be random noise, so the auxiliary R² should be near zero. If eᵢ² is systematically related to the x's (R² is large), it means the error variance is varying with the predictors → heteroskedasticity. The chi-squared distribution for n·R² comes from the result that nR² is asymptotically χ² under H₀.</p>
+  <p><strong>Number of non-intercept regressors</strong> in the auxiliary regression for k = 2 predictors: 2 main effects + 2 squares + 1 cross-product = <strong>5 df</strong>.</p>
+</div>
+
+<div class="box box-spss">
+  <div class="box-label lbl-spss">SPSS — White Test by Hand</div>
+  <ol>
+    <li>Run the original regression with <strong>Save → Unstandardised residuals</strong> (stored as RES_1).</li>
+    <li><strong>Transform → Compute Variable</strong>: create <code>SqRes = RES_1 ** 2</code>.</li>
+    <li>Create the squared predictors and cross-products: e.g. <code>X1sq = X1 ** 2</code>, <code>X2sq = X2 ** 2</code>, <code>X1X2 = X1 * X2</code>.</li>
+    <li>Run a new regression with <strong>SqRes</strong> as the dependent variable and all of {X1, X2, X1sq, X2sq, X1X2} as predictors.</li>
+    <li>Read <strong>R²</strong> from the Model Summary. Compute W = n × R². Compare W to χ²-critical with df = 5 (for k = 2), or read the p-value from a χ² table.</li>
+  </ol>
+</div>
+
+<h4>Four Common Remedies for Heteroskedasticity</h4>
+
+<div class="box box-apply">
+  <div class="box-label lbl-apply">Remedies — from easiest to most advanced</div>
+  <ol>
+    <li><strong>Look for an omitted variable.</strong> Heteroskedasticity sometimes disappears once the missing variable is included. The varying error spread was really the omitted variable's effect masquerading as noise.</li>
+    <li><strong>Transform the dependent variable (log).</strong> A log transformation on Y often stabilises variance because it compresses the scale for large values. The double-log model (ln Y = β₀ + β₁ ln x + …) is particularly effective when both Y and x span several orders of magnitude.</li>
+    <li><strong>Use relative variables.</strong> Divide Y and/or x's by a "scale variable" (e.g. firm size, income) to put observations on a comparable scale. This removes a common source of variance growth.</li>
+    <li><strong>Weighted Least Squares (WLS) or Robust Standard Errors (HC se's).</strong> WLS re-weights observations so that noisier ones count less. Robust (Huber–White) standard errors keep the OLS estimates but correct the se's for heteroskedasticity — available in SPSS via <strong>Analyze → Regression → Linear → Options → Heteroskedasticity-consistent</strong> (not in all versions) or via syntax.</li>
+  </ol>
+</div>
+
+<hr/>
+
+<!-- CLOSING SUMMARY -->
+<div class="summary-box">
+  <span>Specify → Estimate → Judge → Validate … and iterate.</span>
+  <p style="margin-top:14px;font-size:0.95rem;opacity:.9;">
+    If validation (Chapter D) finds a problem — quasi-multicollinearity, heteroskedasticity, a wrong functional form, or an omitted variable — go back to Chapter A and re-specify. A good model is never the result of one regression run. It is the product of a thoughtful, theory-anchored loop.
+  </p>
+</div>
+
+</div><!-- end page-wrap -->
+</body>
+</html>
