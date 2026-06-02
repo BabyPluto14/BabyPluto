@@ -644,6 +644,28 @@ def fig_label(text):
                      S("fl", fontSize=8, textColor=colors.HexColor("#555555"),
                        alignment=TA_CENTER, spaceBefore=2, spaceAfter=8))
 
+SPSS_BG = colors.HexColor("#EBF5FB")
+
+def spss_box(steps, title="SPSS Step-by-Step"):
+    hdr = S("spss_h", fontSize=9.5, fontName="DV-B", textColor=WHITE, leading=13)
+    sty = S("spss_s", fontSize=9, fontName="DV-M", leading=14,
+            textColor=colors.HexColor("#1A1A2E"))
+    rows = [[Paragraph(f"  ⌨  {title}", hdr)]]
+    for i, step in enumerate(steps, 1):
+        rows.append([Paragraph(f"  {i}.  {step}", sty)])
+    t = Table(rows, colWidths=[W])
+    t.setStyle(TableStyle([
+        ("BACKGROUND", (0,0), (0,0), MID_BLUE),
+        ("BACKGROUND", (0,1), (-1,-1), SPSS_BG),
+        ("BOX",        (0,0), (-1,-1), 1, MID_BLUE),
+        ("INNERGRID",  (0,1), (-1,-1), 0.3, GREY_LINE),
+        ("TOPPADDING", (0,0), (-1,-1), 5),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 5),
+        ("LEFTPADDING", (0,0), (-1,-1), 10),
+        ("VALIGN", (0,0), (-1,-1), "TOP"),
+    ]))
+    return t
+
 def pitfall_row(i, title, text):
     bg = RED_BG if i%2==0 else colors.HexColor("#FFF0F0")
     ts = S(f"pt{i}", fontSize=9.5, fontName="DV-B",
@@ -740,6 +762,15 @@ story.append(fig_label(
     "Figure 1.2 — Each bar shows the mean Y for that region. "
     "The dummy coefficient = the bar's height minus the reference bar (Center). "
     "The reference group has no dummy and its effect is absorbed into the intercept β₀."))
+story.append(spss_box([
+    "Transform → Compute Variable…",
+    "Target Variable: D_North   |   Numeric Expression: (Region = 1)   [use the numeric code for North]",
+    "Click OK.  Repeat for each category EXCEPT the reference (e.g. Center).",
+    "Analyze → Regression → Linear…",
+    "Dependent: Y   |   Independent(s): X1, D_North, D_South, D_East",
+    "Click OK.  Read Coefficients table: B column = estimates, Sig. column = p-values.",
+], title="SPSS: Creating and Using Dummy Variables"))
+story.append(sp(4))
 story.append(pitfall_box([
     "Never create k dummies — always k−1. Including all k causes perfect multicollinearity (dummy trap).",
     '"Baseline group", "comparison group", "omitted category", "reference category" — all the same.',
@@ -772,6 +803,15 @@ story.append(info_box([
     "Answer: 1% increase in NOx → −16.04/100 = −0.16 units of Y.  "
     "If Y is in thousands of dollars: −$160 per 1% rise in pollution.",
 ], bg=LIGHT_BLUE, label="Most Tested: Linear-Log"))
+story.append(sp(4))
+story.append(spss_box([
+    "If the variable is NOT yet logged: Transform → Compute Variable…",
+    "Target Variable: LN_X   |   Numeric Expression: LN(X)   |   Click OK.",
+    "If both sides need logging (log-log model): also create LN_Y = LN(Y).",
+    "Analyze → Regression → Linear…",
+    "Dependent: Y (or LN_Y)   |   Independent(s): LN_X (and other predictors)",
+    "Click OK.  Read B column for β — apply the correct interpretation rule from the table above.",
+], title="SPSS: Log Transformations"))
 story.append(sp(8))
 
 # 1.4
@@ -797,6 +837,15 @@ story.append(formula_box([
     "Decision:  p-value (Sig. column in SPSS) < 0.05  →  Reject H₀  →  significant at 5%",
     "           p-value ≥ 0.05               →  Fail to reject H₀  →  not significant",
 ]))
+story.append(sp(4))
+story.append(spss_box([
+    "Analyze → Regression → Linear…",
+    "Dependent: Y   |   Independent(s): all predictor variables",
+    "Click OK.  Open the Coefficients table in the output.",
+    "Find the row for the variable of interest.",
+    "Read the Sig. column (= p-value).  If Sig. < 0.05 → significant at 5%.",
+    "Also read B (estimate) and t columns to quote in your answer.",
+], title="SPSS: Testing Individual Coefficient Significance"))
 story.append(sp(4))
 story.append(pitfall_box([
     '"Significant" means statistically distinguishable from zero — NOT necessarily large or important.',
@@ -836,6 +885,19 @@ story.append(formula_box([
     "  Alternatively: if your computed F > F-critical value → Reject H₀",
 ]))
 story.append(sp(4))
+story.append(spss_box([
+    "Run UNRESTRICTED model: Analyze → Regression → Linear…",
+    "  Dependent: Y   |   Independent(s): X1, D_North, D_South, D_East  (all variables)",
+    "  Click OK.  Record: SSE_u from ANOVA table (Residual row, Sum of Squares column)",
+    "  OR record R²_u from Model Summary table.",
+    "Run RESTRICTED model: Analyze → Regression → Linear…",
+    "  Dependent: Y   |   Independent(s): X1 only  (remove the variables being tested)",
+    "  Click OK.  Record: SSE_r (Residual SS) OR R²_r from Model Summary.",
+    "Count J = number of variables you removed (e.g. 3 dummies → J = 3).",
+    "Compute F manually using the formula above.  Compare p-value to 0.05.",
+    "TIP: n = Total df + 1 from the ANOVA table.  k = number of IVs in unrestricted model.",
+], title="SPSS: Running the Joint F-test (Restricted vs Unrestricted)"))
+story.append(sp(4))
 story.append(pitfall_box([
     "J = number of RESTRICTIONS (variables REMOVED), not total variables.",
     "Restricted model has FEWER variables — its SSE is always LARGER.",
@@ -864,6 +926,17 @@ story.append(fig_label(
     "Figure 1.7 — Left: good residual plot — random cloud, no pattern. "
     "Centre: heteroskedasticity — fan shape, variance grows with fitted values. "
     "Right: non-linearity — curved arc, model is missing a term (e.g. X²)."))
+story.append(sp(4))
+story.append(spss_box([
+    "Analyze → Regression → Linear…",
+    "Dependent: Y   |   Independent(s): all predictors",
+    "Click Plots… button (bottom of dialog).",
+    "In the Plots dialog: set Y-axis to ZRESID  (standardized residuals)",
+    "  and X-axis to ZPRED  (standardized fitted values).  Click Continue.",
+    "Click OK.  The scatter plot appears in the Output Viewer.",
+    "Inspect the plot using the three patterns in Figure 1.7 above:",
+    "  • Random cloud → good  |  Fan shape → heteroskedasticity  |  Curved arc → non-linearity",
+], title="SPSS: Generating the Residual Plot"))
 story.append(sp(4))
 story.append(pitfall_box([
     "Do not say 'residuals are not normal' from this plot alone. "
@@ -896,6 +969,22 @@ story.append(formula_box([
     "         df = number of regressors in auxiliary regression (excluding constant)",
     "Step 5:  If p < 0.05  →  Reject H₀  →  heteroskedasticity present",
 ]))
+story.append(sp(4))
+story.append(spss_box([
+    "Run original regression: Analyze → Regression → Linear…  (Y on all X predictors).",
+    "Save residuals: click Save… → check Unstandardized (under Residuals) → Continue → OK.",
+    "  SPSS creates variable RES_1 in the dataset.",
+    "Compute squared residuals: Transform → Compute Variable…",
+    "  Target Variable: RES_SQ   |   Expression: RES_1 ** 2   |   Click OK.",
+    "Run auxiliary regression: Analyze → Regression → Linear…",
+    "  Dependent: RES_SQ",
+    "  Independent(s): all original X's  +  X² for each continuous X  +  Xᵢ×Xⱼ cross-products",
+    "  (Do NOT square dummies.  Do NOT include dummy×dummy products.)",
+    "  Click OK.  Record R²_aux from Model Summary  and  n_aux = Total df + 1 from ANOVA.",
+    "Compute: W = n_aux × R²_aux.  df = number of IVs in auxiliary regression.",
+    "Decision: if Sig. < 0.05 on the overall F of the auxiliary regression → reject H₀ (heteroskedasticity).",
+    "  OR: if W > χ²_critical(df, 5%) → reject H₀.",
+], title="SPSS: Running the White Test"))
 story.append(sp(4))
 story.append(pitfall_box([
     "df is NOT 1. Example: 2 continuous X's → X₁, X₂, X₁², X₂², X₁×X₂ → df = 5.",
@@ -967,6 +1056,16 @@ story.append(tbl(
         ["> 10", "< 0.10", "Severe — estimates are unreliable"],
     ],
     col_widths=[2.5*cm, 3.5*cm, 10.5*cm]))
+story.append(sp(4))
+story.append(spss_box([
+    "Analyze → Regression → Linear…",
+    "Dependent: Y   |   Independent(s): all predictor variables",
+    "Click Statistics… button.",
+    "Check Collinearity diagnostics.  Click Continue.",
+    "Click OK.  In the Coefficients table, scroll right to find:",
+    "  Tolerance column: should be close to 1.0 (low multicollinearity)",
+    "  VIF column: flag any value above 5 as concerning, above 10 as severe.",
+], title="SPSS: Getting VIF and Tolerance"))
 story.append(sp(8))
 
 # 1.11
@@ -1055,6 +1154,24 @@ story.append(tbl(
     ],
     col_widths=[4.5*cm, 5*cm, 7*cm]))
 story.append(sp(4))
+story.append(spss_box([
+    "CREATE FIRST DIFFERENCE:  Transform → Compute Variable…",
+    "  Target Variable: DIFF_Y   |   Expression: Y - LAG(Y, 1)   |   Click OK.",
+    "CREATE LAGGED LEVEL:  Transform → Compute Variable…",
+    "  Target Variable: LAG_Y    |   Expression: LAG(Y, 1)        |   Click OK.",
+    "RUN DF REGRESSION (Version 1 — no trend):",
+    "  Analyze → Regression → Linear…",
+    "  Dependent: DIFF_Y   |   Independent(s): LAG_Y",
+    "  Click OK.",
+    "RUN DF REGRESSION (Version 2 — with trend):",
+    "  Same as above but ALSO add your time variable (e.g. TIME or t) to Independent(s).",
+    "READ OUTPUT: Coefficients table → find row for LAG_Y → read the t column.",
+    "  IGNORE the Sig. column!  Compare t directly to −2.86 (V1) or −3.41 (V2).",
+    "  t more negative than CV → Reject H₀ → STATIONARY.",
+    "  t less negative (closer to 0) → Fail to reject → UNIT ROOT → difference the series.",
+    "IF UNIT ROOT: repeat steps 1–12 using DIFF_Y instead of Y (test the first difference).",
+], title="SPSS: Dickey-Fuller Test (Step 1 — Stationarity)"))
+story.append(sp(4))
 story.append(pitfall_box([
     "NEVER use the standard t-table (±1.96) for DF. Always use −2.86 (V1) or −3.41 (V2).",
     "The Sig. (p-value) SPSS shows for the LAG variable uses the wrong distribution — ignore it.",
@@ -1106,6 +1223,23 @@ story.append(fig_label(
     "The dashed line is the total multiplier (sum of all β coefficients). "
     "The lag-0 bar alone is the immediate effect; the total multiplier captures all delayed effects."))
 story.append(sp(4))
+story.append(spss_box([
+    "CREATE LAG VARIABLES (example for q_max = 3):",
+    "  Transform → Compute Variable…  Target: LAG1_X  Expression: LAG(X, 1)  OK",
+    "  Transform → Compute Variable…  Target: LAG2_X  Expression: LAG(X, 2)  OK",
+    "  Transform → Compute Variable…  Target: LAG3_X  Expression: LAG(X, 3)  OK",
+    "FIT DL(3) — Analyze → Regression → Linear…",
+    "  Dependent: Y   |   Independent(s): X, LAG1_X, LAG2_X, LAG3_X   |   Click OK.",
+    "  Check Coefficients table: look at Sig. for LAG3_X (highest lag).",
+    "  If Sig. > 0.05 → LAG3_X not significant → drop it → fit DL(2).",
+    "FIT DL(2) — repeat with Independent(s): X, LAG1_X, LAG2_X.",
+    "  If Sig. of LAG2_X > 0.05 → drop → fit DL(1).",
+    "FIT DL(1) — repeat with: X, LAG1_X.",
+    "  If Sig. of LAG1_X > 0.05 → drop → fit DL(0) (static model with X only).",
+    "STOP when the highest remaining lag is significant (Sig. ≤ 0.05).",
+    "TOTAL MULTIPLIER: sum all B values (X + LAG1_X + … + LAGq_X) from the final model.",
+], title="SPSS: DL(q) Top-Down Lag Selection (Step 2 — Model Fitting)"))
+story.append(sp(4))
 story.append(pitfall_box([
     "q_max is usually given in the question. Common default is 3 or 4.",
     "Each lag costs one observation. DL(3) with n = 100 gives 97 usable rows.",
@@ -1132,6 +1266,20 @@ story.append(fig_label(
     "a one-time shock of 1 unit in X_t. The immediate effect is β = 1.0. "
     "Each subsequent period, the effect is multiplied by γ = 0.65 — it decays geometrically. "
     "The sum of all bars equals the total multiplier β/(1−γ) = 2.86."))
+story.append(sp(4))
+story.append(spss_box([
+    "CREATE LAGGED Y:  Transform → Compute Variable…",
+    "  Target Variable: LAG_Y   |   Expression: LAG(Y, 1)   |   Click OK.",
+    "Analyze → Regression → Linear…",
+    "  Dependent: Y   |   Independent(s): X  and  LAG_Y",
+    "  Click OK.",
+    "Read Coefficients table:",
+    "  B for X     = β  (immediate effect of a 1-unit rise in X this period)",
+    "  B for LAG_Y = γ  (persistence — must be between −1 and +1)",
+    "Compute total multiplier manually: β / (1 − γ)",
+    "  Example: β = 1.5, γ = 0.6  →  total multiplier = 1.5 / (1 − 0.6) = 3.75",
+    "Then run the LMSC test (Section 2.6) on these residuals — autocorrelation biases AR(1) estimates.",
+], title="SPSS: Fitting the AR(1) Model"))
 story.append(sp(4))
 story.append(pitfall_box([
     "AR(1) with remaining autocorrelation → coefficient estimates are BIASED. "
@@ -1176,6 +1324,26 @@ story.append(formula_box([
     "Step 5:  If p < 0.05  (or LM > 3.841)  →  Reject H₀  →  autocorrelation present",
     "         If p ≥ 0.05  (or LM ≤ 3.841)  →  Fail to reject  →  A3 plausibly satisfied",
 ]))
+story.append(sp(4))
+story.append(spss_box([
+    "SAVE RESIDUALS from your original model:",
+    "  Analyze → Regression → Linear…  (run your fitted model)",
+    "  Click Save… → check Unstandardized under Residuals → Continue → OK.",
+    "  SPSS creates variable RES_1 in the dataset.",
+    "CREATE LAGGED RESIDUAL:  Transform → Compute Variable…",
+    "  Target Variable: LAG_RES1   |   Expression: LAG(RES_1, 1)   |   Click OK.",
+    "RUN AUXILIARY REGRESSION:  Analyze → Regression → Linear…",
+    "  Dependent: RES_1",
+    "  Independent(s): ALL original X variables  +  LAG_RES1",
+    "  (e.g. if original model had X and LAG1_X: use X, LAG1_X, LAG_RES1 as IVs)",
+    "  Click OK.",
+    "READ FROM OUTPUT:",
+    "  Model Summary: record R²_aux",
+    "  ANOVA table: n_aux = Total df + 1  (the Total row, df column, add 1)",
+    "COMPUTE: LM = n_aux × R²_aux",
+    "DECISION: if LM > 3.841  OR  overall model Sig. < 0.05 → Reject H₀ → autocorrelation present.",
+    "  Otherwise: Fail to reject H₀ → A3 plausibly satisfied.",
+], title="SPSS: LMSC Autocorrelation Test (Step 3 — Residual Check)"))
 story.append(sp(4))
 story.append(pitfall_box([
     "The auxiliary regression MUST include ALL original X predictors + lagged residual.",
