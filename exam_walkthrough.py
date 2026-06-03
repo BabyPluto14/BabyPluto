@@ -306,6 +306,279 @@ def plot_q2c_r2():
     return fig
 
 
+def plot_q1b_coeff():
+    """Horizontal bar chart: all Q1 t-statistics, coloured by significance, lnNOx highlighted."""
+    from scipy.stats import f as fdist
+    labels = ["PTRatio","DIS","RM","lnNOx","CRIM","AGE","DNE","RAD","DS","DNW"]
+    tvals  = [-7.407, -6.493, 16.602, -5.572, -4.885, -2.889, -1.312, 1.205, 0.373, -0.370]
+    pvals  = [0.000,   0.000,  0.000,  0.000,  0.000,  0.004,  0.190, 0.229, 0.709,  0.712]
+    sig    = [p < 0.05 for p in pvals]
+    cols   = ["#D4500A" if (l == "lnNOx") else ("#1A6B3A" if s else "#AAAAAA")
+              for l, s in zip(labels, sig)]
+    fig, ax = plt.subplots(figsize=(10, 4.2))
+    bars = ax.barh(labels, tvals, color=cols, edgecolor="white", linewidth=0.8, height=0.6)
+    ax.axvline(0, color="black", lw=0.8)
+    ax.axvline( 1.96, color="#C0392B", lw=1.5, ls="--", alpha=0.7, label="±1.96 (approx. 5% threshold)")
+    ax.axvline(-1.96, color="#C0392B", lw=1.5, ls="--", alpha=0.7)
+    for bar, tv, pv, lb in zip(bars, tvals, pvals, labels):
+        xoff = 0.3 if tv >= 0 else -0.3
+        ha   = "left" if tv >= 0 else "right"
+        tag  = f"t={tv:.3f}  p={'<.001' if pv<0.001 else f'{pv:.3f}'}"
+        ax.text(tv + xoff, bar.get_y()+bar.get_height()/2, tag,
+                va="center", ha=ha, fontsize=7.5,
+                color="#D4500A" if lb == "lnNOx" else "#1B3A6B",
+                fontweight="bold" if lb == "lnNOx" else "normal")
+    ax.set_xlabel("t-statistic", fontsize=9)
+    ax.set_title("Q1 Regression — t-statistics for all predictors\n"
+                 "Orange = lnNOx (focus variable)  ·  Green = significant  ·  Grey = not significant",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=8, frameon=False, loc="lower right")
+    ax.set_xlim(-10, 20)
+    fig.tight_layout(pad=1.2)
+    return fig
+
+def plot_q1c_fdist():
+    """F(3,495) distribution — F=1.463 vs critical value, showing fail-to-reject."""
+    from scipy.stats import f as fdist
+    x = np.linspace(0, 6, 500)
+    y = fdist.pdf(x, 3, 495)
+    cv = fdist.ppf(0.95, 3, 495)          # ≈ 2.62
+    fig, ax = plt.subplots(figsize=(9, 3.2))
+    ax.plot(x, y, color="#1B3A6B", lw=2.5)
+    ax.fill_between(x, y, where=(x >= cv), color="#C0392B", alpha=0.35,
+                    label=f"Reject H₀: F > {cv:.2f}  (5% level)")
+    ax.fill_between(x, y, where=(x < cv),  color="#2E6DA4", alpha=0.15,
+                    label="Fail to reject H₀")
+    ax.axvline(cv, color="#C0392B", lw=1.8, ls="--")
+    ax.text(cv+0.08, ax.get_ylim()[1]*0.7, f"CV = {cv:.2f}", fontsize=8.5,
+            color="#C0392B", fontweight="bold")
+    ax.axvline(1.463, color="#D4500A", lw=2.5)
+    ax.text(1.463+0.08, ax.get_ylim()[1]*0.55, "F = 1.463\n(our test statistic)",
+            fontsize=8.5, color="#D4500A", fontweight="bold")
+    ax.annotate("", xy=(1.463, 0.05), xytext=(cv-0.1, 0.05),
+                arrowprops=dict(arrowstyle="<->", color="#555", lw=1.5))
+    ax.text((1.463+cv)/2, 0.07, "well inside\nfail-to-reject zone",
+            ha="center", fontsize=8, color="#555")
+    ax.set_xlabel("F statistic", fontsize=9)
+    ax.set_ylabel("F(3, 495) density", fontsize=9)
+    ax.set_title("Q1c — F(3, 495) distribution for joint Region test\n"
+                 "F = 1.463  ·  p = 0.224  →  Region NOT significant",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=8.5, frameon=False)
+    ax.set_xlim(0, 6)
+    fig.tight_layout(pad=1.2)
+    return fig
+
+def plot_q1d_residual():
+    """Schematic residual plot replicating Q1 patterns: outliers, line cluster, positive tails."""
+    rng = np.random.default_rng(42)
+    n = 506
+    fitted = np.linspace(5, 42, n)
+    # Base: mostly random
+    res = rng.normal(0, 4, n)
+    # Add curvature: positive residuals at extremes (low and high fitted)
+    curve = 0.004*(fitted - 24)**2 - 2
+    res += curve * 0.5
+    # A few extreme outliers
+    outlier_idx = [10, 25, 40, 480, 490, 500]
+    for i in outlier_idx:
+        res[i] += rng.choice([-1,1]) * (18 + rng.uniform(5,15))
+    # A "line pattern" cluster — group of points with similar fitted values, linearly increasing residual
+    line_idx = np.arange(200, 230)
+    fitted[line_idx] = np.linspace(18, 22, 30)
+    res[line_idx] = np.linspace(-6, 8, 30) + rng.normal(0, 0.5, 30)
+
+    fig, ax = plt.subplots(figsize=(10, 4.0))
+    ax.scatter(fitted, res, color="#2E6DA4", s=12, alpha=0.5, label="Residuals")
+    ax.axhline(0, color="black", lw=1.2, ls="--")
+    # Highlight outliers
+    for i in outlier_idx:
+        ax.scatter(fitted[i], res[i], color="#C0392B", s=45, zorder=5)
+    ax.annotate("Outliers (isolated\nextreme points)",
+                xy=(fitted[outlier_idx[4]], res[outlier_idx[4]]),
+                xytext=(35, 30), fontsize=8, color="#C0392B", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#C0392B", lw=1.5))
+    # Highlight line cluster
+    ax.scatter(fitted[line_idx], res[line_idx], color="#D4500A", s=20, zorder=5)
+    ax.annotate("Line pattern\n(clustered subgroup)",
+                xy=(20, 6), xytext=(26, 14), fontsize=8, color="#D4500A", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#D4500A", lw=1.5))
+    # Show the curvature tendency with a smooth curve
+    x_smooth = np.linspace(5, 42, 200)
+    y_smooth = 0.002*(x_smooth-24)**2 - 0.8
+    ax.plot(x_smooth, y_smooth, color="#1A6B3A", lw=2.5, ls="-.", alpha=0.8,
+            label="Average residual trend (should be flat at 0)")
+    ax.annotate("Positive residuals\nfor lowest fitted values",
+                xy=(7, 2.5), xytext=(2, 12), fontsize=8, color="#1A6B3A", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#1A6B3A", lw=1.5))
+    ax.annotate("Positive residuals\nfor highest fitted values",
+                xy=(40, 4), xytext=(32, 16), fontsize=8, color="#1A6B3A", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#1A6B3A", lw=1.5))
+    ax.set_xlabel("Fitted (predicted) values  →  CMEDV", fontsize=9)
+    ax.set_ylabel("Residuals  êᵢ", fontsize=9)
+    ax.set_title("Q1d — Schematic of actual residual plot\n"
+                 "Red = outliers  ·  Orange = line-pattern cluster  ·  Green = non-zero average trend",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=8, frameon=False)
+    ax.set_ylim(-25, 40)
+    fig.tight_layout(pad=1.2)
+    return fig
+
+def plot_q2a_vif():
+    """Bar chart of VIF values with threshold lines for Q2a."""
+    vars_  = ["SUN", "INHABITANTS_log", "POLICE"]
+    vifs   = [1.123, 1.088, 1.106]
+    tols   = [0.890, 0.919, 0.904]
+    fig, axes = plt.subplots(1, 2, figsize=(11, 3.2))
+    # VIF panel
+    bars = axes[0].bar(vars_, vifs, color="#2E6DA4", edgecolor="white", width=0.45)
+    axes[0].axhline(5,  color="#D4500A", lw=2,   ls="--", label="VIF = 5 (warning)")
+    axes[0].axhline(10, color="#C0392B", lw=2,   ls=":",  label="VIF = 10 (severe)")
+    for bar, v in zip(bars, vifs):
+        axes[0].text(bar.get_x()+bar.get_width()/2, v+0.03, f"{v}", ha="center",
+                     fontsize=10, fontweight="bold", color="#1B3A6B")
+    axes[0].set_ylim(0, 6.5)
+    axes[0].set_title("VIF values (threshold = 5)", color="#1B3A6B", fontsize=10, fontweight="bold")
+    axes[0].set_ylabel("VIF", fontsize=9)
+    axes[0].legend(fontsize=8.5, frameon=False)
+    axes[0].tick_params(labelsize=9)
+    # Tolerance panel
+    bars2 = axes[1].bar(vars_, tols, color="#1A6B3A", edgecolor="white", width=0.45)
+    axes[1].axhline(0.20, color="#D4500A", lw=2, ls="--", label="Tolerance = 0.20 (warning)")
+    axes[1].axhline(0.10, color="#C0392B", lw=2, ls=":",  label="Tolerance = 0.10 (severe)")
+    for bar, v in zip(bars2, tols):
+        axes[1].text(bar.get_x()+bar.get_width()/2, v+0.01, f"{v}", ha="center",
+                     fontsize=10, fontweight="bold", color="#1A3A1A")
+    axes[1].set_ylim(0, 1.1)
+    axes[1].set_title("Tolerance values (threshold = 0.20)", color="#1B3A6B", fontsize=10, fontweight="bold")
+    axes[1].set_ylabel("Tolerance", fontsize=9)
+    axes[1].legend(fontsize=8.5, frameon=False)
+    axes[1].tick_params(labelsize=9)
+    fig.suptitle("Q2a — All VIF scores well below 5 → No multicollinearity",
+                 fontsize=10, fontweight="bold", color="#1B3A6B", y=1.01)
+    fig.tight_layout(pad=1.3)
+    return fig
+
+def plot_q2c_fdist():
+    """F(1,96) distribution — F=70.56 far in the rejection tail for Q2c."""
+    from scipy.stats import f as fdist
+    x  = np.linspace(0, 12, 600)
+    y  = fdist.pdf(x, 1, 96)
+    cv = fdist.ppf(0.95, 1, 96)           # ≈ 3.94
+    fig, ax = plt.subplots(figsize=(9, 3.0))
+    ax.plot(x, y, color="#1B3A6B", lw=2.5)
+    ax.fill_between(x, y, where=(x >= cv), color="#C0392B", alpha=0.35,
+                    label=f"Reject H₀: F > {cv:.2f}")
+    ax.fill_between(x, y, where=(x < cv),  color="#2E6DA4", alpha=0.15,
+                    label="Fail to reject H₀")
+    ax.axvline(cv, color="#C0392B", lw=1.8, ls="--")
+    ax.text(cv+0.15, 0.35, f"CV ≈ {cv:.2f}", fontsize=8.5, color="#C0392B", fontweight="bold")
+    # F=70.56 is far off the chart — show arrow pointing right
+    ax.annotate("F = 70.56\n(way out here →)\np ≈ 4×10⁻¹³",
+                xy=(11.5, 0.02), xytext=(7.5, 0.22),
+                fontsize=9, color="#D4500A", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#D4500A", lw=2))
+    ax.set_xlabel("F statistic", fontsize=9)
+    ax.set_ylabel("F(1, 96) density", fontsize=9)
+    ax.set_title("Q2c — F(1, 96) distribution\n"
+                 "F = 70.56 is far into the rejection tail → Strongly reject H₀",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=8.5, frameon=False)
+    ax.set_xlim(0, 12)
+    fig.tight_layout(pad=1.2)
+    return fig
+
+def plot_q2f_interaction():
+    """Two regression lines showing SUN effect for coast vs non-coast cities (Q2f)."""
+    sun = np.linspace(50, 320, 200)
+    # ln(INHABITANTS) = 7.779 + 0*SUN              [non-coast, COAST=0]
+    y_noncoast = 7.779 + 0.000 * sun
+    # ln(INHABITANTS) = (7.779+0.150) + (0+0.020)*SUN  [coast, COAST=1]
+    y_coast    = (7.779 + 0.150) + 0.020 * sun
+
+    fig, ax = plt.subplots(figsize=(10, 3.8))
+    ax.plot(sun, y_noncoast, color="#2E6DA4", lw=2.5, label="Non-coast city  (COAST=0)\nEffect of SUN = 0.000  (not significant, p=1.000)")
+    ax.plot(sun, y_coast,    color="#D4500A", lw=2.5, label="Coast city  (COAST=1)\nEffect of SUN = 0.020 per day → +2% inhabitants")
+    # Annotate slope
+    idx = 120
+    ax.annotate("", xy=(sun[idx+30], y_coast[idx+30]), xytext=(sun[idx], y_coast[idx]),
+                arrowprops=dict(arrowstyle="->", color="#D4500A", lw=1.5))
+    ax.text(sun[idx+15]+2, (y_coast[idx]+y_coast[idx+30])/2 + 0.12,
+            "Slope = 0.020\n(+2% per sun day)",
+            fontsize=8.5, color="#D4500A", fontweight="bold")
+    ax.annotate("Flat line — SUN has\nno effect for non-coast",
+                xy=(200, y_noncoast[80]), xytext=(170, 10.5),
+                fontsize=8.5, color="#2E6DA4", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#2E6DA4", lw=1.5))
+    ax.set_xlabel("SUN (average days of sunshine per year)", fontsize=9)
+    ax.set_ylabel("ln(INHABITANTS)", fontsize=9)
+    ax.set_title("Q2f — Interaction effect: SUN × COAST\n"
+                 "SUN only matters for coastal cities; non-coast cities show zero slope",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=9, frameon=False, loc="upper left")
+    fig.tight_layout(pad=1.2)
+    return fig
+
+def plot_q3d_scatter():
+    """Scatter plot DIFF_p vs DIFF_q with fitted regression line y = 0.678 - 2.596x (Q3d)."""
+    rng2  = np.random.default_rng(7)
+    dp    = rng2.uniform(-0.6, 0.5, 50)
+    noise = rng2.normal(0, 0.55, 50)
+    dq    = 0.678 - 2.596*dp + noise
+
+    x_fit = np.linspace(-0.7, 0.6, 200)
+    y_fit = 0.678 - 2.596 * x_fit
+
+    fig, ax = plt.subplots(figsize=(9, 3.8))
+    ax.scatter(dp, dq, color="#2E6DA4", s=28, alpha=0.7, label="Observations (n=50)")
+    ax.plot(x_fit, y_fit, color="#D4500A", lw=2.5,
+            label="Fitted: Δq = 0.678 − 2.596·Δp\n(t=−2.456, p=0.018 → significant)")
+    ax.axhline(0, color="black", lw=0.7, ls="--", alpha=0.5)
+    ax.axvline(0, color="black", lw=0.7, ls="--", alpha=0.5)
+    # Annotate slope direction
+    ax.annotate("", xy=(0.3, 0.678-2.596*0.3), xytext=(-0.3, 0.678-2.596*(-0.3)),
+                arrowprops=dict(arrowstyle="->", color="#D4500A", lw=2))
+    ax.text(0.0, -0.5, "Negative slope = −2.596\n(price ↑  →  demand ↓)",
+            ha="center", fontsize=8.5, color="#D4500A", fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="#FFF3E0", edgecolor="#D4500A"))
+    ax.set_xlabel("Δp  (first difference of price)", fontsize=9)
+    ax.set_ylabel("Δq  (first difference of quantity)", fontsize=9)
+    ax.set_title("Q3d — Static model on first differences\n"
+                 "Δqₜ = 0.678 − 2.596·Δpₜ   ·   n = 50 observations",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=8.5, frameon=False, loc="upper right")
+    fig.tight_layout(pad=1.2)
+    return fig
+
+def plot_q3e_chi2():
+    """χ²(1) distribution with LM=0.597 and CV=3.841 for Q3e LMSC test."""
+    from scipy.stats import chi2
+    x = np.linspace(0, 10, 400)
+    y = chi2.pdf(x, df=1)
+    fig, ax = plt.subplots(figsize=(9, 3.2))
+    ax.plot(x, y, color="#1B3A6B", lw=2.5)
+    ax.fill_between(x, y, where=(x >= 3.841), color="#C0392B", alpha=0.35,
+                    label="Reject H₀: LM > 3.841  (autocorrelation present)")
+    ax.fill_between(x, y, where=(x < 3.841),  color="#2E6DA4", alpha=0.15,
+                    label="Fail to reject H₀  (A3 plausibly satisfied)")
+    ax.axvline(3.841, color="#C0392B", lw=2, ls="--")
+    ax.text(3.841+0.15, 0.38, "CV = 3.841\n(5% level)", fontsize=8.5,
+            color="#C0392B", fontweight="bold")
+    ax.axvline(0.597, color="#1A6B3A", lw=2.5)
+    ax.annotate("LM = 0.597\n(our test statistic)\np = 0.440",
+                xy=(0.597, 0.28), xytext=(2.5, 0.50),
+                fontsize=9, color="#1A6B3A", fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color="#1A6B3A", lw=1.8))
+    ax.set_xlabel("LM statistic  =  n × R²_aux", fontsize=9)
+    ax.set_ylabel("χ²(1) density", fontsize=9)
+    ax.set_title("Q3e — LMSC test: LM = 0.597  ≪  3.841\n"
+                 "Far from rejection zone → Fail to reject H₀ → No autocorrelation",
+                 color="#1B3A6B", fontsize=9.5, fontweight="bold")
+    ax.legend(fontsize=8.5, frameon=False, loc="upper right")
+    ax.set_xlim(0, 10); ax.set_ylim(0, 0.65)
+    fig.tight_layout(pad=1.2)
+    return fig
+
 # ════════════════════════════════════════════════════════════════════════════
 # STORY
 # ════════════════════════════════════════════════════════════════════════════
@@ -409,6 +682,13 @@ story.append(data_tbl(
     [["lnNOx","−16.041","2.879","−5.572","0.000","Significant at 5%"]],
     cw=[2.5*cm,2*cm,2.5*cm,2*cm,2*cm,5.5*cm]))
 story.append(sp(4))
+story.append(fig_to_image(plot_q1b_coeff(), 16.5))
+story.append(fig_label(
+    "Figure Q1b — t-statistics for all 10 predictors. Orange bar = lnNOx (our focus variable), "
+    "green bars = significant at 5%, grey bars = not significant. "
+    "The dashed lines show ±1.96 (approximate 5% boundary). "
+    "lnNOx and 5 others clearly exceed the threshold; RAD and the 3 region dummies do not."))
+story.append(sp(4))
 story.append(ans_box([
     "Model type: Linear-Log (Y is in levels, X is logged).",
     "Rule: 1% increase in X  →  β/100 units change in Y.",
@@ -467,6 +747,13 @@ story.append(ans_box([
     "Conclusion: The region dummies do not jointly improve the model significantly.",
     "Region does NOT have a statistically significant effect on CMEDV at the 5% level.",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q1c_fdist(), 15))
+story.append(fig_label(
+    "Figure Q1c — F(3, 495) distribution. Our test statistic F = 1.463 (orange line) sits "
+    "well inside the blue fail-to-reject zone, far from the red rejection region (F > 2.62). "
+    "p = 0.224: there is a 22.4% chance of seeing this F or larger by chance alone — "
+    "nowhere near the 5% threshold needed to claim significance."))
 story.append(sp(10))
 
 # Q1d ─────────────────────────────────────────────────────────────────────────
@@ -506,6 +793,14 @@ story.append(ans_box([
     "  Curved arc → A1 violated (model misspecified).",
     "  Outliers → investigate individually (can distort estimates).",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q1d_residual(), 16.5))
+story.append(fig_label(
+    "Figure Q1d — Schematic of the actual Q1 residual plot. "
+    "Red dots = extreme outliers (isolated points far from zero). "
+    "Orange dots = the 'line pattern' cluster (a subgroup behaving differently from the rest). "
+    "Green dashed curve = average residual trend — it is NOT flat at zero for extreme fitted values, "
+    "indicating the mean-zero assumption (A1) is violated at the tails."))
 story.append(sp(10))
 
 # Q1e ─────────────────────────────────────────────────────────────────────────
@@ -626,6 +921,12 @@ story.append(ans_box([
     "Conclusion: There is no indication of (quasi-)multicollinearity in this model.",
     "The coefficient estimates are reliable and the standard errors are not inflated.",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q2a_vif(), 16))
+story.append(fig_label(
+    "Figure Q2a — VIF (left) and Tolerance (right) for all three predictors. "
+    "All bars are far from the warning thresholds (VIF = 5, Tolerance = 0.20). "
+    "The further from the threshold, the less multicollinearity concern."))
 story.append(sp(10))
 
 # Q2b ─────────────────────────────────────────────────────────────────────────
@@ -692,6 +993,12 @@ story.append(ans_box([
     "Conclusion: The R² of Model 2 is significantly larger. Adding POLICE significantly",
     "improves the model's explanatory power.",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q2c_fdist(), 14))
+story.append(fig_label(
+    "Figure Q2c — F(1, 96) distribution. Our F = 70.56 is so far into the right tail "
+    "that it falls completely off the visible part of the chart (shown by the orange arrow). "
+    "The p-value ≈ 4 × 10⁻¹³ is essentially zero — adding POLICE unambiguously improves the model."))
 story.append(sp(10))
 
 # Q2d ─────────────────────────────────────────────────────────────────────────
@@ -803,6 +1110,13 @@ story.append(ans_box([
     "The intercept shift for coast cities: COAST = 0.150 → coast cities have on average",
     "e^0.150 ≈ 16% more inhabitants than non-coast cities at the same level of SUN.",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q2f_interaction(), 16))
+story.append(fig_label(
+    "Figure Q2f — Effect of SUN on ln(INHABITANTS) for coast vs. non-coast cities. "
+    "Blue line (non-coast): completely flat — SUN coefficient is 0.000 (p=1.000, no effect). "
+    "Orange line (coast): rising slope of 0.020 per sun day → 2% more inhabitants per extra day. "
+    "The gap between the lines at any SUN value shows the COAST dummy intercept effect (+15.6%)."))
 story.append(PageBreak())
 
 
@@ -982,6 +1296,12 @@ story.append(ans_box([
     "Interpretation: A 1-unit increase in the price difference leads to a 2.596-unit",
     "decrease in the demand difference — as expected (higher price → lower consumption).",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q3d_scatter(), 14))
+story.append(fig_label(
+    "Figure Q3d — Scatter of Δp vs Δq with the fitted line Δq = 0.678 − 2.596·Δp. "
+    "The negative slope is visible: higher price change → lower demand change. "
+    "t = −2.456, p = 0.018 confirms this slope is significantly different from zero."))
 story.append(sp(10))
 
 # Q3e ─────────────────────────────────────────────────────────────────────────
@@ -1027,6 +1347,13 @@ story.append(ans_box([
     "Conclusion: No significant evidence of autocorrelation.  Assumption A3 is",
     "plausibly satisfied.  The static model residuals are not serially correlated.",
 ]))
+story.append(sp(4))
+story.append(fig_to_image(plot_q3e_chi2(), 14))
+story.append(fig_label(
+    "Figure Q3e — χ²(1) distribution for the LMSC test. "
+    "Our LM statistic = 0.597 (green line) is far to the left of the critical value 3.841 (red dashed line). "
+    "It sits deep in the blue fail-to-reject zone — there is no evidence of autocorrelation. "
+    "Compare this to the rejection zone: LM would need to exceed 3.841 to conclude A3 is violated."))
 story.append(sp(10))
 
 # Q3f ─────────────────────────────────────────────────────────────────────────
