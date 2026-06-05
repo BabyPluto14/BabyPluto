@@ -108,65 +108,118 @@ An airline's single largest operating cost is jet fuel, which is priced off crud
 
 ## Position 2 — Short Call
 
+### The Core Confusion — Why This Is Counterintuitive
+
+Most people understand buying options easily: you pay money, you get a right, you use it if it helps. Short positions are harder because **you are now on the other side of the table** — you are the one who sold that right to someone else. That means:
+
+- You collect money upfront (the premium). This feels good.
+- But you have taken on an **obligation** you cannot escape. If the buyer decides to exercise, you must comply, no matter what.
+- Your profit is **capped** at the premium you collected. Your loss can be very large.
+
+**Key mental model — think of yourself as the insurance company:**
+When you sell a call, you are like an insurance company selling a policy. The buyer pays you a premium to be "insured" against the asset price rising above K. If the price stays low, you collect the premium and nothing happens — profit. If the price surges, the buyer "claims on their insurance" and you have to pay out by selling at the below-market price K. The higher the price surges, the bigger your payout.
+
+**The most important question to ask yourself:** "What happens if the asset price goes up?"
+- Long call buyer (the person who bought from you): they are delighted — they exercise and profit.
+- Short call seller (you): you are forced to sell at K even though the market is much higher. You lose the difference.
+
 ### What It Is
 
-You **sell** (write) a call option. You receive the premium upfront immediately. In return, you accept the **obligation to sell** the underlying asset at K if the buyer decides to exercise. You no longer have a choice — if the buyer wants to buy at K, you must sell at K, even if the market price is much higher.
+You **sell** (write) a call option. You collect the premium upfront. In exchange you accept an irrevocable **obligation to sell** the underlying asset at K whenever the buyer chooses to exercise. You no longer have a choice in the matter.
 
-Think of it like this: you accept a payment today in exchange for **capping your upside**. If the asset stays cheap, great — you keep the premium for free. If the asset surges, you are forced to sell cheaply and miss all the gains above K.
+**Concrete analogy:** Imagine you own 1,000 shares in a company currently trading at €50. You sell call options with K = €60 and collect €4/share in premium. You have now locked yourself into the following deal: "If this stock reaches €60, I agree to sell my shares at €60 — regardless of where the price actually is at that point." You received €4,000 today for making that promise.
+
+- Stock stays at €50 → buyer does nothing → you keep €4,000 for free.
+- Stock rises to €70 → buyer exercises → you must sell at €60, missing the €10 gain above K. Your net result: you sold at €60 + kept €4 premium = €64 effective price, but the market was at €70. You missed €6/share.
+- Stock rises to €100 → same thing, but now you missed €40/share. Your net result is €64 effective price on a €100 stock — a painful opportunity cost.
+
+This is why the short call graph **slopes downward to the right**: the higher the stock goes, the worse you do.
 
 ### Payoff at Expiry — Three Scenarios
 
-**Scenario A — Asset price stays at or below K (S ≤ K):**
-The buyer has no incentive to exercise (why pay K when the market is cheaper?). The option expires. You keep the full premium with no further obligation. This is the **best case** for the short call writer.
+**Scenario A — Stock price stays at or below K (S ≤ K): You WIN**
 
-*Example with numbers:* K = 100, Premium = 8, S = 85.
-Profit = **+8** (full premium kept)
+The buyer has no incentive to exercise. Why would they pay you K to buy a stock they can buy cheaper in the market? The option expires worthless. You keep the full premium — it's pure profit. Nothing else happens.
 
-**Scenario B — Asset price rises above K but below break-even (K < S < K + Premium):**
-The buyer exercises. You must sell at K while the market is at S > K. You lose (S − K) on the transaction, but this loss is less than the premium you received, so you still have a small net profit.
+```
+K = 100, Premium = 8, S = 75
 
-*Example with numbers:* K = 100, Premium = 8, S = 105.
-Profit = 8 − (105 − 100) = **+3** (still positive but shrinking)
+You collected: +8 (premium)
+Buyer exercises? NO (market at 75, why pay 100?)
+Your result: +8 profit — you keep everything
+```
 
-**Scenario C — Asset price rises far above K (S >> K):**
-The buyer exercises. You must sell at K, forfeiting all the upside above K. Your loss grows without bound as S increases. This is the **naked short call** — theoretically unlimited loss.
+This is the scenario you are hoping for when you sell a call.
 
-*Example with numbers:* K = 100, Premium = 8, S = 150.
-Profit = 8 − (150 − 100) = **−42** (large loss)
+**Scenario B — Stock rises just above K, but below break-even (K < S < K + Premium): You still net positive, but less**
+
+The buyer exercises (the stock is above K, so exercising is profitable for them). You must sell at K. You lose (S − K) on the sale, but this amount is smaller than the premium you already collected, so you still come out ahead overall.
+
+```
+K = 100, Premium = 8, S = 105
+
+You collected: +8 (premium)
+Buyer exercises: YES (market at 105, strike at 100 — they profit 5)
+You must sell at 100 when market is 105: you lose 5 on the trade
+Net result: +8 − 5 = +3 (still a profit, but shrinking)
+```
+
+Between K and K+Premium, you still profit — the premium cushion absorbs the small exercise loss.
+
+**Scenario C — Stock rises far above K (S >> K + Premium): You LOSE**
+
+The buyer exercises. You must sell at K, even though the market is far above K. The premium you collected is now insufficient to offset the large loss from being forced to sell cheaply.
+
+```
+K = 100, Premium = 8, S = 150
+
+You collected: +8 (premium)
+Buyer exercises: YES (market at 150, strike at 100 — they profit 50)
+You must sell at 100 when market is 150: you lose 50 on the trade
+Net result: +8 − 50 = −42 (large loss)
+```
+
+If S = 200: Net result = +8 − 100 = −92. As S keeps rising, your loss keeps growing with no ceiling. This is what "unlimited downside" means for a short call.
 
 **Summary formulas:**
 - Payoff to seller = −max(S − K, 0)
 - Profit = Premium − max(S − K, 0)
-- Break-even: S = K + Premium
+- Break-even: S = K + Premium (above this, you're in net loss territory)
+- Max gain: the premium received (achieved when S ≤ K)
+- Max loss: unlimited (loss grows without bound as S rises)
+
+### Why Does the Graph Start Above Zero?
+
+The graph starts at +Premium on the y-axis because you collected the premium on day one regardless of what happens later. That premium is yours to keep no matter what. The graph then slopes downward once S exceeds K, because every dollar the stock rises above K is a dollar you lose on the forced sale. Once the stock has risen by more than the premium above K (i.e., S > K + Premium), your total position is in the red.
 
 ### Corporate Use — Generating Income on Assets Already Owned (Covered Call)
 
-**Why a company uses a short call:** When a company already owns the underlying asset, selling a call is not as dangerous as it sounds. If the stock is called away (buyer exercises), the company simply delivers shares it already holds. The risk of the stock "surging past K and causing losses" is offset by the fact that those shares gain value — so the company doesn't actually lose money; it just misses out on gains above K.
+**Why a company uses a short call:** A company that already owns the underlying asset can sell a call to generate income. If the buyer exercises, the company just hands over shares it already holds. There is no "unlimited loss" in practice — the loss of the upside above K is an opportunity cost, not a cash outflow. This is why it's called a **covered** call: the shares you own "cover" your obligation.
 
 ---
 
-**Scenario 1 — Covered Call on an Equity Stake:**
+**Scenario 1 — Covered Call on an Equity Stake (Income Generation):**
 
-A large industrial conglomerate holds a 5% equity stake in a supplier company worth €50 per share. The conglomerate does not plan to sell in the short term, but it would be happy to sell at €60/share — that would represent a good return. The stock has been trading sideways, generating no income.
+A large industrial conglomerate holds a 5% equity stake in a supplier. The shares are worth €50 each and have been trading sideways for a year — generating no income. The conglomerate would happily exit the position at €60 (a 20% gain). It doesn't want to just sit and wait for nothing.
 
-**The strategy:** The conglomerate sells call options on those shares with K = €60. It receives a premium of €3/share.
+**The strategy:** Sell call options with K = €60, collect €3/share premium today.
 
-- If the stock stays below €60: the calls expire, the conglomerate keeps its shares AND the €3 premium — extra income on an idle asset.
-- If the stock surges to €75: the buyer exercises; the conglomerate must sell at €60. It misses the gain from €60 to €75, but it already achieved its target exit price and collected the premium. This is acceptable.
-- Downside: If the stock crashes to €30, the conglomerate still loses on the share value. The premium received (€3) provides only a small cushion against that fall — a covered call is **not** downside protection.
+The deal they've made: "We'll sell our shares at €60 if the buyer wants them. We receive €3 now for making this promise."
 
-**Bottom line:** The short call converts a static equity position into one that generates regular income, at the cost of capping the upside.
+| What happens to the stock | What the buyer does | What the conglomerate gets |
+|---|---|---|
+| Stays at €50 or falls | Does not exercise | Keeps shares + keeps €3 premium = free income |
+| Rises to €60–€63 | Exercises, but premium partially offsets | Effective sale price = €60 + €3 premium received = €63 — acceptable |
+| Surges to €80 | Exercises | Must sell at €60, misses €20/share above K — painful opportunity cost |
+| Crashes to €30 | Does not exercise | Still holds the depreciating shares; the €3 premium is a small cushion but NOT real protection |
+
+**Critical point:** A covered call does NOT protect against a fall in the asset. If the stock crashes, you still own it and lose money. The premium (€3) barely helps. Covered calls help when the asset is **flat or slowly rising**, not when it crashes.
 
 ---
 
-**Scenario 2 — Exporter Locking in a Favorable Exchange Rate (Capped Upside):**
+**Scenario 2 — What "Naked" Means and Why It's Dangerous:**
 
-A German exporter will receive $2 million in 6 months. The current rate is €1 = $1.08. The company would be very happy converting at $1.05 (they'd get more euros per dollar). They are willing to accept that rate and give up any further euro appreciation.
-
-**The strategy:** The exporter sells a call on EUR/USD (effectively selling a call on EUR from the dollar's perspective) at K = $1.05. They receive a premium.
-
-- If EUR stays weak (rate = $1.10): the buyer does not exercise, and the exporter converts at the favorable market rate and keeps the premium.
-- If EUR strengthens significantly: the call is exercised; the exporter converts at $1.05 as agreed — still acceptable to them.
+Suppose instead the conglomerate does NOT own any shares and sells call options anyway. Now if the buyer exercises, the conglomerate must go into the open market, buy shares at €80 (market price), and sell them to the buyer at €60 (K). That's a guaranteed €20/share cash loss. If shares go to €200, the loss is €140/share. There is no ceiling. This is a **naked short call** — speculative, not hedging, and avoided by most corporate treasurers.
 
 **Important note on naked short calls:** Selling a call **without** owning the underlying is called a **naked short call**. Because losses are theoretically unlimited, this is a speculative bet, not a hedge, and is rarely appropriate for corporate risk management. It requires significant capital reserves and is heavily regulated.
 
@@ -253,41 +306,106 @@ A Belgian IT company exports software to the US and will receive $3 million in 3
 
 ## Position 4 — Short Put
 
+### The Core Confusion — How It Differs From Short Call
+
+Short Put is the mirror image of Short Call, but the direction that hurts you is **opposite**:
+
+| | Short Call | Short Put |
+|---|---|---|
+| You collect | Premium | Premium |
+| You are obligated to | **SELL** at K if buyer exercises | **BUY** at K if buyer exercises |
+| Buyer exercises when | S > K (price rises above K) | S < K (price falls below K) |
+| You get hurt when | Price **rises** far above K | Price **falls** far below K |
+| Max gain | Premium received | Premium received |
+| Max loss | Unlimited (no ceiling on S) | K − Premium (S can fall to zero at most) |
+
+**Key mental model — think of yourself as a willing buyer at K:**
+When you sell a put, you are essentially saying: "I promise to buy this asset at K if the price falls to K or below." The buyer of the put is buying protection against a price fall — they are "insured" against the asset dropping. You are the insurer. If the price drops, they "claim" on the insurance and sell their asset to you at K (even though it's now worth less than K in the market).
+
+**The most important question to ask yourself:** "What happens if the asset price goes down?"
+- Long put buyer (the person who bought from you): they are delighted — they exercise and profit (they sell at K > market price).
+- Short put seller (you): you are forced to buy at K even though the market has fallen far below K. You've overpaid.
+
 ### What It Is
 
-You **sell** (write) a put option. You receive the premium upfront immediately. In return, you accept the **obligation to buy** the underlying asset at K if the buyer decides to exercise. The buyer will only exercise if the market falls below K — meaning you are forced to pay K for something worth less than K.
+You **sell** (write) a put option. You collect the premium upfront. In exchange you accept an irrevocable **obligation to buy** the underlying asset at K whenever the buyer chooses to exercise. This will only happen when the market price has fallen below K — because that's the only time it benefits the buyer to sell to you at K instead of at the market.
 
-Think of it like this: you agree to be a buyer of last resort at K. You collect a fee (premium) for making this commitment. If the asset never falls to K, you keep the fee and nothing happens. If the asset does fall below K, you must buy it at the above-market price K.
+**Concrete analogy:** Imagine you want to buy a house currently priced at €400,000, but you think it's too expensive. Your target price is €350,000. You tell your neighbor: "If the house price drops to €350,000, I promise I'll buy it at that price. In exchange, pay me €5,000 today." Your neighbor pays you €5,000.
+
+- Price stays at €400,000 → neighbor doesn't exercise → you keep €5,000, no house purchased.
+- Price falls to €350,000 → neighbor exercises → you must buy the house at €350,000. Fine — that was your target! Effective cost = €350,000 − €5,000 premium = €345,000. Great outcome.
+- Price collapses to €200,000 → neighbor exercises → you must still buy at €350,000, even though the market value is now €200,000. You've overpaid by €150,000 minus the €5,000 premium = net loss of €145,000.
+
+The short put is great when you genuinely want the asset at K. It becomes a problem if the asset's value collapses far below K.
 
 ### Payoff at Expiry — Three Scenarios
 
-**Scenario A — Asset price stays at or above K (S ≥ K):**
-The buyer has no reason to exercise (market value ≥ K, so they can sell at market for at least as much). Option expires worthless. You keep the premium. Best case for the short put writer.
+**Scenario A — Asset price stays at or above K (S ≥ K): You WIN**
 
-*Example with numbers:* K = 100, Premium = 8, S = 115.
-Profit = **+8** (full premium kept)
+The buyer has no incentive to exercise. Why would they sell their asset to you at K when the market pays the same or more? The option expires worthless. You keep the full premium — pure profit.
 
-**Scenario B — Asset price falls just below K (K − Premium < S < K):**
-The buyer exercises. You buy at K, overpaying relative to market. Your loss (K − S) is smaller than the premium you received, so you still net a small profit.
+```
+K = 100, Premium = 8, S = 120
 
-*Example with numbers:* K = 100, Premium = 8, S = 95.
-Profit = 8 − (100 − 95) = **+3** (still positive, but shrinking)
+You collected: +8 (premium)
+Buyer exercises? NO (market at 120, why sell to you at 100?)
+Your result: +8 profit — you keep everything
+```
 
-**Scenario C — Asset price falls far below K (S << K):**
-The buyer exercises. You are forced to buy at K — a large overpayment relative to current market value. Your loss grows as S falls. Maximum loss = K − Premium (if S → 0 the asset is worthless but you paid K for it).
+This is the scenario you are hoping for when you sell a put.
 
-*Example with numbers:* K = 100, Premium = 8, S = 50.
-Profit = 8 − (100 − 50) = **−42**
+**Scenario B — Asset price falls just below K, but above break-even (K − Premium < S < K): You still net positive, but less**
+
+The buyer exercises (the stock is below K, so it benefits them to sell to you at K rather than the market). You must buy at K even though the market price is a bit lower. However, your loss on the purchase (K − S) is smaller than the premium you collected, so overall you still profit.
+
+```
+K = 100, Premium = 8, S = 95
+
+You collected: +8 (premium)
+Buyer exercises: YES (market at 95, they sell to you at 100 — they gain 5)
+You buy at 100 when market is 95: you overpaid by 5
+Net result: +8 − 5 = +3 (still a profit, but shrinking)
+```
+
+Between K and K−Premium, you still profit — the premium cushion absorbs the small exercise loss.
+
+**Scenario C — Asset price falls far below K (S << K − Premium): You LOSE**
+
+The buyer exercises. You must buy at K — badly overpaying. The premium you collected is now insufficient to cover the loss.
+
+```
+K = 100, Premium = 8, S = 50
+
+You collected: +8 (premium)
+Buyer exercises: YES (market at 50, they sell to you at 100 — they gain 50)
+You buy at 100 when market is 50: you overpaid by 50
+Net result: +8 − 50 = −42 (large loss)
+```
+
+If S = 0 (asset is completely worthless): you bought it at K = 100 for nothing. Maximum loss = 100 − 8 = **−92**. This is why max loss = K − Premium (not unlimited, because a price cannot go below zero).
+
+**Why short put loss is capped but short call loss is not:**
+- Short call: the stock price can rise to infinity → unlimited loss.
+- Short put: the stock price can fall to zero at most → maximum loss is K − Premium.
 
 **Summary formulas:**
 - Payoff to seller = −max(K − S, 0)
 - Profit = Premium − max(K − S, 0)
-- Break-even: S = K − Premium
-- Max loss: K − Premium (if S → 0)
+- Break-even: S = K − Premium (below this, you're in net loss territory)
+- Max gain: the premium received (achieved when S ≥ K)
+- Max loss: K − Premium (achieved if S → 0)
+
+### Why Does the Graph Start Above Zero and Slope Down to the Left?
+
+The graph starts at +Premium on the y-axis (for high values of S, you keep the whole premium). As S falls below K, the graph slopes downward to the left — each dollar the stock falls below K is a dollar you lose on the forced purchase. Once the stock falls more than the premium below K (i.e., S < K − Premium), your total position turns negative. The graph hits its maximum loss at S = 0.
+
+**Compare the two short positions on their graphs:**
+- Short call: flat on the left (you win when S is low), slopes down to the right (you lose when S rises).
+- Short put: flat on the right (you win when S is high), slopes down to the left (you lose when S falls).
 
 ### Corporate Use — Committing to Buy a Desired Asset at a Lower Price
 
-**Why a company uses a short put:** A company that genuinely wants to acquire an asset (shares, land, equipment) but thinks the current price is too high can sell a put at its target acquisition price K. If the price never falls to K, the company keeps the premium as compensation for being willing to buy. If the price does fall to K, the company gets what it wanted at exactly the price it was prepared to pay.
+**Why a company uses a short put:** A company that genuinely wants to acquire an asset but thinks the current price is too high can sell a put at its target acquisition price K. Two outcomes are both acceptable: (1) price never falls to K → keep the premium as income; (2) price falls to K → acquire the asset at exactly the price you wanted, with the premium reducing the effective cost further.
 
 ---
 
