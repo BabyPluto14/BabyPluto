@@ -321,21 +321,21 @@ where Div₁ is the next dividend and r is the cost of equity.
 
 **How should the acquisition price be determined?**
 
-Determining an acquisition price is a **financial valuation** exercise. The goal is to estimate the **intrinsic (fundamental) value** of NextAuth — what its future cash flows are worth in present value terms today. Three ingredients are needed (as established in CH0 of the course):
+The acquisition should be framed as a **financial valuation problem**, and CH0 of the course gives a precise framework for approaching any such problem through three questions: *who is valuing, what cash flows will they receive, and at what discount rate?*
 
-1. **Future Free Cash Flows (FCF):** Forecast the cash flows NextAuth will generate from operations over an explicit forecast horizon — revenues, costs, taxes, capex, and changes in working capital.
+**Who is valuing?** Itsme, as the acquirer, must estimate the maximum price it would rationally be willing to pay — not what NextAuth is worth to its current owners, but what it is worth *to Itsme*.
 
-2. **Appropriate discount rate (opportunity cost of capital):** Discount at the rate that reflects NextAuth's **risk level** — its WACC, which must be estimated using CAPM (for cost of equity) and the capital structure. This is not necessarily Itsme's WACC.
+**Which cash flows?** The course defines financial value as the **sum of discounted future cash flows**. Itsme must forecast all **Free Cash Flows (FCF)** NextAuth will generate over an explicit horizon, plus a **terminal (going-concern) value** beyond that horizon — estimated as a growing perpetuity:
 
-3. **Terminal (going-concern) value:** Beyond the forecast horizon, NextAuth continues generating cash. A terminal value is estimated using a growing perpetuity:
+    TV = FCF_(n+1) / (WACC − g_long-run)
 
-        TV = FCF_(n+1) / (WACC − g_long-run)
+Critically, Itsme must also quantify **synergies** — the additional cash flows that only arise *because* Itsme owns NextAuth (cost savings, combined technology, new revenue streams). These are part of the value Itsme captures but NextAuth cannot create alone. The maximum rational acquisition price therefore equals:
 
-4. **Synergies:** The acquisition may unlock additional value (cost savings, new revenues). These should be estimated separately. The maximum price Itsme should pay = stand-alone value + synergy value.
+    Max price = Standalone DCF value of NextAuth + PV of synergies
 
-5. **Minimum price:** What NextAuth's owners can get elsewhere (outside options). The final deal price will land between these bounds.
+**At what discount rate?** The cash flows must be discounted at NextAuth's **WACC** — reflecting *NextAuth's* risk profile, not Itsme's. A riskier target implies a higher discount rate, which mechanically reduces its present value.
 
-> **Recommended method:** DCF model (discounting FCFs + terminal value) cross-checked with relative multiples (P/E, EV/EBITDA of comparable fintech/authentication companies).
+The deeper insight from CH0 is that **financial value ≠ price**. The final negotiated price depends on investor disagreement — what Itsme believes NextAuth is worth versus what NextAuth's owners believe. If Itsme pays less than its estimated value, the acquisition creates value. If it overpays — even for a fundamentally strong company — it destroys shareholder value.
 
 ---
 
@@ -343,29 +343,26 @@ Determining an acquisition price is a **financial valuation** exercise. The goal
 
 **What is PVGO, why does it arise, how to estimate it?**
 
-**What it means:**
-PVGO is the portion of a stock's current price that comes from the market's expectation of **future profitable reinvestment**, rather than from current earnings alone. The course decomposes stock value into two parts:
+The deepest insight here is that a stock price is not one thing — it is the sum of **two fundamentally different claims** that investors are buying simultaneously:
 
     P₀ = EPS / r  +  PVGO
          ─────────    ──────
-         Steady-state  Value of
-         value         future growth
-         (no growth,   opportunities
-         full payout)
+         Value as a   Value of future
+         zero-growth  reinvestment
+         perpetuity   opportunities
 
-**Why PVGOs arise:**
-PVGOs arise when two conditions hold simultaneously:
-- The firm **retains earnings** (plowback > 0), using: `g = ROE × plowback ratio`
-- The reinvested earnings earn a **return above the cost of equity**: `ROE > r`
+The first term, EPS/r, is what the company would be worth if it paid out *all* earnings as dividends forever and never grew. It is a bond-like perpetuity based on current earnings power. The second term, **PVGO**, is what investors pay *on top of that* because they expect the company to reinvest earnings profitably in the future — it is essentially a **real option on future investment**.
 
-When ROE > r, each euro retained creates more than one euro of value. If ROE = r, retaining vs. paying out is irrelevant (PVGO = 0). If ROE < r, retaining destroys value (negative PVGO).
+**Why PVGOs arise — the critical condition:**
+PVGO is only positive when the firm can invest retained earnings at a **return on equity (ROE) that exceeds the cost of equity (r)**. This is the condition `ROE > r`. When this holds, each euro retained and reinvested creates *more* than one euro of value, so retaining earnings is preferable to paying them out. When `ROE = r`, retention adds no value (PVGO = 0). When `ROE < r`, the firm is destroying value by retaining — a negative PVGO — and shareholders would be better off receiving the earnings as dividends to reinvest themselves elsewhere.
+
+This means PVGO is fundamentally a signal of **managerial reinvestment quality**: high PVGO firms are those the market believes will continue finding projects that beat the cost of capital.
 
 **How to estimate:**
 
     PVGO = P₀  −  EPS / r
 
-where P₀ is the current market price (or the constant-growth DDM price = Div₁/(r−g)),
-EPS/r is the benchmark zero-growth value (100% payout perpetuity), and r is the cost of equity.
+where P₀ is the market price (observed or via Gordon-Shapiro DDM), EPS/r is the no-growth benchmark, and r is the cost of equity.
 
 ---
 
@@ -375,19 +372,16 @@ EPS/r is the benchmark zero-growth value (100% payout perpetuity), and r is the 
 
     Volatility (%) = Modified Duration = Macaulay Duration / (1 + YTM)
 
-Three drivers (from the course — "ceteris paribus" for each):
+All three drivers reduce to **one unifying mechanism**: they all change how *back-loaded* a bond's cash flows are — i.e., how much of the bond's total value is concentrated in distant future payments. The further cash flows lie in the future, the more sensitive they are to interest rate changes, because they are divided by (1+r)^t where t is large. A small change in r gets amplified by compounding over many periods.
 
 **1. Coupon Rate → inverse relationship with volatility**
-Higher coupon → lower duration → lower volatility.
-A high-coupon bond returns more cash sooner (front-loaded cash flows). These early payments are less affected by discounting changes. Extreme case: a zero-coupon bond has duration = maturity (all cash at the end) and thus maximum volatility for a given maturity.
+A lower coupon bond is more back-loaded: less cash arrives early (via coupons), so proportionally more of the bond's value comes from the final principal repayment far in the future. That distant cash flow is highly rate-sensitive. Extreme case: a **zero-coupon bond** has *all* its cash at maturity — maximum back-loading, maximum volatility for a given maturity.
 
 **2. Time to Maturity → positive relationship with volatility**
-Longer maturity → higher duration → higher volatility.
-Cash flows further in the future are discounted by (1+r)^t, where t is large. A change in r has a much larger effect on these distant cash flows than on near-term ones. Longer bonds therefore carry more interest-rate risk.
+A longer maturity pushes all cash flows — especially the principal — further into the future. The compounding effect in (1+r)^t grows with t, so rate changes have an exponentially larger effect on distant flows than near-term ones. Longer bonds are therefore inherently more rate-sensitive.
 
 **3. YTM Level → inverse relationship with volatility**
-Lower YTM → higher volatility.
-When yields are low, future cash flows are discounted less, giving them a larger weight in the bond's price. A given change in YTM therefore produces a larger price swing. Also, at low yield levels, rates are more likely to rise, amplifying downside price risk.
+At lower yield levels, the discount factors (1+r)^t are smaller, giving distant cash flows a relatively larger weight in the bond's price. A given change in YTM then moves those heavily-weighted distant flows more in PV terms, producing a bigger overall price swing. This is also why bond price-yield relationship is **convex**: at low yields, the same rate change causes a larger price impact than at high yields.
 
 ---
 
@@ -399,30 +393,35 @@ The two equations from the course:
 
     SML:  E(Ri) = rf  +  βᵢ  ×  [E(Rm) − rf]
 
-**The essence of the CML:**
-The CML formalises the positive relationship between **total risk (σ)** and expected return **for portfolios**. It represents the best possible risk-return combinations achievable by mixing the market portfolio with the risk-free asset. Any rational investor should hold a portfolio *on* this line — choosing a portfolio *below* the CML is irrational because you could earn more return for the same total risk. The slope of the CML equals the **Sharpe ratio of the market portfolio**: reward per unit of total risk.
+**The essence of both lines is the same fundamental principle: you are only compensated for risk you cannot avoid.**
 
-**The essence of the SML:**
-The SML formalises the positive relationship between **systematic risk (β)** and expected return **for individual securities**. Its key insight: **only beta (market risk) is priced**, because idiosyncratic (unique) risk can be diversified away at no cost. Investors receive no compensation for carrying avoidable risk. A security plotting above the SML is underpriced (buy); below the SML is overpriced (sell or avoid).
+Both the CML and SML express expected return as the **risk-free rate** (r_f) plus a **risk premium** — a reward for bearing risk. The critical question both equations answer is: *which risk deserves a premium?*
 
-**Key distinction:** CML uses total risk (σ) and applies to *portfolios*. SML uses systematic risk (β) and applies to *individual securities*.
+**The essence of the CML** — for fully diversified portfolios under **Modern Portfolio Theory**: an investor who holds the **market portfolio** (the optimal risky portfolio) has already eliminated all **unsystematic (idiosyncratic) risk** through diversification. What remains is total risk (σ), which at this point is entirely systematic. The slope of the CML — (E(Rm)−rf)/σm — is the **market Sharpe ratio**, the going rate of compensation per unit of total portfolio risk. Any rational investor should position themselves *on* this line, not below it.
+
+**The essence of the SML** — the core insight of **CAPM**: when extended to individual securities, total risk is no longer the right measure, because part of it (idiosyncratic risk) can be diversified away for free. The market therefore only prices the part that *cannot* be avoided — **beta (β)**, the measure of an asset's **systematic risk** relative to the market. The term β_i(E(Rm)−rf) is the **equity risk premium**, scaled by the asset's sensitivity to market-wide movements. Investors receive no compensation for firm-specific risk because rational, diversified investors have already eliminated it.
+
+**The connection:** The CML is a special case of the SML — valid only for efficient, fully diversified portfolios where total risk equals systematic risk. The SML is universal, applying to any asset by isolating the only component of risk that survives in a rational investor's portfolio. A security plotting above the SML offers a return *above* what its beta justifies — it is underpriced (**buy**); below the SML, it is overpriced (**sell**).
 
 ---
 
 ### Q2.5 — Diversification
 
-**How it works:**
-Diversification exploits the **imperfect correlation between assets**. The course variance formula shows this directly:
+**The core insight: diversification is a free lunch — you reduce risk without sacrificing expected return.**
+
+When you combine assets in a portfolio, expected returns add up linearly (they are additive by weight), but risks *partially cancel out* rather than adding up. This is because firm-specific shocks are uncorrelated across companies — when one firm has a bad quarter due to a management scandal, another firm's product launch is unaffected. These events wash out in a large portfolio. The variance formula makes this visible:
 
     σ²p = wA² × σA²  +  wB² × σB²  +  2 × wA × wB × ρ(A,B) × σA × σB
 
-When ρ < 1, the cross-term is smaller than in the case ρ = 1 (perfect correlation), making portfolio risk **lower** than the weighted average of individual risks. The lower the correlation, the greater the risk reduction. Theoretically, if ρ = −1, all portfolio risk can be eliminated.
+When ρ < 1, the cross-term shrinks, making portfolio risk strictly lower than the weighted average of individual risks — without any reduction in expected return. The lower the correlation, the more powerful the diversification effect. At the theoretical extreme of ρ = −1, all risk can be eliminated.
 
-**Type of risk eliminated:**
+**What can and cannot be eliminated:**
 
-- **Idiosyncratic / unique / non-systematic risk** — firm-specific factors (product recalls, management changes, lawsuits). These events are uncorrelated across firms, so they cancel out in a large portfolio. This risk **can** be eliminated through diversification.
+Diversification eliminates **unsystematic (idiosyncratic / firm-specific) risk** — shocks unique to a company (product recalls, lawsuits, management changes). These are uncorrelated across firms, so they cancel out as the portfolio grows.
 
-- **Systematic / market / non-diversifiable risk** — economy-wide shocks (recessions, interest rate changes, inflation) that move all assets simultaneously. This risk **cannot** be eliminated. It is captured by beta and is the only risk for which investors are compensated (per the SML).
+What *cannot* be eliminated is **systematic (market / non-diversifiable) risk** — shocks that affect *all* assets simultaneously: recessions, interest rate changes, inflation, geopolitical crises. There is no second asset to offset these with, because everything moves in the same direction. No matter how many stocks you hold, you cannot diversify away a global recession.
+
+This is why **beta, not total standard deviation, is the correct measure of risk for pricing purposes** (per the SML): it captures only the irreducible, non-diversifiable component of risk — the only part that rational investors are actually exposed to and must therefore be compensated for.
 
 ---
 
@@ -671,13 +670,13 @@ Enter: `NPV(8.21, −400000, {124500, 124500, 124500, 124500})` → **€10,487*
 
 **Yes — holding more inventory reduces the financial value generated by the project.**
 
-More inventory = **increase in Net Working Capital (NWC)**. Working capital is cash that is tied up in operations and temporarily unavailable for other uses. In project NPV analysis, a change in working capital appears as a cash flow:
+The key insight is not that money is *lost* — it is that money is *locked up in time*. Higher inventory requires cash to be committed upfront (to purchase and hold stock), which is an **increase in Net Working Capital (NWC)**. In NPV analysis this appears as an immediate cash outflow:
 
     Cash flow from ΔNWC = −ΔNWC  (increase in NWC = cash outflow)
 
-An increase in NWC at the start of the project is an **additional cash outflow at t = 0** (not captured in operating cash flows), which directly reduces NPV. If working capital continues to rise over the project's life, there are further outflows in subsequent years. At the project's end, NWC is typically recovered — but because of the time value of money, the PV of that future recovery is less than the initial outflow.
+At the end of the project, that inventory is typically liquidated and the NWC is recovered — so the cash does come back. But this is precisely where **time value of money** creates the damage: the outflow happens at t = 0 (full weight), while the recovery happens at t = n (discounted heavily). The PV of the future recovery is always less than the present outflow. The net effect is a permanent reduction in NPV — not because cash disappears, but because holding it idle in inventory has an **opportunity cost**: that capital could have been earning returns elsewhere.
 
-**Conclusion:** More inventory → higher NWC → additional cash outflow → **lower NPV** → less financial value created.
+**Conclusion:** More inventory → higher NWC → additional cash outflow at t = 0 → recovery only at project end → **lower NPV** due to time value of money.
 
 ---
 
@@ -685,21 +684,20 @@ An increase in NWC at the start of the project is an **additional cash outflow a
 
 **Yes — switching to declining balance (degressive) depreciation would increase the financial value of the project.**
 
-The reasoning draws directly on the **depreciation tax shield** formula from the course:
+The essential insight is that **the total amount depreciated is identical under both methods** — you write off the same CAPEX down to zero either way. So the total nominal tax saved over the project's life is also the same. What changes is purely the *timing* of those tax savings, and timing is everything in a discounted cash flow world.
+
+The **depreciation tax shield** each year equals:
 
     Depreciation tax shield = t × Depreciation
 
-**Why front-loading helps:**
+Under straight-line depreciation, this shield is spread evenly across all years. Under declining balance, larger depreciation charges arrive in early years, front-loading the tax shields:
 
-1. **Total depreciation and total tax paid are identical** over the project's life regardless of the method.
+- **Early years:** larger deduction → larger tax shield → tax saved *now* (full PV)
+- **Later years:** smaller deduction → smaller tax shield → tax saved *in the future* (discounted)
 
-2. **But timing matters** — declining balance charges larger depreciation in early years:
-   - **Early years:** larger depreciation → larger tax shield → more tax saved sooner
-   - **Later years:** smaller depreciation → smaller tax shield → less saving, but already in the future
+Because of **time value of money**, a euro of tax saved in year 1 is worth more than a euro saved in year 5. By pulling the tax savings forward in time, declining balance depreciation increases the **present value of the total tax shield stream** — even though the sum of all shields is unchanged in nominal terms.
 
-3. **Time value of money:** Because we discount all cash flows, tax savings received **earlier** have a **higher present value** than the same savings received later. Front-loading the depreciation therefore **increases the total PV of tax shields**, even though their nominal total is unchanged.
-
-**Conclusion:** Declining balance depreciation → front-loaded tax deductions → higher PV of tax shields → **higher NPV** → more financial value created. This is a core principle from the course: *"Front-loading depreciation = lower taxes in the beginning = higher financial value."*
+**Conclusion:** Declining balance → front-loaded tax deductions → higher PV of depreciation tax shields → **higher NPV**. This is a pure time-value-of-money effect: same cash, earlier timing, higher value.
 
 ---
 
@@ -721,14 +719,16 @@ GameStop's stock surged from ~$20 to nearly $500 within weeks, causing billions 
 
 #### Part b — EMH Implications
 
-**What EMH means:** The Efficient Market Hypothesis (EMH) states that stock prices **reflect all available information** at all times, so no investor can consistently earn abnormal (risk-adjusted) returns. Three forms exist: weak (historical prices), semi-strong (all public information), and strong (all information including private).
+**What EMH means:** The **Efficient Market Hypothesis (EMH)** states that asset prices at all times reflect all available information, so no investor can consistently earn abnormal (risk-adjusted) returns. It exists in three forms: **weak** (prices reflect all historical trading data), **semi-strong** (prices reflect all publicly available information), and **strong** (prices reflect all information including private). The deeper implication of EMH — connecting back to CH0 — is that in an efficient market, **price equals fundamental value** at all times.
 
-**The GameStop story challenges EMH:**
-- The price surge was **not driven by any change in fundamental value** — GameStop was still a struggling retailer. Prices diverged massively from intrinsic value for weeks, which EMH says should not persist.
-- The event illustrates **market inefficiency** driven by **behavioral finance** forces: herding (retail investors collectively chasing momentum), FOMO, and social media coordination — irrational, not information-based.
-- However, once the squeeze ended, prices eventually collapsed back toward fundamental value — partially consistent with the long-run corrective tendency implied by semi-strong EMH.
+**How GameStop challenges EMH — the arbitrage mechanism:**
+The most important academic insight from GameStop is not simply that the price was "wrong" — it is that the *mechanism that normally corrects mispricings was disabled*.
 
-**Academic conclusion:** GameStop is a real-world example of temporary market inefficiency. It supports behavioral finance and the adaptive market hypothesis over strict EMH, while showing that mispricings, though they can persist briefly, eventually tend to correct.
+Under EMH, **short-sellers are the market's self-correction mechanism**: when a stock is overpriced, sophisticated investors short it, creating selling pressure that drives the price back toward fundamental value. In GameStop, this mechanism was inverted. As the coordinated retail buying drove the price up, margin requirements forced short-sellers to *buy* rather than sell, adding *upward* pressure rather than corrective downward pressure. The very action that should have corrected the overpricing instead amplified it — a **short squeeze** turned the EMH correction mechanism against itself.
+
+This is a challenge to the **semi-strong form** of EMH: for weeks, the market price reflected irrational social media coordination rather than publicly available fundamental information about GameStop's cash flows. It is strong evidence for **behavioral finance** — specifically herding, momentum chasing, and FOMO — over rational price formation.
+
+The eventual collapse of the price back toward fundamental value is partially consistent with the long-run corrective tendency of semi-strong EMH, suggesting markets may be inefficient in the **short run** but tend toward efficiency over time — closer to the **Adaptive Market Hypothesis** than strict EMH.
 
 ---
 
