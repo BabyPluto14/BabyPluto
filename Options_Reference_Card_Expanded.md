@@ -156,78 +156,71 @@ If the stock stays below €60, the calls expire and the conglomerate keeps the 
 
 ### What It Is
 
-You **buy** a put option by paying a premium upfront. In return, you receive the **right to sell** the underlying asset at K. You will only exercise if the market price drops below K, because that lets you sell at K (better than the market).
+You buy a put option by paying a premium upfront. In return you get the right to sell an asset at the strike price K, no matter how low the market price has fallen.
 
-Think of it like this: you pay insurance. If the asset you own loses value, your put option pays out to compensate. If the asset holds its value or rises, you simply don't claim on the insurance — you just lose the premium (the cost of the policy).
+The most important thing to understand about a long put is **why you would want it**. In almost every corporate use case, you already own something — shares, a currency you are about to receive, a commodity you are about to harvest — and you are worried its value could drop before you get to sell it. The long put is insurance on that asset. It guarantees you a minimum selling price of K. Whatever the market does, you can always fall back on your option and sell at K.
 
-### Payoff at Expiry — Three Scenarios
+**Simple analogy to make it concrete:** Imagine you are a farmer who will harvest wheat in September. Today in April, wheat is trading at €180 per tonne — a price you are happy with. But you cannot sell yet because the wheat is still in the ground. You are worried that by September, a bumper harvest globally could push prices down to €130 per tonne, which would barely cover your costs.
 
-**Scenario A — Asset price falls far below K (S << K):**
-You exercise the option. You sell the asset at K even though the market only offers S < K. Your profit = (K − S) − Premium. The lower S falls, the more you make. Maximum gain occurs if S falls to zero: max gain = K − Premium.
+You buy a put option with K = €175 and pay a premium of €5.
 
-*Example with numbers:* K = 100, Premium = 8, S = 60.
-Profit = (100 − 60) − 8 = **+32**
+What you have now is a guarantee: no matter what wheat does between now and September, you can always sell at €175. You have locked in your worst-case revenue.
 
-**Scenario B — Asset price falls slightly below K (S slightly < K):**
-You still exercise (market is below K so your right to sell at K is valuable), but your net profit depends on whether you've covered the premium. Between K and break-even (K − Premium), you exercise but still suffer a small net loss.
+- If wheat crashes to €130: you exercise the put. You sell at €175 instead of €130, saving €45 per tonne. After deducting the €5 premium you paid, you are €40 per tonne better off than if you had no protection.
+- If wheat rises to €210: you ignore the put and sell at €210 in the open market. You only lose the €5 premium — a small cost for the security you had all season. Your upside is completely intact.
 
-*Example with numbers:* K = 100, Premium = 8, S = 95.
-Profit = (100 − 95) − 8 = **−3** (exercise, but net loss because S hasn't dropped far enough to cover the premium)
+This is the key advantage of a long put over just selling forward or selling now: **you keep all the upside if prices rise, and you are protected if prices fall.** You pay the premium for that asymmetry.
 
-**Scenario C — Asset price stays at or above K (S ≥ K):**
-You do **not** exercise — why sell at K when the market pays more? The put expires worthless. Your total loss = the premium. This is the worst case, and it is fully bounded.
+### Payoff at Expiry
 
-*Example with numbers:* K = 100, Premium = 8, S = 120.
-Loss = **−8** (premium only)
+**If the price falls far below K:** This is when the put pays off most. You exercise — you sell the asset to the option counterparty at K even though the market would only give you S. The further the price has fallen, the bigger the gain. Your profit = (K − S) − Premium.
 
-**Summary formulas:**
-- Payoff = max(K − S, 0)
+With numbers: K = 100, Premium = 8, S = 60.
+Profit = (100 − 60) − 8 = +32.
+
+**If the price falls slightly below K, but not by enough to cover the premium:** You still exercise — it is always worth exercising when S < K, because even a partial recovery of the premium is better than recovering nothing. But your net result is still a small loss overall because the price has not fallen far enough to offset the premium you paid upfront.
+
+With numbers: K = 100, Premium = 8, S = 95.
+You exercise and recover 100 − 95 = 5 from the option. But you paid 8 for the option. Net result = 5 − 8 = −3. A small loss, but still much better than not exercising (which would have been a full −8 loss).
+
+This is an important point: **you exercise whenever S is below K, even if you have not yet hit break-even.** Exercising recovers some of the premium. Not exercising recovers none of it.
+
+**If the price stays above K:** There is no point exercising — the market pays more than K, so you just sell there. The option expires worthless and your only loss is the premium you paid at the start. This is the worst case for a long put buyer, and it is fully bounded — you can never lose more than the premium.
+
+With numbers: K = 100, Premium = 8, S = 130.
+Loss = −8 (premium only, option not exercised).
+
+**Summary:**
 - Profit = max(K − S, 0) − Premium
-- Break-even: S = K − Premium
-- Max gain: K − Premium (achieved if S → 0)
+- Break-even: S = K − Premium (the price must fall far enough to recover the premium)
+- Max gain: K − Premium (if the asset falls all the way to zero)
+- Max loss: Premium paid (if the asset stays above K)
 
-### Corporate Use — Hedging the Risk That Something You OWN Loses Value (Portfolio Insurance)
+### Why the Graph Looks the Way It Does
 
-**Why a company uses a long put:** Any time a company or investor holds an asset and fears its value could drop — shares, a currency receivable, a commodity stockpile — a long put sets a **floor** on the minimum selling price. No matter how low the market falls, the put guarantees you can sell at K.
+The profit line starts below zero on the right side (you paid a premium, so you start in the hole). As long as S stays above K, the option is worthless and the line stays flat at −Premium. Once S falls below K, the option starts paying out — the line rises steeply to the left. It crosses zero at the break-even point S = K − Premium, and keeps rising as the price falls further. The graph is essentially the mirror image of the long call, but flipped horizontally: the long call profits from rising prices, the long put profits from falling prices.
 
----
+### Corporate Use — Protection Against Losing Value on Something You Own
 
-**Scenario 1 — Fund Manager (Portfolio Insurance):**
+The long put is used whenever a company or investor has an asset exposed to falling prices and wants to set a floor. You are not betting that prices will fall — you are protecting against that possibility while keeping all the upside if prices rise instead.
 
-A pension fund holds €500 million in equities. The fund manager is worried about a market correction in the next 6 months but does not want to sell the portfolio (it would trigger taxes and transaction costs, and the manager expects recovery after the correction). Without protection, a 20% market fall would wipe out €100 million.
+**Scenario 1 — Fund Manager protecting a stock portfolio:**
 
-**The hedge:** The fund manager buys put options on the index (or the underlying stocks) with a strike K close to today's index level. Each option is like an insurance policy on a portion of the portfolio.
+A pension fund holds €500 million in equities. The fund manager cannot simply sell everything — that would trigger large transaction costs and tax events, and the fund is a long-term investor. But the manager is worried about a correction in the next six months and cannot afford to let the portfolio fall 20%.
 
-- If the market falls 25%: the puts pay out. For every unit of index below K, the put delivers K − S. This offsets the portfolio losses, limiting the fund's drawdown to roughly the premium cost.
-- If the market rises 10%: the puts expire worthless. The fund keeps all the upside gains and only forfeits the premium — the cost of the insurance.
+The solution is to buy put options on the portfolio (or on the index that tracks it), with K close to today's portfolio value. Think of it as buying insurance on the entire portfolio.
 
-**Key insight:** Unlike selling the portfolio, a long put lets you keep full **upside participation** while cutting off the downside beyond K. You pay for this asymmetry with the premium.
+If the market falls 25%, the puts pay out. The fund loses value on its shares but gains almost as much on the puts — the net result is a drawdown limited to roughly the premium paid, not the full 25%. If the market rises 10%, the puts expire unused and the fund participates fully in the gain, minus the premium cost. The fund manager gets to stay invested, avoid transaction costs, and sleep at night.
 
----
+**Scenario 2 — Belgian wheat farmer protecting harvest revenue:**
 
-**Scenario 2 — Belgian Wheat Farmer (Commodity Price Risk):**
+As described in the analogy above: farmer buys a put with K = €175, pays €5 premium. If wheat crashes, the put pays the difference. If wheat rises, the put expires and the farmer sells at the high market price. The premium is a known, fixed cost — the farmer can build it into the budget and plan the whole season around the guaranteed minimum revenue of €175 − €5 = €170 per tonne.
 
-A farmer plants wheat in April expecting to harvest and sell in September. The current wheat price is €180/tonne — profitable. But the farmer fears that by September, a bumper global harvest could push prices down to €130/tonne, making the crop barely profitable or even loss-making.
+**Scenario 3 — Exporter protecting foreign currency revenue:**
 
-**The hedge:** The farmer buys put options on wheat with K = €175/tonne (close to today's price) and pays a premium of €5/tonne.
+A Belgian company will receive $3 million from a US client in three months. Today's rate is €1 = $1.10, which means roughly €2.73 million. The risk is that the dollar weakens — if the rate moves to €1 = $1.25 by then, those same dollars convert to only €2.40 million, a €330,000 shortfall.
 
-- If wheat falls to €130 by September: the farmer exercises the put, effectively selling at €175 instead of €130. The €45/tonne saving (minus the €5 premium) = €40/tonne net benefit. The floor protects the business.
-- If wheat rises to €200 by September: the put expires unused. The farmer sells at the high market price of €200 and only loses the €5 premium — a small cost for the security they had all season.
-
-**Key insight:** The long put gives the farmer the **best of both worlds**: a guaranteed minimum price plus full participation in any price rally. The premium is the cost of that certainty, and it allows the farmer to plan cash flows, service loans, and budget inputs with confidence.
-
----
-
-**Scenario 3 — Exporter (FX Risk):**
-
-A Belgian IT company exports software to the US and will receive $3 million in 3 months. At today's rate of €1 = $1.10, that's roughly €2.73 million. But if the dollar weakens to $1.25 = €1, those dollars convert to only €2.40 million — a €330,000 shortfall.
-
-**The hedge:** The exporter buys a put on USD (the right to sell USD at K = $1.12 per euro, i.e., a floor on how many euros each dollar is worth).
-
-- If USD weakens to $1.25 = €1: the exporter exercises the put, converting at the protected rate of $1.12 = €1. The put compensates for the weaker dollar.
-- If USD stays strong at $1.10 = €1: the put expires. The exporter converts at the favorable rate and only loses the small premium.
-
-**Bottom line:** The long put locks in a **minimum revenue** in euros from foreign-currency income, eliminating the FX downside while keeping the benefit if the dollar stays strong.
+The company buys a put on USD with K set at a rate close to today's. This gives them the right to convert at K even if the dollar has weakened by then. If the dollar weakens, they exercise the put and convert at the protected rate. If the dollar strengthens or stays flat, they just convert at the favorable market rate and let the put expire. Either way, they can forecast their euro revenue with confidence from day one.
 
 ---
 
