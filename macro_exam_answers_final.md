@@ -3,16 +3,19 @@ title: "Macroeconomics – Try-Out Exam Answers"
 subtitle: "AY 2025/2026 | Macroeconomics (MBA Bridging Program)"
 author: "Prepared from course material"
 date: "June 2026"
-geometry: "margin=2.5cm"
+geometry: "top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.8cm"
 fontsize: 11pt
+linestretch: 1.3
 header-includes:
   - \usepackage{booktabs}
   - \usepackage{float}
   - \usepackage{graphicx}
   - \usepackage{xcolor}
-  - \usepackage{mdframed}
-  - \definecolor{noteblue}{RGB}{0,90,160}
-  - \definecolor{notebg}{RGB}{235,245,255}
+  - \usepackage{parskip}
+  - \setlength{\parskip}{6pt}
+  - \usepackage{titlesec}
+  - \titlespacing*{\section}{0pt}{14pt}{6pt}
+  - \titlespacing*{\subsection}{0pt}{10pt}{4pt}
 ---
 
 \newpage
@@ -21,129 +24,161 @@ header-includes:
 
 ---
 
-## Question 1.1 – Initial Long-Run Equilibrium (Time 0)   *(0.75 p)*
+## Q 1.1 – Initial Long-Run Equilibrium (Time 0)   *(0.75 p)*
 
-In **long-run equilibrium**, actual prices equal expected prices and output equals the natural rate (Y\*). All three curves intersect at a single point **(P₀, Y\*)**.
+In **long-run equilibrium** all three curves intersect at a single point **(P~0~, Y\*)**:
+actual prices equal expected prices, output equals the natural rate, and
+unemployment equals its natural rate.
 
-- **LRAS** – vertical at Y\* (supply determined by real factors only)
-- **SRAS₀** – upward-sloping (sticky wages in the short run)
-- **AD₀** – downward-sloping (wealth + interest-rate effects)
+- **LRAS** – vertical at Y\* (determined solely by real factors)
+- **SRAS~0~** – upward-sloping (sticky wages in the short run)
+- **AD~0~** – downward-sloping (wealth effect + interest-rate effect)
 
-![AD–AS diagram showing all four equilibrium positions (Time 0–3)](diagrams/fig1_adas.png)
-
-> **Time 0** is the intersection of all three curves at (P₀, Y\*).
+**Time 0** is the single intersection of all three curves in the diagram below.
 
 ---
 
-## Question 1.2 – Short-Run Impact of the Breakdown (Time 1)   *(1.5 p)*
+## Q 1.2 – Short-Run Impact of the Breakdown (Time 1)   *(1.5 p)*
 
-A power-station breakdown is a **permanent adverse supply shock**: electricity is a crucial production input across all industries.
+A permanent power-station breakdown is an **adverse supply shock**: electricity
+is an essential production input across the whole economy.
 
 **Mechanism:**
 
-1. Higher electricity prices → **production costs rise** for firms economy-wide.
+1. Higher electricity prices raise **production costs** for firms economy-wide.
 2. Firms respond by **reducing output** and **raising prices**.
-3. The **SRAS curve shifts LEFT/UPWARD** (SRAS₀ → SRAS₁) — firms supply less at every price level.
-4. Because the breakdown is *permanent*, **productive capacity is permanently reduced** → **LRAS also shifts left** (Y\* → Y\*').
-5. AD₀ is unchanged initially (no demand-side shock yet).
+3. The **SRAS curve shifts left / upward** (SRAS~0~ → SRAS~1~).
+4. Because the breakdown is *permanent*, productive capacity is permanently
+   reduced → the **LRAS also shifts left** (Y\* → Y\*').
+5. AD~0~ is unchanged at this stage (no demand-side shock yet).
 
-**Short-run result (Time 1):**
+| Variable | Short-run direction |
+|----------|:-------------------:|
+| Output (Y) | Falls  (Y~1~ < Y\*) |
+| Price level (P) | Rises  (P~1~ > P~0~) |
+| Unemployment | Rises |
 
-| Variable | Direction |
-|----------|-----------|
-| Output (Y) | **Falls** (Y₁ < Y\*) |
-| Price level (P) | **Rises** (P₁ > P₀) |
-| Unemployment | **Rises** |
-
-This combination of falling output and rising prices is called **stagflation**.
-
-*(See diagram above — Time 1 point is the intersection of AD₀ and SRAS₁.)*
+This simultaneous fall in output and rise in prices is called **stagflation**.
 
 ---
 
-## Question 1.4 – Short-Run Impact on the Phillips Curve (Time 0 → Time 1)   *(1.5 p)*
+## AD–AS Diagram (Q 1.1 / Q 1.2 / Q 1.6.2 / Q 1.7)
 
-![Phillips Curve diagram showing supply shock shift](diagrams/fig2_phillips.png)
-
-**Key points on the diagram:**
-
-- **LRPC₀** – vertical at the initial natural unemployment rate (u\*)
-- **LRPC₁** – shifts RIGHT to u\*' because the permanent breakdown raises the natural unemployment rate (lower productive capacity → fewer jobs in the long run)
-- **SRPC₀** – initial short-run Phillips curve (Time 0 at u\*, π₀)
-- **SRPC₁** – shifts **upward** due to the supply shock: firms face higher costs, raise prices → higher inflation at every level of unemployment
-- **Time 1 (SR)** – the economy moves up and to the right along SRPC₁: **both inflation and unemployment increase** simultaneously (stagflation in Phillips curve terms)
-
-> The supply shock is **unfavorable**: policymakers cannot reduce both inflation and unemployment at the same time. Accepting higher inflation does NOT reduce unemployment here (unlike a standard demand expansion).
+![](diagrams/fig1_adas.png)
 
 ---
 
-## Question 1.5 – Labour Market with Binding Minimum Wage (Time 0 → Time 1)   *(2 p)*
+## Q 1.4 – Impact on the Phillips Curve (Time 0 → Time 1)   *(1.5 p)*
 
-![Labour market with binding minimum wage](diagrams/fig3_labour.png)
+![](diagrams/fig2_phillips.png)
+
+**Reading the diagram:**
+
+| Curve / line | What it shows |
+|---|---|
+| **LRPC~0~** | Vertical at initial natural unemployment rate u\* |
+| **LRPC~1~** | Shifts **right** to u\*' – the permanent breakdown raises the structural natural rate |
+| **SRPC~0~** | Initial short-run Phillips curve; Time 0 is on this curve at (u\*, π~0~) |
+| **SRPC~1~** | Shifts **upward** – higher input costs push up inflation at every unemployment level |
+| **Time 1 (SR)** | Economy moves to SRPC~1~: both inflation **and** unemployment rise (stagflation) |
+
+> The supply shock is **unfavourable**: policymakers cannot simultaneously reduce
+> inflation *and* unemployment – the standard trade-off breaks down.
+
+---
+
+## Q 1.5 – Labour Market with Binding Minimum Wage (Time 0 → Time 1)   *(2 p)*
+
+![](diagrams/fig3_labour.png)
 
 **Initial situation (Time 0):**
 
-- The minimum wage W_min is **above** the market-clearing wage → labour supply exceeds labour demand at W_min → **structural unemployment** already exists (gap between L_S and L₀).
+The minimum wage W~min~ already exceeds the market-clearing wage, so labour
+supply exceeds demand at W~min~, creating an existing unemployment gap (L~S~ − L~0~).
 
 **After the breakdown (Time 1):**
 
-- Higher electricity costs reduce firm profitability → **firms reduce labour demand** → LD₀ shifts LEFT to LD₁.
-- Wages **cannot fall below W_min** (legally binding floor) — the normal market-adjustment mechanism is blocked.
-- At W_min, firms now demand even fewer workers: **L₁ < L₀**.
-- Labour supply (L_S) at W_min is unchanged.
-- **The unemployment gap widens**: (L_S − L₁) > (L_S − L₀).
+- Higher electricity costs reduce firm profitability → firms reduce their
+  **demand for labour** → LD shifts **leftward** (LD~0~ → LD~1~).
+- Because W~min~ is a legal floor, wages **cannot fall** to clear the market.
+- At W~min~, firms now demand fewer workers: **L~1~ < L~0~**.
+- Labour supply at W~min~ is unchanged.
+- The unemployment gap **widens**: (L~S~ − L~1~) > (L~S~ − L~0~).
 
-**Conclusion:** The binding minimum wage prevents wages from falling to absorb the shock, so the entire adjustment falls on **employment** — unemployment rises more than it would in a flexible wage market.
-
----
-
-## Question 1.6 – Government Policy Response
-
-### 1.6.1 – Type of Policy   *(0.75 p)*
-
-To keep economic activity high before elections, the government will implement:
-
-> **Expansionary Fiscal Policy** — specifically an **increase in government spending (↑G)** and/or a **cut in taxes (↓T)**.
-
-This directly or indirectly increases aggregate demand, partially offsetting the recession caused by the supply shock.
-
-### 1.6.2 – Impact on the AD–AS Diagram (Time 2)   *(0.75 p)*
-
-*(See the AD–AS diagram above — the green AD₂ curve and the green "Time 2" point.)*
-
-- Expansionary fiscal policy shifts **AD to the right** (AD₀ → AD₂).
-- Moving along SRAS₁, the new short-run equilibrium (Time 2) shows:
-  - **Output rises** (Y₂ > Y₁, recovering toward Y\*')
-  - **Price level rises further** (P₂ > P₁) — the stimulus adds additional inflationary pressure on top of the supply shock.
-
-### 1.6.3 – Effectiveness Depending on Interest Sensitivity of Investment (IS-LM)   *(2 p)*
-
-Fiscal policy (↑G) shifts the **IS curve to the right**. Higher income raises money demand → interest rate (i) rises → **private investment is crowded out**. The degree of crowding-out depends on how sensitive investment is to the interest rate.
-
-![IS-LM diagrams comparing high vs low interest sensitivity](diagrams/fig4_islm.png)
-
-| Sensitivity | IS slope | IS shift result | Crowding-out | Fiscal effectiveness |
-|-------------|----------|-----------------|--------------|----------------------|
-| **High** | Flat | Small ΔY, large Δi | **Large** | **Less effective** |
-| **Low** | Steep | Large ΔY, small Δi | **Small** | **More effective** |
-
-**Conclusion:** Fiscal policy is **most effective when the interest sensitivity of investment is LOW** (steep IS curve). In this case, even though the interest rate rises, investment barely responds, so very little of the fiscal stimulus is crowded out.
+**Conclusion:** With a binding minimum wage the entire adjustment falls on
+*employment*, not wages – unemployment rises more than in a flexible-wage economy.
 
 ---
 
-## Question 1.7 – Long-Run Outcome (Time 3)   *(0.75 p)*
+## Q 1.6 – Government Policy Response
 
-*(See AD–AS diagram above — the purple "Time 3" point.)*
+### Q 1.6.1 – Type of Policy   *(0.75 p)*
 
-Since the breakdown is **permanent**, the long-run adjustment unfolds as follows:
+To keep economic activity high before elections the government will implement:
 
-1. The economy is above the new natural rate at Time 2 (output Y₂ > Y\*' and prices are rising).
-2. Over time, workers and unions **update their inflation expectations upward** → they bargain for higher wages → firms face even higher costs → **SRAS continues to shift left** (SRAS₁ → SRAS₂) until it passes through the new LRAS (at Y\*').
-3. Long-run equilibrium (Time 3) is where **AD₂ intersects the new LRAS** (at Y\*'):
-   - **Output = Y\*'** (permanently lower than original Y\*)
-   - **Price level = P₃** (significantly higher than P₀; government stimulus made it even higher)
+> **Expansionary Fiscal Policy** — an increase in government spending (↑G)
+> and / or a cut in taxes (↓T).
 
-> The government's expansionary policy **only raises prices in the long run** — it cannot permanently move output above the new natural rate Y\*'. The long-run sacrifice is both lower output (structural) and higher inflation (policy-induced).
+This directly or indirectly raises aggregate demand, partially offsetting the
+recession caused by the supply shock.
+
+### Q 1.6.2 – Impact on the AD–AS Diagram (Time 2)   *(0.75 p)*
+
+*(See the AD–AS diagram above — the green AD~2~ curve and the green Time 2 point.)*
+
+Expansionary fiscal policy shifts **AD rightward** (AD~0~ → AD~2~).  
+Moving along SRAS~1~, the new short-run equilibrium (Time 2) shows:
+
+- Output **rises** (Y~2~ > Y~1~, recovering toward Y\*')
+- Price level **rises further** (P~2~ > P~1~) — the stimulus adds inflationary
+  pressure on top of the supply shock.
+
+### Q 1.6.3 – IS-LM: Fiscal Policy Effectiveness by Interest Sensitivity   *(2 p)*
+
+Fiscal policy (↑G) shifts the **IS curve rightward**.  Higher income raises
+money demand → the interest rate (i) rises → private investment is **crowded
+out**. The degree of crowding-out depends on how sensitive investment is to the
+interest rate.
+
+**When sensitivity is HIGH (flat IS):**
+
+![](diagrams/fig4_islm_1.png)
+
+A small rise in *i* causes a large fall in *I* → **large crowding-out → small
+ΔY** → fiscal policy is **less effective**.
+
+**When sensitivity is LOW (steep IS):**
+
+![](diagrams/fig4_islm_2.png)
+
+A large rise in *i* causes only a small fall in *I* → **little crowding-out →
+large ΔY** → fiscal policy is **more effective**.
+
+| Interest sensitivity | IS slope | Crowding-out | Fiscal effectiveness |
+|---|---|---|---|
+| High | Flat | Large | Less effective |
+| **Low** | **Steep** | **Small** | **More effective** ✓ |
+
+---
+
+## Q 1.7 – Long-Run Outcome (Time 3)   *(0.75 p)*
+
+*(See the AD–AS diagram above — the purple Time 3 point.)*
+
+Because the breakdown is **permanent** the long-run adjustment unfolds as follows:
+
+1. At Time 2 output (Y~2~) exceeds the new natural rate (Y\*') → upward wage
+   and price pressure builds.
+2. Workers update their inflation expectations upward → higher wages → higher
+   costs → **SRAS continues shifting left** (SRAS~1~ → SRAS~2~) until it
+   intersects the new LRAS at Y\*'.
+3. Long-run equilibrium (Time 3) is where **AD~2~ meets the new LRAS**:
+   - Output = **Y\*'** (permanently lower than the original Y\*)
+   - Price level = **P~3~** (substantially higher than P~0~)
+
+> The government stimulus **only raises prices in the long run** — output cannot
+> be permanently kept above the new natural rate.  
+> The long-run cost: lower structural output *and* higher inflation.
 
 \newpage
 
@@ -156,137 +191,131 @@ Since the breakdown is **permanent**, the long-run adjustment unfolds as follows
 ## Answer Sheet
 
 \begin{center}
-\begin{tabular}{ccccc}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{lcccc}
 \toprule
 \textbf{Question} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
 \midrule
-2.1 & \textbf{✓} & & & \\
-2.2 & & & & \textbf{✓} \\
-2.3 & & & \textbf{✓} & \\
-2.4 & & & \textbf{✓} & \\
-2.5 & & & \textbf{✓} & \\
+2.1 & \textbf{A} & & & \\
+2.2 & & & & \textbf{D} \\
+2.3 & & & \textbf{C} & \\
+2.4 & & & \textbf{C} & \\
+2.5 & & & \textbf{C} & \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 ---
 
-## Question 2.1 – Money Market   **→ Answer: A (Both statements are correct)**
+## Q 2.1 – Money Market   **Answer: A — Both statements are correct**
 
-![Money Market diagram](diagrams/fig5_money.png)
+![](diagrams/fig5_money.png)
 
-The diagram has **value of money (1/P)** on the vertical axis and **nominal quantity of money (M)** on the horizontal axis. The money supply (MS) is a vertical line controlled by the central bank; money demand (MD) is downward-sloping.
+**Statement 1 – A → D via Quantitative Easing:**   **Correct** ✓
 
-**Statement 1 – A → D via Quantitative Easing:**  ✓ **Correct**
+QE = the central bank buys long-term assets from banks, **increasing the money
+supply**. The vertical MS curve shifts **rightward** (MS~0~ → MS~1~). The new
+equilibrium D has *more money* and a *lower value of money* (higher price level),
+which is consistent with the movement A → D.
 
-Quantitative easing (QE) = the central bank purchases long-term assets from banks, **increasing the money supply**. The MS curve shifts **rightward**. The new equilibrium has *more money* and a *lower value of money* (higher price level). If D lies to the right and below A on the MD curve, this movement is consistent with QE.
+**Statement 2 – D → C via increased inclination to hold cash over deposits:**   **Correct** ✓
 
-**Statement 2 – D → C via increased inclination to hold cash over demand deposits:**  ✓ **Correct**
-
-When households shift holdings from demand deposits to cash, the **currency-deposit ratio rises** → the **money multiplier falls** → the effective money supply M1 (currency + demand deposits) **contracts** → MS shifts **leftward**. The equilibrium moves to a point with *less money* and a *higher value of money*. The movement D → C (upper-left direction) is consistent with this effect.
-
-> **Answer: A**
-
----
-
-## Question 2.2 – Labour Market Statistics   **→ Answer: D**
-
-**Calculations:**
-
-|  | **2014** | **2015** |
-|--|----------|----------|
-| Working-age population (18–65) | 10,000,000 | **11,000,000** (+1M) |
-| Employed | 5,000,000 | **5,000,000** (unchanged) |
-| Unemployed | 1,000,000 | **2,000,000** (doubled) |
-| **Labour force** | **6,000,000** | **7,000,000** |
-| Not in labour force | **4,000,000** | **4,000,000** |
-| **Unemployment rate** | 1/6 = **16.67%** | 2/7 = **28.57%** |
-| **Employment rate** | 5/10 = **50.00%** | 5/11 = **45.45%** |
-| **Labour Force Participation Rate** | 6/10 = **60.00%** | 7/11 = **63.64%** |
-
-Checking each statement:
-
-- **A)** Unemployment rate doubled? → doubled would be 33.33%; actual = 28.57% → **FALSE**
-- **B)** Employment rate unchanged? → 50% ≠ 45.45% → **FALSE**
-- **C)** People not in labour force decreased? → 4M = 4M (unchanged) → **FALSE**
-- **D)** LFPR increased? → 60.00% → 63.64% → **TRUE ✓**
-
-> **Answer: D**
+When households shift from demand deposits to cash, the **currency-deposit
+ratio rises** → the **money multiplier falls** → the effective money supply M1
+**(currency + demand deposits) contracts** → MS shifts **leftward** (MS~1~ →
+MS~2~). The equilibrium moves to *less money* and a *higher value of money*,
+consistent with the movement D → C.
 
 ---
 
-## Question 2.3 – Before-Tax Nominal Interest Rate   **→ Answer: C (15% < x ≤ 20%)**
+## Q 2.2 – Labour Market Statistics   **Answer: D**
 
-**Given:**
+| | 2014 | 2015 |
+|---|---|---|
+| Working-age population (18–65) | 10 000 000 | **11 000 000** (+1M) |
+| Employed | 5 000 000 | **5 000 000** (unchanged) |
+| Unemployed | 1 000 000 | **2 000 000** (doubled) |
+| **Labour force** | **6 000 000** | **7 000 000** |
+| Not in labour force | **4 000 000** | **4 000 000** |
+| **Unemployment rate** | 1/6 = **16.67 %** | 2/7 = **28.57 %** |
+| **Employment rate** | 5/10 = **50.00 %** | 5/11 = **45.45 %** |
+| **Labour Force Participation Rate** | 6/10 = **60.00 %** | 7/11 = **63.64 %** |
 
-| Variable | Value |
-|----------|-------|
-| After-tax real interest rate | 12% |
-| Inflation rate | 2% |
-| Tax rate | 12.5% |
+- **A** – Unemployment rate doubled? Doubled would be 33.33 %; actual is 28.57 % → **False**
+- **B** – Employment rate unchanged? 50.00 % ≠ 45.45 % → **False**
+- **C** – Not-in-labour-force decreased? 4 M = 4 M (unchanged) → **False**
+- **D** – LFPR increased? 60.00 % → 63.64 % → **True** ✓
 
-**Step 1** – Find after-tax nominal interest rate using the Fisher equation:
+---
 
-$$\text{After-tax nominal rate} = \text{After-tax real rate} + \text{Inflation} = 12\% + 2\% = 14\%$$
+## Q 2.3 – Before-Tax Nominal Interest Rate   **Answer: C (15 % < x ≤ 20 %)**
 
-**Step 2** – Relate after-tax nominal rate to before-tax nominal rate:
+| Given | Value |
+|---|---|
+| After-tax real interest rate | 12 % |
+| Inflation rate | 2 % |
+| Tax rate | 12.5 % |
 
-$$\text{After-tax nominal rate} = x \times (1 - \text{tax rate})$$
-$$14\% = x \times (1 - 0.125) = 0.875x$$
+**Step 1 — Fisher equation (after-tax):**
 
-**Step 3** – Solve for x:
+$$\text{After-tax nominal rate} = 12\% + 2\% = 14\%$$
+
+**Step 2 — Apply tax:**
+
+$$14\% = x \times (1 - 0.125) = 0.875\,x$$
+
+**Step 3 — Solve:**
 
 $$x = \frac{14\%}{0.875} = \mathbf{16\%}$$
 
-Since $15\% < 16\% \leq 20\%$:
-
-> **Answer: C**
+Since 15 % < 16 % ≤ 20 %: **Answer C**.
 
 ---
 
-## Question 2.4 – Trading Partner Growth   **→ Answer: C (Only Statement 2 correct)**
+## Q 2.4 – Trading Partner Growth   **Answer: C — Only Statement 2 is correct**
 
-**Context:** Country X's main trading partner experiences strong growth → that country's income rises → it imports more from Country X → **Country X's net exports (NX) increase** → IS curve shifts right → AD increases.
+**Context:** Trading partner's growth raises its income → it imports more from
+country X → **X's exports rise → NX↑ → IS shifts right → AD increases**.
 
-**Statement 1:** *"Assume I = f(i, Y). The short-run effect of this event is theoretically ambiguous."* → **INCORRECT**
+**Statement 1:** *"Assume I = f(i, Y).  The short-run effect is theoretically ambiguous."* — **Incorrect**
 
-With I = f(i, Y) (investment depends on both the interest rate and income):
-- NX↑ → IS shifts right → in IS-LM equilibrium: both **Y rises and i rises**
-- The effect on investment *alone* is ambiguous (Y↑ raises I, but i↑ lowers I)
-- However, the effect on **total output (Y)** is **unambiguously positive** — the IS shift rightward with an upward-sloping LM always yields a higher Y
-- The Keynesian stability condition (ΔZ/ΔY < 1) ensures a well-defined, higher equilibrium
+With I = f(i, Y) the IS-LM equilibrium still gives a unique, higher output Y:
 
-Statement 1 is **wrong**: the short-run effect on aggregate output is NOT ambiguous.
+- NX↑ shifts IS right → new IS-LM intersection has higher Y *and* higher i.
+- Higher i lowers I (negative), higher Y raises I (positive via accelerator).
+- The effect on *investment alone* is ambiguous, but the effect on **total output
+  (Y)** is unambiguously positive — the IS shift rightward with an upward-sloping
+  LM always produces a higher equilibrium Y.
 
-**Statement 2:** *"In the long run, the price level will increase more without automatic stabilizers."* → **CORRECT**
+Statement 1 is **wrong**.
 
-Automatic stabilizers (progressive taxation, unemployment benefits) **dampen** the AD increase:
-- As income rises → taxes automatically increase, transfers decrease → AD shift is **smaller**
-- Without stabilizers → the full multiplier plays out → **larger AD shift** → larger long-run price level increase
+**Statement 2:** *"Price level rises more in the long run without automatic
+stabilizers."* — **Correct** ✓
 
-Since LRAS is vertical, a larger AD shift produces a larger price level increase in the long run. ✓
-
-> **Answer: C**
+Automatic stabilizers (progressive taxes, unemployment benefits) dampen the AD
+increase: as income rises, taxes automatically rise and transfers fall → smaller
+net AD shift → smaller long-run price increase.  
+Without stabilizers the full multiplier operates → larger AD shift → larger
+long-run price level increase (LRAS is vertical, so all extra AD shows up as
+higher P in the long run).
 
 ---
 
-## Question 2.5 – GDP Investment Component   **→ Answer: C**
-
-The question asks which transaction affects the **Investment (I)** component of Eurozone GDP in year t.
+## Q 2.5 – GDP Investment Component   **Answer: C**
 
 Recall: **I = Fixed investment + Change in inventories**
 
-| Option | Analysis | Affects I? |
-|--------|----------|-----------|
-| **A** British firm builds factory in London | Investment, but UK is **outside the Eurozone** — does not affect Eurozone GDP | ✗ |
-| **B** Belgian buys German car (produced year t) | Both countries in Eurozone; car bought by consumer = **Consumption (C)**, not I | ✗ |
-| **C** Dutch company sells carpet produced in t-1 | Carpet was produced in t-1 → counted as **inventory investment (+I) in t-1**. Selling from inventory in year t → **inventory falls → negative inventory investment (−I) in year t**. This directly affects the I component. | **✓** |
-| **D** Greek resident buys old house | Old house = existing asset, not new production; sale of existing assets does **not** enter current GDP | ✗ |
+| Option | Analysis | Affects I in Eurozone year t? |
+|---|---|:---:|
+| **A** British firm builds factory in London | New factory = investment, but the UK is **outside the Eurozone** | No |
+| **B** Belgian buys German car (produced year t) | Both in Eurozone; car purchased by consumer = **Consumption (C)** | No |
+| **C** Dutch company sells carpet produced in year t-1 | Carpet entered inventory as **+I in t-1**; selling it from inventory in year t = **inventory drawdown → negative I in year t** | **Yes** ✓ |
+| **D** Greek resident buys old house | Existing asset; sale of old assets is not new production → does not enter current GDP | No |
 
-Option C is the only transaction that affects the Investment (I) component of Eurozone GDP in year t — through a reduction in inventories (negative inventory investment).
-
-> **Answer: C**
+Option C is the only transaction that directly affects the Investment component
+of Eurozone GDP in year t — through a **reduction in inventories** (negative
+inventory investment).
 
 ---
 
-*End of Answers Document*
+*End of Answers*

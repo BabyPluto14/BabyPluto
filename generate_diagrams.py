@@ -1,342 +1,423 @@
+"""
+Clean, well-spaced macroeconomics diagrams for the try-out exam.
+Font: Liberation Sans  |  Subscripts: LaTeX math mode
+"""
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyArrowPatch
+import matplotlib.patheffects as pe
 import numpy as np
 import os
 
 OUT = "/home/user/BabyPluto/diagrams"
 os.makedirs(OUT, exist_ok=True)
 
-STYLE = {
-    "font.family": "serif",
+# ── Global style ─────────────────────────────────────────────────────────────
+plt.rcParams.update({
+    "font.family": "Liberation Sans",
+    "font.size": 13,
+    "axes.linewidth": 1.5,
     "axes.spines.top": False,
     "axes.spines.right": False,
-    "axes.linewidth": 1.4,
-    "font.size": 12,
-}
-plt.rcParams.update(STYLE)
+    "xtick.bottom": False,
+    "ytick.left": False,
+    "xtick.labelbottom": False,
+    "ytick.labelleft": False,
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+})
 
-def arrow(ax, x0, y0, x1, y1, color="black", lw=1.5):
-    ax.annotate("", xy=(x1, y1), xytext=(x0, y0),
-                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw))
+# Palette
+C0  = "#2166ac"   # blue      – Time 0 / initial
+C1  = "#d6604d"   # red-orange – Time 1 / shock
+C2  = "#4dac26"   # green     – Time 2 / stimulus
+C3  = "#8e44ad"   # purple    – Time 3 / long-run
+CLM = "#e67e22"   # orange    – LM curve
+BG  = "white"
 
-def finish(ax, xlabel, ylabel, title, fname):
-    ax.set_xlabel(xlabel, fontsize=12)
-    ax.set_ylabel(ylabel, fontsize=12)
-    ax.set_title(title, fontsize=13, fontweight="bold", pad=10)
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 10)
-    ax.set_xticks([]); ax.set_yticks([])
-    plt.tight_layout()
-    plt.savefig(f"{OUT}/{fname}", dpi=150, bbox_inches="tight")
-    plt.close()
+def lbl(ax, x, y, text, color, ha="left", va="center", fs=12, bold=False):
+    """Label with a white backing so it never overlaps curves."""
+    weight = "bold" if bold else "normal"
+    ax.text(x, y, text, color=color, ha=ha, va=va, fontsize=fs,
+            fontweight=weight,
+            bbox=dict(boxstyle="round,pad=0.25", fc=BG, ec="none", alpha=0.85))
+
+def dot(ax, x, y, color, size=9):
+    ax.plot(x, y, "o", color=color, ms=size, zorder=6, mec="white", mew=1.2)
+
+def save(fig, fname):
+    fig.savefig(f"{OUT}/{fname}", dpi=160, bbox_inches="tight", facecolor=BG)
+    plt.close(fig)
     print(f"  saved {fname}")
 
-# ── 1.1 / 1.2 / 1.6.2 / 1.7  AD-AS diagram ──────────────────────────────────
-fig, ax = plt.subplots(figsize=(7, 6))
+def axis_labels(ax, xlabel, ylabel, fontsize=13):
+    ax.set_xlabel(xlabel, fontsize=fontsize, labelpad=6)
+    ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=6)
 
-# LRAS curves
-ax.axvline(x=6.2, color="#1f77b4", lw=2, ls="--", label="LRAS₀ (Time 0)")
-ax.axvline(x=4.5, color="#d62728", lw=2, ls="--", label="LRAS₁ / LRAS₂ (Time 1+)")
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIG 1 – AD-AS  (Q 1.1 / 1.2 / 1.6.2 / 1.7)
+# ═══════════════════════════════════════════════════════════════════════════════
+fig, ax = plt.subplots(figsize=(11, 8.5))
+ax.set_xlim(0, 11);  ax.set_ylim(0, 11)
+ax.set_title("AD – AS Diagram  (Q 1.1 · Q 1.2 · Q 1.6.2 · Q 1.7)",
+             fontsize=14, fontweight="bold", pad=12)
+axis_labels(ax, "Real Output  (Y)", "Price Level  (P)")
 
-# SRAS curves
-x = np.linspace(0.5, 9.5, 200)
-# SRAS₀
-sras0 = 0.6 * x + 1.0
-ax.plot(x, sras0, color="#1f77b4", lw=2, label="SRAS₀ (Time 0)")
-# SRAS₁ (supply shock shifts left)
-sras1 = 0.6 * x + 3.2
-ax.plot(x, sras1, color="#d62728", lw=2, label="SRAS₁ (Time 1)")
-# SRAS₂ (long-run adj., shifts further left — Time 3 label on same curve for clarity)
-sras2 = 0.6 * x + 5.0
-ax.plot(x, sras2, color="#9467bd", lw=2, ls=(0,(5,3)), label="SRAS₂ (Time 3)")
+Y = np.linspace(0.3, 10.7, 400)
 
-# AD curves
-ad0 = -0.6 * x + 9.5
-ax.plot(x, ad0, color="#1f77b4", lw=2, ls="-.", label="AD₀ (Time 0)")
-ad2 = -0.6 * x + 11.5   # government stimulus shifts AD right
-ax.plot(x, ad2, color="#2ca02c", lw=2, ls="-.", label="AD₂ (Time 2)")
+# ── LRAS lines ──
+Ystar0, Ystar1 = 7.2, 5.0
+ax.axvline(Ystar0, color=C0, lw=2.2, ls="--", zorder=2)
+ax.axvline(Ystar1, color=C1, lw=2.2, ls="--", zorder=2)
+lbl(ax, Ystar0+0.1, 10.2, r"$LRAS_0$", C0, fs=12, bold=True)
+lbl(ax, Ystar1+0.1, 10.2, r"$LRAS_{1,2,3}$", C1, fs=12, bold=True)
+lbl(ax, Ystar0,     0.4, r"$Y^*$",  C0, ha="center", fs=11)
+lbl(ax, Ystar1,     0.4, r"$Y^{*'}$", C1, ha="center", fs=11)
 
-# ── Equilibrium points ─────────────────────────────────────────────────────
-# Time 0: LRAS₀ x=6.2, AD₀ at x=6.2 → y = -0.6*6.2+9.5 = 5.78; sras0 at x=6.2 → 0.6*6.2+1=4.72 → intersection SRAS₀ & AD₀
-# Actual crossing SRAS₀ & AD₀: 0.6x+1 = -0.6x+9.5 → 1.2x=8.5 → x=7.08; y=5.25
-x0_eq, y0_eq = 7.08, 5.25   # but we place it at LRAS₀ for LR-eq
-# For long-run eq at LRAS₀=6.2 we need AD₀ to pass through (6.2, sras0(6.2)):
-# Let's just mark the intersections visually
-# Time 0 LR eq: LRAS₀ & AD₀: y_AD0(6.2)=-0.6*6.2+9.5=5.78; we say equilibrium=(6.2,5.78)
-p0, y0 = 5.78, 6.2
-ax.plot(y0, p0, 'o', color="#1f77b4", ms=9, zorder=5)
-ax.text(y0+0.1, p0+0.2, "Time 0\n(P₀, Y*)", color="#1f77b4", fontsize=10)
+# ── SRAS curves  y = slope*x + intercept ──
+def sras(x, intercept, slope=0.55):
+    return slope * x + intercept
 
-# Time 1 SR eq: SRAS₁ & AD₀: 0.6x+3.2=-0.6x+9.5 → 1.2x=6.3 → x=5.25; y=6.35
-p1, y1 = 6.35, 5.25
-ax.plot(y1, p1, 'o', color="#d62728", ms=9, zorder=5)
-ax.text(y1-1.6, p1+0.15, "Time 1 (P₁↑, Y₁↓)", color="#d62728", fontsize=10)
+def ad(x, intercept, slope=-0.65):
+    return slope * x + intercept
 
-# Time 2 SR eq: SRAS₁ & AD₂: 0.6x+3.2=-0.6x+11.5 → 1.2x=8.3 → x=6.92; y=7.35
-p2, y2 = 7.35, 6.92
-ax.plot(y2, p2, 'o', color="#2ca02c", ms=9, zorder=5)
-ax.text(y2+0.1, p2+0.1, "Time 2\n(P₂↑↑, Y₂↑)", color="#2ca02c", fontsize=10)
+def intersect_sras_ad(si, ai, ss=0.55, as_=-0.65):
+    # ss*x + si = as_*x + ai  →  x = (ai-si)/(ss-as_)
+    x = (ai - si) / (ss - as_)
+    y = ss * x + si
+    return x, y
 
-# Time 3 LR eq: new LRAS₁=4.5, AD₂: y_AD2(4.5)=-0.6*4.5+11.5=8.8
-p3, y3 = 8.8, 4.5
-ax.plot(y3, p3, 'o', color="#9467bd", ms=9, zorder=5)
-ax.text(y3-2.2, p3+0.1, "Time 3 (P₃↑↑↑, Y*'↓)", color="#9467bd", fontsize=10)
+sras0_i, sras1_i, sras2_i = 0.5, 2.8, 5.5
+ad0_i,   ad2_i            = 10.0, 12.5
 
-# Vertical dashed lines at Y* and Y*'
-ax.plot([y0, y0], [0, p0], ls=":", color="#1f77b4", lw=1)
-ax.plot([4.5, 4.5], [0, p3], ls=":", color="#d62728", lw=1)
-ax.text(y0-0.05, 0.2, "Y*", color="#1f77b4", fontsize=11, ha="center")
-ax.text(4.5-0.05, 0.2, "Y*'", color="#d62728", fontsize=11, ha="center")
+# SRAS₀ (Time 0)
+ax.plot(Y, sras(Y, sras0_i), color=C0, lw=2.2, zorder=3)
+lbl(ax, 9.8, sras(9.8, sras0_i)+0.35, r"$SRAS_0$", C0, ha="right", fs=12, bold=True)
 
-# Horizontal dashed lines at price levels
-for p, label, col in [(p0,"P₀","#1f77b4"),(p1,"P₁","#d62728"),
-                       (p2,"P₂","#2ca02c"),(p3,"P₃","#9467bd")]:
-    ax.plot([0, max(y0,y1,y2,y3)], [p, p], ls=":", color=col, lw=1, alpha=0.5)
-    ax.text(0.15, p+0.1, label, color=col, fontsize=10)
+# SRAS₁ (Time 1 – supply shock)
+ax.plot(Y, sras(Y, sras1_i), color=C1, lw=2.2, zorder=3)
+lbl(ax, 9.5, sras(9.5, sras1_i)+0.35, r"$SRAS_1$", C1, ha="right", fs=12, bold=True)
 
-ax.legend(loc="upper right", fontsize=9, framealpha=0.9)
-finish(ax, "Real Output (Y)", "Price Level (P)",
-       "AD–AS Diagram (Q1.1 / 1.2 / 1.6.2 / 1.7)", "fig1_adas.png")
+# SRAS₂ (Time 3 – long-run adjustment)
+ax.plot(Y, sras(Y, sras2_i), color=C3, lw=2.2, ls=(0,(6,3)), zorder=3)
+lbl(ax, 9.0, sras(9.0, sras2_i)+0.35, r"$SRAS_2$", C3, ha="right", fs=12, bold=True)
 
-# ── 1.4  Phillips Curve ───────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(6.5, 5.5))
+# AD₀ (Time 0 & 1)
+ax.plot(Y, ad(Y, ad0_i), color=C0, lw=2.2, ls="-.", zorder=3)
+lbl(ax, 9.8, ad(9.8, ad0_i)-0.5, r"$AD_0$", C0, ha="right", fs=12, bold=True)
 
-u = np.linspace(0.5, 9.5, 200)
+# AD₂ (Time 2 – fiscal stimulus)
+ax.plot(Y, ad(Y, ad2_i), color=C2, lw=2.2, ls="-.", zorder=3)
+lbl(ax, 10.0, ad(10.0, ad2_i)-0.5, r"$AD_2$", C2, ha="right", fs=12, bold=True)
 
-# Long-run Phillips curves
-ax.axvline(x=4.5, color="#1f77b4", lw=2, ls="--", label="LRPC₀ (u* initial)")
-ax.axvline(x=6.0, color="#d62728", lw=2, ls="--", label="LRPC₁ (u*' after shock)")
+# ── Equilibrium points ──
+# Time 0: LRAS₀ & AD₀
+P0 = ad(Ystar0, ad0_i)
+dot(ax, Ystar0, P0, C0)
+lbl(ax, Ystar0+0.25, P0+0.3,
+    r"$\mathbf{Time\ 0}$" + "\n" + r"$(P_0,\ Y^*)$",
+    C0, fs=11)
 
-# SRPC₀
-srpc0 = -0.8*u + 7.5
-ax.plot(u, srpc0, color="#1f77b4", lw=2.2, label="SRPC₀ (Time 0)")
+# Time 1: SRAS₁ & AD₀
+Y1, P1 = intersect_sras_ad(sras1_i, ad0_i)
+dot(ax, Y1, P1, C1)
+lbl(ax, Y1-0.3, P1+0.5,
+    r"$\mathbf{Time\ 1}$" + "\n" + r"$(P_1{\uparrow},\ Y_1{\downarrow})$",
+    C1, ha="right", fs=11)
 
-# SRPC₁ shifted up (supply shock)
-srpc1 = -0.8*u + 10.0
-ax.plot(u, srpc1, color="#d62728", lw=2.2, label="SRPC₁ (Time 1, after shock)")
+# Time 2: SRAS₁ & AD₂
+Y2, P2 = intersect_sras_ad(sras1_i, ad2_i)
+dot(ax, Y2, P2, C2)
+lbl(ax, Y2+0.25, P2-0.55,
+    r"$\mathbf{Time\ 2}$" + "\n" + r"$(P_2{\uparrow\uparrow},\ Y_2{\uparrow})$",
+    C2, fs=11)
+
+# Time 3: SRAS₂ & AD₂ at new LRAS
+P3 = ad(Ystar1, ad2_i)
+dot(ax, Ystar1, P3, C3)
+lbl(ax, Ystar1-0.3, P3+0.4,
+    r"$\mathbf{Time\ 3}$" + "\n" + r"$(P_3{\uparrow\uparrow\uparrow},\ Y^{*'})$",
+    C3, ha="right", fs=11)
+
+# Price-level guide lines
+for P, col in [(P0, C0), (P1, C1), (P2, C2), (P3, C3)]:
+    ax.axhline(P, color=col, lw=0.6, ls=":", alpha=0.55)
+
+ax.spines["bottom"].set_position(("data", 0))
+ax.spines["left"].set_position(("data", 0))
+save(fig, "fig1_adas.png")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIG 2 – Phillips Curve  (Q 1.4)
+# ═══════════════════════════════════════════════════════════════════════════════
+fig, ax = plt.subplots(figsize=(9.5, 7.5))
+ax.set_xlim(0, 11);  ax.set_ylim(0, 11)
+ax.set_title("Phillips Curve  (Q 1.4)", fontsize=14, fontweight="bold", pad=12)
+axis_labels(ax, r"Unemployment Rate  ($u$)", r"Inflation Rate  ($\pi$)")
+
+u = np.linspace(0.3, 10.7, 400)
+
+unat0, unat1 = 4.2, 6.0          # natural rates
+
+# LRPC lines
+ax.axvline(unat0, color=C0, lw=2.2, ls="--")
+ax.axvline(unat1, color=C1, lw=2.2, ls="--")
+lbl(ax, unat0+0.15, 10.3, r"$LRPC_0$", C0, fs=12, bold=True)
+lbl(ax, unat1+0.15, 10.3, r"$LRPC_1$", C1, fs=12, bold=True)
+lbl(ax, unat0,  0.4, r"$u^*$",  C0, ha="center", fs=11)
+lbl(ax, unat1,  0.4, r"$u^{*'}$", C1, ha="center", fs=11)
+
+# SRPC₀  π = −0.9u + 8.5
+srpc0 = lambda x: -0.9*x + 8.5
+ax.plot(u, srpc0(u), color=C0, lw=2.4)
+lbl(ax, 1.2, srpc0(1.2)+0.4, r"$SRPC_0$  (Time 0)", C0, fs=12, bold=True)
+
+# SRPC₁ shifted up by 2.5 (supply shock)
+srpc1 = lambda x: -0.9*x + 11.0
+ax.plot(u, srpc1(u), color=C1, lw=2.4)
+lbl(ax, 1.2, srpc1(1.2)+0.4, r"$SRPC_1$  (Time 1, after shock)", C1, fs=12, bold=True)
+
+# Time 0 equilibrium: LRPC₀ ∩ SRPC₀
+P_eq0 = srpc0(unat0)
+dot(ax, unat0, P_eq0, C0)
+lbl(ax, unat0+0.3, P_eq0+0.3, "Time 0\n" + r"$(u^*,\ \pi_0)$", C0, fs=11)
+
+# Short-run Time 1: on SRPC₁, unemployment rises moderately
+u_sr1 = 5.4
+pi_sr1 = srpc1(u_sr1)
+dot(ax, u_sr1, pi_sr1, C1)
+lbl(ax, u_sr1+0.3, pi_sr1+0.3,
+    "Time 1  (SR)\n" + r"$\pi\uparrow$  and  $u\uparrow$  (stagflation)",
+    C1, fs=11)
+ax.annotate("", xy=(u_sr1, pi_sr1), xytext=(unat0, P_eq0),
+            arrowprops=dict(arrowstyle="-|>", color="gray", lw=1.4,
+                            connectionstyle="arc3,rad=-0.2"))
+
+# Long-run Time 1: LRPC₁ ∩ SRPC₁
+pi_lr1 = srpc1(unat1)
+dot(ax, unat1, pi_lr1, "#d4ac0d")
+lbl(ax, unat1+0.3, pi_lr1-0.7,
+    "Long-run equilibrium\n" + r"$(u^{*'},\ \pi_1)$", "#d4ac0d", fs=11)
+
+ax.spines["bottom"].set_position(("data", 0))
+ax.spines["left"].set_position(("data", 0))
+save(fig, "fig2_phillips.png")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIG 3 – Labour Market with Binding Minimum Wage  (Q 1.5)
+# ═══════════════════════════════════════════════════════════════════════════════
+fig, ax = plt.subplots(figsize=(9.5, 7.5))
+ax.set_xlim(0, 11);  ax.set_ylim(0, 11)
+ax.set_title("Labour Market – Binding Minimum Wage  (Q 1.5)",
+             fontsize=14, fontweight="bold", pad=12)
+axis_labels(ax, "Quantity of Labour  (L)", "Nominal Wage  (W)")
+
+L = np.linspace(0.3, 10.7, 400)
+
+ls_fn  = lambda x:  0.75*x + 1.2          # Labour supply
+ld0_fn = lambda x: -0.75*x + 9.8          # Labour demand Time 0
+ld1_fn = lambda x: -0.75*x + 7.5          # Labour demand Time 1 (shift left)
+
+ax.plot(L, ls_fn(L),  color=C0, lw=2.4, label=r"$LS$  (Labour Supply)")
+ax.plot(L, ld0_fn(L), color=C2, lw=2.4, label=r"$LD_0$  (Time 0 demand)")
+ax.plot(L, ld1_fn(L), color=C1, lw=2.4, label=r"$LD_1$  (Time 1 demand, after shock)")
+
+lbl(ax, 8.8, ls_fn(8.8)+0.4,   r"$LS$",   C0, fs=12, bold=True)
+lbl(ax, 8.8, ld0_fn(8.8)+0.4,  r"$LD_0$", C2, fs=12, bold=True)
+lbl(ax, 8.8, ld1_fn(8.8)-0.65, r"$LD_1$", C1, fs=12, bold=True)
+
+# Minimum wage horizontal line
+W_min = 7.2
+ax.axhline(W_min, color="black", lw=2.0, ls="--", zorder=4)
+lbl(ax, 0.4, W_min+0.35, r"$W_{min}$  (binding minimum wage)",
+    "black", fs=12, bold=True)
+
+# Key quantities at W_min
+# LD₀ at W_min: -0.75L+9.8=7.2 → L=3.47
+# LD₁ at W_min: -0.75L+7.5=7.2 → L=0.4 (very small — let's adjust)
+# Adjust LD₁: -0.75L+8.3=7.2 → L=1.47
+ld1_fn2 = lambda x: -0.75*x + 8.3
+ax.get_lines()[-2].remove()    # remove old LD1
+ax.plot(L, ld1_fn2(L), color=C1, lw=2.4)
+lbl(ax, 8.5, ld1_fn2(8.5)-0.65, r"$LD_1$", C1, fs=12, bold=True)
+
+L_ld0 = (9.8 - W_min) / 0.75   # employment Time 0 ≈ 3.47
+L_ld1 = (8.3 - W_min) / 0.75   # employment Time 1 ≈ 1.47
+L_ls  = (W_min - 1.2) / 0.75   # labour supply at W_min ≈ 8.0
+
+dot(ax, L_ld0, W_min, C2)
+dot(ax, L_ld1, W_min, C1)
+dot(ax, L_ls,  W_min, C0)
+
+lbl(ax, L_ld0, W_min-0.7, r"$L_0$" + "\n(employed\nTime 0)", C2, ha="center", fs=11)
+lbl(ax, L_ld1, W_min-0.7, r"$L_1$" + "\n(employed\nTime 1)", C1, ha="center", fs=11)
+lbl(ax, L_ls,  W_min+0.4, r"$L_S$" + "\n(labour supply)", C0, ha="center", fs=11)
+
+# Unemployment gap arrows — Time 0
+y_a0 = W_min - 1.6
+ax.annotate("", xy=(L_ls, y_a0), xytext=(L_ld0, y_a0),
+            arrowprops=dict(arrowstyle="<->", color=C2, lw=1.7))
+lbl(ax, (L_ld0+L_ls)/2, y_a0-0.45,
+    "Unemployment gap\n(Time 0)", C2, ha="center", fs=10)
+
+# Unemployment gap arrows — Time 1
+y_a1 = W_min - 2.9
+ax.annotate("", xy=(L_ls, y_a1), xytext=(L_ld1, y_a1),
+            arrowprops=dict(arrowstyle="<->", color=C1, lw=1.7))
+lbl(ax, (L_ld1+L_ls)/2, y_a1-0.45,
+    "Wider unemployment gap\n(Time 1)", C1, ha="center", fs=10)
+
+# Arrow showing demand shift
+mid_L = 6.0
+ax.annotate("", xy=(mid_L, ld1_fn2(mid_L)+0.15),
+            xytext=(mid_L, ld0_fn(mid_L)-0.15),
+            arrowprops=dict(arrowstyle="-|>", color=C1, lw=1.7))
+
+ax.spines["bottom"].set_position(("data", 0))
+ax.spines["left"].set_position(("data", 0))
+save(fig, "fig3_labour.png")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIG 4 – IS-LM: high vs low interest sensitivity  (Q 1.6.3)
+# Two separate figures to avoid congestion
+# ═══════════════════════════════════════════════════════════════════════════════
+for panel, (title_note, is_slope, label_eff) in enumerate([
+    ("Interest Sensitivity  HIGH  →  Flat IS  →  Fiscal Policy  LESS Effective",
+     -0.22, "small $\Delta Y$"),
+    ("Interest Sensitivity  LOW  →  Steep IS  →  Fiscal Policy  MORE Effective",
+     -1.40, "large $\Delta Y$"),
+], start=1):
+
+    fig, ax = plt.subplots(figsize=(9, 7))
+    ax.set_xlim(0, 11);  ax.set_ylim(0, 11)
+    ax.set_title(title_note, fontsize=13, fontweight="bold", pad=12, wrap=True)
+    axis_labels(ax, "Output  (Y)", "Interest Rate  (i)")
+
+    lm_slope, lm_int = 0.6, 1.0
+
+    def lm(x): return lm_slope*x + lm_int
+    def is0(x): return is_slope*x + 9.5
+    def is1(x): return is_slope*x + 9.5 - is_slope*2.8   # shift right by 2.8
+
+    # IS intersect LM
+    def eq(fn):
+        x = (lm_int - (fn(0) - is_slope*0)) / (is_slope - lm_slope) if is_slope != lm_slope else None
+        # more carefully: is_slope*x + b = lm_slope*x + lm_int  → x=(lm_int-b)/(is_slope-lm_slope)
+        b0 = fn(0)   # intercept of IS
+        x_ = (lm_int - b0) / (is_slope - lm_slope)
+        return x_, lm(x_)
+
+    Yeq0, ieq0 = eq(is0)
+    Yeq1, ieq1 = eq(is1)
+
+    ax.plot(np.linspace(0.3,10.7,400), lm(np.linspace(0.3,10.7,400)),
+            color=CLM, lw=2.4)
+    ax.plot(np.linspace(0.3,10.7,400), is0(np.linspace(0.3,10.7,400)),
+            color=C0, lw=2.4)
+    ax.plot(np.linspace(0.3,10.7,400), is1(np.linspace(0.3,10.7,400)),
+            color=C2, lw=2.4)
+
+    # Curve end labels
+    lbl(ax, 10.5, lm(10.5)+0.35, "$LM$", CLM, fs=12, bold=True)
+    lbl(ax, 10.5, is0(10.5)+0.35, r"$IS_0$", C0, fs=12, bold=True)
+    lbl(ax, 10.5, is1(10.5)-0.65, r"$IS_1$  (after $\uparrow G$)", C2, fs=12, bold=True)
+
+    dot(ax, Yeq0, ieq0, C0)
+    dot(ax, Yeq1, ieq1, C2)
+
+    lbl(ax, Yeq0-0.25, ieq0+0.45, r"$E_0$", C0, ha="right", fs=12, bold=True)
+    lbl(ax, Yeq1+0.25, ieq1+0.45, r"$E_1$", C2, ha="left",  fs=12, bold=True)
+
+    # Guide lines
+    for Yeq, ieq, col in [(Yeq0, ieq0, C0), (Yeq1, ieq1, C2)]:
+        ax.plot([Yeq, Yeq], [0, ieq], ls=":", color=col, lw=1.1)
+        ax.plot([0, Yeq],   [ieq, ieq], ls=":", color=col, lw=1.1)
+
+    lbl(ax, Yeq0, 0.45, r"$Y_0$", C0, ha="center", fs=11)
+    lbl(ax, Yeq1, 0.45, r"$Y_1$", C2, ha="center", fs=11)
+    lbl(ax, 0.3, ieq0, r"$i_0$", C0, ha="right", fs=11)
+    lbl(ax, 0.3, ieq1, r"$i_1$", C2, ha="right", fs=11)
+
+    # Delta Y bracket
+    y_brk = 0.95
+    ax.annotate("", xy=(Yeq1, y_brk), xytext=(Yeq0, y_brk),
+                arrowprops=dict(arrowstyle="<->", color="gray", lw=1.5))
+    lbl(ax, (Yeq0+Yeq1)/2, y_brk+0.55, label_eff, "gray", ha="center", fs=11)
+
+    ax.spines["bottom"].set_position(("data", 0))
+    ax.spines["left"].set_position(("data", 0))
+    save(fig, f"fig4_islm_{panel}.png")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIG 5 – Money Market  (Q 2.1)
+# ═══════════════════════════════════════════════════════════════════════════════
+fig, ax = plt.subplots(figsize=(9, 7.5))
+ax.set_xlim(0, 11);  ax.set_ylim(0, 11)
+ax.set_title("Money Market  (Q 2.1)", fontsize=14, fontweight="bold", pad=12)
+axis_labels(ax, "Quantity of Money  (M)", "Value of Money  (1/P)")
+
+M = np.linspace(0.3, 10.7, 400)
+md_fn = lambda x: -0.75*x + 9.8
+
+# Money demand
+ax.plot(M, md_fn(M), color=C0, lw=2.4)
+lbl(ax, 9.8, md_fn(9.8)-0.6, "$MD$  (Money Demand)", C0, ha="right", fs=12, bold=True)
+
+# MS₀ initial
+ms0 = 4.8
+ax.axvline(ms0, color=C0, lw=2.4)
+lbl(ax, ms0+0.15, 10.3, r"$MS_0$  (initial)", C0, fs=12, bold=True)
+
+# MS₁ after QE (shifts right)
+ms1 = 7.2
+ax.axvline(ms1, color=C1, lw=2.4, ls="--")
+lbl(ax, ms1+0.15, 10.3, r"$MS_1$  (after QE)", C1, fs=12, bold=True)
+
+# MS₂ after cash-holding shift (shifts left from MS₁)
+ms2 = 5.6
+ax.axvline(ms2, color=C2, lw=2.4, ls=(0,(6,3)))
+lbl(ax, ms2-0.2, 10.3, r"$MS_2$  (cash $\uparrow$, multiplier $\downarrow$)", C2,
+    ha="right", fs=12, bold=True)
 
 # Equilibrium points
-# Time 0: LRPC₀ x=4.5 → srpc0: y=-0.8*4.5+7.5=3.9
-ax.plot(4.5, 3.9, 'o', color="#1f77b4", ms=9, zorder=5)
-ax.text(4.6, 3.7, "Time 0\n(u*, π₀)", color="#1f77b4", fontsize=10)
+A = (ms0, md_fn(ms0))   # initial eq
+D = (ms1, md_fn(ms1))   # after QE
+C_pt = (ms2, md_fn(ms2))# after cash shift
 
-# Time 1: on SRPC₁, at u*'=6.0 → y=-0.8*6.0+10.0=5.2
-# short-run: on SRPC₁, moving from previous u*=4.5 → unemployment rises AND inflation rises
-# Short run: still at old u expectation → on SRPC₁ at u~5.5 (between old and new)
-ax.plot(5.6, 5.52, 'o', color="#d62728", ms=9, zorder=5)
-ax.text(5.7, 5.6, "Time 1 (SR)", color="#d62728", fontsize=10)
-ax.annotate("", xy=(5.6,5.52), xytext=(4.5,3.9),
-            arrowprops=dict(arrowstyle="-|>", color="gray", lw=1.4))
-
-# Long-run after shock: on LRPC₁ and SRPC₁
-ax.plot(6.0, 5.2, 'o', color="#ff7f0e", ms=9, zorder=5)
-ax.text(6.1, 5.3, "LR after shock\n(u*', π₁)", color="#ff7f0e", fontsize=10)
-
-ax.plot([4.5,4.5],[0,3.9], ls=":", color="#1f77b4", lw=1)
-ax.plot([6.0,6.0],[0,5.2], ls=":", color="#d62728", lw=1)
-ax.text(4.5, 0.2, "u*", color="#1f77b4", fontsize=11, ha="center")
-ax.text(6.0, 0.2, "u*'", color="#d62728", fontsize=11, ha="center")
-
-ax.legend(loc="upper right", fontsize=9, framealpha=0.9)
-finish(ax, "Unemployment Rate (u)", "Inflation Rate (π)",
-       "Phillips Curve (Q1.4)", "fig2_phillips.png")
-
-# ── 1.5  Labour Market with Binding Minimum Wage ─────────────────────────────
-fig, ax = plt.subplots(figsize=(6.5, 5.5))
-
-L = np.linspace(0.5, 9.5, 200)
-
-# Labour supply (upward sloping)
-ls = 0.7*L + 1.0
-ax.plot(L, ls, color="#1f77b4", lw=2.2, label="Labour Supply (LS)")
-
-# Labour demand Time 0
-ld0 = -0.7*L + 9.0
-ax.plot(L, ld0, color="#2ca02c", lw=2.2, label="Labour Demand (LD₀)")
-
-# Labour demand Time 1 (shifts left)
-ld1 = -0.7*L + 6.5
-ax.plot(L, ld1, color="#d62728", lw=2.2, label="Labour Demand (LD₁, after shock)")
-
-# Equilibrium wages (where LS meets LD)
-# LS=LD₀: 0.7L+1=-0.7L+9 → 1.4L=8 → L=5.71, W=5.0
-L_eq0, W_eq0 = 5.71, 5.0
-
-# Minimum wage line — above W_eq0
-W_min = 6.8
-ax.axhline(y=W_min, color="black", lw=2, ls="--", label=f"W_min (binding)")
-ax.text(0.6, W_min+0.15, "W_min", fontsize=11, fontweight="bold")
-
-# Employment at W_min under LD₀: LD₀=W_min → -0.7L+9=6.8 → L=3.14
-# Employment at W_min under LD₁: LD₁=W_min → -0.7L+6.5=6.8 → L=−0.43 (neg, so = 0 or use L=0.5)
-# Let me adjust LD₁ so it makes sense
-# LD₁ = -0.7L + 8.0 → at W_min=6.8 → L=(8-6.8)/0.7 = 1.71
-ld1b = -0.7*L + 8.0
-ax.get_lines()[-1].remove()
-ax.plot(L, ld1b, color="#d62728", lw=2.2, label="Labour Demand (LD₁, after shock)")
-
-L_emp0 = (9.0 - W_min) / 0.7   # ~3.14
-L_emp1 = (8.0 - W_min) / 0.7   # ~1.71
-# Labour supply at W_min: LS=W_min → 0.7L+1=6.8 → L=8.29/0.7=8.29
-L_sup = (W_min - 1.0) / 0.7    # ~8.29
-
-# Mark Time 0 employment and unemployment
-ax.plot(L_emp0, W_min, 'o', color="#2ca02c", ms=9, zorder=5)
-ax.text(L_emp0+0.1, W_min+0.2, f"L₀\n(Time 0\nemployment)", color="#2ca02c", fontsize=9)
-
-# Mark Time 1 employment
-ax.plot(L_emp1, W_min, 'o', color="#d62728", ms=9, zorder=5)
-ax.text(L_emp1-0.1, W_min+0.2, f"L₁\n(Time 1)", color="#d62728", fontsize=9, ha="right")
-
-# Labour supply at W_min
-ax.plot(L_sup, W_min, 'o', color="#1f77b4", ms=9, zorder=5)
-ax.text(L_sup+0.1, W_min+0.2, "L_S", color="#1f77b4", fontsize=10)
-
-# Unemployment gap arrows
-ax.annotate("", xy=(L_sup, W_min-0.35), xytext=(L_emp0, W_min-0.35),
-            arrowprops=dict(arrowstyle="<->", color="#2ca02c", lw=1.5))
-ax.text((L_emp0+L_sup)/2, W_min-0.7, "Unemployment\n(Time 0)", color="#2ca02c",
-        fontsize=9, ha="center")
-
-ax.annotate("", xy=(L_sup, W_min-1.3), xytext=(L_emp1, W_min-1.3),
-            arrowprops=dict(arrowstyle="<->", color="#d62728", lw=1.5))
-ax.text((L_emp1+L_sup)/2, W_min-1.7, "Unemployment\n(Time 1, wider)", color="#d62728",
-        fontsize=9, ha="center")
-
-# Arrow showing LD shift
-ax.annotate("", xy=(4.5, ld1b[np.argmin(np.abs(L-4.5))]),
-            xytext=(4.5, ld0[np.argmin(np.abs(L-4.5))]),
-            arrowprops=dict(arrowstyle="-|>", color="#d62728", lw=1.5))
-
-ax.legend(loc="lower right", fontsize=9, framealpha=0.9)
-finish(ax, "Quantity of Labour (L)", "Nominal Wage (W)",
-       "Labour Market with Binding Minimum Wage (Q1.5)", "fig3_labour.png")
-
-# ── 1.6.3  IS-LM: Interest Sensitivity of Investment ─────────────────────────
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5.5))
-
-for ax, title, is_flat, fname_suffix in [
-    (ax1, "Interest Sensitivity HIGH\n(Flat IS curve – fiscal policy LESS effective)", True, "A"),
-    (ax2, "Interest Sensitivity LOW\n(Steep IS curve – fiscal policy MORE effective)", False, "B"),
+for pt, lbl_txt, col in [
+    (A,    "A  (initial equilibrium)", C0),
+    (D,    "D  (after QE)", C1),
+    (C_pt, "C  (after cash shift)", C2),
 ]:
-    Y = np.linspace(0.5, 9.5, 200)
-
-    # LM curve (upward sloping, same in both)
-    lm = 0.55*Y + 1.5
-    ax.plot(Y, lm, color="#1f77b4", lw=2.2, label="LM")
-
-    # IS slope: flat vs steep
-    if is_flat:
-        slope_is = -0.25
+    dot(ax, *pt, col, size=11)
+    # determine offset to avoid overlap
+    if pt == A:
+        dx, dy, ha_ = -0.3, 0.45, "right"
+    elif pt == D:
+        dx, dy, ha_ = 0.3, 0.45, "left"
     else:
-        slope_is = -1.2
+        dx, dy, ha_ = -0.3, -0.65, "right"
+    lbl(ax, pt[0]+dx, pt[1]+dy, lbl_txt, col, ha=ha_, fs=11, bold=True)
 
-    # IS₀
-    intercept0 = 8.0
-    is0 = slope_is*Y + intercept0
-    ax.plot(Y, is0, color="#2ca02c", lw=2.2, label="IS₀")
+# Arrows between points
+ax.annotate("", xy=(D[0]-0.1, D[1]+0.5),
+            xytext=(A[0]+0.1, A[1]-0.25),
+            arrowprops=dict(arrowstyle="-|>", color=C1, lw=1.7,
+                            connectionstyle="arc3,rad=-0.3"))
+lbl(ax, 6.5, 6.8, "Statement 1:\nQE  →  A to D", C1, ha="center", fs=10)
 
-    # IS₁ (fiscal policy shifts IS right by same horizontal amount)
-    shift = 2.5  # same horizontal shift for both diagrams
-    intercept1 = intercept0 - slope_is*shift  # shift IS right
-    is1 = slope_is*Y + intercept1
-    ax.plot(Y, is1, color="#d62728", lw=2.2, label="IS₁ (after fiscal policy ↑G)")
+ax.annotate("", xy=(C_pt[0]+0.1, C_pt[1]+0.3),
+            xytext=(D[0]-0.1,    D[1]-0.3),
+            arrowprops=dict(arrowstyle="-|>", color=C2, lw=1.7,
+                            connectionstyle="arc3,rad=0.35"))
+lbl(ax, 5.9, 4.2, "Statement 2:\ncash↑  →  D to C", C2, ha="center", fs=10)
 
-    # Find intersections IS0 & LM: slope_is*Y+int0 = 0.55*Y+1.5 → (slope_is-0.55)*Y = 1.5-int0
-    Y_eq0 = (1.5 - intercept0) / (slope_is - 0.55)
-    i_eq0 = 0.55*Y_eq0 + 1.5
-
-    Y_eq1 = (1.5 - intercept1) / (slope_is - 0.55)
-    i_eq1 = 0.55*Y_eq1 + 1.5
-
-    ax.plot(Y_eq0, i_eq0, 'o', color="#2ca02c", ms=9, zorder=5)
-    ax.plot(Y_eq1, i_eq1, 'o', color="#d62728", ms=9, zorder=5)
-
-    ax.annotate("", xy=(Y_eq1, i_eq1+0.2), xytext=(Y_eq0, i_eq0+0.2),
-                arrowprops=dict(arrowstyle="-|>", color="gray", lw=1.4))
-
-    ax.text(Y_eq0-0.1, i_eq0-0.5, "E₀", fontsize=11, color="#2ca02c", ha="right")
-    ax.text(Y_eq1+0.1, i_eq1-0.5, "E₁", fontsize=11, color="#d62728")
-
-    delta_Y = Y_eq1 - Y_eq0
-    delta_i = i_eq1 - i_eq0
-
-    ax.plot([Y_eq0, Y_eq0], [0, i_eq0], ls=":", color="#2ca02c", lw=1)
-    ax.plot([Y_eq1, Y_eq1], [0, i_eq1], ls=":", color="#d62728", lw=1)
-    ax.plot([0, Y_eq0], [i_eq0, i_eq0], ls=":", color="#2ca02c", lw=1)
-    ax.plot([0, Y_eq1], [i_eq1, i_eq1], ls=":", color="#d62728", lw=1)
-
-    ax.text(Y_eq0, 0.2, "Y₀", color="#2ca02c", fontsize=10, ha="center")
-    ax.text(Y_eq1, 0.2, "Y₁", color="#d62728", fontsize=10, ha="center")
-    ax.text(0.2, i_eq0, f"i₀", color="#2ca02c", fontsize=10, va="center")
-    ax.text(0.2, i_eq1, f"i₁", color="#d62728", fontsize=10, va="center")
-
-    dy_label = f"ΔY ≈ {delta_Y:.1f}"
-    ax.text((Y_eq0+Y_eq1)/2, 0.6, dy_label, ha="center", fontsize=10, color="gray",
-            bbox=dict(boxstyle="round,pad=0.2", fc="lightyellow", ec="gray"))
-
-    ax.set_title(title, fontsize=11, fontweight="bold", pad=8)
-    ax.set_xlabel("Output (Y)", fontsize=11)
-    ax.set_ylabel("Interest Rate (i)", fontsize=11)
-    ax.set_xlim(0, 10); ax.set_ylim(0, 10)
-    ax.set_xticks([]); ax.set_yticks([])
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.legend(loc="upper right", fontsize=9, framealpha=0.9)
-
-plt.suptitle("IS-LM: Effectiveness of Fiscal Policy by Interest Sensitivity of Investment (Q1.6.3)",
-             fontsize=12, fontweight="bold", y=1.01)
-plt.tight_layout()
-plt.savefig(f"{OUT}/fig4_islm.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("  saved fig4_islm.png")
-
-# ── 2.1  Money Market ─────────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(6.5, 5.5))
-
-M = np.linspace(0.5, 9.5, 200)
-
-# Money demand (downward sloping)
-md = -0.7*M + 9.0
-ax.plot(M, md, color="#1f77b4", lw=2.2, label="Money Demand (MD)")
-
-# MS₀ (initial, vertical)
-ax.axvline(x=5.0, color="#2ca02c", lw=2.2, label="MS₀ (initial)")
-# MS₁ after QE (shifts right)
-ax.axvline(x=7.0, color="#d62728", lw=2, ls="--", label="MS₁ (after QE)")
-# MS₂ after increased cash holding (shifts left from MS₁)
-ax.axvline(x=5.5, color="#ff7f0e", lw=2, ls="-.", label="MS₂ (cash↑→ multiplier↓)")
-
-# Point A: initial equilibrium MS₀ & MD: M=5 → V=−0.7*5+9=5.5
-A = (5.0, 5.5)
-# Point D: equilibrium after QE on MS₁: M=7 → V=−0.7*7+9=4.1
-D = (7.0, 4.1)
-# Point C: equilibrium on MS₂: M=5.5 → V=−0.7*5.5+9=5.15
-C = (5.5, 5.15)
-# Point B: some reference point (upper area)
-B = (5.0, 7.5)
-
-for pt, lbl, col in [(A,"A","#2ca02c"),(D,"D","#d62728"),(C,"C","#ff7f0e"),(B,"B","#9467bd")]:
-    ax.plot(*pt, 'o', ms=10, color=col, zorder=6)
-    offset = (0.2, 0.2) if lbl in ("A","D") else (-0.5, 0.2)
-    ax.text(pt[0]+offset[0], pt[1]+offset[1], lbl, fontsize=13, fontweight="bold", color=col)
-
-# Arrows
-ax.annotate("", xy=D, xytext=A,
-            arrowprops=dict(arrowstyle="-|>", color="#d62728", lw=1.5,
-                            connectionstyle="arc3,rad=-0.25"))
-ax.text(6.1, 5.2, "Stmt 1:\nQE → A→D", color="#d62728", fontsize=9)
-
-ax.annotate("", xy=C, xytext=D,
-            arrowprops=dict(arrowstyle="-|>", color="#ff7f0e", lw=1.5,
-                            connectionstyle="arc3,rad=0.3"))
-ax.text(6.2, 4.5, "Stmt 2:\nD→C", color="#ff7f0e", fontsize=9)
-
-ax.legend(loc="upper right", fontsize=9, framealpha=0.9)
-finish(ax, "Quantity of Money (M)", "Value of Money (1/P)",
-       "Money Market (Q2.1)", "fig5_money.png")
+ax.spines["bottom"].set_position(("data", 0))
+ax.spines["left"].set_position(("data", 0))
+save(fig, "fig5_money.png")
 
 print("\nAll diagrams generated successfully.")
