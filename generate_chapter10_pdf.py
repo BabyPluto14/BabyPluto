@@ -1319,10 +1319,12 @@ def build_story(styles):
         [8*cm, 4.5*cm, 4.5*cm], S))
     story.append(sp(4))
     story.append(p(
-        "Note: the relief (11,000) is the same in both scenarios — it equals the "
-        "State R tax that would have been levied on the 20,000 of foreign income "
-        "(35% × 20,000 = 7,000) <i>plus</i> the effective reduction from applying "
-        "the 30% rate instead of 35% to all 80,000 ... actually: 35,000 − 24,000 = 11,000."
+        "<b>Why is the relief 11,000 and not just 7,000?</b> Because the exemption "
+        "has two effects: (1) it removes 20,000 from the base, saving 35% × 20,000 = <b>7,000</b>; "
+        "and (2) the lower base (80k instead of 100k) triggers a lower average rate "
+        "(30% instead of 35%), saving an additional 5% × 80,000 = <b>4,000</b>. "
+        "Total relief = 7,000 + 4,000 = <b>11,000</b>. "
+        "This is independent of the State S tax rate, which is why both scenarios give the same relief."
     ))
     story.append(sp(6))
 
@@ -1431,22 +1433,25 @@ def build_story(styles):
 
     # Comparison ─────────────────────────────────────────────────────────
     story.append(h2("Summary Comparison: All Four Methods"))
-    comp_data = [
-        ["Method", "State R Tax", "State S Tax", "Total Tax (Sc.1)", "Total Tax (Sc.2)", "Philosophy"],
-        ["No relief", "35,000", "4k / 8k", "39,000", "43,000", "—"],
-        ["Full exemption", "24,000", "4k / 8k", "28,000", "32,000", "CIN"],
-        ["Exemp. w/ prog.", "28,000", "4k / 8k", "32,000", "36,000", "CIN (mild)"],
-        ["Full credit", "31k / 27k", "4k / 8k", "35,000", "35,000", "CEN (pure)"],
-        ["Ordinary credit", "31k / 28k", "4k / 8k", "35,000", "36,000", "CEN (partial)"],
-    ]
+    story.append(p(
+        "Sc.1 = State S rate 20% (foreign tax = 4,000). "
+        "Sc.2 = State S rate 40% (foreign tax = 8,000). "
+        "State R tax on worldwide income without relief = 35% × 100,000 = 35,000."
+    ))
     story.append(numeric_table(
-        ["Method","Tax R","Tax S","Total Sc.1","Total Sc.2","Philosophy"],
-        [["No relief","35,000","4k/8k","39,000","43,000","—"],
-         ["Full exemption","24,000","4k/8k","28,000","32,000","CIN"],
-         ["Exemp. w/ prog.","28,000","4k/8k","32,000","36,000","CIN (mild)"],
-         ["Full credit","31k/27k","4k/8k","35,000","35,000","CEN (pure)"],
-         ["Ordinary credit","31k/28k","4k/8k","35,000","36,000","CEN (partial)"]],
-        [4*cm, 2*cm, 2*cm, 2.5*cm, 2.5*cm, PAGE_W-2*MARGIN-13*cm], S))
+        ["Method", "State R tax (Sc.1)", "State R tax (Sc.2)", "State S tax (Sc.1)", "State S tax (Sc.2)", "Total (Sc.1)", "Total (Sc.2)", "Philosophy"],
+        [["No relief",         "35,000", "35,000", "4,000", "8,000", "39,000", "43,000", "—"],
+         ["Full exemption",    "24,000", "24,000", "4,000", "8,000", "28,000", "32,000", "CIN"],
+         ["Exemp. w/ prog.",   "28,000", "28,000", "4,000", "8,000", "32,000", "36,000", "CIN"],
+         ["Full credit",       "31,000", "27,000", "4,000", "8,000", "35,000", "35,000", "CEN (pure)"],
+         ["Ordinary credit",   "31,000", "28,000", "4,000", "8,000", "35,000", "36,000 ⚠", "CEN"]],
+        [3.2*cm, 2.2*cm, 2.2*cm, 2*cm, 2*cm, 1.8*cm, 1.8*cm, PAGE_W-2*MARGIN-15.2*cm], S))
+    story.append(sp(4))
+    story.append(p(
+        "⚠ Ordinary credit Sc.2: foreign tax paid = 8,000 but credit is capped at "
+        "35% × 20,000 = 7,000. State R credits only 7,000, leaving 1,000 of "
+        "foreign tax unrelieved ('excess foreign tax credit'). Total = 28,000 + 8,000 = 36,000."
+    ))
     story.append(sp(6))
     story.append(ex("Know the mechanics of all four methods and be able to compute "
                     "the tax outcomes. CIN (exemption) vs. CEN (credit) is a "
