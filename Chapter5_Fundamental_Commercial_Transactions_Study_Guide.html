@@ -1,0 +1,1040 @@
+<title>Chapter 5 · Fundamental Commercial Transactions — Interactive Study Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* ============================================================
+   DESIGN TOKENS — "The Ledger" (shared coursebook system)
+   ============================================================ */
+:root{
+  --paper:#f6f2e9;--surface:#fffdf7;--surface-2:#efeadd;--line:#d9d2c1;--line-strong:#c3baa4;
+  --ink:#182420;--ink-soft:#4a544e;--ink-faint:#7a8079;--brand:#0e5c47;--brand-deep:#0a4234;
+  --brand-tint:#e3ede8;--brass:#a9772f;--brass-tint:#f2e7d2;--debit:#2f6f9e;--debit-tint:#e2edf4;
+  --credit:#b0503a;--credit-tint:#f6e6e0;--good:#2f7d55;--bad:#b23b30;--warn:#a9772f;
+  --shadow:0 1px 2px rgba(24,36,32,.06),0 6px 18px rgba(24,36,32,.07);--shadow-lg:0 12px 40px rgba(24,36,32,.14);
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --maxw:1120px;--radius:12px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0e1512;--surface:#151f1b;--surface-2:#101815;--line:#26332d;--line-strong:#34443c;
+    --ink:#e9efe9;--ink-soft:#aab4ac;--ink-faint:#7c877e;--brand:#3fb892;--brand-deep:#2b8c6e;
+    --brand-tint:#16241e;--brass:#d6a256;--brass-tint:#221a0f;--debit:#6fb0dc;--debit-tint:#132532;
+    --credit:#e08a72;--credit-tint:#2c1712;--good:#4cc07f;--bad:#e07a6c;--warn:#d6a256;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 16px 48px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#f6f2e9;--surface:#fffdf7;--surface-2:#efeadd;--line:#d9d2c1;--line-strong:#c3baa4;
+  --ink:#182420;--ink-soft:#4a544e;--ink-faint:#7a8079;--brand:#0e5c47;--brand-deep:#0a4234;
+  --brand-tint:#e3ede8;--brass:#a9772f;--brass-tint:#f2e7d2;--debit:#2f6f9e;--debit-tint:#e2edf4;
+  --credit:#b0503a;--credit-tint:#f6e6e0;--good:#2f7d55;--bad:#b23b30;--warn:#a9772f;
+  --shadow:0 1px 2px rgba(24,36,32,.06),0 6px 18px rgba(24,36,32,.07);--shadow-lg:0 12px 40px rgba(24,36,32,.14);
+}
+:root[data-theme="dark"]{
+  --paper:#0e1512;--surface:#151f1b;--surface-2:#101815;--line:#26332d;--line-strong:#34443c;
+  --ink:#e9efe9;--ink-soft:#aab4ac;--ink-faint:#7c877e;--brand:#3fb892;--brand-deep:#2b8c6e;
+  --brand-tint:#16241e;--brass:#d6a256;--brass-tint:#221a0f;--debit:#6fb0dc;--debit-tint:#132532;
+  --credit:#e08a72;--credit-tint:#2c1712;--good:#4cc07f;--bad:#e07a6c;--warn:#d6a256;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 16px 48px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.15;text-wrap:balance;color:var(--ink)}
+a{color:var(--brand);text-underline-offset:2px}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px;position:relative;z-index:1}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+@media(max-width:900px){.layout{grid-template-columns:1fr;gap:0}}
+.topbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.brandmark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:15px}
+.brandmark .tacc{font-family:var(--mono);font-weight:700;color:var(--brand);border:1.5px solid var(--brand);border-radius:5px;width:26px;height:26px;display:grid;place-items:center;font-size:15px}
+.brandmark .ch{font-family:var(--mono);font-size:11px;color:var(--ink-faint);border:1px solid var(--line-strong);border-radius:20px;padding:1px 8px}
+.progresswrap{flex:1;height:7px;background:var(--surface-2);border-radius:20px;overflow:hidden;min-width:50px}
+#globalProgress{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brass));transition:width .5s ease}
+.pct{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-width:34px;text-align:right}
+.themebtn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;display:grid;place-items:center}
+.themebtn:hover{border-color:var(--brand)}
+.hero{padding:66px 0 36px}
+.eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--brass);font-weight:600}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.7rem);margin:.25em 0 .2em;letter-spacing:-.01em}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.26rem);color:var(--ink-soft);max-width:60ch}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:12.5px;padding:5px 11px;border-radius:20px;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-soft)}
+.chip b{color:var(--brand)}
+.badge-live{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);border:1px solid var(--brass);border-radius:20px;padding:2px 8px}
+/* sidenav */
+.sidenav{position:sticky;top:74px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0 40px}
+.sidenav ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.sidenav a{display:flex;gap:10px;align-items:baseline;padding:6px 10px;border-radius:8px;text-decoration:none;color:var(--ink-soft);font-size:14.5px;line-height:1.3;border-left:2px solid transparent}
+.sidenav a::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.sidenav a:hover{background:var(--surface);color:var(--ink)}
+.sidenav a.active{color:var(--brand);border-left-color:var(--brand);background:var(--brand-tint);font-weight:600}
+.sidenav .navttl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);padding:0 10px 8px}
+@media(max-width:900px){.sidenav{display:none}}
+main{padding:24px 0 80px;min-width:0}
+section.mod{padding:30px 0 8px;scroll-margin-top:70px}
+section.mod+section.mod{border-top:1px solid var(--line)}
+.mod-h{display:flex;gap:14px;align-items:flex-start;margin-bottom:4px}
+.mod-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--surface);background:var(--brand);border-radius:8px;padding:4px 9px;margin-top:6px;white-space:nowrap}
+.mod-h h2{font-size:clamp(1.5rem,3.4vw,2.05rem);margin:0}
+.mod-sub{color:var(--ink-soft);margin:.2em 0 1.2em;font-size:1.02rem}
+h3{font-size:1.28rem;margin:1.9em 0 .5em}
+h4{font-size:1.06rem;margin:1.5em 0 .4em}
+p{margin:.7em 0;max-width:68ch}
+ul,ol{max-width:66ch}
+li{margin:.32em 0}
+strong{color:var(--ink)}
+.lead-in{font-size:1.08rem}
+.box{border-radius:var(--radius);padding:16px 18px;margin:18px 0;border:1px solid var(--line-strong);background:var(--surface);box-shadow:var(--shadow)}
+.box .box-ttl{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.box p{margin:.4em 0}
+.box.tip{border-left:4px solid var(--brand)}.box.tip .box-ttl{color:var(--brand)}
+.box.gap{border-left:4px solid var(--brass);background:var(--brass-tint)}.box.gap .box-ttl{color:var(--brass)}
+.box.warn{border-left:4px solid var(--bad)}.box.warn .box-ttl{color:var(--bad)}
+.box.def{border-left:4px solid var(--debit)}.box.def .box-ttl{color:var(--debit)}
+/* T-account */
+.tacct{font-family:var(--mono);font-variant-numeric:tabular-nums;background:var(--surface);border:1.5px solid var(--line-strong);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);min-width:210px}
+.tacct .t-name{text-align:center;font-weight:700;padding:7px 8px;font-size:13px;background:var(--surface-2);border-bottom:1.5px solid var(--line-strong);color:var(--ink)}
+.tacct .t-name .accno{color:var(--brand);font-size:11.5px}
+.tacct .t-body{display:grid;grid-template-columns:1fr 1fr;min-height:56px}
+.tacct .t-side{padding:6px 8px}
+.tacct .t-side.d{border-right:1.5px solid var(--line-strong)}
+.t-head{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-faint);border-bottom:1px dashed var(--line);padding-bottom:3px;margin-bottom:4px;letter-spacing:.08em}
+.tacct .t-row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:1px 0}
+.tacct .t-row .ref{color:var(--ink-faint);font-size:11px}
+.d .amt{color:var(--debit)}.c .amt{color:var(--credit)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin:16px 0}
+/* tables */
+.table-scroll{overflow-x:auto;margin:16px 0;border:1px solid var(--line-strong);border-radius:10px}
+table.led{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);min-width:440px}
+table.led th,table.led td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line)}
+table.led thead th{background:var(--surface-2);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+table.led td.n,table.led th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+table.led tr:last-child td{border-bottom:none}
+table.led .accno{font-family:var(--mono);color:var(--brand);font-weight:600}
+table.led tr.tot td{border-top:2px solid var(--line-strong);font-weight:700;background:var(--surface-2)}
+table.led tr.sub td{color:var(--ink-soft)}
+.tag-d{color:var(--debit);font-weight:600}.tag-c{color:var(--credit);font-weight:600}
+/* interactive shared */
+.ix{border:1.5px solid var(--brand);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);margin:22px 0;overflow:hidden}
+.ix-head{background:linear-gradient(90deg,var(--brand-tint),transparent);padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ix-head .ix-kind{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--brand);border:1px solid var(--brand);border-radius:5px;padding:2px 7px}
+.ix-head h3{margin:0;font-size:1.12rem}
+.ix-body{padding:18px}
+.btn{font-family:var(--sans);font-size:15px;font-weight:600;border-radius:9px;padding:9px 16px;cursor:pointer;border:1.5px solid transparent;transition:transform .06s,background .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn-primary:hover{background:var(--brand-deep)}
+.btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-d{background:var(--debit-tint);border-color:var(--debit);color:var(--debit)}
+.btn-c{background:var(--credit-tint);border-color:var(--credit);color:var(--credit)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+/* flashcards */
+.deck{perspective:1400px}
+.card{position:relative;min-height:200px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.15,.2,1)}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:22px;display:flex;flex-direction:column;justify-content:center;border:1.5px solid var(--line-strong)}
+.face.front{background:var(--surface-2)}
+.face.back{background:var(--brand-tint);transform:rotateY(180deg);border-color:var(--brand)}
+.face .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+.face .term{font-family:var(--serif);font-size:1.45rem;color:var(--ink)}
+.face .def{font-size:1rem;color:var(--ink)}
+.deck-bar{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:10px}
+.deck-count{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+/* trainer */
+.trainer-scen{text-align:center;padding:12px 6px}
+.trainer-scen .ctx{font-size:1.12rem;color:var(--ink);max-width:52ch;margin:0 auto 6px}
+.trainer-scen .doc{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint)}
+.pill{font-family:var(--mono);font-size:12.5px;padding:4px 11px;border-radius:16px;font-weight:600;display:inline-block}
+.pill.purchase{background:var(--debit-tint);color:var(--debit)}
+.pill.sale{background:var(--credit-tint);color:var(--credit)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+.optbtn{text-align:left;border:1.5px solid var(--line-strong);background:var(--surface);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:14.5px;color:var(--ink)}
+.optbtn .an{font-family:var(--mono);color:var(--brand);font-weight:700}
+.optbtn:hover{border-color:var(--brand)}
+.optbtn.correct{border-color:var(--good);background:var(--brand-tint)}
+.optbtn.wrong{border-color:var(--bad);background:var(--credit-tint)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:9px;font-size:14.5px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--brand-tint);border:1px solid var(--good);color:var(--ink)}
+.feedback.no{background:var(--credit-tint);border:1px solid var(--bad);color:var(--ink)}
+.scoreline{display:flex;gap:16px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin-top:12px;flex-wrap:wrap}
+.scoreline b{color:var(--brand);font-size:15px}
+.streak b{color:var(--brass)}
+/* quiz */
+.quiz .q{font-weight:600;font-size:1.05rem;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line-strong);background:var(--surface);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:15px;color:var(--ink);display:flex;gap:10px;align-items:flex-start}
+.opt:hover{border-color:var(--brand)}
+.opt .mk{font-family:var(--mono);font-weight:700;color:var(--ink-faint)}
+.opt.correct{border-color:var(--good);background:var(--brand-tint)}
+.opt.wrong{border-color:var(--bad);background:var(--credit-tint)}
+.opt:disabled{cursor:default}
+.explain{margin-top:12px;padding:11px 14px;border-radius:9px;background:var(--surface-2);border-left:3px solid var(--brass);font-size:14.5px;display:none}
+.explain.show{display:block}
+.quiz-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;flex-wrap:wrap}
+.quiz-prog{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+/* journal drill */
+.jd-scen{background:var(--surface-2);border-radius:10px;padding:12px 14px;font-size:14.5px;margin-bottom:14px;border-left:3px solid var(--brass)}
+.jd-scen .date{font-family:var(--mono);font-weight:700;color:var(--brand)}
+.jd-line{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.jd-line .aname{font-size:14.5px}
+.jd-line .aname .an{font-family:var(--mono);font-size:11.5px;color:var(--brand)}
+.jd-amt{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--ink-soft)}
+.dc-toggle{display:flex;gap:4px}
+.dc-toggle button{font-family:var(--mono);font-weight:700;font-size:13px;width:34px;height:32px;border-radius:7px;border:1.5px solid var(--line-strong);background:var(--surface);cursor:pointer;color:var(--ink-faint)}
+.dc-toggle button.pick-d{background:var(--debit);border-color:var(--debit);color:#fff}
+.dc-toggle button.pick-c{background:var(--credit);border-color:var(--credit);color:#fff}
+.dc-toggle button.err{outline:3px solid var(--bad);outline-offset:1px}
+.dc-toggle button.right{outline:3px solid var(--good);outline-offset:1px}
+/* invoice calculator */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.calc-grid{grid-template-columns:1fr}}
+.calc-inputs{display:flex;flex-direction:column;gap:10px}
+.calc-inputs label{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-soft)}
+.calc-inputs input,.calc-inputs select{font-family:var(--mono);font-size:14px;padding:7px 10px;border:1.5px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink);width:130px;text-align:right}
+.calc-inputs select{width:auto;text-align:left}
+.seg{display:inline-flex;border:1.5px solid var(--line-strong);border-radius:9px;overflow:hidden}
+.seg button{font-family:var(--sans);font-size:14px;font-weight:600;padding:7px 14px;border:none;background:var(--surface);color:var(--ink-soft);cursor:pointer}
+.seg button.on{background:var(--brand);color:#fff}
+.scheme{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:14px;border:1.5px solid var(--line-strong);border-radius:10px;overflow:hidden}
+.scheme .srow{display:grid;grid-template-columns:1fr auto 42px;gap:8px;padding:6px 12px;border-bottom:1px dashed var(--line);align-items:center}
+.scheme .srow:last-child{border-bottom:none}
+.scheme .srow .lab{color:var(--ink-soft)}
+.scheme .srow .val{text-align:right;color:var(--ink)}
+.scheme .srow .acc{font-size:11px;font-weight:700;text-align:center}
+.scheme .srow.total{background:var(--surface-2);font-weight:700}
+.scheme .srow.basis{background:var(--brass-tint)}
+.scheme .srow .acc.d{color:var(--debit)}.scheme .srow .acc.c{color:var(--credit)}
+.scheme-entry{margin-top:14px}
+/* reveal + checklist + cycle */
+details.reveal{border:1px solid var(--line-strong);border-radius:10px;margin:10px 0;background:var(--surface);overflow:hidden}
+details.reveal summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::after{content:"reveal";font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);border:1px solid var(--brand);border-radius:5px;padding:2px 7px}
+details.reveal[open] summary::after{content:"hide"}
+details.reveal[open] summary{color:var(--brand)}
+details.reveal .rc{padding:0 16px 16px;border-top:1px solid var(--line);font-size:15px}
+.checklist{list-style:none;padding:0;margin:16px 0}
+.checklist li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:9px;margin:8px 0;background:var(--surface);cursor:pointer}
+.checklist li:hover{background:var(--surface-2)}
+.checklist .cbx{flex:0 0 22px;height:22px;border:2px solid var(--line-strong);border-radius:6px;display:grid;place-items:center;font-size:14px;color:transparent;margin-top:1px}
+.checklist li.done .cbx{background:var(--brand);border-color:var(--brand);color:#fff}
+.checklist li.done .ct{color:var(--ink-faint);text-decoration:line-through}
+.flowline{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--mono);font-size:13px;margin:10px 0}
+.flowline .step{background:var(--surface-2);border:1px solid var(--line-strong);border-radius:7px;padding:4px 9px}
+.flowline .arr{color:var(--brand);font-weight:700}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:680px){.two-col{grid-template-columns:1fr}}
+.mini{font-size:13.5px;color:var(--ink-soft)}
+hr.rule{border:none;border-top:1px solid var(--line);margin:30px 0}
+footer{border-top:1px solid var(--line);padding:30px 20px 60px;text-align:center;color:var(--ink-faint);font-size:14px}
+footer .wrap{max-width:640px}
+</style>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brandmark"><span class="tacc">T</span><span>Fundamental Commercial Transactions</span><span class="ch">Ch. 5</span></div>
+    <div class="progresswrap" title="Your study progress"><div id="globalProgress"></div></div>
+    <span class="pct" id="pctLabel">0%</span>
+    <button class="themebtn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Internal &amp; External Financial Reporting · Chapter 5</div>
+    <h1>Fundamental Commercial Transactions</h1>
+    <p class="lede">Everyday buying and selling — with all the real-world wrinkles: VAT, trade &amp; cash discounts, extra charges, credit notes, and every way money actually moves. One master scheme ties it all together.</p>
+    <div class="hero-meta">
+      <span class="chip">Running case: <b>TELEROMEO plc</b></span>
+      <span class="chip">Master tool: <b>the invoice scheme</b></span>
+      <span class="chip">Textbook pp. <b>85–118</b></span>
+      <span class="chip"><span class="badge-live">interactive</span></span>
+    </div>
+    <div class="box tip" style="margin-top:26px">
+      <div class="box-ttl">◆ The one framework to rule them all</div>
+      <p>Almost every entry in this chapter is one filled-in copy of the same seven-line <strong>invoice scheme</strong>. Learn it once and purchase invoices, sales invoices, discounts, charges and credit notes all become the same drill. Module 5 has a live calculator that builds it for you.</p>
+      <div class="flowline" style="margin-top:10px">
+        <span class="step">Price of goods</span><span class="arr">−</span><span class="step">Comm. discount</span><span class="arr">+</span><span class="step">Charges</span><span class="arr">=</span><span class="step">NET</span><span class="arr">−</span><span class="step">Fin. discount</span><span class="arr">=</span><span class="step">VAT basis</span><span class="arr">+</span><span class="step">VAT</span><span class="arr">=</span><span class="step">TOTAL</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidenav" aria-label="Contents">
+    <div class="navttl">Modules</div>
+    <ol id="navList">
+      <li><a href="#intro">What counts as a commercial transaction</a></li>
+      <li><a href="#accounts">Where it all lives (chart of accounts)</a></li>
+      <li><a href="#vat">How VAT really works</a></li>
+      <li><a href="#declaration">The VAT declaration (netting)</a></li>
+      <li><a href="#scheme">The invoice scheme + live builder</a></li>
+      <li><a href="#commercial">Commercial discount</a></li>
+      <li><a href="#charges">Additional charges</a></li>
+      <li><a href="#financial">Financial discount</a></li>
+      <li><a href="#creditnotes">Credit notes</a></li>
+      <li><a href="#payment">Modes of payment</a></li>
+      <li><a href="#teleromeo">Full case: TELEROMEO</a></li>
+      <li><a href="#exam">Exam readiness &amp; checklist</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- 1 INTRO -->
+  <section class="mod" id="intro">
+    <div class="mod-h"><span class="mod-num">01</span><h2>What counts as a commercial transaction</h2></div>
+    <p class="mod-sub">Buying and selling goods and services for the trading or production process — the core operating activity of the business.</p>
+    <p class="lead-in">A <strong>commercial transaction</strong> is buying goods/services to be <em>used in</em> the trading or production process, or selling goods/services. The critical exclusion:</p>
+    <div class="box warn"><div class="box-ttl">⚠ Not a commercial transaction</div><p>Buying a <strong>fixed asset</strong> (a building, machine, vehicle) is an <strong>investment</strong>, not a commercial transaction. It's capitalised on the balance sheet, not booked as a purchase expense. Keep this line clear — it's a classic trap.</p></div>
+    <div class="two-col">
+      <div class="box def"><div class="box-ttl">◧ What can be bought?</div>
+        <ul class="mini"><li><strong>Manufacturers:</strong> raw materials &amp; consumables</li><li><strong>Traders:</strong> goods for resale</li><li><strong>Both:</strong> services &amp; other goods (rent, insurance, telephone…)</li></ul></div>
+      <div class="box def" style="border-left-color:var(--credit)"><div class="box-ttl" style="color:var(--credit)">◨ What can be sold?</div>
+        <ul class="mini"><li><strong>Manufacturers:</strong> finished goods</li><li><strong>Traders:</strong> goods for resale</li><li><strong>Service companies:</strong> services</li></ul></div>
+    </div>
+    <div class="box gap"><div class="box-ttl">✎ Fills the verbal gap</div><p>Purchases land in the <strong>income statement as an expense</strong> straight away — not as inventory. The stock you haven't sold yet is corrected only at year-end via a <strong>change-in-inventory</strong> end-of-period entry (Chapter 6). So during the year, "purchases" ≠ "what's still on the shelf."</p></div>
+  </section>
+
+  <!-- 2 ACCOUNTS -->
+  <section class="mod" id="accounts">
+    <div class="mod-h"><span class="mod-num">02</span><h2>Where it all lives — the chart of accounts</h2></div>
+    <p class="mod-sub">A small, fixed cast of accounts does almost all the work in this chapter. Meet them now; you'll use them constantly.</p>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th class="n">No.</th><th>Account</th><th>Nature</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td class="accno">604</td><td>Purchases of goods for resale</td><td>Expense (op.)</td><td>Buying trading goods (group 60)</td></tr>
+        <tr><td class="accno">600 / 601</td><td>Purchases of raw materials / consumables</td><td>Expense (op.)</td><td>Manufacturers (group 60)</td></tr>
+        <tr><td class="accno">61</td><td>Services and other goods</td><td>Expense (op.)</td><td>Costs <em>not</em> directly in the process: rent, insurance, phone…</td></tr>
+        <tr><td class="accno">608</td><td>Discounts received (−)</td><td>Expense (op., contra)</td><td>Commercial discount on a purchase</td></tr>
+        <tr><td class="accno">70x</td><td>Sales of goods for resale</td><td>Revenue (op.)</td><td>Selling (group 70, 700/707)</td></tr>
+        <tr><td class="accno">708</td><td>Discounts granted (−)</td><td>Revenue (op., contra)</td><td>Commercial discount on a sale</td></tr>
+        <tr><td class="accno">757</td><td>Financial discounts received</td><td>Financial revenue</td><td>Cash discount taken on a purchase</td></tr>
+        <tr><td class="accno">657</td><td>Financial discounts granted</td><td>Financial expense</td><td>Cash discount given on a sale</td></tr>
+        <tr><td class="accno">411</td><td>VAT to reclaim</td><td>Asset</td><td>VAT on purchases</td></tr>
+        <tr><td class="accno">451</td><td>VAT due</td><td>Liability</td><td>VAT on sales</td></tr>
+        <tr><td class="accno">440</td><td>Suppliers</td><td>Liability</td><td>Amount owed on a purchase</td></tr>
+        <tr><td class="accno">400</td><td>Trade debtors</td><td>Asset</td><td>Amount owed to us on a sale</td></tr>
+        <tr><td class="accno">5500</td><td>Bank X — current account</td><td>Asset</td><td>Bank payments (group 55)</td></tr>
+        <tr><td class="accno">5501</td><td>Bank X — cheques written out</td><td>Asset</td><td>Cheques we issue, awaiting cashing</td></tr>
+        <tr><td class="accno">540</td><td>Amounts overdue / in process of collection</td><td>Asset</td><td>Cheques we receive, awaiting cashing (group 54)</td></tr>
+        <tr><td class="accno">570</td><td>Cash at hand</td><td>Asset</td><td>Physical cash (group 57)</td></tr>
+        <tr><td class="accno">58</td><td>Internal transfers of funds</td><td>Asset (bridge)</td><td>Moving money between our own accounts</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box tip"><div class="box-ttl">◆ 60 vs. 61 — the distinction that trips people</div><p><strong>Group 60</strong> = purchases directly ascribable to the trading/production process (the goods you resell, the materials you build with). <strong>Group 61 "Services and other goods"</strong> = everything bought that <em>can't</em> be tied directly to a product: rent, insurance premiums, telephone, internet, office supplies. Both are operating expenses; the group tells the reader <em>why</em> the money was spent.</p></div>
+  </section>
+
+  <!-- 3 VAT -->
+  <section class="mod" id="vat">
+    <div class="mod-h"><span class="mod-num">03</span><h2>How VAT really works</h2></div>
+    <p class="mod-sub">An indirect consumer tax collected in stages along the business chain — but borne entirely by the final consumer.</p>
+    <p class="lead-in">VAT is a tax on <strong>value added</strong> at each step. Companies collect it on behalf of the tax authorities under a system of <strong>netting</strong>: each business pays the state only the VAT on the value <em>it</em> added.</p>
+    <div class="box def"><div class="box-ttl">▤ The golden statement</div><p><strong>VAT is neither an expense nor a revenue for the company.</strong> It flows through. <span class="tag-d">VAT to reclaim (411)</span> is an <strong>asset</strong> (paid to suppliers, reclaimable). <span class="tag-c">VAT due (451)</span> is a <strong>liability</strong> (collected from customers, owed to the state).</p></div>
+
+    <h3>The three-stage flat-screen TV, worked out</h3>
+    <p>A TV travels manufacturer → wholesaler → retailer → consumer. Watch how each firm remits VAT only on <em>its</em> margin, yet the state collects VAT on the full final price.</p>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Stage</th><th class="n">Purchase</th><th class="n">VAT reclaim</th><th class="n">Sale</th><th class="n">VAT due</th><th class="n">Value added</th><th class="n">Paid to state</th></tr></thead>
+      <tbody>
+        <tr><td>Manufacturer</td><td class="n">—</td><td class="n">—</td><td class="n">1 000,00</td><td class="n">210,00</td><td class="n">1 000,00</td><td class="n">210,00</td></tr>
+        <tr><td>Wholesaler</td><td class="n">1 000,00</td><td class="n">210,00</td><td class="n">1 500,00</td><td class="n">315,00</td><td class="n">500,00</td><td class="n">105,00</td></tr>
+        <tr><td>Retailer</td><td class="n">1 500,00</td><td class="n">315,00</td><td class="n">1 900,00</td><td class="n">399,00</td><td class="n">400,00</td><td class="n">84,00</td></tr>
+        <tr><td>Consumer</td><td class="n">1 900,00</td><td class="n">399,00</td><td class="n">—</td><td class="n">—</td><td class="n"></td><td class="n"></td></tr>
+        <tr class="tot"><td>Total to state</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">1 900,00</td><td class="n">399,00</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box gap"><div class="box-ttl">✎ Fills the verbal gap — why "netting" is clever</div><p>The consumer pays 1 900,00 + 399,00 VAT and can't reclaim anything — they bear the whole 399,00. The state receives that same 399,00, but <em>in instalments</em> (210 + 105 + 84) collected earlier and from multiple parties. Each firm's remittance = <span class="mono">VAT on its sales − VAT on its purchases = VAT on its added value</span>. Splitting collection this way gets tax to the state sooner and makes evasion harder.</p></div>
+    <div class="tgrid">
+      <div class="tacct"><div class="t-name">Buyer subject to VAT<br><span class="accno">411 VAT to reclaim</span></div><div class="t-body"><div class="t-side d"><div class="t-head"><span>DEBIT</span></div><div class="t-row"><span class="ref">+</span><span class="amt">VAT paid</span></div></div><div class="t-side c"><div class="t-head"><span>CREDIT</span></div></div></div></div>
+      <div class="tacct"><div class="t-name">Seller subject to VAT<br><span class="accno">451 VAT due</span></div><div class="t-body"><div class="t-side d"><div class="t-head"><span>DEBIT</span></div></div><div class="t-side c"><div class="t-head"><span>CREDIT</span></div><div class="t-row"><span class="ref">+</span><span class="amt">VAT charged</span></div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 4 DECLARATION -->
+  <section class="mod" id="declaration">
+    <div class="mod-h"><span class="mod-num">04</span><h2>The VAT declaration — settling up by netting</h2></div>
+    <p class="mod-sub">Monthly or quarterly, the two VAT accounts are compared and the difference is settled with the tax office.</p>
+    <p class="lead-in">Periodically the company files a <strong>VAT declaration</strong>. The procedure is mechanical:</p>
+    <ol>
+      <li>Compare the balances of <span class="mono accno">411</span> (VAT to reclaim) and <span class="mono accno">451</span> (VAT due).</li>
+      <li><strong>Close the account with the smaller balance</strong> and transfer it into the larger one.</li>
+      <li>The remaining balance is the net VAT <em>due to</em> (if 451 wins) or <em>receivable from</em> (if 411 wins) the state — then settled through the bank.</li>
+    </ol>
+    <h4>Worked example (the wholesaler)</h4>
+    <p class="mini">411 shows 210,00 debit (VAT on the 1 000,00 purchase); 451 shows 315,00 credit (VAT on the 1 500,00 sale). 451 is larger → close 411 into 451.</p>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th class="n">No.</th><th class="accno">Acc.</th><th>Description</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">3<br><span class="mini">31/10</span></td><td class="accno">451</td><td>VAT due</td><td class="n">210,00</td><td class="n"></td></tr>
+        <tr><td></td><td class="accno">411</td><td>&nbsp;&nbsp;@ VAT to reclaim — <span class="mini">VAT declaration</span></td><td class="n"></td><td class="n">210,00</td></tr>
+        <tr class="sub"><td colspan="5" class="mini">→ leaves 451 with a 105,00 credit balance = net VAT owed to the state.</td></tr>
+        <tr><td class="mono">4<br><span class="mini">07/11</span></td><td class="accno">451</td><td>VAT due</td><td class="n">105,00</td><td class="n"></td></tr>
+        <tr><td></td><td class="accno">5500</td><td>&nbsp;&nbsp;@ Bank — current account</td><td class="n"></td><td class="n">105,00</td></tr>
+      </tbody>
+    </table></div>
+
+    <!-- VAT NETTING DRILL -->
+    <div class="ix" id="vatDrill">
+      <div class="ix-head"><span class="ix-kind">Netting drill</span><h3>File the VAT declaration</h3><span class="badge-live" style="margin-left:auto">repeat me</span></div>
+      <div class="ix-body">
+        <p class="mini" style="margin-top:0">Given the two balances, decide the outcome. New random figures each round.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:6px 0 4px">
+          <div class="tacct" style="min-width:180px"><div class="t-name">411 VAT to reclaim</div><div class="t-body"><div class="t-side d"><div class="t-head"><span>DEBIT</span></div><div class="t-row"><span class="ref">bal</span><span class="amt" id="vd411">—</span></div></div><div class="t-side c"><div class="t-head"><span>CREDIT</span></div></div></div></div>
+          <div class="tacct" style="min-width:180px"><div class="t-name">451 VAT due</div><div class="t-body"><div class="t-side d"><div class="t-head"><span>DEBIT</span></div></div><div class="t-side c"><div class="t-head"><span>CREDIT</span></div><div class="t-row"><span class="ref">bal</span><span class="amt" id="vd451">—</span></div></div></div></div>
+        </div>
+        <p style="text-align:center;font-weight:600;margin:14px 0 4px" id="vdQ">After netting, what does the company owe / reclaim?</p>
+        <div class="grid2" id="vdOpts"></div>
+        <div class="feedback" id="vdFb"></div>
+        <div class="scoreline"><span>Correct: <b id="vdCorrect">0</b></span><span>Attempts: <b id="vdTotal">0</b></span><span class="streak">Streak: <b id="vdStreak">0</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 SCHEME -->
+  <section class="mod" id="scheme">
+    <div class="mod-h"><span class="mod-num">05</span><h2>The invoice scheme — the master framework</h2></div>
+    <p class="mod-sub">Seven lines that turn any invoice into a journal entry. Everything else in this chapter is a special case of this.</p>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Line</th><th>Purchase invoice</th><th>Sales invoice</th></tr></thead>
+      <tbody>
+        <tr><td>Price of the goods</td><td><span class="accno">604</span> <span class="tag-d">D</span></td><td><span class="accno">70x</span> <span class="tag-c">C</span></td></tr>
+        <tr><td>− Commercial discount</td><td><span class="accno">608</span> <span class="tag-c">C</span></td><td><span class="accno">708</span> <span class="tag-d">D</span></td></tr>
+        <tr><td>+ Additional charges</td><td><span class="accno">604</span> <span class="tag-d">D</span></td><td><span class="accno">70x</span> <span class="tag-c">C</span></td></tr>
+        <tr class="tot"><td>= NET amount invoice</td><td><span class="accno">604</span> <span class="tag-d">D</span></td><td><span class="accno">70x</span> <span class="tag-c">C</span></td></tr>
+        <tr><td>− Financial discount</td><td><span class="accno">757</span> <span class="tag-c">C</span> <span class="mini">(at payment)</span></td><td><span class="accno">657</span> <span class="tag-d">D</span> <span class="mini">(at payment)</span></td></tr>
+        <tr class="tot"><td>= Basis for VAT</td><td colspan="2" class="mini">the amount VAT is calculated on</td></tr>
+        <tr><td>+ VAT (21%)</td><td><span class="accno">411</span> <span class="tag-d">D</span></td><td><span class="accno">451</span> <span class="tag-c">C</span></td></tr>
+        <tr class="tot"><td>= TOTAL invoice</td><td><span class="accno">440</span> <span class="tag-c">C</span></td><td><span class="accno">400</span> <span class="tag-d">D</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="box tip"><div class="box-ttl">◆ Three things this scheme quietly teaches</div>
+      <ul>
+        <li><strong>Commercial discount is inside the VAT basis</strong> (subtracted before NET), so it reduces the VAT. <strong>Additional charges too</strong> (added before NET) — they increase it.</li>
+        <li><strong>Financial discount also reduces the VAT basis</strong> — but it's only <em>booked</em> when quick payment actually happens (accounts 757/657 hit at payment, not at invoicing).</li>
+        <li>The <strong>supplier/debtor line (440/400)</strong> carries the total <em>as if no quick payment</em>; VAT, however, is computed on the reduced (quick-payment) basis. That mismatch is the source of most mistakes.</li>
+      </ul>
+    </div>
+
+    <!-- LIVE CALCULATOR -->
+    <div class="ix" id="calcWrap">
+      <div class="ix-head"><span class="ix-kind">Live builder</span><h3>Invoice scheme calculator</h3><span class="badge-live" style="margin-left:auto">plug in exercises</span></div>
+      <div class="ix-body">
+        <p class="mini" style="margin-top:0">Set the inputs and watch the scheme and the journal entry build in real time. Great for checking textbook exercises — type in the numbers and see every line.</p>
+        <div style="margin-bottom:14px"><span class="seg"><button id="cPurchase" class="on">Purchase invoice</button><button id="cSale">Sales invoice</button></span></div>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <label>Unit price (excl. VAT) <input type="number" id="cPrice" value="500" step="0.01"></label>
+            <label>Quantity <input type="number" id="cQty" value="20" step="1"></label>
+            <label>Commercial discount % <input type="number" id="cComm" value="5" step="0.5"></label>
+            <label>Additional charges € <input type="number" id="cCharge" value="50" step="0.01"></label>
+            <label>Financial discount % <input type="number" id="cFin" value="0" step="0.5"></label>
+            <label>VAT rate % <input type="number" id="cVat" value="21" step="1"></label>
+          </div>
+          <div>
+            <div class="scheme" id="cScheme"></div>
+          </div>
+        </div>
+        <div class="scheme-entry">
+          <h4 style="margin:.6em 0 .3em">Resulting journal entry (at invoicing)</h4>
+          <div class="table-scroll"><table class="led"><thead><tr><th class="accno">Acc.</th><th>Description</th><th class="n">Debit</th><th class="n">Credit</th></tr></thead><tbody id="cEntry"></tbody></table></div>
+          <p class="mini" id="cFinNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 COMMERCIAL -->
+  <section class="mod" id="commercial">
+    <div class="mod-h"><span class="mod-num">06</span><h2>Commercial discount</h2></div>
+    <p class="mod-sub">A trade discount on the goods themselves — part of normal operations, so it lands in the operating result.</p>
+    <p class="lead-in">A <strong>commercial (trade) discount</strong> is granted to boost sales, reward bulk orders, promote a product, compensate for damage, or favour an important customer. Because it's tied to the <em>normal operating activity</em>, it's classified under operating results:</p>
+    <ul>
+      <li>Purchase invoice → operating <strong>expenses ↓</strong> → <span class="accno">608</span> <strong>Discounts received (−)</strong>, credit.</li>
+      <li>Sales invoice → operating <strong>revenues ↓</strong> → <span class="accno">708</span> <strong>Discounts granted (−)</strong>, debit.</li>
+    </ul>
+    <div class="box gap"><div class="box-ttl">✎ Two equally-correct entry methods</div><p>The slides show both. <strong>Gross method:</strong> book the full price to 604/70x and the discount separately to 608/708. <strong>Net method (alternative):</strong> book only the net (price − discount) straight to 604/70x and skip 608/708. Same NET, same VAT, same total — pick whichever the exercise asks for. The gross method keeps the discount visible; the net method is shorter.</p></div>
+    <h4>Example — PI 20X0/001: 10 smartphones @200,00, 5% commercial discount</h4>
+    <div class="two-col">
+      <div class="table-scroll"><table class="led"><thead><tr><th>Scheme line</th><th class="n">€</th><th>Acc.</th></tr></thead><tbody>
+        <tr><td>Price 10 × 200,00</td><td class="n">2 000,00</td><td><span class="accno">604</span> <span class="tag-d">D</span></td></tr>
+        <tr><td>− Commercial 5%</td><td class="n">−100,00</td><td><span class="accno">608</span> <span class="tag-c">C</span></td></tr>
+        <tr class="tot"><td>= NET</td><td class="n">1 900,00</td><td></td></tr>
+        <tr><td>+ VAT 21%</td><td class="n">399,00</td><td><span class="accno">411</span> <span class="tag-d">D</span></td></tr>
+        <tr class="tot"><td>= TOTAL</td><td class="n">2 299,00</td><td><span class="accno">440</span> <span class="tag-c">C</span></td></tr>
+      </tbody></table></div>
+      <div class="table-scroll"><table class="led"><thead><tr><th>Gross-method entry</th><th class="n">D</th><th class="n">C</th></tr></thead><tbody>
+        <tr><td><span class="accno">604</span> Purchases of GFR</td><td class="n">2 000,00</td><td class="n"></td></tr>
+        <tr><td><span class="accno">411</span> VAT to reclaim</td><td class="n">399,00</td><td class="n"></td></tr>
+        <tr><td><span class="accno">608</span> @ Discounts received</td><td class="n"></td><td class="n">100,00</td></tr>
+        <tr><td><span class="accno">440</span> @ Suppliers</td><td class="n"></td><td class="n">2 299,00</td></tr>
+        <tr class="tot"><td>Balance</td><td class="n">2 399,00</td><td class="n">2 399,00</td></tr>
+      </tbody></table></div>
+    </div>
+  </section>
+
+  <!-- 7 CHARGES -->
+  <section class="mod" id="charges">
+    <div class="mod-h"><span class="mod-num">07</span><h2>Additional charges</h2></div>
+    <p class="mod-sub">Direct buying/selling costs added onto the invoice — transport, insurance, packaging.</p>
+    <p class="lead-in"><strong>Additional charges</strong> are direct costs of buying or selling: transport, loading/unloading, lost packaging, insurance. They move the operating result the opposite way to a discount:</p>
+    <ul><li>Purchase invoice → operating <strong>expenses ↑</strong> (folded into <span class="accno">604</span>).</li><li>Sales invoice → operating <strong>revenues ↑</strong> (folded into <span class="accno">70x</span>).</li></ul>
+    <div class="box tip"><div class="box-ttl">◆ They're inside the VAT basis</div><p>Charges are added <em>before</em> the NET line, so VAT is charged on them too. In the slides they're simply merged into the 604/70x net figure rather than given their own account.</p></div>
+    <h4>Example — PI 20X0/002: 20 computers @500,00, +50,00 transport, 5% commercial discount</h4>
+    <div class="table-scroll"><table class="led"><thead><tr><th>Scheme line</th><th class="n">€</th><th>Acc.</th></tr></thead><tbody>
+      <tr><td>Price 20 × 500,00</td><td class="n">10 000,00</td><td></td></tr>
+      <tr><td>− Commercial 5%</td><td class="n">−500,00</td><td></td></tr>
+      <tr><td>+ Transport</td><td class="n">+50,00</td><td></td></tr>
+      <tr class="tot"><td>= NET</td><td class="n">9 550,00</td><td><span class="accno">604</span> <span class="tag-d">D</span></td></tr>
+      <tr><td>+ VAT 21%</td><td class="n">2 005,50</td><td><span class="accno">411</span> <span class="tag-d">D</span></td></tr>
+      <tr class="tot"><td>= TOTAL</td><td class="n">11 555,50</td><td><span class="accno">440</span> <span class="tag-c">C</span></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <!-- 8 FINANCIAL -->
+  <section class="mod" id="financial">
+    <div class="mod-h"><span class="mod-num">08</span><h2>Financial discount (cash discount)</h2></div>
+    <p class="mod-sub">A reward for paying quickly. Because it's about <em>timing of payment</em>, it belongs to the financial result — and it's booked only when payment actually arrives.</p>
+    <p class="lead-in">A <strong>financial discount</strong> (discount for cash / quick payment) is offered if payment is made within a time limit. Paying early is a <em>financing</em> decision, so this discount is classified under <strong>financial results</strong>:</p>
+    <ul>
+      <li>Purchase invoice → financial <strong>revenues ↑</strong> → <span class="accno">757</span> <strong>Financial discounts received</strong>, credit.</li>
+      <li>Sales invoice → financial <strong>expenses ↑</strong> → <span class="accno">657</span> <strong>Financial discounts granted</strong>, debit.</li>
+    </ul>
+    <div class="box warn"><div class="box-ttl">⚠ The three things everyone gets wrong</div>
+      <ol>
+        <li><strong>VAT is computed on the reduced basis</strong> (after the financial discount), <em>assuming</em> the customer will pay quickly — even at invoicing time, before you know if they will.</li>
+        <li><strong>At invoicing, 757/657 are NOT booked.</strong> The supplier/debtor account carries the full "no quick payment" total; the discount only appears at the payment entry, and only if paid on time.</li>
+        <li><strong>If payment is late, there is no VAT correction.</strong> The buyer simply pays the full total (440 D / 5500 C for the whole amount); the reduced VAT stands.</li>
+      </ol>
+    </div>
+    <h4>Example — PI 20X0/003: 20 computers @500,00, 3% financial discount if paid in 10 days</h4>
+    <div class="two-col">
+      <div class="table-scroll"><table class="led"><thead><tr><th>Scheme line</th><th class="n">€</th></tr></thead><tbody>
+        <tr><td>NET (= price, no comm./charges)</td><td class="n">10 000,00</td></tr>
+        <tr><td>− Financial 3%</td><td class="n">−300,00</td></tr>
+        <tr class="tot"><td>= Basis for VAT</td><td class="n">9 700,00</td></tr>
+        <tr><td>+ VAT 21% (on 9 700)</td><td class="n">2 037,00</td></tr>
+        <tr class="tot"><td>= TOTAL if quick pay</td><td class="n">11 737,00</td></tr>
+        <tr><td>TOTAL if NO quick pay</td><td class="n">12 037,00</td></tr>
+      </tbody></table></div>
+      <div>
+        <p class="mini" style="margin-top:0"><strong>At invoicing (entry 5):</strong></p>
+        <div class="table-scroll"><table class="led"><tbody>
+          <tr><td><span class="accno">604</span> Purchases</td><td class="n tag-d">10 000,00</td><td class="n"></td></tr>
+          <tr><td><span class="accno">411</span> VAT to reclaim</td><td class="n tag-d">2 037,00</td><td class="n"></td></tr>
+          <tr><td><span class="accno">440</span> @ Suppliers</td><td class="n"></td><td class="n tag-c">12 037,00</td></tr>
+        </tbody></table></div>
+        <p class="mini"><strong>At quick payment (entry 6):</strong></p>
+        <div class="table-scroll"><table class="led"><tbody>
+          <tr><td><span class="accno">440</span> Suppliers</td><td class="n tag-d">12 037,00</td><td class="n"></td></tr>
+          <tr><td><span class="accno">5500</span> @ Bank</td><td class="n"></td><td class="n tag-c">11 737,00</td></tr>
+          <tr><td><span class="accno">757</span> @ Fin. discounts received</td><td class="n"></td><td class="n tag-c">300,00</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <!-- DISCOUNT CLASSIFIER TRAINER -->
+    <div class="ix" id="trainerWrap">
+      <div class="ix-head"><span class="ix-kind">Reflex trainer</span><h3>Which discount account?</h3><span class="badge-live" style="margin-left:auto">repeat me</span></div>
+      <div class="ix-body">
+        <p class="mini" style="margin-top:0">Read the situation, then pick the right discount account. This drills the two axes at once: <strong>commercial vs. financial</strong> and <strong>purchase vs. sale</strong>.</p>
+        <div class="trainer-scen">
+          <span class="pill" id="trSide"></span>
+          <p class="ctx" id="trCtx">—</p>
+        </div>
+        <div class="grid2" id="trOpts"></div>
+        <div class="feedback" id="trFb"></div>
+        <div class="scoreline"><span>Correct: <b id="trCorrect">0</b></span><span>Attempts: <b id="trTotal">0</b></span><span class="streak">Streak: <b id="trStreak">0</b></span><span>Best: <b id="trBest">0</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 CREDIT NOTES -->
+  <section class="mod" id="creditnotes">
+    <div class="mod-h"><span class="mod-num">09</span><h2>Credit notes</h2></div>
+    <p class="mod-sub">A credit note is an invoice in reverse — a proportional correction for returns or after-the-fact discounts.</p>
+    <div class="two-col">
+      <div class="box def"><div class="box-ttl">◧ Incoming credit note (ICN)</div><p>Drawn up by <strong>your supplier</strong> — you get money/credit back. Triggers: you returned purchased goods, or got an extra discount afterwards. <strong>Reverses a purchase invoice.</strong></p></div>
+      <div class="box def" style="border-left-color:var(--credit)"><div class="box-ttl" style="color:var(--credit)">◨ Outgoing credit note (OCN)</div><p>Drawn up by <strong>you, as seller</strong> — you give credit back to a customer. Triggers: goods returned to you, or an extra discount you grant afterwards. <strong>Reverses a sales invoice.</strong></p></div>
+    </div>
+    <div class="box tip"><div class="box-ttl">◆ Just flip the sides</div><p>Every account that was debited on the original invoice is now credited, and vice-versa — scaled to the returned/discounted portion. Nothing new to learn; it's the invoice scheme run backwards.</p></div>
+    <h4>ICN 20X0/001 — 2 of the 10 smartphones returned (from PI 001)</h4>
+    <div class="table-scroll"><table class="led"><thead><tr><th>Account</th><th>On original PI</th><th>On credit note</th><th class="n">€</th></tr></thead><tbody>
+      <tr><td><span class="accno">440</span> Suppliers</td><td class="tag-c">Credit</td><td class="tag-d">Debit</td><td class="n">459,80</td></tr>
+      <tr><td><span class="accno">604</span> Purchases of GFR</td><td class="tag-d">Debit</td><td class="tag-c">Credit</td><td class="n">380,00</td></tr>
+      <tr><td><span class="accno">411</span> VAT to reclaim</td><td class="tag-d">Debit</td><td class="tag-c">Credit</td><td class="n">79,80</td></tr>
+    </tbody></table></div>
+    <p class="mini">Net = 2 × 200,00 − 5% = 380,00; VAT 79,80; total 459,80 — exactly 2/10 of the original invoice.</p>
+  </section>
+
+  <!-- 10 PAYMENT -->
+  <section class="mod" id="payment">
+    <div class="mod-h"><span class="mod-num">10</span><h2>Modes of payment</h2></div>
+    <p class="mod-sub">Bank, cash, cheque, and moving money between your own accounts. Each has its own document and account.</p>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Mode</th><th>Document</th><th>Collecting a sale</th><th>Paying a purchase</th></tr></thead>
+      <tbody>
+        <tr><td>Bank account</td><td>Current account extract</td><td><span class="accno">5500</span> <span class="tag-d">D ↑</span></td><td><span class="accno">5500</span> <span class="tag-c">C ↓</span></td></tr>
+        <tr><td>Cash</td><td>Cash document</td><td><span class="accno">570</span> <span class="tag-d">D ↑</span></td><td><span class="accno">570</span> <span class="tag-c">C ↓</span></td></tr>
+        <tr><td>Cheque received</td><td>Cheque</td><td><span class="accno">540</span> <span class="tag-d">D</span> then cashed → <span class="accno">5500</span></td><td>—</td></tr>
+        <tr><td>Cheque written out</td><td>Cheque</td><td>—</td><td><span class="accno">5501</span> <span class="tag-c">C</span> then cashed → <span class="accno">5500</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="box gap"><div class="box-ttl">✎ Why cheques take two entries</div><p>A cheque isn't instant cash — there's a gap between writing/receiving it and the bank actually moving the money. So a <strong>bridge account</strong> holds the amount in the meantime: <span class="accno">540</span> for cheques you've received, <span class="accno">5501</span> for cheques you've written. When the bank confirms via the account extract, you clear the bridge into <span class="accno">5500</span>. Same idea powers internal transfers.</p></div>
+    <h4>Internal transfers of funds — account 58</h4>
+    <p>Moving cash between your <em>own</em> accounts (e.g. depositing cash at the bank) also spans two documents on two dates: the cash document and, later, the bank extract. Account <span class="accno">58 Internal transfers of funds</span> bridges the timing gap and nets to zero once both sides post.</p>
+    <div class="tgrid">
+      <div class="tacct"><div class="t-name">570 Cash at hand</div><div class="t-body"><div class="t-side d"><div class="t-head"><span>D</span></div></div><div class="t-side c"><div class="t-head"><span>C</span></div><div class="t-row"><span class="ref">(23)</span><span class="amt">2 000,00</span></div></div></div></div>
+      <div class="tacct"><div class="t-name">58 Internal transfers</div><div class="t-body"><div class="t-side d"><div class="t-head"><span>D</span></div><div class="t-row"><span class="ref">(23)</span><span class="amt">2 000,00</span></div></div><div class="t-side c"><div class="t-head"><span>C</span></div><div class="t-row"><span class="ref">(24)</span><span class="amt">2 000,00</span></div></div></div></div>
+      <div class="tacct"><div class="t-name">5500 Bank — C/A</div><div class="t-body"><div class="t-side d"><div class="t-head"><span>D</span></div><div class="t-row"><span class="ref">(24)</span><span class="amt">2 000,00</span></div></div><div class="t-side c"><div class="t-head"><span>C</span></div></div></div></div>
+    </div>
+    <p class="mini">(23) 21/11 cash leaves the till: <span class="mono">58 D / 570 C</span>. (24) 25/11 money lands at the bank: <span class="mono">5500 D / 58 C</span>. Account 58 opens and closes at 2 000,00 — back to zero.</p>
+
+    <!-- PAYMENT QUIZ -->
+    <div class="ix" data-quiz="pay">
+      <div class="ix-head"><span class="ix-kind">Quiz</span><h3>Which account moves?</h3></div>
+      <div class="ix-body quiz"></div>
+    </div>
+  </section>
+
+  <!-- 11 TELEROMEO -->
+  <section class="mod" id="teleromeo">
+    <div class="mod-h"><span class="mod-num">11</span><h2>Full case: TELEROMEO plc</h2></div>
+    <p class="mod-sub">A trader of multimedia devices. Opening bank 15 000,00, opening cash 3 000,00. Twenty-four entries covering every transaction type — try each before revealing, then journalise them in the drill.</p>
+    <div id="txCards"></div>
+
+    <!-- JOURNAL DRILL -->
+    <div class="ix" id="journalDrill">
+      <div class="ix-head"><span class="ix-kind">Journalizing drill</span><h3>Post it yourself — debit or credit each line?</h3><span class="badge-live" style="margin-left:auto">repeat me</span></div>
+      <div class="ix-body">
+        <div class="jd-scen" id="jdScen"></div>
+        <div id="jdLines"></div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="jdCheck">Check entry</button>
+          <button class="btn btn-ghost" id="jdNext" disabled>Next transaction ›</button>
+        </div>
+        <div class="feedback" id="jdFb"></div>
+        <div class="scoreline"><span>Transaction <b id="jdIdx">1</b> / <b id="jdTot">0</b></span><span>Solved: <b id="jdSolved">0</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 EXAM -->
+  <section class="mod" id="exam">
+    <div class="mod-h"><span class="mod-num">12</span><h2>Exam readiness</h2></div>
+    <p class="mod-sub">The lecturer's objectives as a checklist. Tick each when you can do it unaided.</p>
+    <ul class="checklist" id="objList">
+      <li data-obj="1"><span class="cbx">✓</span><span class="ct">Describe in my own words <strong>how VAT works</strong> (indirect tax, netting, borne by the final consumer).</span></li>
+      <li data-obj="2"><span class="cbx">✓</span><span class="ct">Record a <strong>VAT declaration</strong> from given purchase and sales invoices (close the smaller balance, settle the difference).</span></li>
+      <li data-obj="3"><span class="cbx">✓</span><span class="ct">Record purchase/sales invoices with <strong>commercial discounts</strong> (gross &amp; net methods).</span></li>
+      <li data-obj="4"><span class="cbx">✓</span><span class="ct">Record invoices with <strong>additional charges</strong>.</span></li>
+      <li data-obj="5"><span class="cbx">✓</span><span class="ct">Record invoices with <strong>financial discounts</strong> — VAT on reduced basis, discount booked at payment, no correction if late.</span></li>
+      <li data-obj="6"><span class="cbx">✓</span><span class="ct">Record <strong>incoming &amp; outgoing credit notes</strong> as proportional reversals.</span></li>
+      <li data-obj="7"><span class="cbx">✓</span><span class="ct">Record payments by <strong>bank, cash and cheque</strong> (incl. the bridge accounts 540 / 5501).</span></li>
+      <li data-obj="8"><span class="cbx">✓</span><span class="ct">Record <strong>internal transfers of funds</strong> using account 58.</span></li>
+      <li data-obj="9"><span class="cbx">✓</span><span class="ct">Explain the <strong>impact</strong> of these transactions on the balance sheet and income statement.</span></li>
+    </ul>
+    <div class="box tip"><div class="box-ttl">◆ Where to read &amp; practise</div><p>Textbook <em>A Practical Guide to Financial Accounting</em>, <strong>Chapter 5 (pp. 85–118)</strong>. Practise with <strong>Ex. 1: AMERICANO (p. 119)</strong>, <strong>Ex. 2: BLUE NOTE (p. 120)</strong>, <strong>Ex. 3: GRASSHOPPER (p. 121)</strong>. Tip: plug each exercise's numbers into the Module 5 calculator to self-check.</p></div>
+    <div class="box warn"><div class="box-ttl">⚠ Top exam traps for this chapter</div>
+      <ul>
+        <li><strong>Commercial vs. financial discount:</strong> commercial → operating (608/708); financial → financial (757/657). Different accounts, different part of the income statement.</li>
+        <li><strong>Financial discount timing:</strong> not booked at invoicing; VAT already on the reduced basis; no VAT correction if paid late.</li>
+        <li><strong>60 vs. 61:</strong> resale goods/materials (60) vs. services &amp; other goods like rent/phone (61).</li>
+        <li><strong>Fixed-asset purchase is not a commercial transaction</strong> — don't route it through 604.</li>
+        <li><strong>Cheques &amp; transfers need two entries</strong> via a bridge account (540 / 5501 / 58).</li>
+      </ul>
+    </div>
+    <div class="ix" data-quiz="mixed">
+      <div class="ix-head"><span class="ix-kind">Final quiz</span><h3>Mixed review — the whole chapter</h3></div>
+      <div class="ix-body quiz"></div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Chapter 5 · Fundamental Commercial Transactions</strong> — interactive study guide.</p>
+    <p class="mini">Built from the lecture slides (V. Ghijselinck, Internal &amp; External Financial Reporting, 2025–2026) and expanded with the connective explanations usually given verbally. Figures follow the TELEROMEO plc case. Progress and drill scores save locally in this browser — nothing is uploaded. Part of the same coursebook series as Chapter 3.</p>
+  </div>
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const FLASHCARDS=[
+  {cat:"Scope",front:"Commercial transaction",back:"Buying goods/services to use in the trading or production process, or selling goods/services. NOT buying fixed assets (that's investment)."},
+  {cat:"VAT",front:"VAT — one-line summary",back:"Indirect consumer tax on value added, collected by companies via netting, borne entirely by the final consumer. Not an expense or revenue for the company."},
+  {cat:"VAT",front:"411 vs 451",back:"411 VAT to reclaim = asset (VAT paid to suppliers). 451 VAT due = liability (VAT collected from customers, owed to the state)."},
+  {cat:"VAT",front:"VAT declaration",back:"Periodic settlement: compare 411 and 451 balances, close the smaller into the larger, then settle the remaining net amount with the tax office through the bank."},
+  {cat:"Scheme",front:"Invoice scheme (7 lines)",back:"Price − commercial discount + additional charges = NET − financial discount = Basis for VAT + VAT = TOTAL."},
+  {cat:"60 vs 61",front:"Group 60 vs 61",back:"60 = purchases directly in the trading/production process (resale goods, raw materials). 61 = services & other goods not directly ascribable (rent, insurance, phone, internet)."},
+  {cat:"Discount",front:"Commercial discount",back:"Trade discount on the goods; part of normal operations → operating result. Purchase: 608 Discounts received (C). Sale: 708 Discounts granted (D). Inside the VAT basis."},
+  {cat:"Discount",front:"Financial discount",back:"Cash/quick-payment discount; a financing matter → financial result. Purchase: 757 (financial revenue, C). Sale: 657 (financial expense, D). Booked at payment, not invoicing."},
+  {cat:"Financial disc.",front:"Financial discount — VAT rule",back:"VAT is calculated on the reduced basis (after the financial discount), assuming quick payment. If payment is late, the full total is paid and there is NO VAT correction."},
+  {cat:"Charges",front:"Additional charges",back:"Direct buying/selling costs (transport, insurance, packaging). Added before NET (so inside the VAT basis). Purchase: expenses ↑ (604). Sale: revenues ↑ (70x)."},
+  {cat:"Credit note",front:"ICN vs OCN",back:"Incoming credit note = from your supplier, reverses a purchase. Outgoing credit note = you issue it as seller, reverses a sale. Proportional reversal of the original entry."},
+  {cat:"Payment",front:"540 vs 5501",back:"540 Amounts overdue/in collection = cheques you RECEIVED, awaiting cashing. 5501 Cheques written out = cheques you ISSUED, awaiting cashing. Both clear into 5500 later."},
+  {cat:"Payment",front:"Account 58",back:"Internal transfers of funds — a bridge account offsetting timing differences when moving cash between your own accounts (e.g. cash → bank). Nets to zero."},
+  {cat:"Timing",front:"Why bridge accounts?",back:"Cheques and internal transfers span two documents/dates. A bridge account (540, 5501, 58) holds the amount until the bank extract confirms the move, then it's cleared to 5500."},
+];
+
+// discount classifier: side=purchase/sale, type=commercial/financial => account
+const TRAINER=[
+  {side:"purchase",type:"commercial",ctx:"You buy in bulk and the supplier knocks 5% off the goods on the invoice."},
+  {side:"sale",type:"commercial",ctx:"You give a loyal customer 5% off the price of the goods on their invoice."},
+  {side:"purchase",type:"financial",ctx:"Your supplier offers 3% off if you pay within 10 days."},
+  {side:"sale",type:"financial",ctx:"You offer a customer 2% off if they pay their invoice within a week."},
+  {side:"purchase",type:"commercial",ctx:"Goods arrived slightly damaged, so the supplier grants a discount on the price."},
+  {side:"sale",type:"financial",ctx:"To collect faster, you reward quick payers with a small discount for cash."},
+  {side:"purchase",type:"financial",ctx:"You pay a purchase invoice early and take the cash-payment discount offered."},
+  {side:"sale",type:"commercial",ctx:"During a promotion you cut the listed sale price for all buyers."},
+];
+const ACCOUNTS={ "purchase-commercial":{a:"608",n:"Discounts received (−)",side:"C"},
+  "sale-commercial":{a:"708",n:"Discounts granted (−)",side:"D"},
+  "purchase-financial":{a:"757",n:"Financial discounts received",side:"C"},
+  "sale-financial":{a:"657",n:"Financial discounts granted",side:"D"} };
+
+const TX=[
+  {n:1,date:"01/10",doc:"PI 20X0/001 — 10 smartphones @200,00, 5% commercial discount (gross method).",
+   lines:[["Purchases of goods for resale","604","2 000,00","D"],["VAT to reclaim","411","399,00","D"],["Discounts received (−)","608","100,00","C"],["Suppliers","440","2 299,00","C"]]},
+  {n:2,date:"03/10",doc:"SI 20X0/001 — sale of 2 smartphones @350,00, 5% commercial discount.",
+   lines:[["Trade debtors","400","804,65","D"],["Discounts granted (−)","708","35,00","D"],["Sales of goods for resale","70x","700,00","C"],["VAT due","451","139,65","C"]]},
+  {n:3,date:"05/10",doc:"PI 20X0/002 — 20 computers @500,00, +50,00 transport, 5% commercial discount.",
+   lines:[["Purchases of goods for resale","604","9 550,00","D"],["VAT to reclaim","411","2 005,50","D"],["Suppliers","440","11 555,50","C"]]},
+  {n:4,date:"07/10",doc:"SI 20X0/002 — 5 computers @750,00, +50,00 installation, 5% commercial discount.",
+   lines:[["Trade debtors","400","4 371,13","D"],["Sales of goods for resale","70x","3 612,50","C"],["VAT due","451","758,63","C"]]},
+  {n:5,date:"09/10",doc:"PI 20X0/003 — 20 computers @500,00, 3% financial discount if paid in 10 days.",
+   lines:[["Purchases of goods for resale","604","10 000,00","D"],["VAT to reclaim","411","2 037,00","D"],["Suppliers","440","12 037,00","C"]]},
+  {n:6,date:"15/10",doc:"C/A 20X0/001 — payment of PI 003 within the 10-day period (financial discount taken).",
+   lines:[["Suppliers","440","12 037,00","D"],["Bank X — current account","5500","11 737,00","C"],["Financial discounts received","757","300,00","C"]]},
+  {n:7,date:"17/10",doc:"SI 20X0/003 — 3 computers @750,00, 3% financial discount if paid in 10 days.",
+   lines:[["Trade debtors","400","2 708,33","D"],["Sales of goods for resale","70x","2 250,00","C"],["VAT due","451","458,33","C"]]},
+  {n:8,date:"25/10",doc:"C/A 20X0/002 — collection of SI 003 within the 10-day period (financial discount granted).",
+   lines:[["Bank X — current account","5500","2 640,83","D"],["Financial discounts granted","657","67,50","D"],["Trade debtors","400","2 708,33","C"]]},
+  {n:9,date:"27/10",doc:"ICN 20X0/001 — 2 smartphones returned (from PI 001), damaged.",
+   lines:[["Suppliers","440","459,80","D"],["Purchases of goods for resale","604","380,00","C"],["VAT to reclaim","411","79,80","C"]]},
+  {n:10,date:"31/10",doc:"OCN 20X0/001 — extra 5% discount granted afterwards on SI 001.",
+   lines:[["Sales of goods for resale","70x","35,00","D"],["VAT due","451","7,35","D"],["Trade debtors","400","42,35","C"]]},
+  {n:11,date:"01/11",doc:"C/A 20X0/003 — settle PI 001 by bank, considering ICN 001 (2 299,00 − 459,80).",
+   lines:[["Suppliers","440","1 839,20","D"],["Bank X — current account","5500","1 839,20","C"]]},
+  {n:12,date:"02/11",doc:"C/A 20X0/004 — collect SI 001 by bank, considering OCN 001 (804,65 − 42,35).",
+   lines:[["Bank X — current account","5500","762,30","D"],["Trade debtors","400","762,30","C"]]},
+  {n:13,date:"03/11",doc:"PI 20X0/004 — 5 smartphones, total 1 210,00 incl. 21% VAT (paid immediately, cash).",
+   lines:[["Purchases of goods for resale","604","1 000,00","D"],["VAT to reclaim","411","210,00","D"],["Suppliers","440","1 210,00","C"]]},
+  {n:14,date:"03/11",doc:"CD 20X0/001 — cash payment of PI 004.",
+   lines:[["Suppliers","440","1 210,00","D"],["Cash at hand","570","1 210,00","C"]]},
+  {n:15,date:"05/11",doc:"SI 20X0/004 — sale of 1 smartphone @400,00 (paid immediately, cash).",
+   lines:[["Trade debtors","400","484,00","D"],["Sales of goods for resale","70x","400,00","C"],["VAT due","451","84,00","C"]]},
+  {n:16,date:"05/11",doc:"CD 20X0/002 — cash collection of SI 004.",
+   lines:[["Cash at hand","570","484,00","D"],["Trade debtors","400","484,00","C"]]},
+  {n:17,date:"07/11",doc:"PI 20X0/005 — 5 smartwatches @750,00 net (paid immediately by cheque).",
+   lines:[["Purchases of goods for resale","604","750,00","D"],["VAT to reclaim","411","157,50","D"],["Suppliers","440","907,50","C"]]},
+  {n:18,date:"07/11",doc:"Bank cheque 20X0/001 — cheque written out to settle PI 005.",
+   lines:[["Suppliers","440","907,50","D"],["Bank X — cheques written out","5501","907,50","C"]]},
+  {n:19,date:"09/11",doc:"C/A 20X0/005 — the issued cheque is cashed (taken from our bank account).",
+   lines:[["Bank X — cheques written out","5501","907,50","D"],["Bank X — current account","5500","907,50","C"]]},
+  {n:20,date:"13/11",doc:"SI 20X0/005 — sale of 1 smartwatch @250,00 (customer pays by cheque).",
+   lines:[["Trade debtors","400","302,50","D"],["Sales of goods for resale","70x","250,00","C"],["VAT due","451","52,50","C"]]},
+  {n:21,date:"13/11",doc:"Bank cheque 20X0/002 — cheque received from the customer for SI 005.",
+   lines:[["Amounts overdue / in collection","540","302,50","D"],["Trade debtors","400","302,50","C"]]},
+  {n:22,date:"17/11",doc:"C/A 20X0/006 — the received cheque is cashed (put on our bank account).",
+   lines:[["Bank X — current account","5500","302,50","D"],["Amounts overdue / in collection","540","302,50","C"]]},
+  {n:23,date:"21/11",doc:"CD 20X0/003 — take 2 000,00 cash to deposit at the bank (cash side).",
+   lines:[["Internal transfers of funds","58","2 000,00","D"],["Cash at hand","570","2 000,00","C"]]},
+  {n:24,date:"25/11",doc:"C/A 20X0/007 — the 2 000,00 lands on the current account (bank side).",
+   lines:[["Bank X — current account","5500","2 000,00","D"],["Internal transfers of funds","58","2 000,00","C"]]},
+];
+
+const QUIZZES={
+  pay:[
+    {q:"You receive a cheque from a customer. Which account is debited first?",o:["5500 Bank — current account","540 Amounts overdue / in process of collection","5501 Cheques written out","570 Cash at hand"],c:1,e:"A received cheque goes to the bridge account 540 until the bank cashes it; only then does it move to 5500."},
+    {q:"You write a cheque to pay a supplier. At the moment you write it:",o:["5500 is credited","5501 Cheques written out is credited","570 is credited","No entry until it clears"],c:1,e:"The issued cheque credits 5501 (a bridge). When the bank extract confirms cashing, 5501 D / 5500 C clears it."},
+    {q:"You deposit 2 000 cash into the company bank account. The first (cash-document) entry is:",o:["5500 D / 570 C","58 D / 570 C","570 D / 58 C","58 D / 5500 C"],c:1,e:"Cash leaves the till through the bridge: 58 Internal transfers D / 570 Cash C. The later bank extract does 5500 D / 58 C."},
+    {q:"Collecting a sale by bank transfer affects account 5500 how?",o:["Debit (increase)","Credit (decrease)","Not at all","Only VAT changes"],c:0,e:"Money comes in → the asset 5500 increases → debit."},
+  ],
+  mixed:[
+    {q:"A commercial discount on a purchase is booked to…",o:["757 Financial discounts received","608 Discounts received (−)","657 Financial discounts granted","708 Discounts granted (−)"],c:1,e:"Commercial discount = operating result. On a purchase it reduces expense via 608 (credit)."},
+    {q:"A financial discount is classified under which part of the income statement?",o:["Operating result","Financial result","Non-recurring result","It's not in the income statement"],c:1,e:"Quick-payment discounts concern the timing of payment (a financing decision) → financial result (757/657)."},
+    {q:"On a purchase invoice with a 3% financial discount, VAT is calculated on…",o:["The full price","The price after the financial discount (reduced basis)","The price plus charges only","Zero until paid"],c:1,e:"VAT uses the reduced basis assuming quick payment — even at invoicing, before you know if the buyer pays early."},
+    {q:"A customer pays a financial-discount invoice LATE. What happens to VAT?",o:["VAT is increased to the full basis","VAT is corrected downward","No VAT correction — full total is simply paid","The sale is reversed"],c:2,e:"If paid late, the buyer pays the full 'no quick payment' total and there is NO VAT correction."},
+    {q:"An incoming credit note (ICN) does what to the original purchase entry?",o:["Duplicates it","Reverses it proportionally","Only affects VAT","Converts it to a fixed asset"],c:1,e:"A credit note is the invoice run backwards — debited accounts become credited, scaled to the returned/discounted part."},
+    {q:"Buying a delivery van for the business is booked as…",o:["604 Purchases of goods for resale","A fixed asset (investment), not a commercial transaction","61 Services and other goods","708 Discounts granted"],c:1,e:"A van is a fixed asset — capitalised, not a commercial purchase. Don't route it through 604."},
+  ],
+};
+
+/* ================= PERSISTENCE ================= */
+const store={get(k,d){try{const v=localStorage.getItem("ch5_"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("ch5_"+k,JSON.stringify(v))}catch(e){}}};
+
+/* ================= THEME ================= */
+(function(){const btn=document.getElementById("themeBtn");const saved=store.get("theme",null);if(saved)document.documentElement.setAttribute("data-theme",saved);
+  btn.addEventListener("click",()=>{const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;const next=isDark?"light":"dark";document.documentElement.setAttribute("data-theme",next);store.set("theme",next);});})();
+
+/* Flashcards deck injected under Module 2 accounts (create container) */
+(function(){
+  const anchor=document.getElementById("accounts");
+  const ix=document.createElement("div");ix.className="ix";
+  ix.innerHTML='<div class="ix-head"><span class="ix-kind">Flashcards</span><h3>Core vocabulary — flip &amp; recall</h3></div>'+
+    '<div class="ix-body"><p class="mini" style="margin-top:0">Click a card to flip. Answer aloud before flipping.</p>'+
+    '<div class="deck"><div class="card" id="flashcard" tabindex="0" role="button" aria-label="Flashcard, click to flip">'+
+    '<div class="face front"><div class="kicker" id="fcCat">Term</div><div class="term" id="fcFront"></div></div>'+
+    '<div class="face back"><div class="kicker">Definition</div><div class="def" id="fcBack"></div></div></div></div>'+
+    '<div class="deck-bar"><button class="btn btn-ghost" id="fcPrev">‹ Prev</button>'+
+    '<span class="deck-count"><span id="fcIdx">1</span> / <span id="fcTot">0</span></span>'+
+    '<button class="btn btn-primary" id="fcNext">Next ›</button></div></div>';
+  anchor.appendChild(ix);
+  let i=0;const card=document.getElementById("flashcard"),front=document.getElementById("fcFront"),back=document.getElementById("fcBack"),cat=document.getElementById("fcCat"),idx=document.getElementById("fcIdx"),tot=document.getElementById("fcTot");
+  tot.textContent=FLASHCARDS.length;
+  function render(){const c=FLASHCARDS[i];front.textContent=c.front;back.textContent=c.back;cat.textContent=c.cat;idx.textContent=i+1;card.classList.remove("flip")}
+  card.addEventListener("click",()=>card.classList.toggle("flip"));
+  card.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();card.classList.toggle("flip")}});
+  document.getElementById("fcNext").addEventListener("click",()=>{i=(i+1)%FLASHCARDS.length;render();bumpProgress("deck",1)});
+  document.getElementById("fcPrev").addEventListener("click",()=>{i=(i-1+FLASHCARDS.length)%FLASHCARDS.length;render()});
+  render();
+})();
+
+/* ================= VAT NETTING DRILL ================= */
+(function(){
+  const e={a:document.getElementById("vd411"),b:document.getElementById("vd451"),opts:document.getElementById("vdOpts"),
+    fb:document.getElementById("vdFb"),c:document.getElementById("vdCorrect"),t:document.getElementById("vdTotal"),s:document.getElementById("vdStreak")};
+  let cur=null,correct=store.get("vd_c",0),total=store.get("vd_t",0),streak=0;
+  e.c.textContent=correct;e.t.textContent=total;
+  function fmt(n){return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function next(){
+    const reclaim=Math.round((Math.random()*400+50)*100)/100;
+    const due=Math.round((Math.random()*400+50)*100)/100;
+    e.a.textContent=fmt(reclaim);e.b.textContent=fmt(due);
+    const net=Math.round((due-reclaim)*100)/100;
+    let correctLabel;
+    if(net>0)correctLabel="Owe the state "+fmt(net);
+    else if(net<0)correctLabel="Reclaim "+fmt(-net)+" from the state";
+    else correctLabel="Nothing — it nets to zero";
+    const wrongs=[
+      "Owe the state "+fmt(due),
+      "Reclaim "+fmt(reclaim)+" from the state",
+      "Owe the state "+fmt(reclaim+due),
+      "Reclaim "+fmt(Math.abs(net)+10)+" from the state"
+    ].filter(x=>x!==correctLabel);
+    const opts=[correctLabel,wrongs[0],wrongs[1]].sort(()=>Math.random()-0.5);
+    cur={correctLabel};
+    e.opts.innerHTML="";
+    opts.forEach(o=>{const b=document.createElement("button");b.className="optbtn";b.textContent=o;b.addEventListener("click",()=>guess(o,b));e.opts.appendChild(b);});
+    e.fb.className="feedback";
+  }
+  function guess(o,btn){
+    total++;e.t.textContent=total;store.set("vd_t",total);
+    const ok=o===cur.correctLabel;
+    [...e.opts.children].forEach(b=>{b.disabled=true;if(b.textContent===cur.correctLabel)b.classList.add("correct")});
+    if(ok){correct++;streak++;e.c.textContent=correct;store.set("vd_c",correct);e.s.textContent=streak;e.fb.className="feedback show ok";
+      e.fb.innerHTML="✓ Right. Close the smaller balance into the larger; the remaining balance is the net position. "+(cur.correctLabel.startsWith("Owe")?"451 was larger → net VAT due.":cur.correctLabel.startsWith("Reclaim")?"411 was larger → net VAT receivable.":"Equal balances → nothing to settle.");
+      bumpProgress("vat",Math.min(streak,8)/8);
+    }else{btn.classList.add("wrong");streak=0;e.s.textContent=0;e.fb.className="feedback show no";e.fb.innerHTML="✗ Net = VAT due − VAT to reclaim. "+cur.correctLabel+".";}
+    setTimeout(next,ok?900:2100);
+  }
+  next();
+})();
+
+/* ================= INVOICE CALCULATOR ================= */
+(function(){
+  let mode="purchase";
+  const $=id=>document.getElementById(id);
+  const els={price:$("cPrice"),qty:$("cQty"),comm:$("cComm"),charge:$("cCharge"),fin:$("cFin"),vat:$("cVat"),scheme:$("cScheme"),entry:$("cEntry"),note:$("cFinNote")};
+  function fmt(n){return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function num(el){const v=parseFloat(el.value);return isNaN(v)?0:v}
+  function calc(){
+    const price=num(els.price)*num(els.qty);
+    const comm=price*num(els.comm)/100;
+    const charge=num(els.charge);
+    const net=price-comm+charge;
+    const fin=net*num(els.fin)/100;
+    const basis=net-fin;
+    const vat=Math.round(basis*num(els.vat)/100*100)/100;
+    const totalQuick=Math.round((basis+vat)*100)/100;
+    const totalNo=Math.round((net+vat)*100)/100;
+    const P=mode==="purchase";
+    const goodsAcc=P?"604":"70x",goodsSide=P?"d":"c";
+    const commAcc=P?"608":"708",commSide=P?"c":"d";
+    const vatAcc=P?"411":"451",vatSide=P?"d":"c";
+    const totAcc=P?"440":"400",totSide=P?"c":"d";
+    const finAcc=P?"757":"657",finSide=P?"c":"d";
+    // scheme render
+    const rows=[
+      ["Price of the goods",price,goodsAcc,goodsSide],
+      ["− Commercial discount",-comm,commAcc,commSide],
+      ["+ Additional charges",charge,goodsAcc,goodsSide],
+      ["= NET amount",net,goodsAcc,goodsSide,"total"],
+      ["− Financial discount",-fin,"("+finAcc+")",finSide],
+      ["= Basis for VAT",basis,"","", "basis"],
+      ["+ VAT",vat,vatAcc,vatSide],
+      ["= TOTAL"+(num(els.fin)>0?" (quick pay)":""),num(els.fin)>0?totalQuick:totalNo,totAcc,totSide,"total"],
+    ];
+    els.scheme.innerHTML=rows.map(r=>{
+      const cls=r[4]?(" "+r[4]):"";
+      const acc=r[2]?('<span class="acc '+r[3]+'">'+r[2]+" "+(r[3]==="d"?"D":r[3]==="c"?"C":"")+'</span>'):'<span class="acc"></span>';
+      return '<div class="srow'+cls+'"><span class="lab">'+r[0]+'</span><span class="val">'+fmt(r[1])+'</span>'+acc+'</div>';
+    }).join("");
+    // entry (at invoicing — financial discount NOT booked; total uses NO-quick-pay, VAT on reduced basis)
+    const lines=[];
+    if(P){
+      lines.push([goodsAcc,"Purchases of goods for resale",net,0]);
+      if(comm>0)lines.push([commAcc,"@ Discounts received (−)",0,comm]);
+      lines.push([vatAcc,"VAT to reclaim",vat,0]);
+      lines.push([totAcc,"@ Suppliers",0,totalNo]);
+    }else{
+      lines.push([totAcc,"Trade debtors",totalNo,0]);
+      if(comm>0)lines.push([commAcc,"Discounts granted (−)",comm,0]);
+      lines.push([goodsAcc,"@ Sales of goods for resale",0,net]);
+      lines.push([vatAcc,"@ VAT due",0,vat]);
+    }
+    // Note: with commercial gross method we show 608/708 separately and goods at gross price
+    // But to keep entry balanced with 'net' on goods, use net method (goods = net). Both valid; we use net method here for clarity when charges present.
+    // Recompute using net method (no separate 608/708):
+    const lines2=[];
+    if(P){lines2.push([goodsAcc,"Purchases of goods for resale",net,0]);lines2.push([vatAcc,"VAT to reclaim",vat,0]);lines2.push([totAcc,"@ Suppliers",0,totalNo]);}
+    else{lines2.push([totAcc,"Trade debtors",totalNo,0]);lines2.push([goodsAcc,"@ Sales of goods for resale",0,net]);lines2.push([vatAcc,"@ VAT due",0,vat]);}
+    els.entry.innerHTML=lines2.map(l=>'<tr><td class="accno">'+l[0]+'</td><td>'+l[1]+'</td><td class="n">'+(l[2]?fmt(l[2]):"")+'</td><td class="n">'+(l[3]?fmt(l[3]):"")+'</td></tr>').join("");
+    els.note.innerHTML=num(els.fin)>0
+      ? "Financial discount present: VAT is on the reduced basis ("+fmt(basis)+"). At invoicing the "+(P?"supplier":"debtor")+" line carries the <b>no-quick-pay</b> total ("+fmt(totalNo)+"); account "+finAcc+" is booked only <b>at payment</b> ("+fmt(fin)+")."
+      : "Net method shown (commercial discount folded into the goods line). Debit total = credit total = "+fmt(P?(net+vat):(totalNo))+".";
+  }
+  ["price","qty","comm","charge","fin","vat"].forEach(k=>els[k].addEventListener("input",()=>{calc();bumpProgress("calc",1)}));
+  $("cPurchase").addEventListener("click",()=>{mode="purchase";$("cPurchase").classList.add("on");$("cSale").classList.remove("on");calc()});
+  $("cSale").addEventListener("click",()=>{mode="sale";$("cSale").classList.add("on");$("cPurchase").classList.remove("on");calc()});
+  calc();
+})();
+
+/* ================= DISCOUNT CLASSIFIER TRAINER ================= */
+(function(){
+  const el={side:document.getElementById("trSide"),ctx:document.getElementById("trCtx"),opts:document.getElementById("trOpts"),
+    fb:document.getElementById("trFb"),c:document.getElementById("trCorrect"),t:document.getElementById("trTotal"),s:document.getElementById("trStreak"),b:document.getElementById("trBest")};
+  let cur=null,correct=store.get("tr_c",0),total=store.get("tr_t",0),streak=0,best=store.get("tr_b",0);
+  el.c.textContent=correct;el.t.textContent=total;el.b.textContent=best;
+  const ALL=Object.keys(ACCOUNTS).map(k=>({key:k,...ACCOUNTS[k]}));
+  function next(){
+    const pick=TRAINER[Math.floor(Math.random()*TRAINER.length)];
+    const key=pick.side+"-"+pick.type;cur={key,side:pick.side};
+    el.side.className="pill "+pick.side;el.side.textContent=pick.side==="purchase"?"On a purchase":"On a sale";
+    el.ctx.textContent=pick.ctx;
+    // options: correct + 3 others
+    const correctA=ACCOUNTS[key];
+    const others=ALL.filter(a=>a.key!==key).sort(()=>Math.random()-0.5).slice(0,3);
+    const opts=[{key,...correctA},...others].sort(()=>Math.random()-0.5);
+    el.opts.innerHTML="";
+    opts.forEach(o=>{const btn=document.createElement("button");btn.className="optbtn";
+      btn.innerHTML='<span class="an">'+o.a+'</span> '+o.n+' <span class="mini">('+(o.side==="D"?"debit":"credit")+')</span>';
+      btn.addEventListener("click",()=>guess(o.key,btn));el.opts.appendChild(btn);});
+    el.fb.className="feedback";
+  }
+  function guess(key,btn){
+    total++;el.t.textContent=total;store.set("tr_t",total);
+    const ok=key===cur.key;
+    [...el.opts.children].forEach(b=>b.disabled=true);
+    const right=ACCOUNTS[cur.key];
+    [...el.opts.children].forEach(b=>{if(b.querySelector(".an").textContent===right.a)b.classList.add("correct")});
+    const type=cur.key.split("-")[1];
+    if(ok){correct++;streak++;el.c.textContent=correct;store.set("tr_c",correct);if(streak>best){best=streak;el.b.textContent=best;store.set("tr_b",best)}el.s.textContent=streak;
+      el.fb.className="feedback show ok";el.fb.innerHTML="✓ Correct — "+right.a+" "+right.n+". "+(type==="commercial"?"Commercial → operating result.":"Financial → financial result (booked at payment).");
+      bumpProgress("trainer",Math.min(streak,12)/12);
+    }else{btn.classList.add("wrong");streak=0;el.s.textContent=0;el.fb.className="feedback show no";
+      el.fb.innerHTML="✗ It's "+right.a+" "+right.n+". "+(type==="commercial"?"A discount on the goods = commercial = operating (608/708).":"A quick-payment discount = financial = financial result (757/657).");}
+    setTimeout(next,ok?850:2200);
+  }
+  next();
+})();
+
+/* ================= QUIZ ENGINE ================= */
+document.querySelectorAll("[data-quiz]").forEach(wrap=>{
+  const key=wrap.getAttribute("data-quiz");const bank=QUIZZES[key];if(!bank)return;
+  const body=wrap.querySelector(".quiz");let qi=0,score=0,answered=false;
+  function render(){const item=bank[qi];answered=false;body.innerHTML="";
+    const q=document.createElement("div");q.className="q";q.innerHTML=(qi+1)+". "+item.q;body.appendChild(q);
+    const opts=document.createElement("div");opts.className="opts";
+    item.o.forEach((txt,k)=>{const b=document.createElement("button");b.className="opt";b.innerHTML='<span class="mk">'+String.fromCharCode(65+k)+'</span><span>'+txt+'</span>';b.addEventListener("click",()=>choose(k,b,opts,item));opts.appendChild(b);});
+    body.appendChild(opts);
+    const ex=document.createElement("div");ex.className="explain";ex.id="ex_"+key;body.appendChild(ex);
+    const foot=document.createElement("div");foot.className="quiz-foot";foot.innerHTML='<span class="quiz-prog">Question '+(qi+1)+' / '+bank.length+' · score '+score+'</span>';
+    const nb=document.createElement("button");nb.className="btn btn-primary";nb.textContent=qi<bank.length-1?"Next question ›":"Restart quiz";
+    nb.addEventListener("click",()=>{if(qi<bank.length-1){qi++}else{qi=0;score=0}render()});foot.appendChild(nb);body.appendChild(foot);}
+  function choose(k,btn,opts,item){if(answered)return;answered=true;
+    [...opts.children].forEach((b,idx)=>{b.disabled=true;if(idx===item.c)b.classList.add("correct")});
+    if(k!==item.c)btn.classList.add("wrong");else{score++;bumpProgress("quiz_"+key+"_"+qi,1)}
+    const ex=document.getElementById("ex_"+key);ex.className="explain show";ex.innerHTML=(k===item.c?"<b>Correct.</b> ":"<b>Answer: "+String.fromCharCode(65+item.c)+".</b> ")+item.e;}
+  render();
+});
+
+/* ================= TELEROMEO REVEAL CARDS ================= */
+(function(){
+  const host=document.getElementById("txCards");if(!host)return;
+  TX.forEach(tx=>{
+    const d=document.createElement("details");d.className="reveal";
+    const rows=tx.lines.map(l=>{const side=l[3]==="D"?'<span class="tag-d">Debit</span>':'<span class="tag-c">Credit</span>';
+      return '<tr><td>'+l[0]+' <span class="mono" style="color:var(--brand);font-size:11.5px">'+l[1]+'</span></td><td>'+side+'</td><td class="n">'+l[2]+'</td></tr>';}).join("");
+    d.innerHTML='<summary><span><span class="mono" style="color:var(--brand);font-weight:700">('+tx.n+') '+tx.date+'</span> — '+tx.doc+'</span></summary>'+
+      '<div class="rc"><div class="table-scroll"><table class="led"><thead><tr><th>Account</th><th>Entry</th><th class="n">Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+    host.appendChild(d);
+  });
+})();
+
+/* ================= JOURNALIZING DRILL ================= */
+(function(){
+  const scen=document.getElementById("jdScen"),lines=document.getElementById("jdLines"),fb=document.getElementById("jdFb");
+  const idxEl=document.getElementById("jdIdx"),totEl=document.getElementById("jdTot"),solvedEl=document.getElementById("jdSolved");
+  const checkBtn=document.getElementById("jdCheck"),nextBtn=document.getElementById("jdNext");
+  let i=0,solved=store.get("jd_solved",0),picks=[];
+  totEl.textContent=TX.length;solvedEl.textContent=solved;
+  function render(){const tx=TX[i];picks=tx.lines.map(()=>null);idxEl.textContent=i+1;
+    scen.innerHTML='<span class="date">('+tx.n+') '+tx.date+'</span> — '+tx.doc;lines.innerHTML="";
+    tx.lines.forEach((l,k)=>{const row=document.createElement("div");row.className="jd-line";
+      row.innerHTML='<div class="aname">'+l[0]+' <span class="an">'+l[1]+'</span></div><div class="jd-amt">'+l[2]+'</div>'+
+        '<div class="dc-toggle"><button data-k="'+k+'" data-v="D">D</button><button data-k="'+k+'" data-v="C">C</button></div>';lines.appendChild(row);});
+    lines.querySelectorAll(".dc-toggle button").forEach(b=>{b.addEventListener("click",()=>{const k=+b.dataset.k,v=b.dataset.v;picks[k]=v;
+      const grp=b.parentElement;grp.querySelectorAll("button").forEach(x=>x.classList.remove("pick-d","pick-c","err","right"));b.classList.add(v==="D"?"pick-d":"pick-c");});});
+    fb.className="feedback";checkBtn.disabled=false;nextBtn.disabled=true;}
+  checkBtn.addEventListener("click",()=>{const tx=TX[i];let allRight=true;const btns=lines.querySelectorAll(".dc-toggle");
+    tx.lines.forEach((l,k)=>{const want=l[3],got=picks[k],grp=btns[k];grp.querySelectorAll("button").forEach(x=>x.classList.remove("err","right"));
+      if(got===want){grp.querySelector('[data-v="'+want+'"]').classList.add("right")}else{allRight=false;if(got)grp.querySelector('[data-v="'+got+'"]').classList.add("err");grp.querySelector('[data-v="'+want+'"]').classList.add("right")}});
+    if(allRight){fb.className="feedback show ok";fb.innerHTML="✓ Correct entry — debits equal credits. Nicely posted.";
+      if(!store.get("jd_done_"+i,false)){solved=Math.min(solved+1,TX.length);store.set("jd_done_"+i,true);store.set("jd_solved",solved);solvedEl.textContent=solved;}
+      bumpProgress("jd_"+i,1);checkBtn.disabled=true;nextBtn.disabled=false;
+    }else{fb.className="feedback show no";fb.innerHTML="✗ Some sides are off — the correct side is highlighted in green. Remember: assets &amp; expenses debit to increase; liabilities, equity &amp; revenues credit to increase. Fix and check again.";}});
+  nextBtn.addEventListener("click",()=>{i=(i+1)%TX.length;render()});
+  render();
+})();
+
+/* ================= CHECKLIST ================= */
+(function(){document.querySelectorAll("#objList li").forEach(li=>{const id=li.dataset.obj;if(store.get("obj_"+id,false))li.classList.add("done");
+  li.addEventListener("click",()=>{li.classList.toggle("done");store.set("obj_"+id,li.classList.contains("done"));updateProgress();});});})();
+
+/* ================= PROGRESS ================= */
+function bumpProgress(key,val){store.set("prog_"+key,Math.max(store.get("prog_"+key,0),val));updateProgress()}
+function updateProgress(){
+  let done=0,tot=0;
+  for(let i=1;i<=9;i++){tot++;if(store.get("obj_"+i,false))done++;}
+  tot+=2;done+=Math.min(store.get("prog_trainer",0),1)*2;
+  tot+=1;done+=Math.min(store.get("prog_vat",0),1);
+  tot+=1;done+=Math.min(store.get("prog_deck",0),1);
+  tot+=1;done+=Math.min(store.get("prog_calc",0),1);
+  tot+=3;done+=Math.min(store.get("jd_solved",0)/TX.length,1)*3;
+  let qTot=0,qDone=0;Object.keys(QUIZZES).forEach(k=>{QUIZZES[k].forEach((_,i)=>{qTot++;if(store.get("prog_quiz_"+k+"_"+i,0))qDone++})});
+  tot+=3;done+=(qTot?qDone/qTot:0)*3;
+  const pct=Math.round(Math.min(done/tot,1)*100);
+  document.getElementById("globalProgress").style.width=pct+"%";document.getElementById("pctLabel").textContent=pct+"%";
+}
+updateProgress();
+
+/* ================= SCROLLSPY ================= */
+(function(){const links=[...document.querySelectorAll(".sidenav a")];const map={};links.forEach(a=>map[a.getAttribute("href").slice(1)]=a);
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove("active"));const a=map[e.target.id];if(a)a.classList.add("active")}})},{rootMargin:"-20% 0px -70% 0px"});
+  document.querySelectorAll("section.mod").forEach(s=>obs.observe(s));})();
+</script>
