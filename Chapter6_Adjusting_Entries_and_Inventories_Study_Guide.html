@@ -1,0 +1,901 @@
+<title>Chapter 6 · Adjusting Entries &amp; Changes in Inventories — Interactive Study Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --paper:#f6f2e9;--surface:#fffdf7;--surface-2:#efeadd;--line:#d9d2c1;--line-strong:#c3baa4;
+  --ink:#182420;--ink-soft:#4a544e;--ink-faint:#7a8079;--brand:#0e5c47;--brand-deep:#0a4234;
+  --brand-tint:#e3ede8;--brass:#a9772f;--brass-tint:#f2e7d2;--debit:#2f6f9e;--debit-tint:#e2edf4;
+  --credit:#b0503a;--credit-tint:#f6e6e0;--good:#2f7d55;--bad:#b23b30;--warn:#a9772f;
+  --shadow:0 1px 2px rgba(24,36,32,.06),0 6px 18px rgba(24,36,32,.07);--shadow-lg:0 12px 40px rgba(24,36,32,.14);
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --maxw:1120px;--radius:12px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#0e1512;--surface:#151f1b;--surface-2:#101815;--line:#26332d;--line-strong:#34443c;
+  --ink:#e9efe9;--ink-soft:#aab4ac;--ink-faint:#7c877e;--brand:#3fb892;--brand-deep:#2b8c6e;
+  --brand-tint:#16241e;--brass:#d6a256;--brass-tint:#221a0f;--debit:#6fb0dc;--debit-tint:#132532;
+  --credit:#e08a72;--credit-tint:#2c1712;--good:#4cc07f;--bad:#e07a6c;--warn:#d6a256;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 16px 48px rgba(0,0,0,.5);}}
+:root[data-theme="light"]{
+  --paper:#f6f2e9;--surface:#fffdf7;--surface-2:#efeadd;--line:#d9d2c1;--line-strong:#c3baa4;
+  --ink:#182420;--ink-soft:#4a544e;--ink-faint:#7a8079;--brand:#0e5c47;--brand-deep:#0a4234;
+  --brand-tint:#e3ede8;--brass:#a9772f;--brass-tint:#f2e7d2;--debit:#2f6f9e;--debit-tint:#e2edf4;
+  --credit:#b0503a;--credit-tint:#f6e6e0;--good:#2f7d55;--bad:#b23b30;--warn:#a9772f;
+  --shadow:0 1px 2px rgba(24,36,32,.06),0 6px 18px rgba(24,36,32,.07);--shadow-lg:0 12px 40px rgba(24,36,32,.14);}
+:root[data-theme="dark"]{
+  --paper:#0e1512;--surface:#151f1b;--surface-2:#101815;--line:#26332d;--line-strong:#34443c;
+  --ink:#e9efe9;--ink-soft:#aab4ac;--ink-faint:#7c877e;--brand:#3fb892;--brand-deep:#2b8c6e;
+  --brand-tint:#16241e;--brass:#d6a256;--brass-tint:#221a0f;--debit:#6fb0dc;--debit-tint:#132532;
+  --credit:#e08a72;--credit-tint:#2c1712;--good:#4cc07f;--bad:#e07a6c;--warn:#d6a256;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 16px 48px rgba(0,0,0,.5);}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.15;text-wrap:balance;color:var(--ink)}
+a{color:var(--brand);text-underline-offset:2px}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px;position:relative;z-index:1}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+@media(max-width:900px){.layout{grid-template-columns:1fr;gap:0}}
+.topbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.brandmark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:15px}
+.brandmark .tacc{font-family:var(--mono);font-weight:700;color:var(--brand);border:1.5px solid var(--brand);border-radius:5px;width:26px;height:26px;display:grid;place-items:center;font-size:15px}
+.brandmark .ch{font-family:var(--mono);font-size:11px;color:var(--ink-faint);border:1px solid var(--line-strong);border-radius:20px;padding:1px 8px}
+.progresswrap{flex:1;height:7px;background:var(--surface-2);border-radius:20px;overflow:hidden;min-width:50px}
+#globalProgress{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brass));transition:width .5s ease}
+.pct{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-width:34px;text-align:right}
+.themebtn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;display:grid;place-items:center}
+.themebtn:hover{border-color:var(--brand)}
+.hero{padding:66px 0 36px}
+.eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--brass);font-weight:600}
+.hero h1{font-size:clamp(2.0rem,5.1vw,3.5rem);margin:.25em 0 .2em;letter-spacing:-.01em}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.26rem);color:var(--ink-soft);max-width:60ch}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:12.5px;padding:5px 11px;border-radius:20px;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-soft)}
+.chip b{color:var(--brand)}
+.badge-live{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);border:1px solid var(--brass);border-radius:20px;padding:2px 8px}
+.sidenav{position:sticky;top:74px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0 40px}
+.sidenav ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.sidenav a{display:flex;gap:10px;align-items:baseline;padding:6px 10px;border-radius:8px;text-decoration:none;color:var(--ink-soft);font-size:14.5px;line-height:1.3;border-left:2px solid transparent}
+.sidenav a::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.sidenav a:hover{background:var(--surface);color:var(--ink)}
+.sidenav a.active{color:var(--brand);border-left-color:var(--brand);background:var(--brand-tint);font-weight:600}
+.sidenav .navttl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);padding:0 10px 8px}
+@media(max-width:900px){.sidenav{display:none}}
+main{padding:24px 0 80px;min-width:0}
+section.mod{padding:30px 0 8px;scroll-margin-top:70px}
+section.mod+section.mod{border-top:1px solid var(--line)}
+.mod-h{display:flex;gap:14px;align-items:flex-start;margin-bottom:4px}
+.mod-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--surface);background:var(--brand);border-radius:8px;padding:4px 9px;margin-top:6px;white-space:nowrap}
+.mod-h h2{font-size:clamp(1.5rem,3.4vw,2.05rem);margin:0}
+.mod-sub{color:var(--ink-soft);margin:.2em 0 1.2em;font-size:1.02rem}
+h3{font-size:1.28rem;margin:1.9em 0 .5em}
+h4{font-size:1.06rem;margin:1.5em 0 .4em}
+p{margin:.7em 0;max-width:68ch}
+ul,ol{max-width:66ch}
+li{margin:.32em 0}
+strong{color:var(--ink)}
+.lead-in{font-size:1.08rem}
+.box{border-radius:var(--radius);padding:16px 18px;margin:18px 0;border:1px solid var(--line-strong);background:var(--surface);box-shadow:var(--shadow)}
+.box .box-ttl{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.box p{margin:.4em 0}
+.box.tip{border-left:4px solid var(--brand)}.box.tip .box-ttl{color:var(--brand)}
+.box.gap{border-left:4px solid var(--brass);background:var(--brass-tint)}.box.gap .box-ttl{color:var(--brass)}
+.box.warn{border-left:4px solid var(--bad)}.box.warn .box-ttl{color:var(--bad)}
+.box.def{border-left:4px solid var(--debit)}.box.def .box-ttl{color:var(--debit)}
+.tacct{font-family:var(--mono);font-variant-numeric:tabular-nums;background:var(--surface);border:1.5px solid var(--line-strong);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);min-width:200px}
+.tacct .t-name{text-align:center;font-weight:700;padding:7px 8px;font-size:12.5px;background:var(--surface-2);border-bottom:1.5px solid var(--line-strong);color:var(--ink)}
+.tacct .t-name .accno{color:var(--brand);font-size:11px}
+.tacct .t-body{display:grid;grid-template-columns:1fr 1fr;min-height:54px}
+.tacct .t-side{padding:6px 8px}
+.tacct .t-side.d{border-right:1.5px solid var(--line-strong)}
+.t-head{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-faint);border-bottom:1px dashed var(--line);padding-bottom:3px;margin-bottom:4px;letter-spacing:.08em}
+.tacct .t-row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:1px 0}
+.tacct .t-row .ref{color:var(--ink-faint);font-size:11px}
+.d .amt{color:var(--debit)}.c .amt{color:var(--credit)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px;margin:16px 0}
+.table-scroll{overflow-x:auto;margin:16px 0;border:1px solid var(--line-strong);border-radius:10px}
+table.led{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);min-width:440px}
+table.led th,table.led td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line)}
+table.led thead th{background:var(--surface-2);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+table.led td.n,table.led th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+table.led tr:last-child td{border-bottom:none}
+table.led .accno{font-family:var(--mono);color:var(--brand);font-weight:600}
+table.led tr.tot td{border-top:2px solid var(--line-strong);font-weight:700;background:var(--surface-2)}
+.tag-d{color:var(--debit);font-weight:600}.tag-c{color:var(--credit);font-weight:600}
+.ix{border:1.5px solid var(--brand);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);margin:22px 0;overflow:hidden}
+.ix-head{background:linear-gradient(90deg,var(--brand-tint),transparent);padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ix-head .ix-kind{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--brand);border:1px solid var(--brand);border-radius:5px;padding:2px 7px}
+.ix-head h3{margin:0;font-size:1.12rem}
+.ix-body{padding:18px}
+.btn{font-family:var(--sans);font-size:15px;font-weight:600;border-radius:9px;padding:9px 16px;cursor:pointer;border:1.5px solid transparent;transition:transform .06s,background .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn-primary:hover{background:var(--brand-deep)}
+.btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.deck{perspective:1400px}
+.card{position:relative;min-height:200px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.15,.2,1)}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:22px;display:flex;flex-direction:column;justify-content:center;border:1.5px solid var(--line-strong)}
+.face.front{background:var(--surface-2)}
+.face.back{background:var(--brand-tint);transform:rotateY(180deg);border-color:var(--brand)}
+.face .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+.face .term{font-family:var(--serif);font-size:1.4rem;color:var(--ink)}
+.face .def{font-size:1rem;color:var(--ink)}
+.deck-bar{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:10px}
+.deck-count{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+.trainer-scen{text-align:center;padding:12px 6px}
+.trainer-scen .ctx{font-size:1.12rem;color:var(--ink);max-width:54ch;margin:0 auto 4px}
+.pill{font-family:var(--mono);font-size:12.5px;padding:4px 11px;border-radius:16px;font-weight:600;display:inline-block}
+.pill.exp{background:var(--brass-tint);color:var(--brass)}
+.pill.rev{background:var(--brand-tint);color:var(--brand)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+.optbtn{text-align:left;border:1.5px solid var(--line-strong);background:var(--surface);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:14.5px;color:var(--ink)}
+.optbtn .an{font-family:var(--mono);color:var(--brand);font-weight:700}
+.optbtn:hover{border-color:var(--brand)}
+.optbtn.correct{border-color:var(--good);background:var(--brand-tint)}
+.optbtn.wrong{border-color:var(--bad);background:var(--credit-tint)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:9px;font-size:14.5px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--brand-tint);border:1px solid var(--good);color:var(--ink)}
+.feedback.no{background:var(--credit-tint);border:1px solid var(--bad);color:var(--ink)}
+.scoreline{display:flex;gap:16px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin-top:12px;flex-wrap:wrap}
+.scoreline b{color:var(--brand);font-size:15px}
+.streak b{color:var(--brass)}
+.quiz .q{font-weight:600;font-size:1.05rem;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line-strong);background:var(--surface);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:15px;color:var(--ink);display:flex;gap:10px;align-items:flex-start}
+.opt:hover{border-color:var(--brand)}
+.opt .mk{font-family:var(--mono);font-weight:700;color:var(--ink-faint)}
+.opt.correct{border-color:var(--good);background:var(--brand-tint)}
+.opt.wrong{border-color:var(--bad);background:var(--credit-tint)}
+.opt:disabled{cursor:default}
+.explain{margin-top:12px;padding:11px 14px;border-radius:9px;background:var(--surface-2);border-left:3px solid var(--brass);font-size:14.5px;display:none}
+.explain.show{display:block}
+.quiz-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;flex-wrap:wrap}
+.quiz-prog{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+.jd-scen{background:var(--surface-2);border-radius:10px;padding:12px 14px;font-size:14.5px;margin-bottom:14px;border-left:3px solid var(--brass)}
+.jd-scen .date{font-family:var(--mono);font-weight:700;color:var(--brand)}
+.jd-line{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.jd-line .aname{font-size:14.5px}
+.jd-line .aname .an{font-family:var(--mono);font-size:11.5px;color:var(--brand)}
+.jd-amt{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--ink-soft)}
+.dc-toggle{display:flex;gap:4px}
+.dc-toggle button{font-family:var(--mono);font-weight:700;font-size:13px;width:34px;height:32px;border-radius:7px;border:1.5px solid var(--line-strong);background:var(--surface);cursor:pointer;color:var(--ink-faint)}
+.dc-toggle button.pick-d{background:var(--debit);border-color:var(--debit);color:#fff}
+.dc-toggle button.pick-c{background:var(--credit);border-color:var(--credit);color:#fff}
+.dc-toggle button.err{outline:3px solid var(--bad);outline-offset:1px}
+.dc-toggle button.right{outline:3px solid var(--good);outline-offset:1px}
+details.reveal{border:1px solid var(--line-strong);border-radius:10px;margin:10px 0;background:var(--surface);overflow:hidden}
+details.reveal summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::after{content:"reveal";font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);border:1px solid var(--brand);border-radius:5px;padding:2px 7px}
+details.reveal[open] summary::after{content:"hide"}
+details.reveal[open] summary{color:var(--brand)}
+details.reveal .rc{padding:0 16px 16px;border-top:1px solid var(--line);font-size:15px}
+.checklist{list-style:none;padding:0;margin:16px 0}
+.checklist li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:9px;margin:8px 0;background:var(--surface);cursor:pointer}
+.checklist li:hover{background:var(--surface-2)}
+.checklist .cbx{flex:0 0 22px;height:22px;border:2px solid var(--line-strong);border-radius:6px;display:grid;place-items:center;font-size:14px;color:transparent;margin-top:1px}
+.checklist li.done .cbx{background:var(--brand);border-color:var(--brand);color:#fff}
+.checklist li.done .ct{color:var(--ink-faint);text-decoration:line-through}
+.flowline{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--mono);font-size:13px;margin:10px 0}
+.flowline .step{background:var(--surface-2);border:1px solid var(--line-strong);border-radius:7px;padding:4px 9px}
+.flowline .arr{color:var(--brand);font-weight:700}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:680px){.two-col{grid-template-columns:1fr}}
+.mini{font-size:13.5px;color:var(--ink-soft)}
+hr.rule{border:none;border-top:1px solid var(--line);margin:30px 0}
+/* 2x2 matrix */
+.matrix{display:grid;grid-template-columns:auto 1fr 1fr;gap:0;border:1.5px solid var(--line-strong);border-radius:12px;overflow:hidden;margin:18px 0;font-size:14.5px}
+.matrix>div{padding:14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.matrix .mh{background:var(--surface-2);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;text-align:center;color:var(--ink-soft)}
+.matrix .rh{background:var(--surface-2);font-family:var(--mono);font-weight:700;display:flex;flex-direction:column;justify-content:center;color:var(--brand)}
+.matrix .cell .acc{font-family:var(--mono);font-weight:700;font-size:1.05rem}
+.matrix .cell .meta{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.matrix .cell.asset{background:color-mix(in srgb,var(--debit-tint) 60%,transparent)}
+.matrix .cell.liab{background:color-mix(in srgb,var(--credit-tint) 60%,transparent)}
+.matrix .cell.asset .acc{color:var(--debit)}.matrix .cell.liab .acc{color:var(--credit)}
+/* timeline */
+.timeline{display:flex;align-items:stretch;gap:0;margin:16px 0;border:1.5px solid var(--line-strong);border-radius:10px;overflow:hidden;font-family:var(--mono);font-size:13px}
+.tl-seg{flex:1;padding:12px;text-align:center;position:relative}
+.tl-seg.past{background:var(--brand-tint)}
+.tl-seg.future{background:var(--surface-2)}
+.tl-seg .yr{font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.tl-seg .amt{font-size:1.05rem;color:var(--ink);margin-top:4px}
+.tl-div{width:2px;background:var(--brass);position:relative}
+.tl-div::after{content:"31/12";position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--brass);background:var(--paper);padding:0 4px;white-space:nowrap}
+/* calculators */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.calc-grid{grid-template-columns:1fr}}
+.calc-inputs{display:flex;flex-direction:column;gap:10px}
+.calc-inputs label{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-soft)}
+.calc-inputs input{font-family:var(--mono);font-size:14px;padding:7px 10px;border:1.5px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink);width:120px;text-align:right}
+.seg{display:inline-flex;border:1.5px solid var(--line-strong);border-radius:9px;overflow:hidden;flex-wrap:wrap}
+.seg button{font-family:var(--sans);font-size:13.5px;font-weight:600;padding:7px 12px;border:none;background:var(--surface);color:var(--ink-soft);cursor:pointer;border-right:1px solid var(--line-strong)}
+.seg button:last-child{border-right:none}
+.seg button.on{background:var(--brand);color:#fff}
+.result-card{border:1.5px solid var(--line-strong);border-radius:10px;overflow:hidden;font-size:14px}
+.result-card .rc-row{display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px dashed var(--line)}
+.result-card .rc-row:last-child{border-bottom:none}
+.result-card .rc-row.hl{background:var(--brass-tint);font-weight:700}
+.result-card .rc-row .v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+footer{border-top:1px solid var(--line);padding:30px 20px 60px;text-align:center;color:var(--ink-faint);font-size:14px}
+footer .wrap{max-width:640px}
+</style>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brandmark"><span class="tacc">T</span><span>Adjusting Entries &amp; Inventories</span><span class="ch">Ch. 6</span></div>
+    <div class="progresswrap" title="Your study progress"><div id="globalProgress"></div></div>
+    <span class="pct" id="pctLabel">0%</span>
+    <button class="themebtn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Internal &amp; External Financial Reporting · Chapter 6</div>
+    <h1>Adjusting Entries &amp; Changes in Inventories</h1>
+    <p class="lede">Year-end housekeeping: shifting revenues and expenses into the period they truly belong to, and correcting the books for stock still on the shelf. This is where the books finally tell the truth.</p>
+    <div class="hero-meta">
+      <span class="chip">Core idea: <b>the matching principle</b></span>
+      <span class="chip">The <b>2×2</b> accrue/defer matrix</span>
+      <span class="chip">Textbook pp. <b>123–141</b></span>
+      <span class="chip"><span class="badge-live">interactive</span></span>
+    </div>
+    <div class="box tip" style="margin-top:26px">
+      <div class="box-ttl">◆ The one question behind the whole chapter</div>
+      <p>"Does this euro of expense or revenue <em>belong</em> to this accounting year — regardless of when the cash actually moved?" If cash and period don't line up, you make an <strong>adjusting entry</strong>. If purchases and sales left stock behind, you book a <strong>change in inventory</strong>. Both are <strong>end-of-period entries</strong> on 31/12.</p>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidenav" aria-label="Contents">
+    <div class="navttl">Modules</div>
+    <ol id="navList">
+      <li><a href="#intro">Where this fits · defer vs accrue</a></li>
+      <li><a href="#matrix">The four cases (2×2 matrix)</a></li>
+      <li><a href="#deferexp">Deferred expenses · OMEGA KAPPA</a></li>
+      <li><a href="#accrrev">Accrued revenues · VANDEVELDE</a></li>
+      <li><a href="#accrexp">Accrued expenses · SUPERPOWER</a></li>
+      <li><a href="#deferrev">Deferred revenues · PEETERS</a></li>
+      <li><a href="#builder">The adjusting-entry builder</a></li>
+      <li><a href="#invproblem">Changes in inventories · the problem</a></li>
+      <li><a href="#invfix">Changes in inventories · the fix</a></li>
+      <li><a href="#drill">Journalizing drill</a></li>
+      <li><a href="#exam">Exam readiness &amp; checklist</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- 1 INTRO -->
+  <section class="mod" id="intro">
+    <div class="mod-h"><span class="mod-num">01</span><h2>Where this fits — and defer vs. accrue</h2></div>
+    <p class="mod-sub">Adjusting entries are made at 31/12, after the first trial balance and before the financial statements — corrections that align the books with the correct period.</p>
+    <p class="lead-in">In the accounting cycle, after all transactions are recorded and the <strong>inventory</strong> (stock-take) is drawn up, you make <strong>end-of-period entries</strong>. This chapter covers two kinds; others (depreciation, provisions) come later.</p>
+    <div class="flowline">
+      <span class="step">Transactions recorded</span><span class="arr">→</span><span class="step">1st trial balance</span><span class="arr">→</span><span class="step">Inventory</span><span class="arr">→</span><span class="step" style="border-color:var(--brand);color:var(--brand)">End-of-period entries</span><span class="arr">→</span><span class="step">2nd trial balance</span><span class="arr">→</span><span class="step">Financial statements</span>
+    </div>
+
+    <h3>The two verbs at the heart of it</h3>
+    <div class="two-col">
+      <div class="box def"><div class="box-ttl">◀ DEFER — push into the future</div><p>Move an expense/revenue <strong>to a future</strong> accounting period. Used when cash moved <em>now</em> but part of it belongs to <em>next year</em>. You're removing the too-early part from this year.</p></div>
+      <div class="box def" style="border-left-color:var(--credit)"><div class="box-ttl" style="color:var(--credit)">▶ ACCRUE — pull into now</div><p>Take an expense/revenue <strong>from a future</strong> period <em>into the current</em> one. Used when the economic event happened <em>now</em> but cash will move <em>next year</em>. You're adding the not-yet-recorded part to this year.</p></div>
+    </div>
+    <div class="box warn"><div class="box-ttl">⚠ Two rules you must never forget</div>
+      <ul>
+        <li><strong>VAT is never an expense or a revenue</strong> — adjusting entries carry <em>no VAT</em>. They only touch a 6/7 account and a 490–493 account.</li>
+        <li><strong>Accruals &amp; deferrals ignore the timing of actual payment.</strong> The question is only <em>which period the economic benefit belongs to</em>. Cash timing is what <em>creates</em> the mismatch you're fixing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2 MATRIX -->
+  <section class="mod" id="matrix">
+    <div class="mod-h"><span class="mod-num">02</span><h2>The four cases — one matrix to memorise</h2></div>
+    <p class="mod-sub">Two questions — expense or revenue? defer or accrue? — pin down exactly one of four accounts (490–493) and its side.</p>
+    <div class="matrix" aria-label="Accrue/defer 2 by 2 matrix">
+      <div class="mh"></div>
+      <div class="mh">Concerns an EXPENSE (6…)</div>
+      <div class="mh">Concerns a REVENUE (7…)</div>
+      <div class="rh">DEFER<br><span class="mini" style="font-weight:400;color:var(--ink-faint)">cash now, belongs later</span></div>
+      <div class="cell asset"><div class="acc">490 Deferred expenses</div><div class="meta">ASSET · debit on 31/12 · "prepaid, not yet used up"</div></div>
+      <div class="cell liab"><div class="acc">493 Deferred revenues</div><div class="meta">LIABILITY · credit on 31/12 · "received in advance, not yet earned"</div></div>
+      <div class="rh">ACCRUE<br><span class="mini" style="font-weight:400;color:var(--ink-faint)">belongs now, cash later</span></div>
+      <div class="cell liab"><div class="acc">492 Accrued expenses</div><div class="meta">LIABILITY · credit on 31/12 · "used up, not yet paid"</div></div>
+      <div class="cell asset"><div class="acc">491 Accrued revenues</div><div class="meta">ASSET · debit on 31/12 · "earned, not yet received"</div></div>
+    </div>
+    <div class="box tip"><div class="box-ttl">◆ How to read the colours</div>
+      <p><span class="tag-d">Blue = asset</span> (490, 491): something owed <em>to</em> you — a prepayment not yet consumed, or income earned but not yet collected. Debited on 31/12.<br>
+      <span class="tag-c">Rust = liability</span> (492, 493): something owed <em>by</em> you — an expense used but unpaid, or income banked but not yet earned. Credited on 31/12.</p>
+    </div>
+    <div class="box gap"><div class="box-ttl">✎ Fills the verbal gap — the reversal on 01/01</div>
+      <p>Every adjusting entry is <strong>reversed ("booked off") on the first day of the next year</strong>. Why? So that when the cash finally moves (you pay the interest, receive the rent), the ordinary transaction can be booked normally and the amounts land in the <em>right</em> year automatically — the reversal cancels the double-count. Every example below shows this three-step rhythm: <strong>book cash → adjust at 31/12 → reverse at 01/01</strong>.</p>
+    </div>
+
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Chart of accounts</th><th class="accno">No.</th><th>Nature</th></tr></thead>
+      <tbody>
+        <tr><td>Deferred expenses (charges)</td><td class="accno">490</td><td>Asset</td></tr>
+        <tr><td>Accrued revenues (income)</td><td class="accno">491</td><td>Asset</td></tr>
+        <tr><td>Accrued expenses (charges)</td><td class="accno">492</td><td>Liability</td></tr>
+        <tr><td>Deferred revenues (income)</td><td class="accno">493</td><td>Liability</td></tr>
+      </tbody>
+    </table></div>
+
+    <!-- FLASHCARDS mount -->
+    <div id="deckMount"></div>
+
+    <!-- ACCRUE/DEFER TRAINER -->
+    <div class="ix" id="trainerWrap">
+      <div class="ix-head"><span class="ix-kind">Reflex trainer</span><h3>Which accrual / deferral account?</h3><span class="badge-live" style="margin-left:auto">repeat me</span></div>
+      <div class="ix-body">
+        <p class="mini" style="margin-top:0">Read the situation and pick the right balance-sheet account (490–493). Feedback tells you the 31/12 side and the reasoning.</p>
+        <div class="trainer-scen"><p class="ctx" id="trCtx">—</p></div>
+        <div class="grid2" id="trOpts"></div>
+        <div class="feedback" id="trFb"></div>
+        <div class="scoreline"><span>Correct: <b id="trCorrect">0</b></span><span>Attempts: <b id="trTotal">0</b></span><span class="streak">Streak: <b id="trStreak">0</b></span><span>Best: <b id="trBest">0</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 DEFERRED EXPENSES -->
+  <section class="mod" id="deferexp">
+    <div class="mod-h"><span class="mod-num">03</span><h2>Deferred expenses · OMEGA KAPPA plc</h2></div>
+    <p class="mod-sub">You paid the whole expense up front, but part of the benefit runs into next year. Push that part out to account 490.</p>
+    <p class="lead-in">On <strong>01/08/20X0</strong>, OMEGA KAPPA pays a fire-insurance premium of <strong>1 800,00/year</strong> in advance. Cover runs 01/08/20X0 → 31/07/20X1. No VAT. Year-end is 31/12/20X0.</p>
+    <div class="timeline">
+      <div class="tl-seg past"><div class="yr">20X0 · Aug–Dec (5 mo)</div><div class="amt">750,00</div><div class="mini">belongs to 20X0</div></div>
+      <div class="tl-div"></div>
+      <div class="tl-seg future"><div class="yr">20X1 · Jan–Jul (7 mo)</div><div class="amt">1 050,00</div><div class="mini">defer this out</div></div>
+    </div>
+    <p>Split: 5/12 × 1 800 = <strong>750,00</strong> belongs to 20X0; 7/12 × 1 800 = <strong>1 050,00</strong> belongs to 20X1 → deferred.</p>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Step</th><th>Entry</th><th class="n">D</th><th class="n">C</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · 01/08</strong> pay premium</td><td><span class="accno">61</span> Services and other goods <span class="tag-d">D</span> / <span class="accno">5500</span> Bank <span class="tag-c">C</span></td><td class="n">1 800,00</td><td class="n">1 800,00</td></tr>
+        <tr><td><strong>2 · 31/12</strong> defer</td><td><span class="accno">490</span> Deferred expenses <span class="tag-d">D</span> / <span class="accno">61</span> Services <span class="tag-c">C</span></td><td class="n">1 050,00</td><td class="n">1 050,00</td></tr>
+        <tr><td><strong>3 · 01/01</strong> book off</td><td><span class="accno">61</span> Services <span class="tag-d">D</span> / <span class="accno">490</span> Deferred expenses <span class="tag-c">C</span></td><td class="n">1 050,00</td><td class="n">1 050,00</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box tip"><div class="box-ttl">◆ Result</div><p>Expense hitting the 20X0 income statement = 1 800 − 1 050 = <strong>750,00</strong>. In 20X1 the reversal puts <strong>1 050,00</strong> into that year. Account 490 sits on the 20X0 balance sheet as a <strong>current asset</strong> (a prepayment) until it's booked off.</p></div>
+  </section>
+
+  <!-- 4 ACCRUED REVENUES -->
+  <section class="mod" id="accrrev">
+    <div class="mod-h"><span class="mod-num">04</span><h2>Accrued revenues · VANDEVELDE plc</h2></div>
+    <p class="mod-sub">You earned the income this year but won't be paid until next year. Pull it in now via account 491.</p>
+    <p class="lead-in">VANDEVELDE rents out property. Quarterly rent <strong>3 000,00</strong>, contract from <strong>01/11/20X0</strong>, collected <strong>in arrear</strong> on 31/01/20X1. Year-end 31/12/20X0.</p>
+    <div class="timeline">
+      <div class="tl-seg past"><div class="yr">20X0 · Nov–Dec (2 mo)</div><div class="amt">2 000,00</div><div class="mini">earned — accrue in</div></div>
+      <div class="tl-div"></div>
+      <div class="tl-seg future"><div class="yr">20X1 · Jan (1 mo)</div><div class="amt">1 000,00</div><div class="mini">belongs to 20X1</div></div>
+    </div>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Step</th><th>Entry</th><th class="n">D</th><th class="n">C</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · 31/12</strong> accrue</td><td><span class="accno">491</span> Accrued revenues <span class="tag-d">D</span> / <span class="accno">743</span> Other operating revenues <span class="tag-c">C</span></td><td class="n">2 000,00</td><td class="n">2 000,00</td></tr>
+        <tr><td><strong>2 · 01/01</strong> book off</td><td><span class="accno">743</span> Other op. revenues <span class="tag-d">D</span> / <span class="accno">491</span> Accrued revenues <span class="tag-c">C</span></td><td class="n">2 000,00</td><td class="n">2 000,00</td></tr>
+        <tr><td><strong>3 · 31/01</strong> receive rent</td><td><span class="accno">5500</span> Bank <span class="tag-d">D</span> / <span class="accno">743</span> Other op. revenues <span class="tag-c">C</span></td><td class="n">3 000,00</td><td class="n">3 000,00</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box tip"><div class="box-ttl">◆ Result</div><p>Revenue in 20X0 = <strong>2 000,00</strong> (accrued, though no cash yet). In 20X1: the 3 000 received minus the 2 000 reversed = <strong>1 000,00</strong> — exactly January's share. Account 491 is a <strong>current asset</strong> (income earned but not yet collected).</p></div>
+  </section>
+
+  <!-- 5 ACCRUED EXPENSES -->
+  <section class="mod" id="accrexp">
+    <div class="mod-h"><span class="mod-num">05</span><h2>Accrued expenses (+ LT→ST) · SUPERPOWER plc</h2></div>
+    <p class="mod-sub">Interest built up this year but is paid next year — accrue it. And the loan slice due within a year gets reclassified to short-term.</p>
+    <p class="lead-in">On <strong>01/04/20X0</strong> SUPERPOWER contracts a <strong>500 000,00</strong> loan, 10 years, <strong>3%</strong>. Interest + capital redemption are paid at each year's expiry, first on 01/04/20X1. Annual interest = 3% × 500 000 = <strong>15 000,00</strong>.</p>
+    <div class="timeline">
+      <div class="tl-seg past"><div class="yr">20X0 · Apr–Dec (9 mo)</div><div class="amt">11 250,00</div><div class="mini">interest — accrue in</div></div>
+      <div class="tl-div"></div>
+      <div class="tl-seg future"><div class="yr">20X1 · Jan–Mar (3 mo)</div><div class="amt">3 750,00</div><div class="mini">belongs to 20X1</div></div>
+    </div>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Step</th><th>Entry</th><th class="n">D</th><th class="n">C</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · 01/04</strong> receive loan</td><td><span class="accno">5500</span> Bank <span class="tag-d">D</span> / <span class="accno">173</span> LT debts – Banks <span class="tag-c">C</span></td><td class="n">500 000</td><td class="n">500 000</td></tr>
+        <tr><td><strong>2 · 31/12</strong> reclassify LT→ST</td><td><span class="accno">173</span> LT debts <span class="tag-d">D</span> / <span class="accno">423</span> Current portion of LT payables <span class="tag-c">C</span></td><td class="n">50 000</td><td class="n">50 000</td></tr>
+        <tr><td><strong>3 · 31/12</strong> accrue interest</td><td><span class="accno">6500</span> Interests <span class="tag-d">D</span> / <span class="accno">492</span> Accrued expenses <span class="tag-c">C</span></td><td class="n">11 250</td><td class="n">11 250</td></tr>
+        <tr><td><strong>4 · 01/01</strong> book off</td><td><span class="accno">492</span> Accrued expenses <span class="tag-d">D</span> / <span class="accno">6500</span> Interests <span class="tag-c">C</span></td><td class="n">11 250</td><td class="n">11 250</td></tr>
+        <tr><td><strong>5 · 01/04</strong> pay redemption + interest</td><td><span class="accno">423</span> <span class="tag-d">D</span> 50 000 + <span class="accno">6500</span> <span class="tag-d">D</span> 15 000 / <span class="accno">5500</span> Bank <span class="tag-c">C</span></td><td class="n">65 000</td><td class="n">65 000</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box gap"><div class="box-ttl">✎ Fills the verbal gap — two separate 31/12 jobs</div>
+      <p>Don't conflate them. <strong>Reclassification (step 2)</strong> answers "how much of this long-term debt is now due within 12 months?" → move 50 000 from <span class="accno">173</span> to <span class="accno">423</span> so the balance sheet shows short-term debt correctly. <strong>Accrual (step 3)</strong> answers "how much interest belongs to this year?" → 11 250 into the income statement. Different questions, different accounts. Interest in 20X1 = 15 000 paid − 11 250 reversed = <strong>3 750,00</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 6 DEFERRED REVENUES -->
+  <section class="mod" id="deferrev">
+    <div class="mod-h"><span class="mod-num">06</span><h2>Deferred revenues · PEETERS plc</h2></div>
+    <p class="mod-sub">You banked the income in advance, but part of it hasn't been earned yet. Push it out to account 493.</p>
+    <p class="lead-in">Same rental as VANDEVELDE, but collected <strong>in advance</strong> on <strong>01/11/20X0</strong>: quarterly rent 3 000,00. Year-end 31/12/20X0.</p>
+    <div class="timeline">
+      <div class="tl-seg past"><div class="yr">20X0 · Nov–Dec (2 mo)</div><div class="amt">2 000,00</div><div class="mini">earned in 20X0</div></div>
+      <div class="tl-div"></div>
+      <div class="tl-seg future"><div class="yr">20X1 · Jan (1 mo)</div><div class="amt">1 000,00</div><div class="mini">defer this out</div></div>
+    </div>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Step</th><th>Entry</th><th class="n">D</th><th class="n">C</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · 01/11</strong> receive rent</td><td><span class="accno">5500</span> Bank <span class="tag-d">D</span> / <span class="accno">743</span> Other op. revenues <span class="tag-c">C</span></td><td class="n">3 000,00</td><td class="n">3 000,00</td></tr>
+        <tr><td><strong>2 · 31/12</strong> defer</td><td><span class="accno">743</span> Other op. revenues <span class="tag-d">D</span> / <span class="accno">493</span> Deferred revenues <span class="tag-c">C</span></td><td class="n">1 000,00</td><td class="n">1 000,00</td></tr>
+        <tr><td><strong>3 · 01/01</strong> book off</td><td><span class="accno">493</span> Deferred revenues <span class="tag-d">D</span> / <span class="accno">743</span> Other op. revenues <span class="tag-c">C</span></td><td class="n">1 000,00</td><td class="n">1 000,00</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box tip"><div class="box-ttl">◆ The mirror of Module 3</div><p>Deferred revenue is deferred expense flipped to the credit side: revenue in 20X0 = 3 000 − 1 000 = <strong>2 000,00</strong>; in 20X1 the reversal adds <strong>1 000,00</strong>. Account 493 is a <strong>liability</strong> — you owe the tenant January's occupancy you've already been paid for.</p></div>
+  </section>
+
+  <!-- 7 BUILDER -->
+  <section class="mod" id="builder">
+    <div class="mod-h"><span class="mod-num">07</span><h2>The adjusting-entry builder</h2></div>
+    <p class="mod-sub">Answer two questions — expense or revenue? paid/received in advance or in arrear? — and the tool prorates, classifies, and writes the 31/12 and 01/01 entries.</p>
+    <div class="ix">
+      <div class="ix-head"><span class="ix-kind">Live builder</span><h3>Prorate &amp; classify any accrual/deferral</h3><span class="badge-live" style="margin-left:auto">plug in exercises</span></div>
+      <div class="ix-body">
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px">
+          <div>Nature: <span class="seg" id="bNature"><button data-v="expense" class="on">Expense</button><button data-v="revenue">Revenue</button></span></div>
+          <div>Cash timing: <span class="seg" id="bTiming"><button data-v="advance" class="on">Paid / received in advance</button><button data-v="arrear">In arrear</button></span></div>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <label>Total amount € <input type="number" id="bAmount" value="1800" step="0.01"></label>
+            <label>Total months of the period <input type="number" id="bTotal" value="12" step="1"></label>
+            <label>Months falling in <em>this</em> year <input type="number" id="bCurrent" value="5" step="1"></label>
+          </div>
+          <div class="result-card" id="bResult"></div>
+        </div>
+        <div style="margin-top:14px">
+          <h4 style="margin:.4em 0 .3em">Adjusting entry on 31/12</h4>
+          <div class="table-scroll"><table class="led"><tbody id="bEntry"></tbody></table></div>
+          <p class="mini" id="bNote"></p>
+        </div>
+      </div>
+    </div>
+    <div class="box tip"><div class="box-ttl">◆ The logic it encodes</div>
+      <p><strong>Advance (cash now):</strong> the whole amount is already booked, so you push the <em>next-year</em> slice out — expense→490 (defer), revenue→493 (defer). <strong>Arrear (cash later):</strong> nothing is booked yet, so you pull the <em>this-year</em> slice in — expense→492 (accrue), revenue→491 (accrue). Try the four combinations and watch which account lights up.</p>
+    </div>
+  </section>
+
+  <!-- 8 INVENTORY PROBLEM -->
+  <section class="mod" id="invproblem">
+    <div class="mod-h"><span class="mod-num">08</span><h2>Changes in inventories — the problem</h2></div>
+    <p class="mod-sub">During the year, purchases go to expense and sales to revenue, and the inventory account never moves. That only tells the truth if you sold exactly what you bought.</p>
+    <p class="lead-in">The set-up (from Chapter 5): <strong>all purchases → 604</strong> (expense), <strong>all sales → 70x</strong> (revenue), and the balance of <strong>340 Inventory of goods for resale stays frozen</strong> all year. So the books show:</p>
+    <div class="box def"><div class="box-ttl">▤ Accounting result vs. actual result</div>
+      <p class="mono" style="font-size:14px">Accounting result = 70x sales − 604 purchases<br>Actual result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= sales price of goods sold − <b>cost of goods SOLD</b></p>
+      <p>These match only when purchases = cost of goods sold, i.e. <strong>closing inventory = opening inventory</strong>. Any leftover (or run-down) stock breaks the equality.</p>
+    </div>
+    <h4>VIVA VELO plc — a wholesaler of mountain bikes (cost 500, sell 800)</h4>
+    <div class="table-scroll"><table class="led">
+      <thead><tr><th>Year</th><th class="n">Bought</th><th class="n">Sold</th><th class="n">Accounting result</th><th class="n">Actual result</th><th>Match?</th></tr></thead>
+      <tbody>
+        <tr><td>20X0</td><td class="n">10 000</td><td class="n">10 000</td><td class="n">3 000 000</td><td class="n">3 000 000</td><td>✓ sold all</td></tr>
+        <tr><td>20X1</td><td class="n">10 000</td><td class="n">9 000</td><td class="n">2 200 000</td><td class="n">2 700 000</td><td class="tag-c">✗ 1 000 left</td></tr>
+        <tr><td>20X2</td><td class="n">9 000</td><td class="n">9 750</td><td class="n">3 300 000</td><td class="n">2 925 000</td><td class="tag-c">✗ sold from stock</td></tr>
+      </tbody>
+    </table></div>
+    <p class="mini">In 20X1 the books <em>understate</em> profit by 500 000 (purchases include 1 000 unsold bikes). In 20X2 they <em>overstate</em> it by 375 000 (9 750 sold but only 9 000 bought — 750 came from opening stock). The fix aligns them.</p>
+  </section>
+
+  <!-- 9 INVENTORY FIX -->
+  <section class="mod" id="invfix">
+    <div class="mod-h"><span class="mod-num">09</span><h2>Changes in inventories — the fix</h2></div>
+    <p class="mod-sub">At year-end, adjust account 340 to the counted closing value, with the counterpart in 6094 — which corrects the operating expenses to true cost of goods sold.</p>
+    <div class="tgrid">
+      <div class="tacct"><div class="t-name">340 Inventory of GFR <span class="accno">(asset)</span></div><div class="t-body"><div class="t-side d"><div class="t-head"><span>DEBIT</span></div><div class="t-row"><span class="ref">▲</span><span class="amt">increase</span></div></div><div class="t-side c"><div class="t-head"><span>CREDIT</span></div><div class="t-row"><span class="ref">▼</span><span class="amt" style="color:var(--credit)">decrease</span></div></div></div></div>
+      <div class="tacct"><div class="t-name">6094 Changes in inventories of GFR <span class="accno">(op. expense)</span></div><div class="t-body"><div class="t-side d"><div class="t-head"><span>DEBIT</span></div><div class="t-row"><span class="ref">↑exp</span><span class="amt">decrease</span></div></div><div class="t-side c"><div class="t-head"><span>CREDIT</span></div><div class="t-row"><span class="ref">↓exp</span><span class="amt">increase</span></div></div></div></div>
+    </div>
+    <div class="box tip"><div class="box-ttl">◆ The two directions (memorise this)</div>
+      <ul>
+        <li><strong>Inventory INCREASES</strong> (closing &gt; opening): <span class="mono">340 <span class="tag-d">D</span> / 6094 <span class="tag-c">C</span></span> → operating <strong>expenses ↓</strong>. You bought more than you sold, so some "purchases" aren't really this year's cost.</li>
+        <li><strong>Inventory DECREASES</strong> (closing &lt; opening): <span class="mono">6094 <span class="tag-d">D</span> / 340 <span class="tag-c">C</span></span> → operating <strong>expenses ↑</strong>. You sold from stock, so cost of goods sold exceeds this year's purchases.</li>
+      </ul>
+      <p class="mini">In the income statement this shows on line <strong>609 "Inventories: decrease (increase)"</strong> inside operating expenses group 60. Cost of goods sold = purchases − change in inventory.</p>
+    </div>
+    <div class="two-col">
+      <div class="table-scroll"><table class="led"><thead><tr><th>VIVA VELO 20X1 (stock builds)</th></tr></thead><tbody>
+        <tr><td>Opening 0 → Closing 1 000 × 500 = 500 000 · change <span class="tag-c">+500 000</span></td></tr>
+      </tbody></table>
+      <div class="table-scroll"><table class="led"><tbody>
+        <tr><td><span class="accno">340</span> Inventory of GFR</td><td class="n tag-d">500 000</td><td class="n"></td></tr>
+        <tr><td><span class="accno">6094</span> @ Changes in inventories</td><td class="n"></td><td class="n tag-c">500 000</td></tr>
+      </tbody></table></div>
+      <p class="mini">COGS = 5 000 000 purchases − 500 000 = 4 500 000 = 9 000 × 500 ✓. Profit now 2 700 000.</p></div>
+      <div class="table-scroll"><table class="led"><thead><tr><th>VIVA VELO 20X2 (stock drawn down)</th></tr></thead><tbody>
+        <tr><td>Opening 1 000 × 500 = 500 000 → Closing 250 × 500 = 125 000 · change <span class="tag-d">−375 000</span></td></tr>
+      </tbody></table>
+      <div class="table-scroll"><table class="led"><tbody>
+        <tr><td><span class="accno">6094</span> Changes in inventories</td><td class="n tag-d">375 000</td><td class="n"></td></tr>
+        <tr><td><span class="accno">340</span> @ Inventory of GFR</td><td class="n"></td><td class="n tag-c">375 000</td></tr>
+      </tbody></table></div>
+      <p class="mini">COGS = 4 500 000 purchases + 375 000 = 4 875 000 = 9 750 × 500 ✓. Profit now 2 925 000.</p></div>
+    </div>
+
+    <!-- INVENTORY RECONCILER -->
+    <div class="ix">
+      <div class="ix-head"><span class="ix-kind">Live builder</span><h3>Changes-in-inventory reconciler</h3><span class="badge-live" style="margin-left:auto">plug in exercises</span></div>
+      <div class="ix-body">
+        <p class="mini" style="margin-top:0">Enter the year's activity; the tool finds closing stock, the change, the correcting entry, and proves accounting result = actual result.</p>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <label>Opening inventory (units) <input type="number" id="iOpen" value="0" step="1"></label>
+            <label>Purchased (units) <input type="number" id="iBuy" value="10000" step="1"></label>
+            <label>Sold (units) <input type="number" id="iSell" value="9000" step="1"></label>
+            <label>Unit cost € <input type="number" id="iCost" value="500" step="0.01"></label>
+            <label>Unit sale price € <input type="number" id="iPrice" value="800" step="0.01"></label>
+          </div>
+          <div class="result-card" id="iResult"></div>
+        </div>
+        <div style="margin-top:14px">
+          <h4 style="margin:.4em 0 .3em">Change-in-inventory entry (31/12)</h4>
+          <div class="table-scroll"><table class="led"><tbody id="iEntry"></tbody></table></div>
+          <p class="mini" id="iNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 DRILL -->
+  <section class="mod" id="drill">
+    <div class="mod-h"><span class="mod-num">10</span><h2>Journalizing drill</h2></div>
+    <p class="mod-sub">Every entry from the four adjusting examples plus both inventory corrections. Decide debit or credit for each line, then check.</p>
+    <div class="ix" id="journalDrill">
+      <div class="ix-head"><span class="ix-kind">Journalizing drill</span><h3>Post it yourself</h3><span class="badge-live" style="margin-left:auto">repeat me</span></div>
+      <div class="ix-body">
+        <div class="jd-scen" id="jdScen"></div>
+        <div id="jdLines"></div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="jdCheck">Check entry</button>
+          <button class="btn btn-ghost" id="jdNext" disabled>Next transaction ›</button>
+        </div>
+        <div class="feedback" id="jdFb"></div>
+        <div class="scoreline"><span>Transaction <b id="jdIdx">1</b> / <b id="jdTot">0</b></span><span>Solved: <b id="jdSolved">0</b></span></div>
+      </div>
+    </div>
+
+    <div class="ix" data-quiz="mixed">
+      <div class="ix-head"><span class="ix-kind">Quiz</span><h3>Concept check</h3></div>
+      <div class="ix-body quiz"></div>
+    </div>
+  </section>
+
+  <!-- 11 EXAM -->
+  <section class="mod" id="exam">
+    <div class="mod-h"><span class="mod-num">11</span><h2>Exam readiness</h2></div>
+    <p class="mod-sub">The lecturer's objectives as a checklist. Tick each when you can do it unaided.</p>
+    <ul class="checklist" id="objList">
+      <li data-obj="1"><span class="cbx">✓</span><span class="ct">Describe the difference between <strong>to defer</strong> (push to a future period) and <strong>to accrue</strong> (pull into the current period).</span></li>
+      <li data-obj="2"><span class="cbx">✓</span><span class="ct">Explain <strong>deferred expenses (490), accrued revenues (491), accrued expenses (492), deferred revenues (493)</strong> — and which are assets vs. liabilities.</span></li>
+      <li data-obj="3"><span class="cbx">✓</span><span class="ct">Record adjusting entries at 31/12 <strong>and their reversal on 01/01</strong>, with correct proration.</span></li>
+      <li data-obj="4"><span class="cbx">✓</span><span class="ct">Record <strong>changes in inventories</strong> (340 ↔ 6094) so the balance sheet shows closing stock and the income statement shows true cost of goods sold.</span></li>
+      <li data-obj="5"><span class="cbx">✓</span><span class="ct">Know the <strong>impact</strong> of both on the balance sheet and income statement (and that adjusting entries carry no VAT).</span></li>
+    </ul>
+    <div class="box tip"><div class="box-ttl">◆ Where to read &amp; practise</div><p>Textbook <em>A Practical Guide to Financial Accounting</em>, <strong>Chapter 6 (pp. 123–141)</strong>. Practise with <strong>Ex. 1: DINGO (p. 142)</strong> and <strong>Ex. 2: FIGARITA (p. 143)</strong>. Use the Module 7 &amp; 9 builders to self-check.</p></div>
+    <div class="box warn"><div class="box-ttl">⚠ Top traps for this chapter</div>
+      <ul>
+        <li><strong>Assets vs. liabilities in the 2×2:</strong> 490 &amp; 491 are assets (debited 31/12); 492 &amp; 493 are liabilities (credited 31/12).</li>
+        <li><strong>Advance vs. arrear decides defer vs. accrue:</strong> cash-now → defer the future slice; cash-later → accrue the current slice.</li>
+        <li><strong>Never put VAT in an adjusting entry.</strong></li>
+        <li><strong>Reversal on 01/01</strong> is part of the answer — don't stop at the 31/12 entry.</li>
+        <li><strong>Inventory direction:</strong> stock up → expenses down (340 D / 6094 C); stock down → expenses up (6094 D / 340 C).</li>
+        <li><strong>Reclassification ≠ accrual:</strong> LT→ST (173→423) is a separate 31/12 job from accruing interest.</li>
+      </ul>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Chapter 6 · Adjusting Entries &amp; Changes in Inventories</strong> — interactive study guide.</p>
+    <p class="mini">Built from the lecture slides (V. Ghijselinck, Internal &amp; External Financial Reporting, 2025–2026) and expanded with the connective explanations usually given verbally. Examples follow OMEGA KAPPA, VANDEVELDE, SUPERPOWER, PEETERS and VIVA VELO. Progress saves locally in this browser. Part of the same coursebook series as Chapters 3 &amp; 5.</p>
+  </div>
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const FLASHCARDS=[
+  {cat:"Verbs",front:"To defer",back:"Move an expense/revenue to a FUTURE accounting period. Used when cash moved now but part belongs to next year — you remove the too-early part from this year."},
+  {cat:"Verbs",front:"To accrue",back:"Take an expense/revenue from a FUTURE period into the CURRENT one. Used when the event happened now but cash moves next year — you add the not-yet-recorded part to this year."},
+  {cat:"490",front:"Deferred expenses (490)",back:"ASSET. An expense paid in advance whose benefit runs into next year. Debited on 31/12 (490 D / 6… C). A prepayment."},
+  {cat:"491",front:"Accrued revenues (491)",back:"ASSET. Income earned this year but received next year. Debited on 31/12 (491 D / 7… C)."},
+  {cat:"492",front:"Accrued expenses (492)",back:"LIABILITY. An expense incurred this year but paid next year. Credited on 31/12 (6… D / 492 C)."},
+  {cat:"493",front:"Deferred revenues (493)",back:"LIABILITY. Income received in advance, not yet earned. Credited on 31/12 (7… D / 493 C)."},
+  {cat:"Rule",front:"Two rules for adjusting entries",back:"(1) No VAT — VAT is never an expense or revenue. (2) They ignore the timing of actual payment; only the period the benefit belongs to matters."},
+  {cat:"Rhythm",front:"The three-step rhythm",back:"Book the cash movement → adjust at 31/12 (defer or accrue) → REVERSE (book off) on 01/01 so the later cash lands in the right year automatically."},
+  {cat:"Inventory",front:"Why change inventory at year-end?",back:"During the year purchases→604, sales→70x, and 340 stays frozen. Purchases ≠ cost of goods sold unless closing stock = opening stock, so the result is wrong until corrected."},
+  {cat:"Inventory",front:"340 & 6094",back:"340 Inventory of goods for resale (asset). 6094 Changes in inventories of GFR (operating expense, line 609). The correction runs between them."},
+  {cat:"Inventory",front:"Inventory increase",back:"Closing > opening: 340 D / 6094 C → operating expenses DOWN. Cost of goods sold = purchases − change."},
+  {cat:"Inventory",front:"Inventory decrease",back:"Closing < opening: 6094 D / 340 C → operating expenses UP. You sold from stock, so COGS exceeds this year's purchases."},
+  {cat:"Reclass",front:"LT → ST reclassification",back:"At year-end, the portion of a long-term debt (173) due within 12 months is moved to 423 Current portion of LT payables. A separate job from accruing interest."},
+];
+
+// trainer: which of 490/491/492/493
+const TRAINER=[
+  {ctx:"An insurance premium is paid in advance on 1 August; part of the cover runs into next year.",acc:"490"},
+  {ctx:"You rent out property; November–December rent is earned but collected only on 31 January next year.",acc:"491"},
+  {ctx:"Loan interest for April–December has built up but is paid only on 1 April next year.",acc:"492"},
+  {ctx:"You received a full quarter's rent in advance on 1 November; part covers January next year.",acc:"493"},
+  {ctx:"Electricity used in December — the invoice arrives and is paid in January.",acc:"492"},
+  {ctx:"A subscription your customer paid in December covers January–March of next year.",acc:"493"},
+  {ctx:"You prepaid a full year of office rent in October; most of it covers next year.",acc:"490"},
+  {ctx:"Interest you earned on an investment this year will be credited to you next year.",acc:"491"},
+];
+const ACCTS={
+  "490":{n:"Deferred expenses",nat:"asset",side:"D",why:"Expense paid in advance → defer the future slice out (asset)."},
+  "491":{n:"Accrued revenues",nat:"asset",side:"D",why:"Revenue earned but not yet received → accrue it in (asset)."},
+  "492":{n:"Accrued expenses",nat:"liability",side:"C",why:"Expense incurred but not yet paid → accrue it in (liability)."},
+  "493":{n:"Deferred revenues",nat:"liability",side:"C",why:"Revenue received in advance → defer the unearned slice out (liability)."},
+};
+
+const TX=[
+  {n:"OMEGA 1",date:"01/08",doc:"Pay fire-insurance premium 1 800,00 in advance (C/A 20X0/069).",
+   lines:[["Services and other goods","61","1 800,00","D"],["Bank X — current account","5500","1 800,00","C"]]},
+  {n:"OMEGA 2",date:"31/12",doc:"Defer 7/12 of the premium into next year (DIV 20X0/083).",
+   lines:[["Deferred expenses","490","1 050,00","D"],["Services and other goods","61","1 050,00","C"]]},
+  {n:"OMEGA 3",date:"01/01",doc:"Book off the deferral (DIV 20X1/001).",
+   lines:[["Services and other goods","61","1 050,00","D"],["Deferred expenses","490","1 050,00","C"]]},
+  {n:"VANDE 1",date:"31/12",doc:"Accrue Nov–Dec rent earned but not yet received (DIV 20X0/057).",
+   lines:[["Accrued revenues","491","2 000,00","D"],["Other operating revenues","743","2 000,00","C"]]},
+  {n:"VANDE 2",date:"01/01",doc:"Book off the accrual (DIV 20X1/001).",
+   lines:[["Other operating revenues","743","2 000,00","D"],["Accrued revenues","491","2 000,00","C"]]},
+  {n:"VANDE 3",date:"31/01",doc:"Receive the quarterly rent in arrear (C/A 20X1/010).",
+   lines:[["Bank X — current account","5500","3 000,00","D"],["Other operating revenues","743","3 000,00","C"]]},
+  {n:"SUPER 1",date:"01/04",doc:"Receive the 500 000 loan (C/A 20X0/052).",
+   lines:[["Bank X — current account","5500","500 000,00","D"],["LT debts — Banks","173","500 000,00","C"]]},
+  {n:"SUPER 2",date:"31/12",doc:"Reclassify the 50 000 due within a year, LT → ST (DIV 20X0/095).",
+   lines:[["LT debts — Banks","173","50 000,00","D"],["Current portion of LT payables","423","50 000,00","C"]]},
+  {n:"SUPER 3",date:"31/12",doc:"Accrue Apr–Dec interest, 9/12 × 15 000 (DIV 20X0/096).",
+   lines:[["Interests","6500","11 250,00","D"],["Accrued expenses","492","11 250,00","C"]]},
+  {n:"SUPER 4",date:"01/01",doc:"Book off the interest accrual (DIV 20X1/001).",
+   lines:[["Accrued expenses","492","11 250,00","D"],["Interests","6500","11 250,00","C"]]},
+  {n:"SUPER 5",date:"01/04",doc:"Pay first redemption 50 000 + full-year interest 15 000 (C/A 20X1/026).",
+   lines:[["Current portion of LT payables","423","50 000,00","D"],["Interests","6500","15 000,00","D"],["Bank X — current account","5500","65 000,00","C"]]},
+  {n:"PEET 1",date:"01/11",doc:"Receive quarterly rent 3 000 in advance (C/A 20X0/065).",
+   lines:[["Bank X — current account","5500","3 000,00","D"],["Other operating revenues","743","3 000,00","C"]]},
+  {n:"PEET 2",date:"31/12",doc:"Defer the January share of the rent (DIV 20X0/078).",
+   lines:[["Other operating revenues","743","1 000,00","D"],["Deferred revenues","493","1 000,00","C"]]},
+  {n:"PEET 3",date:"01/01",doc:"Book off the deferral (DIV 20X1/001).",
+   lines:[["Deferred revenues","493","1 000,00","D"],["Other operating revenues","743","1 000,00","C"]]},
+  {n:"VIVA 20X1",date:"31/12",doc:"Inventory rises to 1 000 bikes; record the increase (500 000).",
+   lines:[["Inventory of goods for resale","340","500 000,00","D"],["Changes in inventories of GFR","6094","500 000,00","C"]]},
+  {n:"VIVA 20X2",date:"31/12",doc:"Inventory falls to 250 bikes; record the decrease (375 000).",
+   lines:[["Changes in inventories of GFR","6094","375 000,00","D"],["Inventory of goods for resale","340","375 000,00","C"]]},
+];
+
+const QUIZZES={mixed:[
+  {q:"You pay a full year's insurance in advance on 1 October. At 31/12 you…",o:["Accrue the used part with 492","Defer 9 months into next year with 490","Do nothing until it expires","Book VAT on the deferral"],c:1,e:"Cash paid now, most of the cover is next year → defer the future slice to 490 Deferred expenses (asset)."},
+  {q:"Interest on a loan for Sep–Dec is only paid next March. At 31/12 you…",o:["Defer it with 493","Accrue it with 492 Accrued expenses","Ignore it — not yet paid","Reclassify it to 423"],c:1,e:"The expense belongs to this year but cash is next year → accrue it: 6500 D / 492 C (liability)."},
+  {q:"Account 491 Accrued revenues is…",o:["A liability credited on 31/12","An asset debited on 31/12","An expense","A VAT account"],c:1,e:"491 is an asset (income earned, not yet received), debited on 31/12."},
+  {q:"An adjusting entry always includes…",o:["A VAT line","A bank line","One income-statement (6/7) account and one 490–493 account","Two balance-sheet accounts"],c:2,e:"Adjusting entries move value between an expense/revenue account and an accrual/deferral account — never VAT."},
+  {q:"Closing inventory (1 000 units) exceeds opening (0). The entry is…",o:["6094 D / 340 C — expenses up","340 D / 6094 C — expenses down","No entry","70x D / 604 C"],c:1,e:"Stock increased → 340 D / 6094 C, reducing operating expenses so COGS = purchases − change."},
+  {q:"Why reverse the adjusting entry on 01/01?",o:["To restate last year","So the later cash transaction lands in the correct year automatically","To book VAT","It's optional"],c:1,e:"The reversal cancels the double-count so the ordinary cash entry next year self-allocates to the right period."},
+]};
+
+/* ================= PERSISTENCE ================= */
+const store={get(k,d){try{const v=localStorage.getItem("ch6_"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("ch6_"+k,JSON.stringify(v))}catch(e){}}};
+
+/* ================= THEME ================= */
+(function(){const btn=document.getElementById("themeBtn");const saved=store.get("theme",null);if(saved)document.documentElement.setAttribute("data-theme",saved);
+  btn.addEventListener("click",()=>{const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;const next=isDark?"light":"dark";document.documentElement.setAttribute("data-theme",next);store.set("theme",next);});})();
+
+/* ================= FLASHCARDS ================= */
+(function(){
+  const anchor=document.getElementById("deckMount");
+  const ix=document.createElement("div");ix.className="ix";
+  ix.innerHTML='<div class="ix-head"><span class="ix-kind">Flashcards</span><h3>Core vocabulary — flip &amp; recall</h3></div>'+
+    '<div class="ix-body"><p class="mini" style="margin-top:0">Click a card to flip. Answer aloud before flipping.</p>'+
+    '<div class="deck"><div class="card" id="flashcard" tabindex="0" role="button" aria-label="Flashcard, click to flip">'+
+    '<div class="face front"><div class="kicker" id="fcCat">Term</div><div class="term" id="fcFront"></div></div>'+
+    '<div class="face back"><div class="kicker">Definition</div><div class="def" id="fcBack"></div></div></div></div>'+
+    '<div class="deck-bar"><button class="btn btn-ghost" id="fcPrev">‹ Prev</button>'+
+    '<span class="deck-count"><span id="fcIdx">1</span> / <span id="fcTot">0</span></span>'+
+    '<button class="btn btn-primary" id="fcNext">Next ›</button></div></div>';
+  anchor.appendChild(ix);
+  let i=0;const card=document.getElementById("flashcard"),front=document.getElementById("fcFront"),back=document.getElementById("fcBack"),cat=document.getElementById("fcCat"),idx=document.getElementById("fcIdx"),tot=document.getElementById("fcTot");
+  tot.textContent=FLASHCARDS.length;
+  function render(){const c=FLASHCARDS[i];front.textContent=c.front;back.textContent=c.back;cat.textContent=c.cat;idx.textContent=i+1;card.classList.remove("flip")}
+  card.addEventListener("click",()=>card.classList.toggle("flip"));
+  card.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();card.classList.toggle("flip")}});
+  document.getElementById("fcNext").addEventListener("click",()=>{i=(i+1)%FLASHCARDS.length;render();bumpProgress("deck",1)});
+  document.getElementById("fcPrev").addEventListener("click",()=>{i=(i-1+FLASHCARDS.length)%FLASHCARDS.length;render()});
+  render();
+})();
+
+/* ================= TRAINER ================= */
+(function(){
+  const el={ctx:document.getElementById("trCtx"),opts:document.getElementById("trOpts"),fb:document.getElementById("trFb"),
+    c:document.getElementById("trCorrect"),t:document.getElementById("trTotal"),s:document.getElementById("trStreak"),b:document.getElementById("trBest")};
+  let cur=null,correct=store.get("tr_c",0),total=store.get("tr_t",0),streak=0,best=store.get("tr_b",0);
+  el.c.textContent=correct;el.t.textContent=total;el.b.textContent=best;
+  const KEYS=Object.keys(ACCTS);
+  function next(){
+    const pick=TRAINER[Math.floor(Math.random()*TRAINER.length)];cur={acc:pick.acc};
+    el.ctx.textContent=pick.ctx;
+    const opts=KEYS.slice().sort(()=>Math.random()-0.5);
+    el.opts.innerHTML="";
+    opts.forEach(k=>{const a=ACCTS[k];const btn=document.createElement("button");btn.className="optbtn";
+      btn.innerHTML='<span class="an">'+k+'</span> '+a.n+' <span class="mini">('+a.nat+')</span>';
+      btn.addEventListener("click",()=>guess(k,btn));el.opts.appendChild(btn);});
+    el.fb.className="feedback";
+  }
+  function guess(k,btn){
+    total++;el.t.textContent=total;store.set("tr_t",total);
+    const ok=k===cur.acc;const right=ACCTS[cur.acc];
+    [...el.opts.children].forEach(b=>{b.disabled=true;if(b.querySelector(".an").textContent===cur.acc)b.classList.add("correct")});
+    if(ok){correct++;streak++;el.c.textContent=correct;store.set("tr_c",correct);if(streak>best){best=streak;el.b.textContent=best;store.set("tr_b",best)}el.s.textContent=streak;
+      el.fb.className="feedback show ok";el.fb.innerHTML="✓ Correct — "+cur.acc+" "+right.n+" ("+right.nat+", "+(right.side==="D"?"debit":"credit")+" on 31/12). "+right.why;
+      bumpProgress("trainer",Math.min(streak,12)/12);
+    }else{btn.classList.add("wrong");streak=0;el.s.textContent=0;el.fb.className="feedback show no";
+      el.fb.innerHTML="✗ It's "+cur.acc+" "+right.n+" ("+right.nat+", "+(right.side==="D"?"debit":"credit")+" on 31/12). "+right.why;}
+    setTimeout(next,ok?900:2300);
+  }
+  next();
+})();
+
+/* ================= ADJUSTING-ENTRY BUILDER ================= */
+(function(){
+  let nature="expense",timing="advance";
+  const $=id=>document.getElementById(id);
+  const els={amt:$("bAmount"),tot:$("bTotal"),cur:$("bCurrent"),res:$("bResult"),entry:$("bEntry"),note:$("bNote")};
+  function fmt(n){return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function num(el){const v=parseFloat(el.value);return isNaN(v)?0:v}
+  function calc(){
+    const amount=num(els.amt),total=Math.max(num(els.tot),1),current=Math.min(Math.max(num(els.cur),0),total);
+    const nextMonths=total-current;
+    const curPortion=Math.round(amount*current/total*100)/100;
+    const nextPortion=Math.round((amount-curPortion)*100)/100;
+    // decide
+    let type,acc,accName,adjAmt,line1,line2,isName;
+    const isAcc=nature==="expense"?"6… expense account":"7… revenue account";
+    if(nature==="expense"&&timing==="advance"){type="DEFER";acc="490";accName="Deferred expenses";adjAmt=nextPortion;
+      line1=["490","Deferred expenses (asset)",adjAmt,0];line2=["6…","@ "+isAcc,0,adjAmt];}
+    else if(nature==="expense"&&timing==="arrear"){type="ACCRUE";acc="492";accName="Accrued expenses";adjAmt=curPortion;
+      line1=["6…",isAcc,adjAmt,0];line2=["492","@ Accrued expenses (liability)",0,adjAmt];}
+    else if(nature==="revenue"&&timing==="advance"){type="DEFER";acc="493";accName="Deferred revenues";adjAmt=nextPortion;
+      line1=["7…",isAcc,adjAmt,0];line2=["493","@ Deferred revenues (liability)",0,adjAmt];}
+    else{type="ACCRUE";acc="491";accName="Accrued revenues";adjAmt=curPortion;
+      line1=["491","Accrued revenues (asset)",adjAmt,0];line2=["7…","@ "+isAcc,0,adjAmt];}
+    els.res.innerHTML=
+      '<div class="rc-row"><span>Belongs to THIS year ('+current+' mo)</span><span class="v">'+fmt(curPortion)+'</span></div>'+
+      '<div class="rc-row"><span>Belongs to NEXT year ('+nextMonths+' mo)</span><span class="v">'+fmt(nextPortion)+'</span></div>'+
+      '<div class="rc-row"><span>Action at 31/12</span><span class="v">'+type+'</span></div>'+
+      '<div class="rc-row hl"><span>Account '+acc+' · '+accName+'</span><span class="v">'+fmt(adjAmt)+'</span></div>';
+    els.entry.innerHTML=[line1,line2].map(l=>'<tr><td class="accno">'+l[0]+'</td><td>'+l[1]+'</td><td class="n">'+(l[2]?fmt(l[2]):"")+'</td><td class="n">'+(l[3]?fmt(l[3]):"")+'</td></tr>').join("");
+    els.note.innerHTML=(timing==="advance"
+      ? "Cash moved in advance, so the whole amount is already booked — you <b>defer</b> the "+fmt(nextPortion)+" that belongs to next year out to account "+acc+"."
+      : "Cash comes in arrear, so nothing is booked yet — you <b>accrue</b> the "+fmt(curPortion)+" that belongs to this year in via account "+acc+".")+
+      " On 01/01 this entry is reversed. (No VAT in adjusting entries.)";
+  }
+  ["amt","tot","cur"].forEach(k=>els[k].addEventListener("input",()=>{calc();bumpProgress("builder",1)}));
+  document.querySelectorAll("#bNature button").forEach(b=>b.addEventListener("click",()=>{nature=b.dataset.v;document.querySelectorAll("#bNature button").forEach(x=>x.classList.remove("on"));b.classList.add("on");calc()}));
+  document.querySelectorAll("#bTiming button").forEach(b=>b.addEventListener("click",()=>{timing=b.dataset.v;document.querySelectorAll("#bTiming button").forEach(x=>x.classList.remove("on"));b.classList.add("on");calc()}));
+  calc();
+})();
+
+/* ================= INVENTORY RECONCILER ================= */
+(function(){
+  const $=id=>document.getElementById(id);
+  const els={open:$("iOpen"),buy:$("iBuy"),sell:$("iSell"),cost:$("iCost"),price:$("iPrice"),res:$("iResult"),entry:$("iEntry"),note:$("iNote")};
+  function fmt(n){return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function num(el){const v=parseFloat(el.value);return isNaN(v)?0:v}
+  function calc(){
+    const open=num(els.open),buy=num(els.buy),sell=num(els.sell),cost=num(els.cost),price=num(els.price);
+    const close=open+buy-sell;
+    const openVal=open*cost,closeVal=close*cost,change=closeVal-openVal;
+    const purchases=buy*cost,sales=sell*price,cogs=sell*cost;
+    const acctResultRaw=sales-purchases;
+    const acctResultAdj=sales-cogs; // = sales - (purchases - change)
+    const up=change>=0;
+    els.res.innerHTML=
+      '<div class="rc-row"><span>Closing inventory</span><span class="v">'+close+' u · '+fmt(closeVal)+'</span></div>'+
+      '<div class="rc-row"><span>Opening inventory</span><span class="v">'+open+' u · '+fmt(openVal)+'</span></div>'+
+      '<div class="rc-row hl"><span>Change in inventory</span><span class="v">'+(change>=0?"+":"")+fmt(change)+'</span></div>'+
+      '<div class="rc-row"><span>Purchases (604)</span><span class="v">'+fmt(purchases)+'</span></div>'+
+      '<div class="rc-row"><span>Cost of goods sold</span><span class="v">'+fmt(cogs)+'</span></div>'+
+      '<div class="rc-row"><span>Actual result (sales − COGS)</span><span class="v">'+fmt(acctResultAdj)+'</span></div>';
+    let e;
+    if(change>0)e=[["340","Inventory of goods for resale",change,0],["6094","@ Changes in inventories of GFR",0,change]];
+    else if(change<0)e=[["6094","Changes in inventories of GFR",-change,0],["340","@ Inventory of goods for resale",0,-change]];
+    else e=[];
+    els.entry.innerHTML=e.length?e.map(l=>'<tr><td class="accno">'+l[0]+'</td><td>'+l[1]+'</td><td class="n">'+(l[2]?fmt(l[2]):"")+'</td><td class="n">'+(l[3]?fmt(l[3]):"")+'</td></tr>').join(""):'<tr><td colspan="4" class="mini">Closing = opening — no change, no entry needed.</td></tr>';
+    els.note.innerHTML=(change>0
+      ? "Stock <b>increased</b> by "+fmt(change)+": 340 D / 6094 C lowers operating expenses. "
+      : change<0? "Stock <b>decreased</b> by "+fmt(-change)+": 6094 D / 340 C raises operating expenses. "
+      : "No change in stock. ")+
+      "Cost of goods sold = purchases "+fmt(purchases)+" "+(change>=0?"−":"+")+" "+fmt(Math.abs(change))+" = <b>"+fmt(cogs)+"</b>. "+
+      "Accounting result now equals the actual result ("+fmt(acctResultAdj)+"); before the correction the books showed "+fmt(acctResultRaw)+".";
+  }
+  ["open","buy","sell","cost","price"].forEach(k=>els[k].addEventListener("input",()=>{calc();bumpProgress("recon",1)}));
+  calc();
+})();
+
+/* ================= QUIZ ENGINE ================= */
+document.querySelectorAll("[data-quiz]").forEach(wrap=>{
+  const key=wrap.getAttribute("data-quiz");const bank=QUIZZES[key];if(!bank)return;
+  const body=wrap.querySelector(".quiz");let qi=0,score=0,answered=false;
+  function render(){const item=bank[qi];answered=false;body.innerHTML="";
+    const q=document.createElement("div");q.className="q";q.innerHTML=(qi+1)+". "+item.q;body.appendChild(q);
+    const opts=document.createElement("div");opts.className="opts";
+    item.o.forEach((txt,k)=>{const b=document.createElement("button");b.className="opt";b.innerHTML='<span class="mk">'+String.fromCharCode(65+k)+'</span><span>'+txt+'</span>';b.addEventListener("click",()=>choose(k,b,opts,item));opts.appendChild(b);});
+    body.appendChild(opts);
+    const ex=document.createElement("div");ex.className="explain";ex.id="ex_"+key;body.appendChild(ex);
+    const foot=document.createElement("div");foot.className="quiz-foot";foot.innerHTML='<span class="quiz-prog">Question '+(qi+1)+' / '+bank.length+' · score '+score+'</span>';
+    const nb=document.createElement("button");nb.className="btn btn-primary";nb.textContent=qi<bank.length-1?"Next question ›":"Restart quiz";
+    nb.addEventListener("click",()=>{if(qi<bank.length-1){qi++}else{qi=0;score=0}render()});foot.appendChild(nb);body.appendChild(foot);}
+  function choose(k,btn,opts,item){if(answered)return;answered=true;
+    [...opts.children].forEach((b,idx)=>{b.disabled=true;if(idx===item.c)b.classList.add("correct")});
+    if(k!==item.c)btn.classList.add("wrong");else{score++;bumpProgress("quiz_"+key+"_"+qi,1)}
+    const ex=document.getElementById("ex_"+key);ex.className="explain show";ex.innerHTML=(k===item.c?"<b>Correct.</b> ":"<b>Answer: "+String.fromCharCode(65+item.c)+".</b> ")+item.e;}
+  render();
+});
+
+/* ================= JOURNALIZING DRILL ================= */
+(function(){
+  const scen=document.getElementById("jdScen"),lines=document.getElementById("jdLines"),fb=document.getElementById("jdFb");
+  const idxEl=document.getElementById("jdIdx"),totEl=document.getElementById("jdTot"),solvedEl=document.getElementById("jdSolved");
+  const checkBtn=document.getElementById("jdCheck"),nextBtn=document.getElementById("jdNext");
+  let i=0,solved=store.get("jd_solved",0),picks=[];
+  totEl.textContent=TX.length;solvedEl.textContent=solved;
+  function render(){const tx=TX[i];picks=tx.lines.map(()=>null);idxEl.textContent=i+1;
+    scen.innerHTML='<span class="date">'+tx.n+' · '+tx.date+'</span> — '+tx.doc;lines.innerHTML="";
+    tx.lines.forEach((l,k)=>{const row=document.createElement("div");row.className="jd-line";
+      row.innerHTML='<div class="aname">'+l[0]+' <span class="an">'+l[1]+'</span></div><div class="jd-amt">'+l[2]+'</div>'+
+        '<div class="dc-toggle"><button data-k="'+k+'" data-v="D">D</button><button data-k="'+k+'" data-v="C">C</button></div>';lines.appendChild(row);});
+    lines.querySelectorAll(".dc-toggle button").forEach(b=>{b.addEventListener("click",()=>{const k=+b.dataset.k,v=b.dataset.v;picks[k]=v;
+      const grp=b.parentElement;grp.querySelectorAll("button").forEach(x=>x.classList.remove("pick-d","pick-c","err","right"));b.classList.add(v==="D"?"pick-d":"pick-c");});});
+    fb.className="feedback";checkBtn.disabled=false;nextBtn.disabled=true;}
+  checkBtn.addEventListener("click",()=>{const tx=TX[i];let allRight=true;const btns=lines.querySelectorAll(".dc-toggle");
+    tx.lines.forEach((l,k)=>{const want=l[3],got=picks[k],grp=btns[k];grp.querySelectorAll("button").forEach(x=>x.classList.remove("err","right"));
+      if(got===want){grp.querySelector('[data-v="'+want+'"]').classList.add("right")}else{allRight=false;if(got)grp.querySelector('[data-v="'+got+'"]').classList.add("err");grp.querySelector('[data-v="'+want+'"]').classList.add("right")}});
+    if(allRight){fb.className="feedback show ok";fb.innerHTML="✓ Correct entry — debits equal credits. Nicely posted.";
+      if(!store.get("jd_done_"+i,false)){solved=Math.min(solved+1,TX.length);store.set("jd_done_"+i,true);store.set("jd_solved",solved);solvedEl.textContent=solved;}
+      bumpProgress("jd_"+i,1);checkBtn.disabled=true;nextBtn.disabled=false;
+    }else{fb.className="feedback show no";fb.innerHTML="✗ Some sides are off — the correct side is highlighted in green. Remember: assets &amp; expenses debit to increase; liabilities &amp; revenues credit to increase. For adjusting entries, 490/491 are assets and 492/493 are liabilities.";}});
+  nextBtn.addEventListener("click",()=>{i=(i+1)%TX.length;render()});
+  render();
+})();
+
+/* ================= CHECKLIST ================= */
+(function(){document.querySelectorAll("#objList li").forEach(li=>{const id=li.dataset.obj;if(store.get("obj_"+id,false))li.classList.add("done");
+  li.addEventListener("click",()=>{li.classList.toggle("done");store.set("obj_"+id,li.classList.contains("done"));updateProgress();});});})();
+
+/* ================= PROGRESS ================= */
+function bumpProgress(key,val){store.set("prog_"+key,Math.max(store.get("prog_"+key,0),val));updateProgress()}
+function updateProgress(){
+  let done=0,tot=0;
+  for(let i=1;i<=5;i++){tot++;if(store.get("obj_"+i,false))done++;}
+  tot+=2;done+=Math.min(store.get("prog_trainer",0),1)*2;
+  tot+=1;done+=Math.min(store.get("prog_deck",0),1);
+  tot+=1;done+=Math.min(store.get("prog_builder",0),1);
+  tot+=1;done+=Math.min(store.get("prog_recon",0),1);
+  tot+=3;done+=Math.min(store.get("jd_solved",0)/TX.length,1)*3;
+  let qTot=0,qDone=0;Object.keys(QUIZZES).forEach(k=>{QUIZZES[k].forEach((_,i)=>{qTot++;if(store.get("prog_quiz_"+k+"_"+i,0))qDone++})});
+  tot+=2;done+=(qTot?qDone/qTot:0)*2;
+  const pct=Math.round(Math.min(done/tot,1)*100);
+  document.getElementById("globalProgress").style.width=pct+"%";document.getElementById("pctLabel").textContent=pct+"%";
+}
+updateProgress();
+
+/* ================= SCROLLSPY ================= */
+(function(){const links=[...document.querySelectorAll(".sidenav a")];const map={};links.forEach(a=>map[a.getAttribute("href").slice(1)]=a);
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove("active"));const a=map[e.target.id];if(a)a.classList.add("active")}})},{rootMargin:"-20% 0px -70% 0px"});
+  document.querySelectorAll("section.mod").forEach(s=>obs.observe(s));})();
+</script>
