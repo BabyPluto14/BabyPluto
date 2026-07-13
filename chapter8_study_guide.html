@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<title>Chapter 8 — Inventories · Interactive Workbook</title>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#f7f4ec; --paper-2:#efe9dc; --card:#fffdf8; --ink:#1b211f; --ink-soft:#4a534f;
+    --line:#ddd4c2; --line-2:#cabfa6; --accent:#0f6e5c; --accent-deep:#0a4d40; --accent-soft:#e2efe9;
+    --debit:#b0503a; --debit-bg:#f6e7e1; --credit:#0f6e5c; --credit-bg:#e2efe9;
+    --gold:#9a7b1f; --shadow:0 1px 2px rgba(27,33,31,.06),0 6px 20px rgba(27,33,31,.06);
+    --maxw:70ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#12181a; --paper-2:#0d1315; --card:#1a2225; --ink:#e9e4d8; --ink-soft:#a3a7a1;
+      --line:#2a3438; --line-2:#3a474b; --accent:#4bc3a8; --accent-deep:#7fe0c9; --accent-soft:#16302b;
+      --debit:#e08a6f; --debit-bg:#2e211d; --credit:#4bc3a8; --credit-bg:#132a26;
+      --gold:#cdae5e; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f7f4ec; --paper-2:#efe9dc; --card:#fffdf8; --ink:#1b211f; --ink-soft:#4a534f;
+    --line:#ddd4c2; --line-2:#cabfa6; --accent:#0f6e5c; --accent-deep:#0a4d40; --accent-soft:#e2efe9;
+    --debit:#b0503a; --debit-bg:#f6e7e1; --credit:#0f6e5c; --credit-bg:#e2efe9; --gold:#9a7b1f;
+    --shadow:0 1px 2px rgba(27,33,31,.06),0 6px 20px rgba(27,33,31,.06);
+  }
+  :root[data-theme="dark"]{
+    --paper:#12181a; --paper-2:#0d1315; --card:#1a2225; --ink:#e9e4d8; --ink-soft:#a3a7a1;
+    --line:#2a3438; --line-2:#3a474b; --accent:#4bc3a8; --accent-deep:#7fe0c9; --accent-soft:#16302b;
+    --debit:#e08a6f; --debit-bg:#2e211d; --credit:#4bc3a8; --credit-bg:#132a26; --gold:#cdae5e;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;}
+  h1,h2,h3,h4{font-family:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+    text-wrap:balance;line-height:1.2;font-weight:600;color:var(--ink);}
+  a{color:var(--accent);text-underline-offset:2px}
+  p{margin:.6em 0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .wide{max-width:min(96ch,100%);}
+
+  .topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .row{max-width:min(96ch,100%);margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:14px}
+  .brand{font-family:Georgia,serif;font-weight:600;font-size:15px;letter-spacing:.01em}
+  .brand b{color:var(--accent)}
+  .progresswrap{flex:1;display:flex;align-items:center;gap:9px;min-width:0}
+  .pbar{flex:1;height:7px;background:var(--paper-2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width .35s ease}
+  .pcount{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .themebtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink);border-radius:8px;
+    padding:5px 10px;font-size:13px;cursor:pointer;line-height:1}
+  .themebtn:hover{border-color:var(--accent)}
+
+  .hero{padding:56px 0 30px;border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 90% at 82% -10%,var(--accent-soft),transparent 60%);}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);font-weight:600}
+  .hero h1{font-size:clamp(2rem,5.4vw,3.2rem);margin:.28em 0 .12em}
+  .hero .sub{font-size:1.12rem;color:var(--ink-soft);max-width:60ch}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .chip{font-size:12.5px;border:1px solid var(--line-2);background:var(--card);border-radius:99px;padding:5px 12px;color:var(--ink-soft)}
+  .chip b{color:var(--ink)}
+
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  .snum{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--accent);
+    letter-spacing:.08em;border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;background:var(--card)}
+  .shead{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}
+  .shead h2{font-size:clamp(1.4rem,3.4vw,1.9rem);margin:0}
+  .lead{color:var(--ink-soft);font-size:1.05rem;margin-top:0}
+
+  .note,.warn,.key{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line-2);background:var(--card);box-shadow:var(--shadow)}
+  .note{border-left:4px solid var(--accent)}
+  .warn{border-left:4px solid var(--debit);background:var(--debit-bg)}
+  .key{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 9%,var(--card))}
+  .note .tag,.warn .tag,.key .tag{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+  .note .tag{color:var(--accent-deep)} .warn .tag{color:var(--debit)} .key .tag{color:var(--gold)}
+
+  .equation{font-family:Georgia,serif;font-size:1.25rem;text-align:center;margin:22px 0;padding:16px;
+    border:1px solid var(--line-2);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
+  .equation b{color:var(--accent)}
+
+  .tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:15px;background:var(--card)}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line)}
+  thead th{background:var(--paper-2);font-family:Georgia,serif;font-weight:600;font-size:13.5px;letter-spacing:.02em}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  tr.total td{font-weight:700;background:var(--paper-2);border-top:2px solid var(--line-2)}
+  .db{color:var(--debit);font-weight:600} .cr{color:var(--credit);font-weight:600}
+  .hi{background:var(--accent-soft)!important}
+
+  .journal{font-family:ui-monospace,monospace;font-size:14px;background:var(--paper-2);
+    border:1px solid var(--line-2);border-radius:12px;padding:14px 16px;margin:16px 0;overflow-x:auto;
+    font-variant-numeric:tabular-nums;line-height:1.75}
+  .journal .jdate{color:var(--accent-deep);font-weight:700}
+  .journal .jline{display:grid;grid-template-columns:60px 1fr auto auto;gap:10px;white-space:nowrap}
+  .journal .jline .acc{color:var(--ink-soft)}
+  .journal .jline .amtD{color:var(--debit);text-align:right;min-width:88px}
+  .journal .jline .amtC{color:var(--credit);text-align:right;min-width:88px}
+  .journal .cred{padding-left:14px}
+  .journal .jdesc{color:var(--ink-soft);font-style:italic;padding-left:60px;font-size:13px}
+  .journal .jrule{border-top:1px dashed var(--line-2);margin:4px 0}
+
+  .qcard{border:1px solid var(--line-2);border-radius:14px;background:var(--card);padding:16px 18px;margin:16px 0;box-shadow:var(--shadow)}
+  .qhead{display:flex;align-items:flex-start;gap:12px}
+  .qcheck{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--line-2);border-radius:6px;
+    cursor:pointer;flex:none;margin-top:2px;position:relative;background:var(--paper)}
+  .qcheck:checked{background:var(--accent);border-color:var(--accent)}
+  .qcheck:checked::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:15px;display:grid;place-items:center;font-weight:700}
+  .qcheck:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .qbody{flex:1}
+  .lvl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:2px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:8px}
+  details.sol{margin-top:12px;border-top:1px dashed var(--line-2);padding-top:6px}
+  details.sol>summary{cursor:pointer;list-style:none;font-weight:600;color:var(--accent);font-size:14.5px;
+    padding:8px 12px;border:1px solid var(--line-2);border-radius:9px;background:var(--paper-2);display:inline-flex;
+    align-items:center;gap:8px;user-select:none;transition:.15s}
+  details.sol>summary:hover{border-color:var(--accent)}
+  details.sol>summary::-webkit-details-marker{display:none}
+  details.sol>summary::before{content:"▸";transition:transform .2s;color:var(--accent)}
+  details.sol[open]>summary::before{transform:rotate(90deg)}
+  details.sol[open]>summary{background:var(--accent-soft)}
+  .solbody{padding:10px 2px 2px;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:18px 0}
+  .flip{background:transparent;border:none;padding:0;cursor:pointer;height:140px;perspective:1000px;font:inherit;text-align:left}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;
+    display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line-2);box-shadow:var(--shadow)}
+  .flip .front{background:var(--card)}
+  .flip .front .q{font-family:Georgia,serif;font-size:15px}
+  .flip .front .hint{font-size:11px;color:var(--ink-soft);margin-top:8px;letter-spacing:.04em;text-transform:uppercase}
+  .flip .back{background:var(--accent-soft);transform:rotateY(180deg);color:var(--ink)}
+  .flip .back .a{font-size:13.5px;font-weight:600}
+  .flip:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+
+  ul,ol{padding-left:1.25em} li{margin:.28em 0}
+  code{font-family:ui-monospace,monospace;background:var(--paper-2);padding:1px 6px;border-radius:5px;font-size:.9em;border:1px solid var(--line)}
+  .toc{columns:2;column-gap:26px;font-size:14.5px}
+  @media(max-width:560px){.toc{columns:1}.journal{font-size:12.5px}}
+  .toc a{display:block;padding:3px 0;color:var(--ink-soft);text-decoration:none}
+  .toc a:hover{color:var(--accent)}
+
+  /* profit bars in the comparison */
+  .bars{display:grid;gap:10px;margin:16px 0}
+  .barrow{display:grid;grid-template-columns:120px 1fr 90px;align-items:center;gap:10px;font-size:14px}
+  .barrow .lab{font-weight:600}
+  .bartrack{background:var(--paper-2);border-radius:99px;height:22px;overflow:hidden;border:1px solid var(--line)}
+  .bartrack>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-deep));border-radius:99px}
+  .barrow .val{text-align:right;font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums;font-weight:600}
+
+  footer{padding:34px 22px 60px;text-align:center;color:var(--ink-soft);font-size:14px}
+  .resetbtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink-soft);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;margin-top:10px}
+  .resetbtn:hover{border-color:var(--debit);color:var(--debit)}
+  @media print{.topbar,.themebtn,.flip .hint{display:none}details.sol{border:none}details.sol>summary{display:none}details.sol .solbody{display:block!important}.qcheck{display:none}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="topbar">
+  <div class="row">
+    <span class="brand">Ch.8 · <b>Inventories</b></span>
+    <div class="progresswrap">
+      <div class="pbar"><i id="pfill"></i></div>
+      <span class="pcount" id="pcount">0 / 14 done</span>
+    </div>
+    <button class="themebtn" id="themebtn" aria-label="Toggle light or dark theme">◐ Theme</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap wide">
+    <span class="eyebrow">Financial Accounting · Interactive Workbook</span>
+    <h1>Inventories</h1>
+    <p class="sub">Same goods, same sales — <em>four</em> different profits. This chapter is about valuing the stock left in the warehouse at year-end (FIFO, LIFO, weighted average), the market test, and write-offs. Running example: <b>OMEGA KAPPA plc</b>.</p>
+    <div class="meta">
+      <span class="chip"><b>Course:</b> Internal &amp; External Financial Reporting</span>
+      <span class="chip"><b>Based on slides by</b> V.&nbsp;Ghijselinck</span>
+      <span class="chip"><b>Textbook:</b> Ch.8, p.177–218</span>
+      <span class="chip"><b>14</b> graded exercises · reveal solutions</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">MAP</span><h2>What's inside</h2></div>
+    <nav class="toc">
+      <a href="#mech">1 · The core mechanism</a>
+      <a href="#cost">2 · Cost vs market value</a>
+      <a href="#case">3 · The case study (OMEGA KAPPA)</a>
+      <a href="#fifo">4 · FIFO</a>
+      <a href="#lifo">5 · LIFO</a>
+      <a href="#wap">6 · Weighted average</a>
+      <a href="#compare">7 · Comparing the methods</a>
+      <a href="#market">8 · The market test</a>
+      <a href="#writeoff">9 · Write-offs</a>
+      <a href="#manu">10 · Manufactured inventories</a>
+      <a href="#worked">11 · Worked example (SPRITZ)</a>
+      <a href="#practice">12 · Practice workbook (14 Q)</a>
+      <a href="#recall">13 · Flashcards</a>
+      <a href="#mistakes">14 · Common mistakes</a>
+      <a href="#summary">15 · Summary sheet</a>
+    </nav>
+    <div class="note"><span class="tag">How to use this</span>This is a <b>workbook.</b> For every practice question, do the numbers on paper <em>first</em> — closing value → change → journal entry — then click <b>Reveal solution</b>. Tick each one off; progress saves in this browser.</div>
+  </div>
+</section>
+
+<section id="mech">
+  <div class="wrap">
+    <div class="shead"><span class="snum">01</span><h2>The core mechanism</h2></div>
+    <p class="lead">The whole chapter hangs on one idea: the inventory account only moves at year-end.</p>
+    <ul>
+      <li><b>During the year:</b> every <b>purchase</b> → expense account <code>604</code>; every <b>sale</b> → revenue account <code>70</code>. The inventory account <code>340</code> is <b>left untouched</b> — it keeps its opening balance all year.</li>
+      <li><b>Only at year-end</b> (an end-of-period entry, after a physical stock-take) do we book the <b>change in inventories</b>, so <code>340</code> shows the correct closing value (asset) and the income statement shows the correct <b>cost of goods sold</b>.</li>
+    </ul>
+    <div class="equation"><b>COGS</b> = Opening inventory + Purchases − Closing inventory &nbsp;·&nbsp; <b>Change</b> = Closing − Opening</div>
+    <div class="key"><span class="tag">The one journal entry (stock increased)</span>Closing &gt; opening means stock went up:</div>
+    <div class="journal">
+<span class="jdate">31/12</span>
+<div class="jline"><span>340</span><span class="acc">Inventory of GFR – Cost of acquisition</span><span class="amtD">[change]</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 6094</span><span class="acc">Changes in inventories of GFR</span><span class="amtD"></span><span class="amtC">[change]</span></div>
+<div class="jdesc">340 is an asset → debit to increase. 6094 (an expense account) is credited — more stock REDUCES net cost of goods sold (line 609). If stock DECREASED, flip the entry.</div>
+    </div>
+  </div>
+</section>
+
+<section id="cost">
+  <div class="wrap">
+    <div class="shead"><span class="snum">02</span><h2>Cost of acquisition vs market value</h2></div>
+    <p class="lead">Two values compete for every item; you always compare them (see §8).</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Value</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td><b>Cost of acquisition</b></td><td>Purchase cost <b>+</b> other/additional costs (transport…), <b>excluding refundable taxes</b> (VAT). Estimated via specific identification, FIFO, LIFO, or weighted average.</td></tr>
+        <tr><td><b>Market value</b><br>(net realisable value)</td><td>Estimated selling price <b>−</b> estimated costs of completion <b>−</b> estimated costs of sale.</td></tr>
+      </tbody>
+    </table></div>
+    <p>The <b>lower of the two always prevails</b> — a consequence of the <b>prudence principle</b>.</p>
+  </div>
+</section>
+
+<section id="case">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">03</span><h2>The case study · OMEGA KAPPA plc</h2></div>
+    <p class="lead">One item of goods for resale. Everything in §4–§8 uses this data.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Date</th><th>Movement</th><th class="num">Units</th><th class="num">Price</th><th class="num">Total</th></tr></thead>
+      <tbody>
+        <tr><td>01/01</td><td>Opening inventory</td><td class="num">100</td><td class="num">10,00</td><td class="num">1 000,00</td></tr>
+        <tr><td>15/02</td><td>Sale</td><td class="num">60</td><td class="num">16,00</td><td class="num">960,00</td></tr>
+        <tr class="hi"><td>29/03</td><td>Purchase</td><td class="num">80</td><td class="num">15,00</td><td class="num">1 200,00</td></tr>
+        <tr><td>23/08</td><td>Sale</td><td class="num">60</td><td class="num">21,00</td><td class="num">1 260,00</td></tr>
+        <tr class="hi"><td>05/09</td><td>Purchase</td><td class="num">100</td><td class="num">20,00</td><td class="num">2 000,00</td></tr>
+        <tr><td>21/12</td><td>Sale</td><td class="num">80</td><td class="num">24,00</td><td class="num">1 920,00</td></tr>
+      </tbody>
+    </table></div>
+    <div class="key"><span class="tag">Same under every method</span>
+      Closing units = 100 + (80+100) − (60+60+80) = <b>80 units</b> · Purchases (cost, on 604) = <b>3 200</b> · Sales (revenue, on 70) = <b>4 140</b> · Opening (on 340) = <b>1 000</b>. Only the <b>value of the 80 leftover units</b> changes between methods.</div>
+  </div>
+</section>
+
+<section id="fifo">
+  <div class="wrap">
+    <div class="shead"><span class="snum">04</span><h2>FIFO — First In, First Out</h2></div>
+    <p class="lead">Goods bought <b>first</b> are sold <b>first</b> → the goods <b>left in stock</b> come from the <b>most recent</b> purchases.</p>
+    <p>Value the 80 closing units from the newest purchase: 80 × 20,00 (05/09) = <b>€1 600</b>. Change = 1 600 − 1 000 = <b>+600</b>.</p>
+    <div class="journal">
+<div class="jline"><span>340</span><span class="acc">Inventory of GFR – Cost of acquisition</span><span class="amtD">600,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 6094</span><span class="acc">Changes in inventories of GFR</span><span class="amtD"></span><span class="amtC">600,00</span></div>
+    </div>
+    <p>Closing inventory (BS) = <b>1 600</b> · COGS = 1 000 + 3 200 − 1 600 = <b>2 600</b> · Operating profit = 4 140 − 2 600 = <b>1 540</b>.</p>
+    <div class="note"><span class="tag">Intuition</span>In <b>rising</b> prices FIFO leaves the newest, dearest units in stock → <b>highest closing inventory, lowest COGS, highest profit.</b></div>
+  </div>
+</section>
+
+<section id="lifo">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">05</span><h2>LIFO — Last In, First Out</h2></div>
+    <p class="lead">Goods bought <b>last</b> are sold <b>first</b> → the goods <b>left in stock</b> come from the <b>earliest</b> purchases.</p>
+    <div class="warn"><span class="tag">Work step by step</span>Check what's in stock <b>at each sale</b> — you can't just grab the oldest layers at the end, because a layer may already be sold.</div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>After…</th><th>Stock layers</th></tr></thead>
+      <tbody>
+        <tr><td>Opening</td><td class="mono">100 @ 10</td></tr>
+        <tr><td>Sale 60 (15/02)</td><td class="mono">sell 60 @ 10 → <b>40 @ 10</b></td></tr>
+        <tr><td>Purchase 80 @ 15</td><td class="mono">40 @ 10 + 80 @ 15</td></tr>
+        <tr><td>Sale 60 (23/08)</td><td class="mono">sell 60 @ 15 → 40 @ 10 + <b>20 @ 15</b></td></tr>
+        <tr><td>Purchase 100 @ 20</td><td class="mono">40 @ 10 + 20 @ 15 + 100 @ 20</td></tr>
+        <tr><td>Sale 80 (21/12)</td><td class="mono">sell 80 @ 20 → 40 @ 10 + 20 @ 15 + <b>20 @ 20</b></td></tr>
+      </tbody>
+    </table></div>
+    <p>Closing = 40×10 + 20×15 + 20×20 = <b>€1 100</b>. Change = <b>+100</b>. Entry: <code>340</code> D 100 / <code>6094</code> C 100.</p>
+    <p>Closing inventory (BS) = <b>1 100</b> · COGS = <b>3 100</b> · Operating profit = <b>1 040</b>.</p>
+    <div class="note"><span class="tag">Intuition</span>In <b>rising</b> prices LIFO leaves the oldest, cheapest units in stock → <b>lowest closing inventory, highest COGS, lowest profit.</b></div>
+  </div>
+</section>
+
+<section id="wap">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">06</span><h2>Weighted average price</h2></div>
+    <p class="lead">Value the closing units at an average purchase price — two flavours.</p>
+    <h3 style="font-size:1.1rem">Overall (periodic) average</h3>
+    <p>Average over opening + all purchases: (1 000 + 3 200) / (100 + 180) = 4 200 / 280 = <b>€15,00/unit</b>. Closing = 80 × 15 = <b>€1 200</b>. Change = <b>+200</b> → COGS <b>3 000</b>, profit <b>1 140</b>.</p>
+    <h3 style="font-size:1.1rem">Moving average — recompute after each purchase</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Date</th><th>Movement</th><th class="num">Units</th><th class="num">Avg</th><th class="num">Value</th></tr></thead>
+      <tbody>
+        <tr><td>01/01</td><td>Opening</td><td class="num">100</td><td class="num">10,00</td><td class="num">1 000,00</td></tr>
+        <tr><td>15/02</td><td>Sale 60</td><td class="num">40</td><td class="num">10,00</td><td class="num">400,00</td></tr>
+        <tr class="hi"><td>29/03</td><td>Purchase 80 @ 15</td><td class="num">120</td><td class="num">13,33</td><td class="num">1 600,00</td></tr>
+        <tr><td>23/08</td><td>Sale 60</td><td class="num">60</td><td class="num">13,33</td><td class="num">800,00</td></tr>
+        <tr class="hi"><td>05/09</td><td>Purchase 100 @ 20</td><td class="num">160</td><td class="num">17,50</td><td class="num">2 800,00</td></tr>
+        <tr><td>21/12</td><td>Sale 80</td><td class="num">80</td><td class="num">17,50</td><td class="num">1 400,00</td></tr>
+      </tbody>
+    </table></div>
+    <p>Closing = <b>€1 400</b>. Change = <b>+400</b> → COGS <b>2 800</b>, profit <b>1 340</b>.</p>
+    <div class="note"><span class="tag">New average after a purchase</span>(old value + purchase value) ÷ (old units + purchased units). E.g. after 29/03: (400 + 1 200) ÷ (40 + 80) = 1 600 ÷ 120 = 13,33.</div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">07</span><h2>Comparing the methods</h2></div>
+    <p class="lead">Same transactions, four different profits — this is the punchline of the chapter.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th class="num">FIFO</th><th class="num">Moving WAP</th><th class="num">Overall WAP</th><th class="num">LIFO</th></tr></thead>
+      <tbody>
+        <tr><td>Sales</td><td class="num">4 140</td><td class="num">4 140</td><td class="num">4 140</td><td class="num">4 140</td></tr>
+        <tr><td>Purchases</td><td class="num">3 200</td><td class="num">3 200</td><td class="num">3 200</td><td class="num">3 200</td></tr>
+        <tr><td>Change in inventory</td><td class="num">−600</td><td class="num">−400</td><td class="num">−200</td><td class="num">−100</td></tr>
+        <tr><td>Cost of goods sold</td><td class="num">2 600</td><td class="num">2 800</td><td class="num">3 000</td><td class="num">3 100</td></tr>
+        <tr class="total"><td>Operating profit</td><td class="num">1 540</td><td class="num">1 340</td><td class="num">1 140</td><td class="num">1 040</td></tr>
+        <tr><td>Closing inventory (BS)</td><td class="num">1 600</td><td class="num">1 400</td><td class="num">1 200</td><td class="num">1 100</td></tr>
+      </tbody>
+    </table></div>
+    <div class="bars" id="profitbars"></div>
+    <div class="key"><span class="tag">Two rules</span>Choose a method and apply it <b>consistently</b>; the chosen method <b>need not match the physical flow</b> of goods. In rising prices: <b>FIFO → highest profit, LIFO → lowest</b>, averages in between.</div>
+  </div>
+</section>
+
+<section id="market">
+  <div class="wrap">
+    <div class="shead"><span class="snum">08</span><h2>The market test</h2></div>
+    <p class="lead">Lower-of-cost-or-market: if market value falls below cost, value inventory at market. Prudence — only downward.</p>
+    <p><b>OMEGA KAPPA, FIFO chosen.</b> FIFO cost of closing = 1 600. But year-end market price is only 14,00/unit → 80 × 14 = <b>1 120</b>. Market &lt; cost → use <b>1 120</b>. Change = 1 120 − 1 000 = <b>+120</b> (not +600).</p>
+    <div class="journal">
+<span class="jdate">31/12</span>
+<div class="jline"><span>340</span><span class="acc">Inventory of GFR – Cost of acquisition</span><span class="amtD">120,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 6094</span><span class="acc">Changes in inventories of GFR</span><span class="amtD"></span><span class="amtC">120,00</span></div>
+<div class="jdesc">No special account — you simply record the change using the LOWER closing value.</div>
+    </div>
+    <p>Closing (BS) = <b>1 120</b> · COGS = 1 000 + 3 200 − 1 120 = <b>3 080</b>.</p>
+  </div>
+</section>
+
+<section id="writeoff">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">09</span><h2>Write-offs on inventory</h2></div>
+    <p class="lead">A <b>further</b> reduction for obsolescence, deterioration or an expected decline — using a separate contra-asset account so gross cost stays visible.</p>
+    <div class="grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="note"><span class="tag">Value ↓</span><code>349</code> Inventory of GFR – Amounts written off (−) — a <b>contra-asset</b> (credit).</div>
+      <div class="warn"><span class="tag">Expense ↑</span><code>6310</code> Amounts written off inventories – Increase — an <b>expense</b> (debit).</div>
+    </div>
+    <p><b>VICTORIA plc (WAP):</b> opening 150 000; closing at cost 200 000; market 185 000; further decline to 160 000 expected.</p>
+    <p><b>Step 1 — change in inventory (market test → 185 000):</b> change = 185 000 − 150 000 = +35 000.</p>
+    <div class="journal">
+<div class="jline"><span>340</span><span class="acc">Inventory of GFR – Cost of acquisition</span><span class="amtD">35 000,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 6094</span><span class="acc">Changes in inventories of GFR</span><span class="amtD"></span><span class="amtC">35 000,00</span></div>
+    </div>
+    <p><b>Step 2 — write-off</b> for the expected drop to 160 000: 185 000 − 160 000 = 25 000.</p>
+    <div class="journal">
+<div class="jline"><span>6310</span><span class="acc">Amounts written off inventories – Increase</span><span class="amtD">25 000,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 349</span><span class="acc">Inventory of GFR – Amounts written off (−)</span><span class="amtD"></span><span class="amtC">25 000,00</span></div>
+    </div>
+    <div class="key"><span class="tag">Market test vs write-off</span>The market test sets the value on <code>340</code> to the lower of cost/market. A <b>write-off</b> is an <em>extra</em> prudence reduction parked in <code>349</code>, keeping the gross <code>340</code> figure intact. Net book value here = 185 000 − 25 000 = <b>160 000</b>.</div>
+  </div>
+</section>
+
+<section id="manu">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">10</span><h2>Manufactured inventories &amp; contracts in progress</h2></div>
+    <p class="lead">A company that <em>makes</em> things values closing stock at manufacturing price (or market if lower). <span style="color:var(--ink-soft)">Numeric examples: textbook p.205–213.</span></p>
+    <div class="grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="tablewrap" style="margin:0"><table>
+        <thead><tr><th>WIP / finished goods</th><th>Cost included</th></tr></thead>
+        <tbody>
+          <tr><td><b>Direct costing</b></td><td>Direct production costs only</td></tr>
+          <tr><td><b>Full costing</b></td><td>Direct + indirect production costs</td></tr>
+        </tbody>
+      </table></div>
+      <div class="tablewrap" style="margin:0"><table>
+        <thead><tr><th>Contracts in progress</th><th>Profit recognised…</th></tr></thead>
+        <tbody>
+          <tr><td><b>% of completion</b></td><td>As work progresses</td></tr>
+          <tr><td><b>Completed contract</b></td><td>Only at the end (delivery)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <p><b>Accounts</b> (asset ↔ changes): <code>320</code>/<code>712</code> WIP · <code>330</code>/<code>713</code> finished goods · <code>370</code>/<code>7170</code> &amp; <code>371</code>/<code>7171</code> contracts in progress (cost / attributed profit).</p>
+  </div>
+</section>
+
+<section id="worked">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">11</span><h2>Worked example · SPRITZ plc</h2></div>
+    <p class="lead">A fresh dataset. Work each method, then check. Goods for resale, VAT excluded from inventory cost.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Date</th><th>Movement</th><th class="num">Units</th><th class="num">Price</th></tr></thead>
+      <tbody>
+        <tr><td>01/01</td><td>Opening</td><td class="num">50</td><td class="num">8,00</td></tr>
+        <tr class="hi"><td>10/03</td><td>Purchase</td><td class="num">100</td><td class="num">10,00</td></tr>
+        <tr><td>15/05</td><td>Sale</td><td class="num">80</td><td class="num">18,00</td></tr>
+        <tr class="hi"><td>12/09</td><td>Purchase</td><td class="num">50</td><td class="num">12,00</td></tr>
+        <tr><td>20/11</td><td>Sale</td><td class="num">40</td><td class="num">22,00</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Same every method:</b> closing units = 50 + 150 − 120 = <b>80</b> · Purchases = <b>1 600</b> · Sales = 80×18 + 40×22 = <b>2 320</b> · Opening = <b>400</b>.</p>
+
+    <div class="qcard">
+      <span class="lvl">FIFO</span>
+      <p>Closing 80 from newest: 50 @ 12 (600) + 30 @ 10 (300) = <b>€900</b>. Change = 900 − 400 = <b>+500</b>.</p>
+      <div class="journal">
+<div class="jline"><span>340</span><span class="acc">Inventory of GFR – Cost of acquisition</span><span class="amtD">500,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 6094</span><span class="acc">Changes in inventories of GFR</span><span class="amtD"></span><span class="amtC">500,00</span></div>
+      </div>
+      <p>COGS = 400 + 1 600 − 900 = <b>1 100</b> · Operating profit = 2 320 − 1 100 = <b>1 220</b>.</p>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">LIFO (step by step)</span>
+      <div class="tablewrap" style="margin:8px 0"><table><tbody>
+        <tr><td>Opening</td><td class="mono">50 @ 8</td></tr>
+        <tr><td>Purchase 100 @ 10</td><td class="mono">50 @ 8 + 100 @ 10</td></tr>
+        <tr><td>Sale 80</td><td class="mono">sell 80 @ 10 → 50 @ 8 + <b>20 @ 10</b></td></tr>
+        <tr><td>Purchase 50 @ 12</td><td class="mono">50 @ 8 + 20 @ 10 + 50 @ 12</td></tr>
+        <tr><td>Sale 40</td><td class="mono">sell 40 @ 12 → 50 @ 8 + 20 @ 10 + <b>10 @ 12</b></td></tr>
+      </tbody></table></div>
+      <p>Closing = 400 + 200 + 120 = <b>€720</b>. Change = <b>+320</b>. COGS = <b>1 280</b>, profit = <b>1 040</b>.</p>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">Overall weighted average</span>
+      <p>Available = 200 units, value 2 000 → WAP = <b>€10,00/unit</b>. Closing = 80 × 10 = <b>€800</b>. Change = <b>+400</b>. COGS = <b>1 200</b>, profit = <b>1 120</b>.</p>
+    </div>
+    <div class="note"><span class="tag">SPRITZ punchline</span>FIFO profit 1 220 &gt; WAP 1 120 &gt; LIFO 1 040 — the familiar rising-price pattern.</div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">12</span><h2>Practice workbook</h2></div>
+    <p class="lead">14 questions, rising in difficulty. Show your working first; tick it off; then reveal.</p>
+    <div id="qlist"></div>
+    <button class="resetbtn" id="resetbtn">↺ Reset my progress</button>
+  </div>
+</section>
+
+<section id="recall">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">13</span><h2>Active-recall flashcards</h2></div>
+    <p class="lead">Click a card to flip. Answer out loud first.</p>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<section id="mistakes">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">14</span><h2>Common mistakes</h2></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>❌ Mistake</th><th>✅ Fix / why</th></tr></thead>
+      <tbody>
+        <tr><td>Touching <code>340</code> <b>during</b> the year on each sale/purchase</td><td><code>340</code> moves <b>only at year-end</b>; purchases → 604, sales → 70 all year.</td></tr>
+        <tr><td><b>LIFO grabbed straight from the end</b> without layers</td><td>Trace stock <b>at every sale</b> — an early layer may already be gone.</td></tr>
+        <tr><td>Valuing closing stock at the <b>selling price</b></td><td>Inventory is valued at <b>cost of acquisition</b> (or lower market), never sales price.</td></tr>
+        <tr><td>Forgetting the <b>market test</b></td><td>Compare closing-at-cost vs market; the <b>lower</b> prevails (prudence).</td></tr>
+        <tr><td>Confusing <b>market test</b> and <b>write-off</b></td><td>Market test → value on 340 at lower of cost/market. Write-off → extra reduction via 6310/349.</td></tr>
+        <tr><td>Booking the <b>change</b> on the wrong side</td><td>Stock <b>up</b> → 340 D / 6094 C. Stock <b>down</b> → 6094 D / 340 C.</td></tr>
+        <tr><td>Thinking the method must match the <b>real flow</b> of goods</td><td>It need <b>not</b> — only <em>consistency</em> is required.</td></tr>
+        <tr><td>Mixing up <b>overall</b> and <b>moving</b> WAP</td><td>Overall = one average for the period; moving = new average <b>after each purchase</b>.</td></tr>
+        <tr><td>Writing an asset <b>up</b> when market &gt; cost</td><td>Not allowed — lower-of-cost-or-market only works <b>downward</b>.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="summary">
+  <div class="wrap">
+    <div class="shead"><span class="snum">15</span><h2>Summary sheet</h2></div>
+    <div class="equation"><b>COGS</b> = Opening + Purchases − Closing &nbsp;·&nbsp; <b>Change</b> = Closing − Opening</div>
+    <p><b>Mechanism:</b> all year — purchases → 604, sales → 70, 340 untouched. At year-end book the change: stock up → <span class="db">340 D</span> / <span class="cr">6094 C</span> (stock ↑ reduces net expense, line 609).</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Method</th><th>Closing units valued from…</th></tr></thead>
+      <tbody>
+        <tr><td><b>FIFO</b></td><td>most recent purchases</td></tr>
+        <tr><td><b>LIFO</b></td><td>earliest purchases (step by step!)</td></tr>
+        <tr><td><b>Overall WAP</b></td><td>(opening + all purchases value) ÷ total units</td></tr>
+        <tr><td><b>Moving WAP</b></td><td>average recomputed after each purchase</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><b>Rising prices:</b> FIFO → highest profit &amp; closing inventory; LIFO → lowest; averages between. Choose one, apply consistently; needn't match physical flow.</li>
+      <li><b>Market test:</b> lower of cost or market (NRV = selling price − completion − selling costs). Only downward.</li>
+      <li><b>Write-off:</b> obsolescence/decline → 6310 (expense, D) / 349 (contra-asset, C).</li>
+      <li><b>Manufactured:</b> direct vs full costing. <b>Contracts in progress:</b> % of completion vs completed contract.</li>
+    </ul>
+    <div class="note"><span class="tag">Read &amp; practise more</span>Textbook Ch.8 (p.177–218). Exercises: 1 <em>PINA COLADA</em> (p.219), 2 <em>MARGARITA</em> (p.220), 3 <em>BELLINI</em> (p.221), 4 <em>COSMOPOLITAN</em> (p.222).</div>
+  </div>
+</section>
+
+</main>
+<footer>
+  Interactive study workbook · Chapter 8 — Inventories · built from the course slides for self-testing.<br>
+  Compute FIFO, LIFO and weighted average on the same data and watch the profit move — that comparison <em>is</em> the chapter. 💪
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var STORE="ch8inv_progress_v1", THEME="ch8inv_theme";
+
+  var root=document.documentElement, tb=document.getElementById("themebtn");
+  var saved=null; try{saved=localStorage.getItem(THEME);}catch(e){}
+  if(saved) root.setAttribute("data-theme",saved);
+  function cur(){ if(root.getAttribute("data-theme")) return root.getAttribute("data-theme");
+    return matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"; }
+  tb.addEventListener("click",function(){ var n=cur()==="dark"?"light":"dark";
+    root.setAttribute("data-theme",n); try{localStorage.setItem(THEME,n);}catch(e){} });
+
+  // profit bars (max 1540)
+  var BARS=[["FIFO",1540],["Moving WAP",1340],["Overall WAP",1140],["LIFO",1040]];
+  var pb=document.getElementById("profitbars"); var mx=1540;
+  BARS.forEach(function(b){
+    var row=document.createElement("div"); row.className="barrow";
+    row.innerHTML='<span class="lab">'+b[0]+'</span><div class="bartrack"><i style="width:'+(b[1]/mx*100)+'%"></i></div><span class="val">'+b[1].toLocaleString('fr-BE')+'</span>';
+    pb.appendChild(row);
+  });
+
+  var Q=[
+    {lv:"Level 1 · recall",q:"During the year, where are (a) purchases and (b) sales recorded? (c) What happens to the inventory account 340 during the year?",
+     a:"(a) Purchases → <b>expense account 604</b>. (b) Sales → <b>revenue account 70</b>. (c) 340 is <b>left unchanged</b> all year — it keeps its opening balance until the year-end change-in-inventory entry."},
+    {lv:"Level 1 · recall",q:"Write the cost-of-goods-sold identity in terms of opening inventory, purchases and closing inventory.",
+     a:"<b>COGS = Opening inventory + Purchases − Closing inventory.</b>"},
+    {lv:"Level 1 · recall",q:"In a period of rising prices, which method gives the highest profit and which the lowest? Why?",
+     a:"<b>FIFO</b> highest, <b>LIFO</b> lowest. FIFO leaves the newest (dearest) units in stock → high closing inventory → low COGS → high profit. LIFO leaves the oldest (cheapest) units → low closing inventory → high COGS → low profit."},
+    {lv:"Level 1 · recall",q:"What is the difference between the market test and a write-off — which accounts does each use?",
+     a:"<b>Market test:</b> value closing inventory at the lower of cost or market, recorded through the normal change entry on 340 / 6094 (no special account). <b>Write-off:</b> an additional prudence reduction (obsolescence, decline) booked to <b>6310</b> (expense, D) / <b>349</b> (contra-asset, C), leaving gross 340 intact."},
+    {lv:"Level 2 · NEGRONI plc",q:"NEGRONI: Opening 40 @ 5 · Purchase 60 @ 7 · Sale 70 · Purchase 50 @ 9 · Sale 30. How many units in closing inventory? What are total purchases (cost)?",
+     a:"Closing units = 40 + (60+50) − (70+30) = <b>50 units</b>. Purchases (cost) = 60×7 + 50×9 = 420 + 450 = <b>€870</b>."},
+    {lv:"Level 2 · NEGRONI plc",q:"Value NEGRONI's closing inventory under FIFO, then write the change-in-inventory entry (opening = 40 × 5 = 200).",
+     a:"FIFO: 50 closing units from newest = 50 @ 9 = <b>€450</b>. Change = 450 − 200 = <b>+250</b>.<div class='journal'><div class='jline'><span>340</span><span class='acc'>Inventory of GFR – Cost of acquisition</span><span class='amtD'>250,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 6094</span><span class='acc'>Changes in inventories of GFR</span><span class='amtD'></span><span class='amtC'>250,00</span></div></div>"},
+    {lv:"Level 2 · NEGRONI plc",q:"Value NEGRONI's closing inventory under LIFO (show the layers step by step), then write the entry.",
+     a:"Opening 40@5 · +60@7 · Sale 70 → sell 60@7 + 10@5, leaving 30@5 · +50@9 · Sale 30 → sell 30@9, leaving 30@5 + 20@9.<br>Closing = 30×5 + 20×9 = 150 + 180 = <b>€330</b>. Change = 330 − 200 = <b>+130</b>.<div class='journal'><div class='jline'><span>340</span><span class='acc'>Inventory of GFR</span><span class='amtD'>130,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 6094</span><span class='acc'>Changes in inventories of GFR</span><span class='amtD'></span><span class='amtC'>130,00</span></div></div>"},
+    {lv:"Level 2 · NEGRONI plc",q:"Value NEGRONI's closing inventory under the overall weighted average method, then write the entry.",
+     a:"Available = 40 + 110 = 150 units; value 200 + 870 = 1 070 → WAP = 1 070 / 150 = <b>€7,1333/unit</b> (≈7,13). Closing = 50 × 7,1333 = <b>€356,67</b>. Change = 356,67 − 200 = <b>+156,67</b>.<div class='journal'><div class='jline'><span>340</span><span class='acc'>Inventory of GFR</span><span class='amtD'>156,67</span><span class='amtC'></span></div><div class='jline cred'><span>@ 6094</span><span class='acc'>Changes in inventories of GFR</span><span class='amtD'></span><span class='amtC'>156,67</span></div></div>Round to the cent, as the course does."},
+    {lv:"Level 3 · COGS",q:"For NEGRONI under FIFO, compute the cost of goods sold (opening = 200, purchases = 870, FIFO closing = 450).",
+     a:"COGS = Opening 200 + Purchases 870 − Closing 450 = <b>€620</b>."},
+    {lv:"Level 3 · market test",q:"NEGRONI has chosen FIFO (closing at cost = 450). At year-end market value is €8/unit. Apply the market test: what closing value goes on the balance sheet, and write the entry.",
+     a:"Market = 50 × 8 = <b>400</b>; cost = 450. Market &lt; cost → use <b>€400</b>. Change = 400 − 200 = <b>+200</b>.<div class='journal'><div class='jline'><span>340</span><span class='acc'>Inventory of GFR</span><span class='amtD'>200,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 6094</span><span class='acc'>Changes in inventories of GFR</span><span class='amtD'></span><span class='amtC'>200,00</span></div></div>"},
+    {lv:"Level 3 · market test",q:"A company's closing inventory at cost (WAP) is €60 000; market value is €66 000. Which value is used, and why?",
+     a:"Use <b>€60 000</b> (the cost). Market (66 000) is <em>higher</em> than cost, so lower-of-cost-or-market keeps the asset at cost — prudence forbids writing an asset up above cost."},
+    {lv:"Level 4 · write-off",q:"MARTINI plc (WAP): opening 80 000, closing at cost 110 000, market 100 000. (a) change-in-inventory entry (apply market test); (b) a further decline to 92 000 is expected — write-off entry; (c) net book value afterwards?",
+     a:"(a) Market 100 000 &lt; cost 110 000 → closing = 100 000. Change = 100 000 − 80 000 = <b>+20 000</b>.<div class='journal'><div class='jline'><span>340</span><span class='acc'>Inventory of GFR</span><span class='amtD'>20 000,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 6094</span><span class='acc'>Changes in inventories of GFR</span><span class='amtD'></span><span class='amtC'>20 000,00</span></div></div>(b) Write-off = 100 000 − 92 000 = 8 000.<div class='journal'><div class='jline'><span>6310</span><span class='acc'>Amounts written off inventories – Increase</span><span class='amtD'>8 000,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 349</span><span class='acc'>Inventory of GFR – Amounts written off (−)</span><span class='amtD'></span><span class='amtC'>8 000,00</span></div></div>(c) Net book value = 100 000 − 8 000 = <b>€92 000</b>."},
+    {lv:"Level 4 · manufactured",q:"Explain, for manufactured goods, direct vs full costing; and for contracts in progress, percentage-of-completion vs completed-contract.",
+     a:"<b>Direct costing</b> includes only <em>direct</em> production costs; <b>full costing</b> includes <em>direct + indirect</em> (higher inventory value). For contracts in progress, <b>percentage-of-completion</b> recognises profit <em>gradually as work progresses</em>; <b>completed-contract</b> recognises profit <em>only at delivery/completion</em>."},
+    {lv:"Level 4 · comparison",q:"Using NEGRONI (FIFO closing 450, LIFO 330, WAP 356,67; opening 200, purchases 870) and sales revenue €1 290, build the comparison (Sales, COGS, Operating profit, Closing inventory) for FIFO, LIFO and overall WAP. Which reports most profit — and is it a real difference?",
+     a:"<div class='tablewrap'><table><thead><tr><th></th><th class='num'>FIFO</th><th class='num'>WAP</th><th class='num'>LIFO</th></tr></thead><tbody><tr><td>Sales</td><td class='num'>1 290</td><td class='num'>1 290</td><td class='num'>1 290</td></tr><tr><td>Closing inv.</td><td class='num'>450,00</td><td class='num'>356,67</td><td class='num'>330,00</td></tr><tr><td>COGS (200+870−closing)</td><td class='num'>620,00</td><td class='num'>713,33</td><td class='num'>740,00</td></tr><tr class='total'><td>Operating profit</td><td class='num'>670,00</td><td class='num'>576,67</td><td class='num'>550,00</td></tr></tbody></table></div><b>FIFO</b> reports the most profit — but it is <b>not</b> a real difference in performance. Identical goods were sold for identical cash; only the accounting assumption about which units remain differs. FIFO's higher profit comes from leaving the dearer, newer units in stock — a bookkeeping choice, not better trading."}
+  ];
+
+  var progress={}; try{progress=JSON.parse(localStorage.getItem(STORE)||"{}");}catch(e){progress={};}
+  var list=document.getElementById("qlist");
+  Q.forEach(function(item,i){
+    var card=document.createElement("div"); card.className="qcard";
+    var checked=progress[i]?"checked":"";
+    card.innerHTML=
+      '<span class="lvl">'+item.lv+'</span>'+
+      '<div class="qhead">'+
+        '<input type="checkbox" class="qcheck" data-i="'+i+'" '+checked+' aria-label="Mark question '+(i+1)+' done">'+
+        '<div class="qbody"><p style="margin-top:0"><b>Q'+(i+1)+'.</b> '+item.q+'</p>'+
+          '<details class="sol"><summary>Reveal solution</summary><div class="solbody">'+item.a+'</div></details>'+
+        '</div>'+
+      '</div>';
+    list.appendChild(card);
+  });
+  function refresh(){
+    var done=0; for(var k in progress){ if(progress[k]) done++; }
+    document.getElementById("pfill").style.width=(done/Q.length*100)+"%";
+    document.getElementById("pcount").textContent=done+" / "+Q.length+" done";
+  }
+  list.addEventListener("change",function(e){
+    if(e.target.classList.contains("qcheck")){
+      progress[e.target.getAttribute("data-i")]=e.target.checked;
+      try{localStorage.setItem(STORE,JSON.stringify(progress));}catch(err){}
+      refresh();
+    }
+  });
+  document.getElementById("resetbtn").addEventListener("click",function(){
+    progress={}; try{localStorage.removeItem(STORE);}catch(e){}
+    var boxes=document.querySelectorAll(".qcheck"); for(var j=0;j<boxes.length;j++) boxes[j].checked=false;
+    refresh();
+  });
+  refresh();
+
+  var FC=[
+    ["During the year, account 340 is…","Left unchanged — the change is booked at year-end."],
+    ["COGS = ?","Opening + Purchases − Closing."],
+    ["Change entry when stock rises","340 D / 6094 C."],
+    ["FIFO — closing stock valued from…","The most recent purchases."],
+    ["LIFO — closing stock valued from…","The earliest purchases (work step by step!)."],
+    ["Overall WAP price = ?","(opening value + all purchases) ÷ (opening + all units)."],
+    ["Moving WAP recomputes the average…","After each purchase."],
+    ["Rising prices: highest / lowest profit","Highest = FIFO; lowest = LIFO."],
+    ["Market test uses the… value","The lower of cost or market (prudence)."],
+    ["Write-off accounts","6310 (expense, D) / 349 (contra-asset, C)."],
+    ["Full vs direct costing","Full = direct + indirect costs; direct = direct only."],
+    ["Profit as work proceeds (contracts)","Percentage-of-completion method."]
+  ];
+  var cards=document.getElementById("cards");
+  FC.forEach(function(c){
+    var b=document.createElement("button"); b.className="flip"; b.type="button"; b.setAttribute("aria-pressed","false");
+    b.innerHTML='<div class="inner"><div class="face front"><div class="q">'+c[0]+'</div><div class="hint">Tap to flip</div></div>'+
+      '<div class="face back"><div class="a">'+c[1]+'</div></div></div>';
+    b.addEventListener("click",function(){ var p=b.getAttribute("aria-pressed")==="true"; b.setAttribute("aria-pressed",p?"false":"true"); });
+    cards.appendChild(b);
+  });
+})();
+</script>
+
+</body>
+</html>

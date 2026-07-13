@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<title>Chapter 5 — Fundamental Commercial Transactions · Interactive Workbook</title>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#f7f4ec; --paper-2:#efe9dc; --card:#fffdf8; --ink:#1b211f; --ink-soft:#4a534f;
+    --line:#ddd4c2; --line-2:#cabfa6; --accent:#0f6e5c; --accent-deep:#0a4d40; --accent-soft:#e2efe9;
+    --debit:#b0503a; --debit-bg:#f6e7e1; --credit:#0f6e5c; --credit-bg:#e2efe9;
+    --gold:#9a7b1f; --shadow:0 1px 2px rgba(27,33,31,.06),0 6px 20px rgba(27,33,31,.06);
+    --maxw:70ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#12181a; --paper-2:#0d1315; --card:#1a2225; --ink:#e9e4d8; --ink-soft:#a3a7a1;
+      --line:#2a3438; --line-2:#3a474b; --accent:#4bc3a8; --accent-deep:#7fe0c9; --accent-soft:#16302b;
+      --debit:#e08a6f; --debit-bg:#2e211d; --credit:#4bc3a8; --credit-bg:#132a26;
+      --gold:#cdae5e; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f7f4ec; --paper-2:#efe9dc; --card:#fffdf8; --ink:#1b211f; --ink-soft:#4a534f;
+    --line:#ddd4c2; --line-2:#cabfa6; --accent:#0f6e5c; --accent-deep:#0a4d40; --accent-soft:#e2efe9;
+    --debit:#b0503a; --debit-bg:#f6e7e1; --credit:#0f6e5c; --credit-bg:#e2efe9; --gold:#9a7b1f;
+    --shadow:0 1px 2px rgba(27,33,31,.06),0 6px 20px rgba(27,33,31,.06);
+  }
+  :root[data-theme="dark"]{
+    --paper:#12181a; --paper-2:#0d1315; --card:#1a2225; --ink:#e9e4d8; --ink-soft:#a3a7a1;
+    --line:#2a3438; --line-2:#3a474b; --accent:#4bc3a8; --accent-deep:#7fe0c9; --accent-soft:#16302b;
+    --debit:#e08a6f; --debit-bg:#2e211d; --credit:#4bc3a8; --credit-bg:#132a26; --gold:#cdae5e;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;}
+  h1,h2,h3,h4{font-family:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+    text-wrap:balance;line-height:1.2;font-weight:600;color:var(--ink);}
+  a{color:var(--accent);text-underline-offset:2px}
+  p{margin:.6em 0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .wide{max-width:min(96ch,100%);}
+
+  .topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .row{max-width:min(96ch,100%);margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:14px}
+  .brand{font-family:Georgia,serif;font-weight:600;font-size:15px;letter-spacing:.01em}
+  .brand b{color:var(--accent)}
+  .progresswrap{flex:1;display:flex;align-items:center;gap:9px;min-width:0}
+  .pbar{flex:1;height:7px;background:var(--paper-2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width .35s ease}
+  .pcount{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .themebtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 10px;font-size:13px;cursor:pointer;line-height:1}
+  .themebtn:hover{border-color:var(--accent)}
+
+  .hero{padding:56px 0 30px;border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 90% at 82% -10%,var(--accent-soft),transparent 60%);}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);font-weight:600}
+  .hero h1{font-size:clamp(1.9rem,5vw,3rem);margin:.28em 0 .12em}
+  .hero .sub{font-size:1.12rem;color:var(--ink-soft);max-width:62ch}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .chip{font-size:12.5px;border:1px solid var(--line-2);background:var(--card);border-radius:99px;padding:5px 12px;color:var(--ink-soft)}
+  .chip b{color:var(--ink)}
+
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  .snum{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--accent);letter-spacing:.08em;border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;background:var(--card)}
+  .shead{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}
+  .shead h2{font-size:clamp(1.4rem,3.4vw,1.9rem);margin:0}
+  .lead{color:var(--ink-soft);font-size:1.05rem;margin-top:0}
+
+  .note,.warn,.key{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line-2);background:var(--card);box-shadow:var(--shadow)}
+  .note{border-left:4px solid var(--accent)}
+  .warn{border-left:4px solid var(--debit);background:var(--debit-bg)}
+  .key{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 9%,var(--card))}
+  .note .tag,.warn .tag,.key .tag{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+  .note .tag{color:var(--accent-deep)} .warn .tag{color:var(--debit)} .key .tag{color:var(--gold)}
+
+  .tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:15px;background:var(--card)}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line)}
+  thead th{background:var(--paper-2);font-family:Georgia,serif;font-weight:600;font-size:13.5px;letter-spacing:.02em}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  tr.total td{font-weight:700;background:var(--paper-2);border-top:2px solid var(--line-2)}
+  .db{color:var(--debit);font-weight:600} .cr{color:var(--credit);font-weight:600}
+  .hi{background:var(--accent-soft)!important}
+
+  .journal{font-family:ui-monospace,monospace;font-size:14px;background:var(--paper-2);
+    border:1px solid var(--line-2);border-radius:12px;padding:14px 16px;margin:16px 0;overflow-x:auto;
+    font-variant-numeric:tabular-nums;line-height:1.75}
+  .journal .jdate{color:var(--accent-deep);font-weight:700}
+  .journal .jline{display:grid;grid-template-columns:56px 1fr auto auto;gap:10px;white-space:nowrap}
+  .journal .jline .acc{color:var(--ink-soft)}
+  .journal .jline .amtD{color:var(--debit);text-align:right;min-width:86px}
+  .journal .jline .amtC{color:var(--credit);text-align:right;min-width:86px}
+  .journal .cred{padding-left:14px}
+  .journal .jdesc{color:var(--ink-soft);font-style:italic;padding-left:56px;font-size:13px}
+  .journal .jrule{border-top:1px dashed var(--line-2);margin:4px 0}
+
+  /* invoice scheme ladder */
+  .ladder{border:1px solid var(--line-2);border-radius:12px;overflow:hidden;margin:18px 0;box-shadow:var(--shadow)}
+  .ladder .lr{display:grid;grid-template-columns:1fr auto;gap:12px;padding:9px 15px;border-bottom:1px solid var(--line);font-size:14.5px}
+  .ladder .lr:last-child{border-bottom:none}
+  .ladder .lr .acc{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--accent);white-space:nowrap}
+  .ladder .op{background:var(--paper-2);font-weight:700}
+  .ladder .eq{background:color-mix(in srgb,var(--accent) 8%,var(--card));font-weight:700}
+
+  .qcard{border:1px solid var(--line-2);border-radius:14px;background:var(--card);padding:16px 18px;margin:16px 0;box-shadow:var(--shadow)}
+  .qhead{display:flex;align-items:flex-start;gap:12px}
+  .qcheck{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--line-2);border-radius:6px;cursor:pointer;flex:none;margin-top:2px;position:relative;background:var(--paper)}
+  .qcheck:checked{background:var(--accent);border-color:var(--accent)}
+  .qcheck:checked::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:15px;display:grid;place-items:center;font-weight:700}
+  .qcheck:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .qbody{flex:1}
+  .lvl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:8px}
+  details.sol{margin-top:12px;border-top:1px dashed var(--line-2);padding-top:6px}
+  details.sol>summary{cursor:pointer;list-style:none;font-weight:600;color:var(--accent);font-size:14.5px;padding:8px 12px;border:1px solid var(--line-2);border-radius:9px;background:var(--paper-2);display:inline-flex;align-items:center;gap:8px;user-select:none;transition:.15s}
+  details.sol>summary:hover{border-color:var(--accent)}
+  details.sol>summary::-webkit-details-marker{display:none}
+  details.sol>summary::before{content:"▸";transition:transform .2s;color:var(--accent)}
+  details.sol[open]>summary::before{transform:rotate(90deg)}
+  details.sol[open]>summary{background:var(--accent-soft)}
+  .solbody{padding:10px 2px 2px;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:18px 0}
+  .flip{background:transparent;border:none;padding:0;cursor:pointer;height:140px;perspective:1000px;font:inherit;text-align:left}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line-2);box-shadow:var(--shadow)}
+  .flip .front{background:var(--card)}
+  .flip .front .q{font-family:Georgia,serif;font-size:15px}
+  .flip .front .hint{font-size:11px;color:var(--ink-soft);margin-top:8px;letter-spacing:.04em;text-transform:uppercase}
+  .flip .back{background:var(--accent-soft);transform:rotateY(180deg);color:var(--ink)}
+  .flip .back .a{font-size:13.5px;font-weight:600}
+  .flip:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+
+  ul,ol{padding-left:1.25em} li{margin:.28em 0}
+  code{font-family:ui-monospace,monospace;background:var(--paper-2);padding:1px 6px;border-radius:5px;font-size:.9em;border:1px solid var(--line)}
+  .toc{columns:2;column-gap:26px;font-size:14.5px}
+  @media(max-width:560px){.toc{columns:1}.journal{font-size:12.5px}}
+  .toc a{display:block;padding:3px 0;color:var(--ink-soft);text-decoration:none}
+  .toc a:hover{color:var(--accent)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:620px){.grid2{grid-template-columns:1fr}}
+  footer{padding:34px 22px 60px;text-align:center;color:var(--ink-soft);font-size:14px}
+  .resetbtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink-soft);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;margin-top:10px}
+  .resetbtn:hover{border-color:var(--debit);color:var(--debit)}
+  @media print{.topbar,.themebtn,.flip .hint{display:none}details.sol{border:none}details.sol>summary{display:none}details.sol .solbody{display:block!important}.qcheck{display:none}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="topbar">
+  <div class="row">
+    <span class="brand">Ch.5 · <b>Commercial Transactions</b></span>
+    <div class="progresswrap">
+      <div class="pbar"><i id="pfill"></i></div>
+      <span class="pcount" id="pcount">0 / 16 done</span>
+    </div>
+    <button class="themebtn" id="themebtn" aria-label="Toggle light or dark theme">◐ Theme</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap wide">
+    <span class="eyebrow">Financial Accounting · Interactive Workbook</span>
+    <h1>Fundamental Commercial Transactions</h1>
+    <p class="sub">The everyday buying and selling of a business — invoices, discounts, credit notes and payments. Master <b>one invoice scheme</b> and 90% of the work is done. Running example: <b>TELEROMEO plc</b>, a trader of multimedia devices.</p>
+    <div class="meta">
+      <span class="chip"><b>Course:</b> Internal &amp; External Financial Reporting</span>
+      <span class="chip"><b>Based on slides by</b> V.&nbsp;Ghijselinck</span>
+      <span class="chip"><b>Textbook:</b> Ch.5, p.85–118</span>
+      <span class="chip"><b>16</b> graded exercises · reveal solutions</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">MAP</span><h2>What's inside</h2></div>
+    <nav class="toc">
+      <a href="#vat">1 · How VAT really works</a>
+      <a href="#basic">2 · Basic purchase &amp; sales invoice</a>
+      <a href="#decl">3 · The VAT declaration</a>
+      <a href="#scheme">4 · ⭐ The complete invoice scheme</a>
+      <a href="#comm">5 · Commercial discount</a>
+      <a href="#charges">6 · Additional charges</a>
+      <a href="#fin">7 · Financial discount</a>
+      <a href="#cn">8 · Credit notes</a>
+      <a href="#pay">9 · Modes of payment</a>
+      <a href="#internal">10 · Internal transfers</a>
+      <a href="#worked">11 · Worked examples</a>
+      <a href="#practice">12 · Practice workbook (16 Q)</a>
+      <a href="#recall">13 · Flashcards</a>
+      <a href="#mistakes">14 · Common mistakes</a>
+      <a href="#summary">15 · Summary sheet</a>
+    </nav>
+    <div class="note"><span class="tag">How to use this</span>This is a <b>workbook.</b> Fill in the invoice scheme and write the journal entry <em>first</em>, then click <b>Reveal solution</b>. Tick each one off; progress saves in this browser. VAT = <b>21%</b> throughout.</div>
+  </div>
+</section>
+
+<section id="vat">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">01</span><h2>How VAT really works</h2></div>
+    <p class="lead">VAT is an indirect consumer tax — entirely at the expense of the final consumer. For a company it is <b>never an expense and never a revenue</b>; it flows <em>through</em>.</p>
+    <p>Each company pays VAT to its supplier (reclaimable) and charges VAT to its customer (payable), then settles only the <b>difference</b> — the VAT on the value it added. The flat-screen-TV chain:</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Stage</th><th class="num">Purchase</th><th class="num">VAT reclaim</th><th class="num">Sale</th><th class="num">VAT due</th><th class="num">Value added</th><th class="num">VAT to tax office</th></tr></thead>
+      <tbody>
+        <tr><td>Manufacturer</td><td class="num">—</td><td class="num">—</td><td class="num">1 000</td><td class="num">210</td><td class="num">1 000</td><td class="num">210</td></tr>
+        <tr><td>Wholesaler</td><td class="num">1 000</td><td class="num">210</td><td class="num">1 500</td><td class="num">315</td><td class="num">500</td><td class="num">105</td></tr>
+        <tr><td>Retailer</td><td class="num">1 500</td><td class="num">315</td><td class="num">1 900</td><td class="num">399</td><td class="num">400</td><td class="num">84</td></tr>
+        <tr class="total"><td>Consumer pays</td><td class="num">1 900</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">399</td></tr>
+      </tbody>
+    </table></div>
+    <p>The stages remit 210 + 105 + 84 = <b>399</b> — exactly the VAT the consumer paid. The tax reaches the government in stages, but the <b>consumer bears all of it.</b></p>
+    <div class="key"><span class="tag">The two VAT accounts</span><b>411 VAT to reclaim</b> = VAT paid to supplier → an <b>asset</b> (debit). <b>451 VAT due</b> = VAT charged to customer → a <b>liability</b> (credit).</div>
+  </div>
+</section>
+
+<section id="basic">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">02</span><h2>The basic purchase &amp; sales invoice</h2></div>
+    <p class="lead">Before any discounts, learn the two skeletons cold.</p>
+    <div class="grid2">
+      <div><b>Purchase</b> — buy €1 000 excl. 21% VAT:
+        <div class="journal">
+<div class="jline"><span>604</span><span class="acc">Purchases of GFR</span><span class="amtD">1 000,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">210,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">1 210,00</span></div>
+        </div>
+      </div>
+      <div><b>Sale</b> — sell €1 500 excl. 21% VAT:
+        <div class="journal">
+<div class="jline"><span>400</span><span class="acc">Trade debtors</span><span class="amtD">1 815,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 70</span><span class="acc">Sales of GFR</span><span class="amtD"></span><span class="amtC">1 500,00</span></div>
+<div class="jline cred"><span>@ 451</span><span class="acc">VAT due</span><span class="amtD"></span><span class="amtC">315,00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="decl">
+  <div class="wrap">
+    <div class="shead"><span class="snum">03</span><h2>The VAT declaration</h2></div>
+    <p class="lead">Periodically you settle with the tax office by closing the two VAT accounts against each other.</p>
+    <ol>
+      <li>Compare the balances of <b>411</b> and <b>451</b>.</li>
+      <li><b>Close the account with the smaller balance</b> into the larger.</li>
+      <li>Whatever remains is the <b>net VAT payable (or receivable)</b> — pay/collect it.</li>
+    </ol>
+    <p>Example: 411 debit balance 210, 451 credit balance 315.</p>
+    <div class="journal">
+<span class="jdate">31/10 — declaration (DIV)</span>
+<div class="jline"><span>451</span><span class="acc">VAT due</span><span class="amtD">210,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 411</span><span class="acc">VAT to reclaim</span><span class="amtD"></span><span class="amtC">210,00</span></div>
+<div class="jrule"></div>
+<span class="jdate">07/11 — pay net VAT of 105 (C/A)</span>
+<div class="jline"><span>451</span><span class="acc">VAT due</span><span class="amtD">105,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 5500</span><span class="acc">Bank account</span><span class="amtD"></span><span class="amtC">105,00</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="scheme">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">04</span><h2>⭐ The complete scheme of an invoice</h2></div>
+    <p class="lead">The single most important thing in the chapter. Every invoice is built from this ladder — learn the order, it never changes.</p>
+    <div class="ladder">
+      <div class="lr"><span>Price of the goods</span><span class="acc"></span></div>
+      <div class="lr"><span>− Commercial discount</span><span class="acc">608 (buy) / 708 (sell)</span></div>
+      <div class="lr"><span>+ Additional charges</span><span class="acc">into 604 / 70</span></div>
+      <div class="lr op"><span>= NET amount invoice</span><span class="acc">604 (buy) / 70 (sell)</span></div>
+      <div class="lr"><span>− Financial discount</span><span class="acc">757 / 657 — at payment only</span></div>
+      <div class="lr op"><span>= BASIS FOR VAT</span><span class="acc">← VAT computed on THIS line</span></div>
+      <div class="lr"><span>+ VAT</span><span class="acc">411 (buy) / 451 (sell)</span></div>
+      <div class="lr eq"><span>= TOTAL (if quick payment)</span><span class="acc"></span></div>
+      <div class="lr eq"><span>&nbsp;&nbsp;TOTAL (if NO quick payment)</span><span class="acc">440 (buy) / 400 (sell)</span></div>
+    </div>
+    <div class="warn"><span class="tag">Three things everyone trips over</span>
+      <b>1.</b> VAT is calculated on the <b>“Basis for VAT”</b> — after the financial discount — <em>whether or not the discount is taken.</em><br>
+      <b>2.</b> The <b>financial discount is NOT booked at invoice time.</b> Goods go in at NET; the supplier/debtor at the “if NO quick payment” total; the discount (757/657) appears only <em>at payment</em>.<br>
+      <b>3.</b> Commercial discount <em>is</em> booked at invoice time (608/708); additional charges simply raise the net.</div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Item</th><th>Purchase</th><th>Sale</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Commercial discount</td><td class="mono">608</td><td class="mono">708</td><td>operating</td></tr>
+        <tr><td>Additional charges</td><td class="mono">into 604</td><td class="mono">into 70</td><td>operating</td></tr>
+        <tr><td>Financial discount</td><td class="mono">757</td><td class="mono">657</td><td><b>financial</b></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="comm">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">05</span><h2>Commercial discount</h2></div>
+    <p class="lead">A reduction on the price itself (quantity, promotion, damaged goods, valued customer). Relates to normal trading → <b>operating</b> result.</p>
+    <p>Purchase → <b>608 Discounts received (−)</b> (reduces expense). Sale → <b>708 Discounts granted (−)</b> (reduces revenue). Two acceptable methods:</p>
+    <div class="grid2">
+      <div><b>Method A — separate (primary):</b> goods at gross, discount separate.
+        <div class="journal">
+<div class="jline"><span>604</span><span class="acc">Purchases of GFR</span><span class="amtD">2 000,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">399,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 608</span><span class="acc">Discounts received (−)</span><span class="amtD"></span><span class="amtC">100,00</span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">2 299,00</span></div>
+        </div>
+      </div>
+      <div><b>Method B — netted:</b> book goods straight at net (1 900), no 608 line. Same VAT (399), same supplier total (2 299).
+        <div class="journal">
+<div class="jline"><span>604</span><span class="acc">Purchases of GFR</span><span class="amtD">1 900,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">399,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">2 299,00</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--ink-soft);font-size:14px">10 smartphones @ 200, 5% discount → net 1 900; VAT 21% of 1 900 = 399.</p>
+  </div>
+</section>
+
+<section id="charges">
+  <div class="wrap">
+    <div class="shead"><span class="snum">06</span><h2>Additional charges</h2></div>
+    <p class="lead">Direct buying/selling costs on the invoice: transport, loading, insurance. They <b>raise the net</b> — so VAT applies to them too.</p>
+    <p>Purchase → operating expense ↑ (into 604). Sale → operating revenue ↑ (into 70).</p>
+    <p><b>Purchase:</b> 20 computers @ 500 = 10 000; −5% = −500; +50 transport; net <b>9 550</b>; VAT 2 005,50; total 11 555,50.</p>
+    <div class="journal">
+<div class="jline"><span>604</span><span class="acc">Purchases of GFR</span><span class="amtD">9 550,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">2 005,50</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">11 555,50</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="fin">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">07</span><h2>Financial discount</h2></div>
+    <p class="lead">A reduction if you pay within a time limit. It's about <b>payment timing</b> (a financing decision) → <b>financial</b> result.</p>
+    <p>Purchase → <b>757 Financial discounts received</b> (financial revenue). Sale → <b>657 Financial discounts granted</b> (financial expense).</p>
+    <div class="warn"><span class="tag">Two golden rules</span><b>1.</b> VAT is calculated on the amount <b>after</b> the financial discount — even if never taken. <b>2.</b> The discount is booked <b>only at payment</b>, and only if taken.</div>
+    <p><b>Purchase, 3% cash discount:</b> 20 computers @ 500 = 10 000 net; disc. 300; basis 9 700; VAT 2 037; total-if-quick 11 737; <b>total-if-not 12 037</b>.</p>
+    <div class="journal">
+<span class="jdate">Invoice — goods at net, supplier at “no quick payment” total</span>
+<div class="jline"><span>604</span><span class="acc">Purchases of GFR</span><span class="amtD">10 000,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">2 037,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">12 037,00</span></div>
+<div class="jrule"></div>
+<span class="jdate">Payment within 10 days — discount now appears</span>
+<div class="jline"><span>440</span><span class="acc">Suppliers</span><span class="amtD">12 037,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 5500</span><span class="acc">Bank account</span><span class="amtD"></span><span class="amtC">11 737,00</span></div>
+<div class="jline cred"><span>@ 757</span><span class="acc">Financial discounts received</span><span class="amtD"></span><span class="amtC">300,00</span></div>
+    </div>
+    <p>If paid <b>after</b> 10 days: 440 D 12 037 / @5500 C 12 037. <b>No VAT correction</b> — VAT stays on the 9 700 basis. (Sales mirror: 70 at net, 400 at the “no quick payment” total; on collection debit <b>657</b>.)</p>
+  </div>
+</section>
+
+<section id="cn">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">08</span><h2>Credit notes</h2></div>
+    <p class="lead">A mini reverse-invoice — a proportional correction of everything the original booked.</p>
+    <div class="grid2">
+      <div class="note"><span class="tag">Incoming (ICN)</span>Received <em>from your supplier</em> (you're the buyer): returned goods or extra discount → <b>reverses a purchase.</b></div>
+      <div class="note"><span class="tag">Outgoing (OCN)</span>You draw it up <em>as the seller</em>: customer returns goods or you grant extra discount → <b>reverses a sale.</b></div>
+    </div>
+    <div class="grid2">
+      <div><b>ICN</b> — return 2 smartphones (net 380, VAT 79,80):
+        <div class="journal">
+<div class="jline"><span>440</span><span class="acc">Suppliers</span><span class="amtD">459,80</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 604</span><span class="acc">Purchases of GFR</span><span class="amtD"></span><span class="amtC">380,00</span></div>
+<div class="jline cred"><span>@ 411</span><span class="acc">VAT to reclaim</span><span class="amtD"></span><span class="amtC">79,80</span></div>
+        </div>
+      </div>
+      <div><b>OCN</b> — grant extra 5% (35, VAT 7,35):
+        <div class="journal">
+<div class="jline"><span>70</span><span class="acc">Sales of GFR</span><span class="amtD">35,00</span><span class="amtC"></span></div>
+<div class="jline"><span>451</span><span class="acc">VAT due</span><span class="amtD">7,35</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 400</span><span class="acc">Trade debtors</span><span class="amtD"></span><span class="amtC">42,35</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pay">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">09</span><h2>Modes of payment</h2></div>
+    <p class="lead">Same event, different account per instrument. The accounting document tells you which.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Instrument</th><th>Document</th><th>Collecting a sale</th><th>Paying a purchase</th></tr></thead>
+      <tbody>
+        <tr><td><b>Bank</b></td><td>C/A extract</td><td class="mono">5500 ↑ (D)</td><td class="mono">5500 ↓ (C)</td></tr>
+        <tr><td><b>Cash</b></td><td>cash document</td><td class="mono">570 ↑ (D)</td><td class="mono">570 ↓ (C)</td></tr>
+        <tr><td><b>Cheque</b></td><td>cheque</td><td class="mono">540 ↑ (D)</td><td class="mono">5501 ↑ (C)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn"><span class="tag">The cheque two-step</span>A cheque isn't cash yet. <b>Received:</b> ① 540 D / 400 C, then ② when cleared 5500 D / 540 C. <b>Written:</b> ① 440 D / 5501 C, then ② when cashed 5501 D / 5500 C. Accounts 540 &amp; 5501 bridge the gap until money actually moves at the bank.</div>
+  </div>
+</section>
+
+<section id="internal">
+  <div class="wrap">
+    <div class="shead"><span class="snum">10</span><h2>Internal transfers of funds</h2></div>
+    <p class="lead">Moving money between the company's own accounts. The two legs fall on different days, so bridge them with account <b>58</b>.</p>
+    <p>Take €2 000 cash to the bank:</p>
+    <div class="journal">
+<span class="jdate">Day 1 — cash leaves the till (CD)</span>
+<div class="jline"><span>58</span><span class="acc">Internal transfers of funds</span><span class="amtD">2 000,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 570</span><span class="acc">Cash at hand</span><span class="amtD"></span><span class="amtC">2 000,00</span></div>
+<div class="jrule"></div>
+<span class="jdate">Day 2 — bank confirms deposit (C/A)</span>
+<div class="jline"><span>5500</span><span class="acc">Bank account</span><span class="amtD">2 000,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 58</span><span class="acc">Internal transfers of funds</span><span class="amtD"></span><span class="amtC">2 000,00</span></div>
+    </div>
+    <p>After both entries, account 58 nets to zero — it existed only to bridge the two days.</p>
+  </div>
+</section>
+
+<section id="worked">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">11</span><h2>Worked examples · TELEROMEO plc</h2></div>
+    <p class="lead">Cover each solution, fill in the invoice scheme, then check. VAT = 21%.</p>
+
+    <div class="qcard">
+      <span class="lvl">A · Sale with commercial discount</span>
+      <p><b>03/10</b> — sell 2 smartphones @ 350 excl. VAT, 5% commercial discount. Scheme: 700 − 35 = net 665; VAT 139,65; total 804,65.</p>
+      <div class="journal">
+<div class="jline"><span>400</span><span class="acc">Trade debtors</span><span class="amtD">804,65</span><span class="amtC"></span></div>
+<div class="jline"><span>708</span><span class="acc">Discounts granted (−)</span><span class="amtD">35,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 70</span><span class="acc">Sales of GFR</span><span class="amtD"></span><span class="amtC">700,00</span></div>
+<div class="jline cred"><span>@ 451</span><span class="acc">VAT due</span><span class="amtD"></span><span class="amtC">139,65</span></div>
+<div class="jdesc">708 is a contra-revenue → debit side. Check: 804,65 + 35 = 700 + 139,65 ✓</div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">C · Sale with financial discount + collection</span>
+      <p><b>17/10</b> — sell 3 computers @ 750 excl. VAT, 3% if paid ≤10 days. Net 2 250; disc. 67,50; basis 2 182,50; VAT 458,33; total-if-not 2 708,33.</p>
+      <div class="journal">
+<span class="jdate">Invoice</span>
+<div class="jline"><span>400</span><span class="acc">Trade debtors</span><span class="amtD">2 708,33</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 70</span><span class="acc">Sales of GFR</span><span class="amtD"></span><span class="amtC">2 250,00</span></div>
+<div class="jline cred"><span>@ 451</span><span class="acc">VAT due</span><span class="amtD"></span><span class="amtC">458,33</span></div>
+<div class="jrule"></div>
+<span class="jdate">25/10 — collected within period</span>
+<div class="jline"><span>5500</span><span class="acc">Bank account</span><span class="amtD">2 640,83</span><span class="amtC"></span></div>
+<div class="jline"><span>657</span><span class="acc">Financial discounts granted</span><span class="amtD">67,50</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 400</span><span class="acc">Trade debtors</span><span class="amtD"></span><span class="amtC">2 708,33</span></div>
+<div class="jdesc">VAT was charged on 2 182,50 even though goods were 2 250 — because the discount was offered.</div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">D · Paying by cheque (two-step)</span>
+      <p><b>07/11</b> — buy 5 smartwatches €750 excl. VAT, pay by cheque; <b>09/11</b> cheque cashed.</p>
+      <div class="journal">
+<div class="jline"><span>604</span><span class="acc">Purchases of GFR</span><span class="amtD">750,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">157,50</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">907,50</span></div>
+<div class="jrule"></div>
+<div class="jline"><span>440</span><span class="acc">Suppliers</span><span class="amtD">907,50</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 5501</span><span class="acc">Bank – Cheques written out</span><span class="amtD"></span><span class="amtC">907,50</span></div>
+<div class="jrule"></div>
+<div class="jline"><span>5501</span><span class="acc">Bank – Cheques written out</span><span class="amtD">907,50</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 5500</span><span class="acc">Bank – Current account</span><span class="amtD"></span><span class="amtC">907,50</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">12</span><h2>Practice workbook</h2></div>
+    <p class="lead">16 questions, rising in difficulty. Fill in the scheme first; tick it off; then reveal.</p>
+    <div id="qlist"></div>
+    <button class="resetbtn" id="resetbtn">↺ Reset my progress</button>
+  </div>
+</section>
+
+<section id="recall">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">13</span><h2>Active-recall flashcards</h2></div>
+    <p class="lead">Click a card to flip. Answer out loud first.</p>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<section id="mistakes">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">14</span><h2>Common mistakes</h2></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>❌ Mistake</th><th>✅ Fix / why</th></tr></thead>
+      <tbody>
+        <tr><td>VAT on the net <b>before</b> the financial discount</td><td>VAT is on the <b>basis for VAT</b> = net <b>minus</b> financial discount, taken or not.</td></tr>
+        <tr><td>Booking the <b>financial discount at invoice time</b></td><td>Only at <b>payment</b> (757/657); at invoice, goods at net, supplier/debtor at the “no quick payment” total.</td></tr>
+        <tr><td>Financial discount in the <b>operating</b> result</td><td>It's <b>financial</b>: 757 revenue / 657 expense.</td></tr>
+        <tr><td>Commercial discount in the <b>financial</b> result</td><td>It's <b>operating</b>: 608 / 708.</td></tr>
+        <tr><td>Correcting VAT when a cash discount is <b>not</b> taken</td><td><b>No correction</b> — VAT stays on the original basis.</td></tr>
+        <tr><td>Treating a <b>cheque as immediate cash</b></td><td>Bridge: 540 (received) / 5501 (written) until it clears at 5500.</td></tr>
+        <tr><td>Skipping account <b>58</b> on an internal transfer</td><td>The legs fall on different days — 58 bridges and nets to zero.</td></tr>
+        <tr><td>Mixing <b>608</b> (credit) and <b>708</b> (debit)</td><td>Received = buyer (credit 608); granted = seller (debit 708).</td></tr>
+        <tr><td>Recording a <b>fixed-asset purchase</b> here</td><td>A machine/van is an <em>investment</em>, not a commercial transaction.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="summary">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">15</span><h2>Summary sheet</h2></div>
+    <div class="ladder">
+      <div class="lr op"><span>Price − Commercial disc. + Additional charges = NET</span><span class="acc">604 / 70</span></div>
+      <div class="lr op"><span>− Financial discount = BASIS FOR VAT</span><span class="acc">757 / 657 (at payment)</span></div>
+      <div class="lr"><span>+ VAT</span><span class="acc">411 / 451</span></div>
+      <div class="lr eq"><span>= TOTAL (if quick) ／ (if not)</span><span class="acc">440 / 400</span></div>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Item</th><th>Buy</th><th>Sell</th><th>Nature</th></tr></thead>
+      <tbody>
+        <tr><td>Goods</td><td class="mono">604 (D)</td><td class="mono">70 (C)</td><td>operating</td></tr>
+        <tr><td>Commercial discount</td><td class="mono">608 (C)</td><td class="mono">708 (D)</td><td>operating</td></tr>
+        <tr><td>Financial discount</td><td class="mono">757 (C)</td><td class="mono">657 (D)</td><td>financial</td></tr>
+        <tr><td>VAT</td><td class="mono">411 (D)</td><td class="mono">451 (C)</td><td>—</td></tr>
+        <tr><td>Counterparty</td><td class="mono">440 (C)</td><td class="mono">400 (D)</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>VAT = 21% of the <b>basis for VAT</b> (after financial discount), always, taken or not.</li>
+      <li>Financial discount recognised <b>only at payment</b>; no VAT correction if lost.</li>
+      <li><b>Payments:</b> bank 5500 · cash 570 · cheque received 540→5500 · cheque written 5501→5500 · internal transfer bridge 58.</li>
+      <li><b>Credit notes:</b> ICN reverses a purchase (440 D / 604 C / 411 C) · OCN reverses a sale (70 D / 451 D / 400 C).</li>
+      <li><b>VAT declaration:</b> close the smaller VAT account into the larger; settle the net by bank.</li>
+    </ul>
+    <div class="note"><span class="tag">Read &amp; practise more</span>Textbook Ch.5 (p.85–118). Exercises: 1 <em>AMERICANO</em> (p.119), 2 <em>BLUE NOTE</em> (p.120), 3 <em>GRASSHOPPER</em> (p.121).</div>
+  </div>
+</section>
+
+</main>
+<footer>
+  Interactive study workbook · Chapter 5 — Fundamental Commercial Transactions · built from the course slides for self-testing.<br>
+  Drill the invoice scheme until you can fill the ladder from memory — that single skill carries the whole chapter. 💪
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var STORE="ch5comm_progress_v1", THEME="ch5comm_theme";
+  var root=document.documentElement, tb=document.getElementById("themebtn");
+  var saved=null; try{saved=localStorage.getItem(THEME);}catch(e){}
+  if(saved) root.setAttribute("data-theme",saved);
+  function cur(){ if(root.getAttribute("data-theme")) return root.getAttribute("data-theme");
+    return matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"; }
+  tb.addEventListener("click",function(){ var n=cur()==="dark"?"light":"dark";
+    root.setAttribute("data-theme",n); try{localStorage.setItem(THEME,n);}catch(e){} });
+
+  var Q=[
+    {lv:"Level 1 · recall",q:"Which account, and on which side, records: (a) commercial discount on a purchase; (b) commercial discount on a sale; (c) financial discount on a purchase; (d) financial discount on a sale?",
+     a:"(a) <b>608</b> Discounts received (−), credit. (b) <b>708</b> Discounts granted (−), debit. (c) <b>757</b> Financial discounts received, credit (financial revenue). (d) <b>657</b> Financial discounts granted, debit (financial expense)."},
+    {lv:"Level 1 · recall",q:"True/false: “Financial discount is deducted after VAT is calculated.” Correct it if false.",
+     a:"<b>False.</b> Financial discount is deducted <b>before</b> VAT — VAT is on the “basis for VAT” (net − financial discount), whether or not the discount is taken."},
+    {lv:"Level 1 · recall",q:"Is a financial discount operating or financial? What about a commercial discount? Why the difference?",
+     a:"Financial discount → <b>financial</b> result (about payment timing, a financing decision). Commercial discount → <b>operating</b> result (part of normal trading). Different account groups (65/75 vs 60/70)."},
+    {lv:"Level 1 · recall",q:"When you pay a supplier by cheque, which account is credited when you write the cheque, and which two accounts move when it is later cashed?",
+     a:"Writing: credit <b>5501</b> Bank – Cheques written out (debit 440 Suppliers). Cashed: <b>5501</b> debited, <b>5500</b> Bank – Current account credited."},
+    {lv:"Level 2 · single invoice",q:"PI: buy 8 tablets @ €300 excl. VAT, 10% commercial discount. Write the entry (604/608 method).",
+     a:"8×300 = 2 400; −10% = −240; net 2 160; VAT 453,60; total 2 613,60.<div class='journal'><div class='jline'><span>604</span><span class='acc'>Purchases of GFR</span><span class='amtD'>2 400,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>453,60</span><span class='amtC'></span></div><div class='jline cred'><span>@ 608</span><span class='acc'>Discounts received (−)</span><span class='amtD'></span><span class='amtC'>240,00</span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>2 613,60</span></div></div>"},
+    {lv:"Level 2 · single invoice",q:"SI: sell 4 tablets @ €480 excl. VAT, no discount. Write the entry.",
+     a:"4×480 = 1 920; VAT 403,20; total 2 323,20.<div class='journal'><div class='jline'><span>400</span><span class='acc'>Trade debtors</span><span class='amtD'>2 323,20</span><span class='amtC'></span></div><div class='jline cred'><span>@ 70</span><span class='acc'>Sales of GFR</span><span class='amtD'></span><span class='amtC'>1 920,00</span></div><div class='jline cred'><span>@ 451</span><span class='acc'>VAT due</span><span class='amtD'></span><span class='amtC'>403,20</span></div></div>"},
+    {lv:"Level 2 · single invoice",q:"PI: buy 15 headphones @ €40 excl. VAT, +€30 transport, no discount. Write the entry.",
+     a:"15×40 = 600; +30 transport; net 630; VAT 132,30; total 762,30.<div class='journal'><div class='jline'><span>604</span><span class='acc'>Purchases of GFR</span><span class='amtD'>630,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>132,30</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>762,30</span></div></div>"},
+    {lv:"Level 3 · financial discount",q:"PI: net €4 000 excl. VAT, 2% cash discount if paid within 8 days. (a) invoice entry; (b) payment within 8 days.",
+     a:"Net 4 000; disc. 80; basis 3 920; VAT 823,20; total-if-not 4 823,20.<div class='journal'><span class='jdate'>(a) invoice</span><div class='jline'><span>604</span><span class='acc'>Purchases of GFR</span><span class='amtD'>4 000,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>823,20</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>4 823,20</span></div><div class='jrule'></div><span class='jdate'>(b) pay within 8 days</span><div class='jline'><span>440</span><span class='acc'>Suppliers</span><span class='amtD'>4 823,20</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>4 743,20</span></div><div class='jline cred'><span>@ 757</span><span class='acc'>Financial discounts received</span><span class='amtD'></span><span class='amtC'>80,00</span></div></div>"},
+    {lv:"Level 3 · financial discount",q:"Same invoice as Q8, but you pay after 8 days. Write the payment entry. Is any VAT correction needed?",
+     a:"Discount lost — pay the full supplier balance.<div class='journal'><div class='jline'><span>440</span><span class='acc'>Suppliers</span><span class='amtD'>4 823,20</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>4 823,20</span></div></div><b>No VAT correction</b> — VAT stays on the 3 920 basis originally recorded."},
+    {lv:"Level 3 · VAT declaration",q:"Quarter-end: 411 VAT to reclaim has a debit balance of €1 260 and 451 VAT due a credit balance of €1 890. (a) declaration entry; (b) how much is payable, write the payment-by-bank entry.",
+     a:"(a) 451 (1 890) larger → close 411 (1 260) into it.<div class='journal'><div class='jline'><span>451</span><span class='acc'>VAT due</span><span class='amtD'>1 260,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 411</span><span class='acc'>VAT to reclaim</span><span class='amtD'></span><span class='amtC'>1 260,00</span></div></div>(b) Remaining 451 = 1 890 − 1 260 = <b>€630 payable</b>.<div class='journal'><div class='jline'><span>451</span><span class='acc'>VAT due</span><span class='amtD'>630,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>630,00</span></div></div>"},
+    {lv:"Level 4 · credit note",q:"OCN: you grant a customer an extra 5% discount on a prior sale whose goods were priced at €1 200 excl. VAT. Write the outgoing credit note.",
+     a:"Discount 5% of 1 200 = 60; VAT 12,60; total 72,60. Reverse of a sale:<div class='journal'><div class='jline'><span>70</span><span class='acc'>Sales of GFR</span><span class='amtD'>60,00</span><span class='amtC'></span></div><div class='jline'><span>451</span><span class='acc'>VAT due</span><span class='amtD'>12,60</span><span class='amtC'></span></div><div class='jline cred'><span>@ 400</span><span class='acc'>Trade debtors</span><span class='amtD'></span><span class='amtC'>72,60</span></div></div>"},
+    {lv:"Level 4 · credit note",q:"ICN: you return goods to a supplier; the original purchase net was €900 excl. VAT. Write the incoming credit note.",
+     a:"Net 900; VAT 189; total 1 089. Reverse of a purchase:<div class='journal'><div class='jline'><span>440</span><span class='acc'>Suppliers</span><span class='amtD'>1 089,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 604</span><span class='acc'>Purchases of GFR</span><span class='amtD'></span><span class='amtC'>900,00</span></div><div class='jline cred'><span>@ 411</span><span class='acc'>VAT to reclaim</span><span class='amtD'></span><span class='amtC'>189,00</span></div></div>"},
+    {lv:"Level 4 · cheque",q:"You receive a customer's cheque for a €605 receivable. Write (a) the entry on receipt and (b) when the bank confirms it cleared.",
+     a:"<div class='journal'><span class='jdate'>(a) on receipt</span><div class='jline'><span>540</span><span class='acc'>Amounts overdue &amp; in collection</span><span class='amtD'>605,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 400</span><span class='acc'>Trade debtors</span><span class='amtD'></span><span class='amtC'>605,00</span></div><div class='jrule'></div><span class='jdate'>(b) cleared</span><div class='jline'><span>5500</span><span class='acc'>Bank account</span><span class='amtD'>605,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 540</span><span class='acc'>Amounts overdue &amp; in collection</span><span class='amtD'></span><span class='amtC'>605,00</span></div></div>"},
+    {lv:"Level 4 · internal transfer",q:"You withdraw €1 500 from the bank to top up the cash till. Write both entries using account 58.",
+     a:"Money leaves the bank first, arrives in cash after — bridge with 58.<div class='journal'><span class='jdate'>C/A – withdrawal</span><div class='jline'><span>58</span><span class='acc'>Internal transfers of funds</span><span class='amtD'>1 500,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>1 500,00</span></div><div class='jrule'></div><span class='jdate'>CD – cash received</span><div class='jline'><span>570</span><span class='acc'>Cash at hand</span><span class='amtD'>1 500,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 58</span><span class='acc'>Internal transfers of funds</span><span class='amtD'></span><span class='amtC'>1 500,00</span></div></div>"},
+    {lv:"Level 4 · mini-cycle · GRASSHOPPER plc",q:"VAT 21%: (1) 02/12 buy 10 speakers @ €150 excl. VAT, 5% commercial disc., on credit; (2) 05/12 sell 6 speakers @ €260 excl. VAT, +€20 delivery, on credit; (3) 09/12 pay the PI by bank; (4) 12/12 the customer pays by bank. (a) journal all four; (b) effect on the operating result?",
+     a:"(1) 1 500 −75 = net 1 425; VAT 299,25; total 1 724,25. (2) 1 560 +20 = net 1 580; VAT 331,80; total 1 911,80.<div class='journal'><div class='jline'><span>604</span><span class='acc'>Purchases GFR</span><span class='amtD'>1 500,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>299,25</span><span class='amtC'></span></div><div class='jline cred'><span>@ 608</span><span class='acc'>Discounts received (−)</span><span class='amtD'></span><span class='amtC'>75,00</span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>1 724,25</span></div><div class='jrule'></div><div class='jline'><span>400</span><span class='acc'>Trade debtors</span><span class='amtD'>1 911,80</span><span class='amtC'></span></div><div class='jline cred'><span>@ 70</span><span class='acc'>Sales GFR</span><span class='amtD'></span><span class='amtC'>1 580,00</span></div><div class='jline cred'><span>@ 451</span><span class='acc'>VAT due</span><span class='amtD'></span><span class='amtC'>331,80</span></div><div class='jrule'></div><div class='jline'><span>440</span><span class='acc'>Suppliers</span><span class='amtD'>1 724,25</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank</span><span class='amtD'></span><span class='amtC'>1 724,25</span></div><div class='jrule'></div><div class='jline'><span>5500</span><span class='acc'>Bank</span><span class='amtD'>1 911,80</span><span class='amtC'></span></div><div class='jline cred'><span>@ 400</span><span class='acc'>Trade debtors</span><span class='amtD'></span><span class='amtC'>1 911,80</span></div></div>(b) Operating result = Sales 1 580 − (Purchases 1 500 − Discounts received 75) = 1 580 − 1 425 = <b>€155</b>. VAT never touches the result; payments just move assets/liabilities."},
+    {lv:"Level 4 · financial-discount scenario",q:"SI: sell goods net €5 000 excl. VAT, 3% cash discount if paid within 10 days. (a) invoice; (b) customer pays on day 6; (c) name and classify the account carrying the €150.",
+     a:"Net 5 000; disc. 150; basis 4 850; VAT 1 018,50; total-if-not 6 018,50.<div class='journal'><span class='jdate'>(a) invoice</span><div class='jline'><span>400</span><span class='acc'>Trade debtors</span><span class='amtD'>6 018,50</span><span class='amtC'></span></div><div class='jline cred'><span>@ 70</span><span class='acc'>Sales of GFR</span><span class='amtD'></span><span class='amtC'>5 000,00</span></div><div class='jline cred'><span>@ 451</span><span class='acc'>VAT due</span><span class='amtD'></span><span class='amtC'>1 018,50</span></div><div class='jrule'></div><span class='jdate'>(b) collect day 6</span><div class='jline'><span>5500</span><span class='acc'>Bank account</span><span class='amtD'>5 868,50</span><span class='amtC'></span></div><div class='jline'><span>657</span><span class='acc'>Financial discounts granted</span><span class='amtD'>150,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 400</span><span class='acc'>Trade debtors</span><span class='amtD'></span><span class='amtC'>6 018,50</span></div></div>(c) The €150 sits in <b>657 Financial discounts granted</b> — a <b>financial expense</b>."}
+  ];
+
+  var progress={}; try{progress=JSON.parse(localStorage.getItem(STORE)||"{}");}catch(e){progress={};}
+  var list=document.getElementById("qlist");
+  Q.forEach(function(item,i){
+    var card=document.createElement("div"); card.className="qcard";
+    var checked=progress[i]?"checked":"";
+    card.innerHTML='<span class="lvl">'+item.lv+'</span><div class="qhead">'+
+      '<input type="checkbox" class="qcheck" data-i="'+i+'" '+checked+' aria-label="Mark question '+(i+1)+' done">'+
+      '<div class="qbody"><p style="margin-top:0"><b>Q'+(i+1)+'.</b> '+item.q+'</p>'+
+      '<details class="sol"><summary>Reveal solution</summary><div class="solbody">'+item.a+'</div></details></div></div>';
+    list.appendChild(card);
+  });
+  function refresh(){var done=0;for(var k in progress){if(progress[k])done++;}
+    document.getElementById("pfill").style.width=(done/Q.length*100)+"%";
+    document.getElementById("pcount").textContent=done+" / "+Q.length+" done";}
+  list.addEventListener("change",function(e){
+    if(e.target.classList.contains("qcheck")){progress[e.target.getAttribute("data-i")]=e.target.checked;
+      try{localStorage.setItem(STORE,JSON.stringify(progress));}catch(err){}refresh();}});
+  document.getElementById("resetbtn").addEventListener("click",function(){
+    progress={};try{localStorage.removeItem(STORE);}catch(e){}
+    var b=document.querySelectorAll(".qcheck");for(var j=0;j<b.length;j++)b[j].checked=false;refresh();});
+  refresh();
+
+  var FC=[
+    ["VAT to reclaim (411) / VAT due (451) are…","Asset (debit) / liability (credit)."],
+    ["For a company, VAT is…","Neither an expense nor a revenue — it flows through."],
+    ["Commercial discount: purchase / sale","608 Discounts received (−) / 708 Discounts granted (−)."],
+    ["Financial discount: purchase / sale","757 (financial revenue) / 657 (financial expense)."],
+    ["VAT is calculated on the…","“Basis for VAT” = net minus financial discount."],
+    ["The financial discount is booked…","At payment time only (if taken)."],
+    ["Additional charges (transport)…","Raise the net, so they ARE subject to VAT."],
+    ["Incoming CN reverses a… / outgoing CN reverses a…","Purchase / sale."],
+    ["Cheque received / written out sit in…","540 / 5501, until they clear at 5500."],
+    ["Internal transfer bridging account","58."],
+    ["Cash at hand account","570."],
+    ["VAT declaration: close the account with the…","Smaller balance, into the larger."]
+  ];
+  var cards=document.getElementById("cards");
+  FC.forEach(function(c){
+    var b=document.createElement("button"); b.className="flip"; b.type="button"; b.setAttribute("aria-pressed","false");
+    b.innerHTML='<div class="inner"><div class="face front"><div class="q">'+c[0]+'</div><div class="hint">Tap to flip</div></div>'+
+      '<div class="face back"><div class="a">'+c[1]+'</div></div></div>';
+    b.addEventListener("click",function(){var p=b.getAttribute("aria-pressed")==="true";b.setAttribute("aria-pressed",p?"false":"true");});
+    cards.appendChild(b);
+  });
+})();
+</script>
+
+</body>
+</html>
