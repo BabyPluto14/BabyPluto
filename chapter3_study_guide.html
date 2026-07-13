@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<title>Chapter 3 — The Accounting Process · Interactive Workbook</title>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#f7f4ec; --paper-2:#efe9dc; --card:#fffdf8; --ink:#1b211f; --ink-soft:#4a534f;
+    --line:#ddd4c2; --line-2:#cabfa6; --accent:#0f6e5c; --accent-deep:#0a4d40; --accent-soft:#e2efe9;
+    --debit:#b0503a; --debit-bg:#f6e7e1; --credit:#0f6e5c; --credit-bg:#e2efe9;
+    --gold:#9a7b1f; --shadow:0 1px 2px rgba(27,33,31,.06),0 6px 20px rgba(27,33,31,.06);
+    --maxw:70ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#12181a; --paper-2:#0d1315; --card:#1a2225; --ink:#e9e4d8; --ink-soft:#a3a7a1;
+      --line:#2a3438; --line-2:#3a474b; --accent:#4bc3a8; --accent-deep:#7fe0c9; --accent-soft:#16302b;
+      --debit:#e08a6f; --debit-bg:#2e211d; --credit:#4bc3a8; --credit-bg:#132a26;
+      --gold:#cdae5e; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f7f4ec; --paper-2:#efe9dc; --card:#fffdf8; --ink:#1b211f; --ink-soft:#4a534f;
+    --line:#ddd4c2; --line-2:#cabfa6; --accent:#0f6e5c; --accent-deep:#0a4d40; --accent-soft:#e2efe9;
+    --debit:#b0503a; --debit-bg:#f6e7e1; --credit:#0f6e5c; --credit-bg:#e2efe9; --gold:#9a7b1f;
+    --shadow:0 1px 2px rgba(27,33,31,.06),0 6px 20px rgba(27,33,31,.06);
+  }
+  :root[data-theme="dark"]{
+    --paper:#12181a; --paper-2:#0d1315; --card:#1a2225; --ink:#e9e4d8; --ink-soft:#a3a7a1;
+    --line:#2a3438; --line-2:#3a474b; --accent:#4bc3a8; --accent-deep:#7fe0c9; --accent-soft:#16302b;
+    --debit:#e08a6f; --debit-bg:#2e211d; --credit:#4bc3a8; --credit-bg:#132a26; --gold:#cdae5e;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;}
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;}
+  h1,h2,h3,h4{font-family:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+    text-wrap:balance;line-height:1.2;font-weight:600;color:var(--ink);}
+  a{color:var(--accent);text-underline-offset:2px}
+  p{margin:.6em 0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .wide{max-width:min(96ch,100%);}
+
+  /* ---- top bar ---- */
+  .topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .row{max-width:min(96ch,100%);margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:14px}
+  .brand{font-family:Georgia,serif;font-weight:600;font-size:15px;letter-spacing:.01em}
+  .brand b{color:var(--accent)}
+  .progresswrap{flex:1;display:flex;align-items:center;gap:9px;min-width:0}
+  .pbar{flex:1;height:7px;background:var(--paper-2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width .35s ease}
+  .pcount{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .themebtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink);border-radius:8px;
+    padding:5px 10px;font-size:13px;cursor:pointer;line-height:1}
+  .themebtn:hover{border-color:var(--accent)}
+
+  /* ---- hero ---- */
+  .hero{padding:56px 0 30px;border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 90% at 82% -10%,var(--accent-soft),transparent 60%);}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);font-weight:600}
+  .hero h1{font-size:clamp(2rem,5.4vw,3.2rem);margin:.28em 0 .12em}
+  .hero .sub{font-size:1.12rem;color:var(--ink-soft);max-width:60ch}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .chip{font-size:12.5px;border:1px solid var(--line-2);background:var(--card);border-radius:99px;padding:5px 12px;color:var(--ink-soft)}
+  .chip b{color:var(--ink)}
+
+  /* ---- ledger rule under headers ---- */
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  .snum{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--accent);
+    letter-spacing:.08em;border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;background:var(--card)}
+  .shead{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}
+  .shead h2{font-size:clamp(1.4rem,3.4vw,1.9rem);margin:0}
+  .lead{color:var(--ink-soft);font-size:1.05rem;margin-top:0}
+
+  /* ---- callouts ---- */
+  .note,.warn,.key{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line-2);background:var(--card);box-shadow:var(--shadow)}
+  .note{border-left:4px solid var(--accent)}
+  .warn{border-left:4px solid var(--debit);background:var(--debit-bg)}
+  .key{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 9%,var(--card))}
+  .note .tag,.warn .tag,.key .tag{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+  .note .tag{color:var(--accent-deep)} .warn .tag{color:var(--debit)} .key .tag{color:var(--gold)}
+
+  .equation{font-family:Georgia,serif;font-size:1.35rem;text-align:center;margin:22px 0;padding:16px;
+    border:1px solid var(--line-2);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
+  .equation b{color:var(--accent)}
+
+  /* ---- tables ---- */
+  .tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:15px;background:var(--card)}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line)}
+  thead th{background:var(--paper-2);font-family:Georgia,serif;font-weight:600;font-size:13.5px;
+    letter-spacing:.02em;position:sticky;top:0}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  tr.total td{font-weight:700;background:var(--paper-2);border-top:2px solid var(--line-2)}
+  .db{color:var(--debit);font-weight:600} .cr{color:var(--credit);font-weight:600}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.02em}
+  .pill.d{color:var(--debit);background:var(--debit-bg)} .pill.c{color:var(--credit);background:var(--credit-bg)}
+
+  /* ---- journal entry ---- */
+  .journal{font-family:ui-monospace,monospace;font-size:14px;background:var(--paper-2);
+    border:1px solid var(--line-2);border-radius:12px;padding:14px 16px;margin:16px 0;overflow-x:auto;
+    font-variant-numeric:tabular-nums;line-height:1.75}
+  .journal .jdate{color:var(--accent-deep);font-weight:700}
+  .journal .jline{display:grid;grid-template-columns:64px 1fr auto auto;gap:10px;white-space:nowrap}
+  .journal .jline .acc{color:var(--ink-soft)}
+  .journal .jline .amtD{color:var(--debit);text-align:right;min-width:90px}
+  .journal .jline .amtC{color:var(--credit);text-align:right;min-width:90px}
+  .journal .cred{padding-left:14px}
+  .journal .jdesc{color:var(--ink-soft);font-style:italic;padding-left:64px;font-size:13px}
+  .journal .jrule{border-top:1px dashed var(--line-2);margin:4px 0}
+
+  /* ---- T account ---- */
+  .taccounts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0}
+  .tacc{border:1px solid var(--line-2);border-radius:10px;overflow:hidden;background:var(--card)}
+  .tacc h4{margin:0;font-size:13.5px;text-align:center;padding:7px;background:var(--paper-2);border-bottom:1px solid var(--line-2)}
+  .tacc .cols{display:grid;grid-template-columns:1fr 1fr;font-family:ui-monospace,monospace;font-size:13px;font-variant-numeric:tabular-nums}
+  .tacc .cols>div{padding:8px 10px}
+  .tacc .cols .left{border-right:1px solid var(--line);color:var(--debit)}
+  .tacc .cols .right{color:var(--credit)}
+  .tacc .cols .hd{font-weight:700;text-align:center;border-bottom:1px solid var(--line);color:var(--ink-soft)}
+  .tacc .r{display:flex;justify-content:space-between;gap:8px}
+  .tacc .bal{border-top:1px dashed var(--line-2);font-weight:700;margin-top:3px;padding-top:3px}
+
+  /* ---- practice ---- */
+  .qcard{border:1px solid var(--line-2);border-radius:14px;background:var(--card);padding:16px 18px;margin:16px 0;box-shadow:var(--shadow)}
+  .qhead{display:flex;align-items:flex-start;gap:12px}
+  .qcheck{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--line-2);border-radius:6px;
+    cursor:pointer;flex:none;margin-top:2px;position:relative;background:var(--paper)}
+  .qcheck:checked{background:var(--accent);border-color:var(--accent)}
+  .qcheck:checked::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:15px;display:grid;place-items:center;font-weight:700}
+  .qcheck:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .qlabel{font-weight:600;font-size:13px;color:var(--accent-deep);letter-spacing:.04em;text-transform:uppercase}
+  .qbody{flex:1}
+  .lvl{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:2px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:8px}
+  details.sol{margin-top:12px;border-top:1px dashed var(--line-2);padding-top:6px}
+  details.sol>summary{cursor:pointer;list-style:none;font-weight:600;color:var(--accent);font-size:14.5px;
+    padding:8px 12px;border:1px solid var(--line-2);border-radius:9px;background:var(--paper-2);display:inline-flex;
+    align-items:center;gap:8px;user-select:none;transition:.15s}
+  details.sol>summary:hover{border-color:var(--accent)}
+  details.sol>summary::-webkit-details-marker{display:none}
+  details.sol>summary::before{content:"▸";transition:transform .2s;color:var(--accent)}
+  details.sol[open]>summary::before{transform:rotate(90deg)}
+  details.sol[open]>summary{background:var(--accent-soft)}
+  .solbody{padding:10px 2px 2px;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+
+  /* ---- flashcards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:18px 0}
+  .flip{background:transparent;border:none;padding:0;cursor:pointer;height:130px;perspective:1000px;font:inherit;text-align:left}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;
+    display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line-2);box-shadow:var(--shadow)}
+  .flip .front{background:var(--card)}
+  .flip .front .q{font-family:Georgia,serif;font-size:15px}
+  .flip .front .hint{font-size:11px;color:var(--ink-soft);margin-top:8px;letter-spacing:.04em;text-transform:uppercase}
+  .flip .back{background:var(--accent-soft);transform:rotateY(180deg);color:var(--ink)}
+  .flip .back .a{font-size:14px;font-weight:600}
+  .flip:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+
+  ul,ol{padding-left:1.25em} li{margin:.28em 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:620px){.grid2{grid-template-columns:1fr}.journal{font-size:12.5px}}
+  code{font-family:ui-monospace,monospace;background:var(--paper-2);padding:1px 6px;border-radius:5px;font-size:.9em;border:1px solid var(--line)}
+  .toc{columns:2;column-gap:26px;font-size:14.5px}
+  @media(max-width:560px){.toc{columns:1}}
+  .toc a{display:block;padding:3px 0;color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent}
+  .toc a:hover{color:var(--accent)}
+  footer{padding:34px 22px 60px;text-align:center;color:var(--ink-soft);font-size:14px}
+  .resetbtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink-soft);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;margin-top:10px}
+  .resetbtn:hover{border-color:var(--debit);color:var(--debit)}
+  @media print{.topbar,.themebtn,.flip .hint{display:none}details.sol{border:none}details.sol>summary{display:none}details.sol .solbody{display:block!important}.qcheck{display:none}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="topbar">
+  <div class="row">
+    <span class="brand">Ch.3 · <b>The Accounting Process</b></span>
+    <div class="progresswrap">
+      <div class="pbar"><i id="pfill"></i></div>
+      <span class="pcount" id="pcount">0 / 17 done</span>
+    </div>
+    <button class="themebtn" id="themebtn" aria-label="Toggle light or dark theme">◐ Theme</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap wide">
+    <span class="eyebrow">Financial Accounting · Interactive Workbook</span>
+    <h1>The Accounting Process</h1>
+    <p class="sub">From a single business event to a balanced set of books — learn the debit/credit reflex the way the exam tests it, by <em>doing</em> the journal entries. Follow one company, <b>TELECONNECT&nbsp;plc</b>, through a full year.</p>
+    <div class="meta">
+      <span class="chip"><b>Course:</b> Internal &amp; External Financial Reporting</span>
+      <span class="chip"><b>Based on slides by</b> V.&nbsp;Ghijselinck</span>
+      <span class="chip"><b>Textbook:</b> Ch.3, p.41–70</span>
+      <span class="chip"><b>17</b> graded exercises · reveal solutions</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- TOC -->
+<section>
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">MAP</span><h2 class="serif">What's inside</h2></div>
+    <nav class="toc">
+      <a href="#cycle">1 · The accounting cycle (big picture)</a>
+      <a href="#bs">2 · The balance sheet</a>
+      <a href="#rules">3 · Debit &amp; credit rules</a>
+      <a href="#is">4 · The income statement</a>
+      <a href="#vat">5 · VAT — the one you trip over</a>
+      <a href="#coa">6 · Chart of accounts</a>
+      <a href="#books">7 · Ledger &amp; journal</a>
+      <a href="#tb">8 · The trial balance</a>
+      <a href="#result">9 · From opening to closing (the result)</a>
+      <a href="#worked">10 · Guided worked examples</a>
+      <a href="#practice">11 · Practice workbook (17 Q)</a>
+      <a href="#recall">12 · Flashcards</a>
+      <a href="#mistakes">13 · Common mistakes</a>
+      <a href="#summary">14 · Summary sheet</a>
+    </nav>
+    <div class="note"><span class="tag">How to use this</span>This is a <b>workbook, not notes.</b> For every practice question, write your own journal entry <em>first</em>, then click <b>Reveal solution</b>. Tick each question off — your progress is saved in this browser. VAT rate is <b>21%</b> throughout.</div>
+  </div>
+</section>
+
+<!-- 1 CYCLE -->
+<section id="cycle">
+  <div class="wrap">
+    <div class="shead"><span class="snum">01</span><h2>The accounting cycle</h2></div>
+    <p class="lead">Every topic below is just one box in this flow. Memorise the shape.</p>
+    <div class="journal" style="line-height:1.9">
+<span class="jdate">OPENING BALANCE SHEET</span>  → open accounts in journal + ledger
+        │
+<span class="jdate">RECORD ALL TRANSACTIONS</span>  during the year (journal + ledger)
+        │
+<span class="jdate">1st PROVISIONAL TRIAL BALANCE</span>  ← check: does debit = credit?
+        │
+<span class="jdate">INVENTORY</span> → END-OF-PERIOD ENTRIES     [mostly later chapters]
+        │
+<span class="jdate">2nd PROVISIONAL TRIAL BALANCE</span>  → result BEFORE tax
+        │
+<span class="jdate">TAXES</span> → <span class="jdate">FINAL TRIAL BALANCE</span>
+        │
+<span class="jdate">FINANCIAL STATEMENTS</span>  = Balance sheet + Income statement + Notes
+        │
+<span class="jdate">DISTRIBUTION OF PROFIT</span>  after tax
+    </div>
+    <div class="note"><span class="tag">Where we are</span>This chapter mostly lives in the top half (open → record → trial balance → result). Inventory adjustments and tax come in later chapters, so the profit we compute here is <b>before</b> end-of-period adjustments and tax.</div>
+  </div>
+</section>
+
+<!-- 2 BALANCE SHEET -->
+<section id="bs">
+  <div class="wrap">
+    <div class="shead"><span class="snum">02</span><h2>The balance sheet</h2></div>
+    <p class="lead">A <b>snapshot</b> — a photo — of the company's financial position at one moment in time.</p>
+    <div class="equation"><b>ASSETS</b> = <b>EQUITY</b> + <b>LIABILITIES</b></div>
+    <p>Two sides that are always equal. The left shows the <b>operating resources</b> the company <em>uses</em> (the "use of funds"); the right shows the <b>financing resources</b> — where the money <em>came from</em> (the "origin of funds"). Every euro of resource had to be financed by someone: the owner (equity) or a third party the company owes (a liability). That's <em>why</em> the sides must match. If they don't, you made an error.</p>
+
+    <div class="key"><span class="tag">The sandwich-shop intuition</span>
+      Opening a shop, you need a <b>building, counter, oven, van</b> (long-lasting → <b>fixed assets</b>) and <b>bread stock, bank, cash</b> (fast-moving → <b>current assets</b>). That's the assets side. To pay for it: your <b>own savings</b> (equity), a <b>bank loan</b>, and <b>suppliers letting you pay later</b> (both liabilities). Same total, two viewpoints.</div>
+
+    <p><b>Ordering rules in our template.</b> Assets are listed by <b>increasing liquidity</b> (fixed assets first, then inventory → receivables → bank → <em>cash last</em>). Equity + liabilities by <b>increasing callability</b> (equity first — never called; then payables &gt;1yr; then payables ≤1yr).</p>
+
+    <div class="key"><span class="tag">The balance sheet always stays balanced</span>
+      After <b>every</b> transaction: Δ Assets = Δ Equity + Δ Liabilities. There are only <b>four</b> possible moves — this is your #1 self-check:</div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>#</th><th>Move</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>①</td><td>Asset ↑ <b>&amp;</b> (E+L) ↑</td><td>Buy furniture on credit</td></tr>
+        <tr><td>②</td><td>Asset ↓ <b>&amp;</b> (E+L) ↓</td><td>Pay a supplier from the bank</td></tr>
+        <tr><td>③</td><td>Asset ↑ <b>&amp;</b> another asset ↓</td><td>Customer pays: bank ↑, receivable ↓</td></tr>
+        <tr><td>④</td><td>(E+L) ↑ <b>&amp;</b> another (E+L) ↓</td><td>Short-term debt becomes a long-term loan</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 3 RULES -->
+<section id="rules">
+  <div class="wrap">
+    <div class="shead"><span class="snum">03</span><h2>Debit &amp; credit — the heart of everything</h2></div>
+    <p class="lead">Each balance sheet item gets its own <b>T-account</b>: <span class="db">debit = left</span>, <span class="cr">credit = right</span>. All accounts together = the <b>general ledger</b>.</p>
+
+    <div class="warn"><span class="tag">Notation warning</span>The slides sometimes print the T-account header as "C … D". Ignore the letter order — always draw <b>debit on the LEFT, credit on the RIGHT.</b></div>
+
+    <p>Learn this table cold. <b>Rule of thumb:</b> an account "lives" on the same side it appears in the balance sheet.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Account type</th><th>Increase</th><th>Decrease</th><th>Home / normal balance</th></tr></thead>
+      <tbody>
+        <tr><td><b>Asset</b> (left of B/S)</td><td><span class="pill d">Debit</span></td><td><span class="pill c">Credit</span></td><td class="db">Debit</td></tr>
+        <tr><td><b>Liability / Equity</b> (right of B/S)</td><td><span class="pill c">Credit</span></td><td><span class="pill d">Debit</span></td><td class="cr">Credit</td></tr>
+        <tr><td><b>Expense</b> (class 6)</td><td><span class="pill d">Debit</span></td><td><span class="pill c">Credit</span></td><td class="db">Debit</td></tr>
+        <tr><td><b>Revenue</b> (class 7)</td><td><span class="pill c">Credit</span></td><td><span class="pill d">Debit</span></td><td class="cr">Credit</td></tr>
+      </tbody>
+    </table></div>
+    <div class="equation">The iron law — for every entry: <b>total DEBIT = total CREDIT</b></div>
+    <p>This is <b>double-entry bookkeeping</b>. Every transaction hits at least two accounts and the debits equal the credits. <em>Assets &amp; Expenses are debit-natured; Liabilities, Equity &amp; Revenues are credit-natured.</em> (Deeper why: an expense reduces equity, a revenue increases it — so they point the same way as assets and equity respectively.)</p>
+
+    <div class="note"><span class="tag">The 4-question procedure — say it out loud every time</span>
+      <b>①</b> Which document? &nbsp; <b>②</b> Which account — asset/liability/equity or expense/revenue? &nbsp; <b>③</b> Increase or decrease? &nbsp; <b>④</b> Debit or credit?</div>
+  </div>
+</section>
+
+<!-- 4 INCOME STATEMENT -->
+<section id="is">
+  <div class="wrap">
+    <div class="shead"><span class="snum">04</span><h2>The income statement</h2></div>
+    <p class="lead">The balance sheet is a photo; the income statement is the <b>film</b> — did we make money over the period?</p>
+    <div class="equation">Revenues − Expenses = <b>Result</b> (Profit or Loss)</div>
+    <div class="journal">   Operating revenues
+ − Operating expenses
+ = <span class="jdate">OPERATING PROFIT (LOSS)</span>
+ + Financial revenues
+ − Financial expenses
+ = <span class="jdate">PROFIT (LOSS) BEFORE TAXES</span>
+ − Income taxes
+ = <span class="jdate">PROFIT AVAILABLE FOR APPROPRIATION</span></div>
+    <p>Revenues (class 7) and expenses (class 6) split into <b>operating</b> vs <b>financial</b>, each into <b>recurring</b> vs <b>non-recurring</b>. Examples: recurring operating revenue = <em>sales of goods for resale</em>; recurring operating expense = <em>purchases, electricity, wages</em>; recurring financial expense = <em>interest on loans, bank charges</em>.</p>
+  </div>
+</section>
+
+<!-- 5 VAT -->
+<section id="vat">
+  <div class="wrap">
+    <div class="shead"><span class="snum">05</span><h2>VAT — the one everyone trips over</h2></div>
+    <p class="lead">The company is a <b>middleman</b> that collects VAT for the government. VAT is <em>not</em> the company's income or expense — it flows <em>through</em> the company.</p>
+    <div class="grid2">
+      <div class="note"><span class="tag" style="color:var(--credit)">On a PURCHASE → an ASSET</span>
+        You <b>pay VAT to your supplier</b>. The tax office will <b>refund</b> it later, so you have a <b>claim / receivable</b>.
+        <br><br><b>"VAT to reclaim" (411) = ASSET</b> → increases on the <span class="db">debit</span> side.</div>
+      <div class="warn" style="background:var(--credit-bg);border-left-color:var(--credit)"><span class="tag" style="color:var(--credit)">On a SALE → a LIABILITY</span>
+        Your <b>customer pays VAT to you</b>. You must <b>hand it to the tax office</b>, so you have a <b>debt</b>.
+        <br><br><b>"VAT due" (451) = LIABILITY</b> → increases on the <span class="cr">credit</span> side.</div>
+    </div>
+    <div class="key"><span class="tag">Memorise the two skeletons</span>Gross = Net × 1.21 &nbsp;(VAT = Net × 0.21). The supplier/customer line always carries the <b>gross</b>; the tax office gets the VAT slice.</div>
+
+    <div class="journal">
+<span class="jdesc" style="padding-left:0">PURCHASE invoice (net N, VAT rate r)</span>
+<div class="jline"><span>604/2xx</span><span class="acc">Purchase / asset</span><span class="amtD">N</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">N × r</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">N × 1.21</span></div>
+<div class="jrule"></div>
+<span class="jdesc" style="padding-left:0">SALES invoice (net N, VAT rate r)</span>
+<div class="jline"><span>400</span><span class="acc">Trade debtors</span><span class="amtD">N × 1.21</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 70</span><span class="acc">Sales of goods for resale</span><span class="amtD"></span><span class="amtC">N</span></div>
+<div class="jline cred"><span>@ 451</span><span class="acc">VAT due</span><span class="amtD"></span><span class="amtC">N × r</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 CHART -->
+<section id="coa">
+  <div class="wrap">
+    <div class="shead"><span class="snum">06</span><h2>The chart of accounts</h2></div>
+    <p class="lead">A structured, <b>decimal</b> plan where every account is judiciously placed — so terminology is uniform and books can be audited and compared.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Level</th><th>Digits</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Class</td><td class="num">1</td><td><code>2</code> = Fixed assets</td></tr>
+        <tr><td>Group</td><td class="num">2</td><td><code>23</code> = Plant, machinery &amp; equipment</td></tr>
+        <tr><td>Account</td><td class="num">3</td><td><code>232</code> = Equipment</td></tr>
+        <tr><td>Subaccount</td><td class="num">4</td><td><code>2320</code> = Equipment – cost of acquisition</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>The classes:</b> 1 = equity &amp; long-term payables · 2 = fixed assets · 3 = inventories · 4 = short-term receivables/payables &amp; VAT · 5 = cash · <b>6 = expenses</b> · <b>7 = revenues</b>.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>No.</th><th>Account (TELECONNECT set)</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">100</td><td>Capital</td><td>Equity</td></tr>
+        <tr><td class="mono">140</td><td>Profit carried forward</td><td>Equity</td></tr>
+        <tr><td class="mono">173</td><td>Loan FORTIS (payable &gt;1yr)</td><td>Liability</td></tr>
+        <tr><td class="mono">2320 / 2400 / 2420</td><td>Equipment / Furniture / Desktops</td><td>Asset (fixed)</td></tr>
+        <tr><td class="mono">400</td><td>Trade debtors</td><td>Asset</td></tr>
+        <tr><td class="mono">411</td><td>VAT to reclaim</td><td>Asset</td></tr>
+        <tr><td class="mono">416</td><td>Current account manager</td><td>Asset</td></tr>
+        <tr><td class="mono">440</td><td>Suppliers</td><td>Liability</td></tr>
+        <tr><td class="mono">451</td><td>VAT due</td><td>Liability</td></tr>
+        <tr><td class="mono">5500</td><td>Bank account</td><td>Asset (cash)</td></tr>
+        <tr><td class="mono">604</td><td>Purchases of goods for resale</td><td>Expense</td></tr>
+        <tr><td class="mono">61…</td><td>Services &amp; other goods (phone, electricity)</td><td>Expense</td></tr>
+        <tr><td class="mono">6500</td><td>Interests (debt charges)</td><td>Expense</td></tr>
+        <tr><td class="mono">70</td><td>Sales of goods for resale</td><td>Revenue</td></tr>
+        <tr><td class="mono">693</td><td>Profit to be carried forward</td><td>Appropriation</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 7 BOOKS -->
+<section id="books">
+  <div class="wrap">
+    <div class="shead"><span class="snum">07</span><h2>The general ledger &amp; the journal</h2></div>
+    <div class="grid2">
+      <div class="note"><span class="tag">General ledger</span>The book of all <b>T-accounts</b>, organised <b>by account</b>. Left page = debit amounts, right page = credit amounts. Answers: <em>"what is the situation of this one account right now?"</em></div>
+      <div class="note"><span class="tag">Journal</span>The accounting diary — all transactions entered <b>without delay, faithfully, completely, in time order</b>. Organised <b>by date</b>. Legally required. Answers: <em>"what happened, chronologically?"</em></div>
+    </div>
+    <p>Every journal entry has the same standardised form: <b>date · order number · account numbers · the entry (debited accounts, then "@ /at" credited accounts + a short description) · debit column · credit column.</b> Debited accounts are written first; credited accounts are indented under "@".</p>
+  </div>
+</section>
+
+<!-- 8 TRIAL BALANCE -->
+<section id="tb">
+  <div class="wrap">
+    <div class="shead"><span class="snum">08</span><h2>The trial balance</h2></div>
+    <p class="lead">An interim <b>control balance</b> (not required by law) listing <em>all</em> accounts to check the books are internally consistent.</p>
+    <div class="grid2">
+      <div class="note"><span class="tag">With footings (totals)</span>For each account, total the debit side and the credit side. <b>Check:</b> total debit-totals = total credit-totals.</div>
+      <div class="note"><span class="tag">With balances</span>For each account, take the difference (debit − credit) as one balance. <b>Check:</b> total debit balances = total credit balances. This <em>is</em> closing the accounts.</div>
+    </div>
+    <div class="warn"><span class="tag">It is not foolproof</span>The trial balance proves the <b>arithmetic is consistent</b> — it will <b>not</b> catch an entry posted to the <em>wrong account</em>, one <em>omitted entirely</em>, or one <em>recorded twice</em>, because those keep debit = credit.</div>
+  </div>
+</section>
+
+<!-- 9 RESULT -->
+<section id="result">
+  <div class="wrap">
+    <div class="shead"><span class="snum">09</span><h2>From opening to closing — where the result comes from</h2></div>
+    <p class="lead">Once all accounts are closed, the profit shows up in <b>two independent places that must agree.</b></p>
+    <div class="grid2">
+      <div class="journal" style="margin:0">   Σ revenue balances (cl.7)   <span class="cr">10 200,00</span>
+ − Σ expense balances (cl.6)  <span class="db">−7 818,75</span>
+ = <span class="jdate">PROFIT</span>                <span class="cr">2 381,25</span></div>
+      <div class="journal" style="margin:0">   Σ asset balances           <span class="db">140 784,25</span>
+ − Σ (equity + liab.) bal.   <span class="cr">−138 403,00</span>
+ = <span class="jdate">PROFIT</span>                <span class="cr">2 381,25</span></div>
+    </div>
+    <div class="key"><span class="tag">The link in one sentence</span>The income statement explains <b>why equity changed</b> during the year; the profit it computes is <b>exactly what makes the closing balance sheet balance again.</b></div>
+    <p><b>Appropriation.</b> A profit (69-group) can be added to reserves, carried forward, or distributed to partners. A loss (79-group) can be withdrawn from equity, carried forward, or covered by partners. Example — carry the whole profit forward:</p>
+    <div class="journal">
+<div class="jline"><span>693</span><span class="acc">Profit to be carried forward</span><span class="amtD">2 381,25</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 140</span><span class="acc">Profit carried forward (equity)</span><span class="amtD"></span><span class="amtC">2 381,25</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 WORKED -->
+<section id="worked">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">10</span><h2>Guided worked examples · TELECONNECT plc</h2></div>
+    <p class="lead">Read each, cover the entry, try it yourself, then check. Opening: capital €75 000 in the bank. VAT 21%.</p>
+
+    <div class="qcard">
+      <span class="lvl">A · Purchase invoice with VAT</span>
+      <p><b>05/01</b> — PI 20X0/001 from FURNIFIT: office <b>furniture</b> €10 000 excl. 21% VAT, payable in 10 days.</p>
+      <p><em>Furniture ↑ (asset, debit) · VAT we paid ↑ (VAT to reclaim, asset, debit) · we owe the supplier ↑ (liability, credit).</em> Net 10 000 → VAT 2 100 → Gross 12 100.</p>
+      <div class="journal">
+<span class="jdate">05/01</span>
+<div class="jline"><span>2400</span><span class="acc">Furniture</span><span class="amtD">10 000,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">2 100,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">12 100,00</span></div>
+<div class="jdesc">FURNIFIT, PI 20X0/001 · check: 10 000 + 2 100 = 12 100 ✓</div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">B · Paying a supplier (case ②)</span>
+      <p><b>12/01</b> — Bank statement: pay PI 20X0/001, €12 100. Bank ↓ (asset, credit); Suppliers ↓ (liability, debit). No new VAT — it was booked when the invoice arrived.</p>
+      <div class="journal">
+<span class="jdate">12/01</span>
+<div class="jline"><span>440</span><span class="acc">Suppliers</span><span class="amtD">12 100,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 5500</span><span class="acc">Bank account</span><span class="amtD"></span><span class="amtC">12 100,00</span></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">D · A sale with VAT (mirror of a purchase)</span>
+      <p><b>05/03</b> — SI 20X0/001: sold 10 smartphones to PEETERS at €340/unit excl. 21% VAT. Debtor ↑ (asset, debit) · Sales ↑ (revenue, credit) · VAT due ↑ (liability, credit). Net 3 400 → VAT 714 → Gross 4 114.</p>
+      <div class="journal">
+<span class="jdate">05/03</span>
+<div class="jline"><span>400</span><span class="acc">Trade debtors</span><span class="amtD">4 114,00</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 70</span><span class="acc">Sales of goods for resale</span><span class="amtD"></span><span class="amtC">3 400,00</span></div>
+<div class="jline cred"><span>@ 451</span><span class="acc">VAT due</span><span class="amtD"></span><span class="amtC">714,00</span></div>
+<div class="jdesc">The debtor plays the supplier's role; "VAT due (liability)" replaces "VAT to reclaim (asset)".</div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">E · Mixed private / business expense (the tricky one)</span>
+      <p><b>11/04</b> — TELENET phone bill €125 excl. 21% VAT; <b>80% business, 20% private</b> (manager). Only the business part is an expense; VAT reclaimable only on the business part; the private slice is owed by the manager (416).</p>
+      <p><em>Net 125 → VAT 26,25 → Gross 151,25. Business: expense 100, VAT 21. Private: 25 + 5,25 = 30,25.</em></p>
+      <div class="journal">
+<span class="jdate">11/04</span>
+<div class="jline"><span>61…</span><span class="acc">Phone charges</span><span class="amtD">100,00</span><span class="amtC"></span></div>
+<div class="jline"><span>411</span><span class="acc">VAT to reclaim</span><span class="amtD">21,00</span><span class="amtC"></span></div>
+<div class="jline"><span>416</span><span class="acc">Current account manager</span><span class="amtD">30,25</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 440</span><span class="acc">Suppliers</span><span class="amtD"></span><span class="amtC">151,25</span></div>
+<div class="jdesc">check: 100 + 21 + 30,25 = 151,25 ✓</div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <span class="lvl">F · Loan repayment + interest (3-account entry)</span>
+      <p><b>31/12</b> — Bank statement: repay a €5 000 loan instalment <b>plus</b> €718,75 interest. Principal repayment ↓ liability (debit); interest is an expense (debit); both leave the bank (credit) €5 718,75.</p>
+      <div class="journal">
+<span class="jdate">31/12</span>
+<div class="jline"><span>173</span><span class="acc">Loan FORTIS</span><span class="amtD">5 000,00</span><span class="amtC"></span></div>
+<div class="jline"><span>6500</span><span class="acc">Interests</span><span class="amtD">718,75</span><span class="amtC"></span></div>
+<div class="jline cred"><span>@ 5500</span><span class="acc">Bank account</span><span class="amtD"></span><span class="amtC">5 718,75</span></div>
+<div class="jdesc">Repaying the loan itself is NOT an expense — only the interest is.</div>
+      </div>
+    </div>
+
+    <div class="note"><span class="tag">Year-end result</span>Across the year TELECONNECT bought 50 phones (@140 = €7 000) and sold 30 (@340 = €10 200). With phone charges €100 and interest €718,75, the result is <b>Revenues 10 200 − Expenses 7 818,75 = €2 381,25 profit</b> — which, carried to equity, balances the closing balance sheet at <b>€140 784,25</b> on each side.</p></div>
+  </div>
+</section>
+
+<!-- 11 PRACTICE -->
+<section id="practice">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">11</span><h2>Practice workbook</h2></div>
+    <p class="lead">17 questions, rising in difficulty. Write your answer first; tick it off; then reveal. Progress saves automatically.</p>
+    <div id="qlist"></div>
+    <button class="resetbtn" id="resetbtn">↺ Reset my progress</button>
+  </div>
+</section>
+
+<!-- 12 FLASHCARDS -->
+<section id="recall">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">12</span><h2>Active-recall flashcards</h2></div>
+    <p class="lead">Click a card to flip. Say the answer out loud before you turn it.</p>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<!-- 13 MISTAKES -->
+<section id="mistakes">
+  <div class="wrap wide">
+    <div class="shead"><span class="snum">13</span><h2>Common mistakes</h2></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>❌ Mistake</th><th>✅ Fix / why</th></tr></thead>
+      <tbody>
+        <tr><td>Treating <b>loan repayment</b> as an expense</td><td>Only the <b>interest</b> is an expense; principal just reduces the liability.</td></tr>
+        <tr><td>Putting <b>VAT to reclaim on the credit</b> side</td><td>It's an <b>asset</b> (a receivable) → debit. VAT <em>due</em> is the liability (credit).</td></tr>
+        <tr><td>Booking the <b>gross</b> amount as the expense/asset</td><td>The expense/asset is the <b>net</b>; VAT is booked separately; only the supplier/customer line carries gross.</td></tr>
+        <tr><td>Forgetting <b>debit = credit</b> in every entry</td><td>If they don't match you're missing a line or used the wrong side.</td></tr>
+        <tr><td>Recording <b>stock cost</b> at the moment of sale</td><td>Here, purchases are expensed and sales booked as revenue; cost-matching is an end-of-period entry (later chapter).</td></tr>
+        <tr><td>Confusing <b>411 VAT to reclaim</b> with <b>451 VAT due</b></td><td><em>Reclaim</em> = paid on a purchase (asset). <em>Due</em> = collected on a sale (liability).</td></tr>
+        <tr><td>Wrong <b>ordering</b> of assets/liabilities</td><td>Assets by increasing liquidity (cash last); E+L by increasing callability (equity first).</td></tr>
+        <tr><td>Thinking the <b>trial balance proves correctness</b></td><td>It only proves debit = credit. Wrong-account, omitted, duplicated entries slip through.</td></tr>
+        <tr><td>Booking a <b>mixed private/business</b> cost fully as company expense</td><td>Split it: only the business % is an expense; private % → receivable on manager (416); VAT reclaimable only on the business part.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 14 SUMMARY -->
+<section id="summary">
+  <div class="wrap">
+    <div class="shead"><span class="snum">14</span><h2>Summary sheet</h2></div>
+    <div class="equation"><b>ASSETS = EQUITY + LIABILITIES</b> — always balanced, after every transaction</div>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th>Increase</th><th>Decrease</th><th>Home side</th></tr></thead>
+      <tbody>
+        <tr><td>Asset</td><td class="db">Debit</td><td class="cr">Credit</td><td class="db">Debit</td></tr>
+        <tr><td>Liability / Equity</td><td class="cr">Credit</td><td class="db">Debit</td><td class="cr">Credit</td></tr>
+        <tr><td>Expense (cl.6)</td><td class="db">Debit</td><td class="cr">Credit</td><td class="db">Debit</td></tr>
+        <tr><td>Revenue (cl.7)</td><td class="cr">Credit</td><td class="db">Debit</td><td class="cr">Credit</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><b>4-question procedure:</b> ① document? ② which account? ③ increase/decrease? ④ debit/credit?</li>
+      <li><b>VAT:</b> purchase → 411 VAT to reclaim (asset, debit); sale → 451 VAT due (liability, credit). Gross = Net × 1.21.</li>
+      <li><b>Classes:</b> 1 equity/LT payables · 2 fixed assets · 3 inventories · 4 ST receivables/payables &amp; VAT · 5 cash · 6 expenses · 7 revenues.</li>
+      <li><b>Two books:</b> ledger = T-accounts by account; journal = transactions by date (legally required).</li>
+      <li><b>Trial balance:</b> interim control; check total debit = total credit; misses wrong-account / omitted / duplicated errors.</li>
+      <li><b>Result, two equal routes:</b> Σ revenues − Σ expenses = Σ assets − Σ(equity + liabilities). Appropriation: profit → 69-group → equity; loss → 79-group → equity reduction.</li>
+    </ul>
+    <div class="note"><span class="tag">Read &amp; practise more</span>Textbook <em>A Practical Guide to Financial Accounting</em>, Ch.3 (p.41–70). Exercises: 1 (p.71), 2 <em>BARRAQUITO</em> (p.72), 3 <em>KEEP IT SIMPLE</em> (p.72–73).</div>
+  </div>
+</section>
+
+</main>
+<footer>
+  Interactive study workbook · Chapter 3 — The Accounting Process · built from the course slides for self-testing.<br>
+  Work the exercises until the journal entries feel automatic — that reflex is what the exam tests. 💪
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var STORE="ch3acc_progress_v1", THEME="ch3acc_theme";
+
+  // ---------- theme ----------
+  var root=document.documentElement, tb=document.getElementById("themebtn");
+  var saved=null; try{saved=localStorage.getItem(THEME);}catch(e){}
+  if(saved) root.setAttribute("data-theme",saved);
+  function cur(){ if(root.getAttribute("data-theme")) return root.getAttribute("data-theme");
+    return matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"; }
+  tb.addEventListener("click",function(){ var n=cur()==="dark"?"light":"dark";
+    root.setAttribute("data-theme",n); try{localStorage.setItem(THEME,n);}catch(e){} });
+
+  // ---------- practice questions ----------
+  var Q=[
+    {lv:"Level 1 · recall",q:"Fill the blanks: (a) Assets increase on the ___ side. (b) Liabilities increase on the ___ side. (c) Expenses increase on the ___ side. (d) Revenues increase on the ___ side.",
+     a:"(a) <b>debit</b> (b) <b>credit</b> (c) <b>debit</b> (d) <b>credit</b>. Assets &amp; expenses are debit-natured; liabilities, equity &amp; revenues are credit-natured."},
+    {lv:"Level 1 · recall",q:"State the type and home balance of: Bank account · Suppliers · Sales of goods for resale · VAT to reclaim · VAT due · Interests · Capital.",
+     a:"Bank = asset/debit · Suppliers = liability/credit · Sales = revenue/credit · VAT to reclaim = asset/debit · VAT due = liability/credit · Interests = expense/debit · Capital = equity/credit."},
+    {lv:"Level 1 · recall",q:"True or false: “Repaying the principal of a bank loan is an expense.” Explain.",
+     a:"<b>False.</b> Repaying principal only reduces a liability (Loan ↓, Bank ↓). It never touches the income statement. Only the <b>interest</b> is an expense."},
+    {lv:"Level 1 · recall",q:"Name the two checks a trial balance performs, and one type of error it will NOT detect.",
+     a:"It checks (1) total debit footings = total credit footings and (2) total debit balances = total credit balances. It will <b>not</b> catch a wrong-account, omitted, or duplicated entry — those keep debit = credit."},
+    {lv:"Level 2 · single transaction",q:"03/02 — Purchase invoice: a laptop (equipment 2320) for €2 000 excl. VAT, on credit. Write the entry.",
+     a:"Net 2 000 → VAT 420 → Gross 2 420.<div class='journal'><div class='jline'><span>2320</span><span class='acc'>Equipment</span><span class='amtD'>2 000,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>420,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>2 420,00</span></div></div>"},
+    {lv:"Level 2 · single transaction",q:"10/02 — Sales invoice: services for €1 500 excl. VAT, on credit (Sales/Services 70, Trade debtors 400).",
+     a:"Net 1 500 → VAT 315 → Gross 1 815.<div class='journal'><div class='jline'><span>400</span><span class='acc'>Trade debtors</span><span class='amtD'>1 815,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 70</span><span class='acc'>Sales / Services</span><span class='amtD'></span><span class='amtC'>1 500,00</span></div><div class='jline cred'><span>@ 451</span><span class='acc'>VAT due</span><span class='amtD'></span><span class='amtC'>315,00</span></div></div>"},
+    {lv:"Level 2 · single transaction",q:"14/02 — Bank statement: the client of Q6 pays in full by bank transfer.",
+     a:"Bank ↑ (debit), receivable ↓ (credit). Gross 1 815.<div class='journal'><div class='jline'><span>5500</span><span class='acc'>Bank account</span><span class='amtD'>1 815,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 400</span><span class='acc'>Trade debtors</span><span class='amtD'></span><span class='amtC'>1 815,00</span></div></div>"},
+    {lv:"Level 2 · single transaction",q:"20/02 — Bank statement: you pay the supplier of Q5 in full by bank transfer.",
+     a:"Suppliers ↓ (debit), bank ↓ (credit). Gross 2 420.<div class='journal'><div class='jline'><span>440</span><span class='acc'>Suppliers</span><span class='amtD'>2 420,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>2 420,00</span></div></div>"},
+    {lv:"Level 2 · single transaction",q:"25/02 — Bank statement: a loan of €40 000 is credited to the bank account (173).",
+     a:"Bank ↑ (debit), loan ↑ (credit).<div class='journal'><div class='jline'><span>5500</span><span class='acc'>Bank account</span><span class='amtD'>40 000,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 173</span><span class='acc'>Loan</span><span class='amtD'></span><span class='amtC'>40 000,00</span></div></div>"},
+    {lv:"Level 3 · VAT & multi-account",q:"02/03 — Purchase invoice: 50 units of goods for resale at €12/unit excl. VAT, on credit (604).",
+     a:"Net = 50 × 12 = 600 → VAT 126 → Gross 726.<div class='journal'><div class='jline'><span>604</span><span class='acc'>Purchases of GFR</span><span class='amtD'>600,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>126,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>726,00</span></div></div>"},
+    {lv:"Level 3 · VAT & multi-account",q:"08/03 — Sales invoice: 30 of those units sold at €25/unit excl. VAT, on credit.",
+     a:"Net = 30 × 25 = 750 → VAT 157,50 → Gross 907,50. <em>(No stock entry now — cost-matching is an end-of-period entry.)</em><div class='journal'><div class='jline'><span>400</span><span class='acc'>Trade debtors</span><span class='amtD'>907,50</span><span class='amtC'></span></div><div class='jline cred'><span>@ 70</span><span class='acc'>Sales of GFR</span><span class='amtD'></span><span class='amtC'>750,00</span></div><div class='jline cred'><span>@ 451</span><span class='acc'>VAT due</span><span class='amtD'></span><span class='amtC'>157,50</span></div></div>"},
+    {lv:"Level 3 · VAT & multi-account",q:"15/03 — Electricity invoice: €600 excl. VAT, on credit (expense 61… services & other goods).",
+     a:"Net 600 → VAT 126 → Gross 726.<div class='journal'><div class='jline'><span>61…</span><span class='acc'>Electricity</span><span class='amtD'>600,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>126,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>726,00</span></div></div>"},
+    {lv:"Level 3 · VAT & multi-account",q:"31/03 — Bank statement: bank charges of €15 deducted (no VAT). Financial expense 65…",
+     a:"No VAT; pure financial expense straight from the bank.<div class='journal'><div class='jline'><span>65…</span><span class='acc'>Bank charges</span><span class='amtD'>15,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>15,00</span></div></div>"},
+    {lv:"Level 4 · scenario",q:"05/04 — Phone invoice €200 excl. 21% VAT; 75% business, 25% private (manager 416). Write the entry.",
+     a:"Net 200 → VAT 42 → Gross 242. Business 75%: expense 150, VAT 31,50. Private 25%: 50 + 10,50 = 60,50.<div class='journal'><div class='jline'><span>61…</span><span class='acc'>Phone charges</span><span class='amtD'>150,00</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>31,50</span><span class='amtC'></span></div><div class='jline'><span>416</span><span class='acc'>C/A manager</span><span class='amtD'>60,50</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>242,00</span></div></div>check: 150 + 31,50 + 60,50 = 242 ✓"},
+    {lv:"Level 4 · scenario",q:"31/12 — Bank statement: repay a €10 000 loan instalment AND €450 interest, all from the bank in one payment.",
+     a:"Principal ↓ liability (debit), interest = expense (debit), bank ↓ (credit) 10 450.<div class='journal'><div class='jline'><span>173</span><span class='acc'>Loan</span><span class='amtD'>10 000,00</span><span class='amtC'></span></div><div class='jline'><span>6500</span><span class='acc'>Interests</span><span class='amtD'>450,00</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank account</span><span class='amtD'></span><span class='amtC'>10 450,00</span></div></div>"},
+    {lv:"Level 4 · mini-cycle · BREAD & CO plc",q:"January 20X1 (VAT 21%): (1) 02/01 owner deposits €50 000 capital to bank; (2) 04/01 buys oven (2320) €8 000 excl. VAT on credit; (3) 06/01 buys flour (604) €1 000 excl. VAT on credit; (4) 10/01 sells bread €2 000 excl. VAT, paid immediately by bank; (5) 15/01 pays the oven supplier in full by bank. Then: (b) closing balance of Bank and of Suppliers; (c) January profit (ignore inventory).",
+     a:"<div class='journal'><div class='jline'><span>5500</span><span class='acc'>Bank</span><span class='amtD'>50 000</span><span class='amtC'></span></div><div class='jline cred'><span>@ 100</span><span class='acc'>Capital</span><span class='amtD'></span><span class='amtC'>50 000</span></div><div class='jrule'></div><div class='jline'><span>2320</span><span class='acc'>Equipment</span><span class='amtD'>8 000</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>1 680</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>9 680</span></div><div class='jrule'></div><div class='jline'><span>604</span><span class='acc'>Purchases GFR</span><span class='amtD'>1 000</span><span class='amtC'></span></div><div class='jline'><span>411</span><span class='acc'>VAT to reclaim</span><span class='amtD'>210</span><span class='amtC'></span></div><div class='jline cred'><span>@ 440</span><span class='acc'>Suppliers</span><span class='amtD'></span><span class='amtC'>1 210</span></div><div class='jrule'></div><div class='jline'><span>5500</span><span class='acc'>Bank</span><span class='amtD'>2 420</span><span class='amtC'></span></div><div class='jline cred'><span>@ 70</span><span class='acc'>Sales GFR</span><span class='amtD'></span><span class='amtC'>2 000</span></div><div class='jline cred'><span>@ 451</span><span class='acc'>VAT due</span><span class='amtD'></span><span class='amtC'>420</span></div><div class='jrule'></div><div class='jline'><span>440</span><span class='acc'>Suppliers</span><span class='amtD'>9 680</span><span class='amtC'></span></div><div class='jline cred'><span>@ 5500</span><span class='acc'>Bank</span><span class='amtD'></span><span class='amtC'>9 680</span></div></div><b>(b)</b> Bank = 50 000 + 2 420 − 9 680 = <b>42 740 (DB)</b>. Suppliers = (9 680 + 1 210) − 9 680 = <b>1 210 (CB)</b>.<br><b>(c)</b> Profit = Sales 2 000 − Purchases 1 000 = <b>€1 000</b>. VAT is never revenue/expense; the oven is an asset, not an expense."},
+    {lv:"Level 4 · reasoning",q:"After a year, revenue credit balances total €85 000 and expense debit balances total €91 000. (a) Profit or loss, how much? (b) Which appropriation group is used, and where does it flow?",
+     a:"<b>(a)</b> Expenses 91 000 &gt; Revenues 85 000 → <b>LOSS of €6 000</b>.<br><b>(b)</b> A loss uses the <b>79-group</b> appropriation account, flowing to <b>equity as a reduction</b> (loss carried forward / withdrawal from equity). A profit would use the 69-group, flowing to an equity account like 140."}
+  ];
+
+  var progress={}; try{progress=JSON.parse(localStorage.getItem(STORE)||"{}");}catch(e){progress={};}
+  var list=document.getElementById("qlist");
+  Q.forEach(function(item,i){
+    var card=document.createElement("div"); card.className="qcard";
+    var checked=progress[i]?"checked":"";
+    card.innerHTML=
+      '<span class="lvl">'+item.lv+'</span>'+
+      '<div class="qhead">'+
+        '<input type="checkbox" class="qcheck" data-i="'+i+'" '+checked+' aria-label="Mark question '+(i+1)+' done">'+
+        '<div class="qbody"><p style="margin-top:0"><b>Q'+(i+1)+'.</b> '+item.q+'</p>'+
+          '<details class="sol"><summary>Reveal solution</summary><div class="solbody">'+item.a+'</div></details>'+
+        '</div>'+
+      '</div>';
+    list.appendChild(card);
+  });
+
+  function refresh(){
+    var done=0; for(var k in progress){ if(progress[k]) done++; }
+    document.getElementById("pfill").style.width=(done/Q.length*100)+"%";
+    document.getElementById("pcount").textContent=done+" / "+Q.length+" done";
+  }
+  list.addEventListener("change",function(e){
+    if(e.target.classList.contains("qcheck")){
+      var i=e.target.getAttribute("data-i");
+      progress[i]=e.target.checked;
+      try{localStorage.setItem(STORE,JSON.stringify(progress));}catch(err){}
+      refresh();
+    }
+  });
+  document.getElementById("resetbtn").addEventListener("click",function(){
+    progress={}; try{localStorage.removeItem(STORE);}catch(e){}
+    var boxes=document.querySelectorAll(".qcheck"); for(var j=0;j<boxes.length;j++) boxes[j].checked=false;
+    refresh();
+  });
+  refresh();
+
+  // ---------- flashcards ----------
+  var FC=[
+    ["Balance sheet = ?","A snapshot of financial position at one moment; Assets = Equity + Liabilities."],
+    ["Income statement = ?","Revenues − Expenses over a period = profit or loss."],
+    ["Assets increase on the … side","Debit."],
+    ["Liabilities & equity increase on the … side","Credit."],
+    ["Expenses ↑ / Revenues ↑ on the … side","Expenses: debit. Revenues: credit."],
+    ["“VAT to reclaim” is a(n) …","Asset — we're owed a refund (debit)."],
+    ["“VAT due” is a(n) …","Liability — we owe the tax office (credit)."],
+    ["Ledger vs journal organised by …","Ledger by account; journal by date."],
+    ["Trial balance checks …","Total debits = total credits."],
+    ["Fixed assets listed …, cash …","Fixed assets first (least liquid); cash last."],
+    ["Loan principal repayment — an expense?","No — only the interest is."],
+    ["Profit from I/S accounts must equal profit from …","Balance-sheet accounts: assets − (equity + liabilities)."]
+  ];
+  var cards=document.getElementById("cards");
+  FC.forEach(function(c){
+    var b=document.createElement("button"); b.className="flip"; b.type="button"; b.setAttribute("aria-pressed","false");
+    b.innerHTML='<div class="inner"><div class="face front"><div class="q">'+c[0]+'</div><div class="hint">Tap to flip</div></div>'+
+      '<div class="face back"><div class="a">'+c[1]+'</div></div></div>';
+    b.addEventListener("click",function(){ var p=b.getAttribute("aria-pressed")==="true"; b.setAttribute("aria-pressed",p?"false":"true"); });
+    cards.appendChild(b);
+  });
+})();
+</script>
+
+</body>
+</html>
