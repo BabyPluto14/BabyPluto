@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Microeconomics — Unit 4: Social Interactions (Study Guide)</title>
+<style>
+  :root{
+    --ink:#1f2933;
+    --muted:#52616b;
+    --teal:#1a7f9c;
+    --teal-dark:#0f5a72;
+    --teal-light:#e3eff4;
+    --magenta:#b0428a;
+    --row-blue:#1f6fb2;
+    --accent:#2aa3c4;
+    --line:#c8d3da;
+    --paper:#ffffff;
+    --def-bg:#eef6f9;
+    --def-br:#1a7f9c;
+    --tip-bg:#fff6e6;
+    --tip-br:#e0a92e;
+    --intu-bg:#f1f7ee;
+    --intu-br:#5a9c4f;
+    --ex-bg:#f4f0f8;
+    --ex-br:#7a5ba6;
+  }
+  *{box-sizing:border-box}
+  html{font-size:12.2px}
+  body{
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    line-height:1.5;
+    margin:0;
+    background:var(--paper);
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:0 6px}
+
+  /* ---------- Cover ---------- */
+  .cover{
+    text-align:left;
+    padding:40px 34px 34px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#0f5a72 0%,#1a7f9c 55%,#2aa3c4 100%);
+    color:#fff;
+    margin-bottom:26px;
+  }
+  .cover .eyebrow{letter-spacing:.22em;text-transform:uppercase;font-size:.78rem;opacity:.9;margin-bottom:16px}
+  .cover h1{font-size:2.5rem;line-height:1.1;margin:0 0 6px;font-weight:700}
+  .cover h2{font-size:1.25rem;font-weight:400;margin:0 0 22px;opacity:.95}
+  .cover .meta{font-size:.85rem;opacity:.9;border-top:1px solid rgba(255,255,255,.35);padding-top:14px;max-width:560px}
+
+  h2.sec{
+    color:var(--teal-dark);
+    font-size:1.55rem;
+    border-bottom:3px solid var(--teal);
+    padding-bottom:5px;
+    margin:34px 0 14px;
+  }
+  h3{color:var(--teal-dark);font-size:1.18rem;margin:22px 0 8px}
+  h4{color:var(--ink);font-size:1.02rem;margin:16px 0 6px}
+  p{margin:8px 0}
+  ul,ol{margin:8px 0 8px 4px;padding-left:22px}
+  li{margin:4px 0}
+  strong{color:var(--ink)}
+  em{color:var(--muted)}
+  a{color:var(--teal);text-decoration:none}
+  .lead{font-size:1.02rem;color:var(--muted)}
+
+  /* callout boxes */
+  .box{border-radius:8px;padding:11px 15px 11px 16px;margin:14px 0;border-left:5px solid;page-break-inside:avoid}
+  .box .lab{display:block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px}
+  .def{background:var(--def-bg);border-color:var(--def-br)}
+  .def .lab{color:var(--teal-dark)}
+  .tip{background:var(--tip-bg);border-color:var(--tip-br)}
+  .tip .lab{color:#a5771a}
+  .intu{background:var(--intu-bg);border-color:var(--intu-br)}
+  .intu .lab{color:#43793a}
+  .ex{background:var(--ex-bg);border-color:var(--ex-br)}
+  .ex .lab{color:#5f4790}
+
+  .cols{display:flex;gap:18px;flex-wrap:wrap}
+  .cols>div{flex:1 1 300px}
+
+  figure{margin:16px 0;text-align:center;page-break-inside:avoid}
+  figcaption{font-size:.82rem;color:var(--muted);margin-top:6px;font-style:italic}
+
+  /* ---------- Payoff matrix ---------- */
+  .pm-wrap{display:flex;flex-direction:column;align-items:center;margin:10px 0}
+  table.pm{border-collapse:collapse;margin:0 auto}
+  table.pm th,table.pm td{border:1px solid #9fb2bc}
+  table.pm .blank{border:none;background:none}
+  table.pm .pcol{background:var(--magenta);color:#fff;font-weight:700;text-align:center;padding:4px 8px;letter-spacing:.02em}
+  table.pm .prow{background:var(--row-blue);color:#fff;font-weight:700;text-align:center;padding:4px 6px;width:26px}
+  table.pm .prow span{writing-mode:vertical-rl;transform:rotate(180deg);display:inline-block}
+  table.pm .strat{background:#f2f6f8;color:var(--ink);font-weight:600;text-align:center;padding:3px 12px;font-size:.9rem}
+  table.pm td.cell{width:104px;height:64px;padding:0;position:relative}
+  .po{position:relative;width:100%;height:100%;
+     background:linear-gradient(to top right,transparent calc(50% - .6px),#b9c6cd calc(50% - .6px),#b9c6cd calc(50% + .6px),transparent calc(50% + .6px));}
+  .po .bl{position:absolute;left:9px;bottom:5px;color:var(--row-blue);font-weight:700;font-size:1.12rem}
+  .po .tr{position:absolute;right:9px;top:4px;color:var(--magenta);font-weight:700;font-size:1.12rem}
+  .po.ne{background-color:#fdf3d0;
+     background-image:linear-gradient(to top right,transparent calc(50% - .6px),#b9c6cd calc(50% - .6px),#b9c6cd calc(50% + .6px),transparent calc(50% + .6px));}
+  .po.ne2{background-color:#e2f0e6;
+     background-image:linear-gradient(to top right,transparent calc(50% - .6px),#b9c6cd calc(50% - .6px),#b9c6cd calc(50% + .6px),transparent calc(50% + .6px));}
+  .po .star{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:.62rem;color:#b8860b;font-weight:700;letter-spacing:.04em}
+  .po .star2{color:#43793a}
+  .pm-legend{font-size:.78rem;color:var(--muted);margin-top:7px;text-align:center}
+  .chip{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin:0 3px 2px 8px}
+  .chip.b{background:var(--row-blue)}
+  .chip.m{background:var(--magenta)}
+  .chip.ne{background:#f6d874}
+  .chip.ne2{background:#a9d3b4}
+
+  /* generic table */
+  table.grid{border-collapse:collapse;width:100%;margin:12px 0;font-size:.92rem}
+  table.grid th,table.grid td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  table.grid th{background:var(--teal-light);color:var(--teal-dark);font-weight:700}
+  table.grid tr:nth-child(even) td{background:#f7fafb}
+
+  .formula{background:#f4f8fa;border:1px solid #d4e2e8;border-radius:8px;padding:12px 16px;text-align:center;font-size:1.12rem;margin:12px 0;font-family:"Cambria Math","Times New Roman",serif}
+  .formula .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 2px}
+  .formula .frac .num{display:block;border-bottom:1.3px solid var(--ink);padding:0 4px}
+  .formula .frac .den{display:block;padding:0 4px}
+  var{font-style:italic;font-family:"Cambria Math",Georgia,serif}
+
+  .toc{background:#f6fafb;border:1px solid #dbe7ec;border-radius:8px;padding:14px 20px;margin:18px 0}
+  .toc h3{margin-top:0}
+  .toc ol{columns:2;column-gap:34px}
+  .toc a{color:var(--ink)}
+
+  .qa{border:1px solid #dbe7ec;border-radius:8px;padding:4px 16px;margin:12px 0;background:#fbfdfe}
+  .answer{color:var(--teal-dark);font-weight:600}
+  .key{background:#fffdf5;border:1px dashed var(--tip-br);border-radius:6px;padding:2px 10px;margin:10px 0}
+
+  hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+  .footer-note{font-size:.8rem;color:var(--muted);text-align:center;margin:30px 0 10px}
+
+  @page{size:A4;margin:15mm 14mm 16mm}
+  @media print{
+    .cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .box,figure,table,.formula{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2.sec{page-break-after:avoid}
+    h3,h4{page-break-after:avoid}
+  }
+  .pagebreak{page-break-before:always}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="eyebrow">Microeconomics · KU Leuven</div>
+  <h1>Unit 4 — Social Interactions</h1>
+  <h2>Game theory, social dilemmas &amp; how we escape them</h2>
+  <div class="meta">
+    A companion study guide and running lecture notes. Every payoff matrix, game tree and
+    graph from the slides is redrawn here so you can follow along visually while the lecturer
+    talks. Definitions, intuition boxes, worked equilibrium solutions and exam-style tips are
+    added throughout. Academic year 2025–2026.
+  </div>
+</div>
+
+<!-- ============ HOW TO USE ============ -->
+<div class="box tip">
+  <span class="lab">How to use these notes</span>
+  Read the <strong>definition boxes</strong> before the lecture to prime the vocabulary. During the
+  lecture, follow the <strong>redrawn diagrams</strong> — they use the same colours and layout as the slides.
+  After the lecture, test yourself with the <strong>self-test questions</strong> at the end. A recurring
+  convention is used for every game: <span class="chip b"></span><strong>blue = the row player</strong>
+  (bottom-left of each cell) and <span class="chip m"></span><strong>magenta = the column player</strong>
+  (top-right of each cell).
+</div>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#a">Introduction: self-interest &amp; social dilemmas</a></li>
+    <li><a href="#b">Game theory: the key concepts</a></li>
+    <li><a href="#read">Reading a payoff matrix</a></li>
+    <li><a href="#nash">Nash equilibrium &amp; best response</a></li>
+    <li><a href="#dom">Dominant strategy &amp; the prisoner's dilemma</a></li>
+    <li><a href="#c">Evaluating outcomes: the Pareto criterion</a></li>
+    <li><a href="#d1">Resolving dilemmas I — social preferences / altruism</a></li>
+    <li><a href="#d2">Resolving dilemmas II — repeated games &amp; punishment</a></li>
+    <li><a href="#d3">Resolving dilemmas III — changing the rules</a></li>
+    <li><a href="#e">Coordination games</a></li>
+    <li><a href="#sum">Summary, glossary &amp; self-test</a></li>
+  </ol>
+</div>
+
+<!-- ============ A. INTRODUCTION ============ -->
+<h2 class="sec" id="a">A. Introduction — why self-interest is not always enough</h2>
+
+<p class="lead">Everything in the earlier units modelled a person choosing <em>alone</em>: a consumer picking a
+basket, a firm picking output. Their best choice did not depend on what anyone else did. Unit 4 drops
+that assumption. Here <strong>your best action depends on other people's actions</strong>, and theirs depend on yours.</p>
+
+<h3>The invisible hand — and its limits</h3>
+<p>Adam Smith's famous claim is that self-interest, channelled through markets, can produce socially good
+outcomes without anyone <em>intending</em> it:</p>
+<div class="box def">
+  <span class="lab">Adam Smith, 1776 — <em>The Wealth of Nations</em></span>
+  "He generally, indeed, neither intends to promote the public interest, nor knows how much he is promoting it.
+  […] he intends only his own gain, and he is in this, as in many other cases, led by an <strong>invisible hand</strong>
+  to promote an end which was no part of his intention."
+</div>
+<p>Self-interest often <em>does</em> drive beneficial outcomes — entrepreneurship, innovation, efficient markets.
+But it can also be <strong>harmful</strong>. The two questions that organise this whole unit are:</p>
+<ul>
+  <li><strong>Why do these problems arise?</strong> (What is it about the incentives?)</li>
+  <li><strong>What can we do about it?</strong> (Which mechanisms restore the good outcome?)</li>
+</ul>
+
+<h3>Social dilemmas</h3>
+<div class="box def">
+  <span class="lab">Definition — Social dilemma</span>
+  A situation in which actions taken <strong>independently</strong> by self-interested individuals result in a
+  <strong>socially sub-optimal outcome</strong> — everyone (or society as a whole) could have been better off.
+  Everyday examples: traffic jams, climate change, over-fishing, antibiotic resistance, the COVID-19 pandemic.
+</div>
+
+<figure>
+<svg width="560" height="260" viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Carbon emissions from fossil fuels rising steeply after 1900">
+  <text x="280" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#0f5a72" font-family="sans-serif">Carbon emissions from fossil fuels (a classic social dilemma)</text>
+  <!-- axes -->
+  <line x1="70" y1="220" x2="530" y2="220" stroke="#8aa0ac" stroke-width="1.2"/>
+  <line x1="70" y1="40" x2="70" y2="220" stroke="#8aa0ac" stroke-width="1.2"/>
+  <!-- gridlines + y labels -->
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif">
+    <line x1="70" y1="40" x2="530" y2="40" stroke="#e3eaee"/><text x="64" y="43" text-anchor="end">9000</text>
+    <line x1="70" y1="100" x2="530" y2="100" stroke="#e3eaee"/><text x="64" y="103" text-anchor="end">6000</text>
+    <line x1="70" y1="160" x2="530" y2="160" stroke="#e3eaee"/><text x="64" y="163" text-anchor="end">3000</text>
+    <text x="64" y="223" text-anchor="end">0</text>
+  </g>
+  <!-- x labels -->
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif" text-anchor="middle">
+    <text x="70" y="234">1750</text><text x="185" y="234">1850</text>
+    <text x="300" y="234">1900</text><text x="415" y="234">1960</text><text x="520" y="234">2010</text>
+  </g>
+  <!-- emissions curve: flat then steep -->
+  <path d="M70,218 L150,216 L210,213 L260,207 L300,196 L330,182 L355,170 L380,150 L400,132 L420,118 L440,98 L460,86 L480,72 L500,58 L520,46"
+        fill="none" stroke="#1f7fb2" stroke-width="2.4"/>
+  <text x="300" y="252" text-anchor="middle" font-size="9" fill="#6a7a83" font-family="sans-serif">Year</text>
+</svg>
+<figcaption>Each driver, factory or country pursues its own interest; the cumulative effect is an outcome
+nobody chose. The steep post-1900 rise is the visual signature of a large-scale social dilemma.</figcaption>
+</figure>
+
+<h3>Two archetypes and two cures</h3>
+<div class="cols">
+  <div>
+    <div class="box def" style="margin-top:0">
+      <span class="lab">Tragedy of the Commons</span>
+      Common property / shared resources tend to be <strong>over-exploited</strong> because each user ignores the
+      cost imposed on everyone else. <em>W. F. Lloyd (1833)</em> used common grazing land → overgrazing;
+      <em>Garrett Hardin (1968, Science)</em> generalised it. Modern versions: fishing, climate, the shared office kitchen.
+    </div>
+  </div>
+  <div>
+    <div class="box def" style="margin-top:0">
+      <span class="lab">Free riding</span>
+      Benefiting from others' contributions to a cooperative project <strong>without contributing yourself</strong>.
+      If everyone free-rides, the project collapses — even though all would prefer it to succeed.
+    </div>
+  </div>
+</div>
+<p>The engine behind both is the same: <strong>people do not fully account for the effects of their actions on others</strong>.
+The rest of the unit asks how <strong>altruism</strong>, <strong>repeated interaction</strong> and <strong>government / institutional policy</strong>
+can resolve these dilemmas.</p>
+
+<!-- ============ B. GAME THEORY ============ -->
+<h2 class="sec pagebreak" id="b">B. Game theory — the key concepts</h2>
+
+<div class="box def">
+  <span class="lab">Three building-block definitions</span>
+  <ul style="margin-bottom:0">
+    <li><strong>Social interaction</strong> — more than one party, where one person's action affects <em>both</em> their own and others' outcomes.</li>
+    <li><strong>Strategic interaction</strong> — a social interaction where people are <em>aware</em> that their actions affect others (and act on that awareness).</li>
+    <li><strong>Strategy</strong> — an action (or plan of actions) a person can take in a social interaction.</li>
+  </ul>
+</div>
+<p>These interactions are studied with <strong>game theory</strong>, a toolkit used across the social sciences and even in biology.</p>
+
+<h3>What defines a "game"?</h3>
+<p>A game is a compact description of a social interaction with five ingredients. Learn them — every exam question that starts "set up the game" wants these five:</p>
+<table class="grid">
+  <tr><th style="width:150px">Element</th><th>Meaning</th></tr>
+  <tr><td><strong>1. Players</strong></td><td>Who is involved in the interaction.</td></tr>
+  <tr><td><strong>2. Feasible strategies</strong></td><td>The actions each player can take.</td></tr>
+  <tr><td><strong>3. Order of play</strong></td><td>Do players move at the same time (simultaneous) or one after another (sequential)?</td></tr>
+  <tr><td><strong>4. Information</strong></td><td>What each player knows when choosing their action.</td></tr>
+  <tr><td><strong>5. Payoffs</strong></td><td>The outcome (utility/profit) for <em>every</em> possible combination of actions.</td></tr>
+</table>
+
+<!-- ============ READING A MATRIX ============ -->
+<h3 id="read">Reading a payoff matrix — Example: Crop choice</h3>
+<p>Two farmers, <strong>Anil</strong> and <strong>Bala</strong>, each decide which crop to specialise in: <em>Rice</em> or <em>Cassava</em>.
+They interact only once (a <strong>one-shot game</strong>) and neither knows what the other will pick (a <strong>simultaneous game</strong>).
+Payoffs depend on market prices and land quality.</p>
+
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="2">Bala</td>
+  </tr>
+  <tr>
+    <td class="strat">Rice</td><td class="strat">Cassava</td>
+  </tr>
+  <tr>
+    <td class="prow" rowspan="2"><span>Anil</span></td>
+    <td class="strat">Rice</td>
+    <td class="cell"><div class="po"><span class="tr">4</span><span class="bl">4</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">3</span><span class="bl">6</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">Cassava</td>
+    <td class="cell"><div class="po ne"><span class="tr">6</span><span class="bl">6</span><span class="star">NASH</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">2</span><span class="bl">5</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend">
+  <span class="chip b"></span>Anil (row) payoff, bottom-left &nbsp;·&nbsp;
+  <span class="chip m"></span>Bala (column) payoff, top-right &nbsp;·&nbsp;
+  <span class="chip ne"></span>Nash equilibrium cell
+</div>
+</div>
+
+<div class="box tip">
+  <span class="lab">How to read any cell</span>
+  Pick a row (Anil's choice) and a column (Bala's choice). The cell where they meet holds two numbers.
+  The <strong>bottom-left, blue</strong> number is the <strong>row player's</strong> payoff; the <strong>top-right, magenta</strong> number is the
+  <strong>column player's</strong> payoff. Example: if Anil grows Cassava and Bala grows Rice, the outcome is
+  (Anil = 6, Bala = 6).
+</div>
+
+<!-- ============ NASH ============ -->
+<h3 id="nash">Nash equilibrium &amp; best response</h3>
+<div class="box def">
+  <span class="lab">Definitions</span>
+  <ul style="margin-bottom:0">
+    <li><strong>Best response</strong> — the strategy that gives a player the highest payoff, <u>given the other player's strategy</u>.</li>
+    <li><strong>Nash equilibrium</strong> — a set of strategies (one per player) such that <em>each</em> player's strategy is a best response to the others'. Named after <strong>John Nash</strong> (1928–2015, Nobel 1994; the film <em>A Beautiful Mind</em>).</li>
+  </ul>
+  <p style="margin-bottom:0"><strong>Key property:</strong> in a Nash equilibrium <u>no player can gain by unilaterally deviating</u> (changing only their own strategy).</p>
+</div>
+
+<div class="box ex">
+  <span class="lab">Worked solution — finding the Nash equilibrium of Crop choice</span>
+  Check each player's best response to every choice of the other. The <strong>underline / circle method</strong>: mark the best-response payoff in each row and column; a cell marked for <em>both</em> players is a Nash equilibrium.
+  <table class="grid" style="margin-top:8px">
+    <tr><th>If the other plays…</th><th>…the player's best response is</th><th>Because</th></tr>
+    <tr><td>Bala plays Rice</td><td>Anil → <strong>Cassava</strong></td><td>6 &gt; 4</td></tr>
+    <tr><td>Bala plays Cassava</td><td>Anil → Rice</td><td>6 &gt; 5</td></tr>
+    <tr><td>Anil plays Rice</td><td>Bala → Rice</td><td>4 &gt; 3</td></tr>
+    <tr><td>Anil plays Cassava</td><td>Bala → <strong>Rice</strong></td><td>6 &gt; 2</td></tr>
+  </table>
+  The mutual best responses meet at <strong>(Anil = Cassava, Bala = Rice)</strong> → payoff <strong>(6, 6)</strong>. Neither wants to switch alone. That is the Nash equilibrium.
+</div>
+<p>Here the Nash equilibrium also happens to be <strong>Pareto efficient</strong> (defined in §C) — but <em>this need not be true in general</em>, as the prisoner's dilemma below will show. Also note: <strong>a game can have more than one Nash equilibrium</strong> (see Coordination, §E).</p>
+
+<h4>A second example — practise the method</h4>
+<p>Player 1 chooses a row (T, M, B); Player 2 chooses a column (L, C, R). Find all Nash equilibria.</p>
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="3">Player 2</td>
+  </tr>
+  <tr><td class="strat">L</td><td class="strat">C</td><td class="strat">R</td></tr>
+  <tr>
+    <td class="prow" rowspan="3"><span>Player 1</span></td>
+    <td class="strat">T</td>
+    <td class="cell"><div class="po"><span class="tr">1</span><span class="bl">2</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">2</span><span class="bl">0</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">3</span><span class="bl">0</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">M</td>
+    <td class="cell"><div class="po"><span class="tr">1</span><span class="bl">1</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">1</span><span class="bl">1</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">0</span><span class="bl">1</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">B</td>
+    <td class="cell"><div class="po"><span class="tr">1</span><span class="bl">0</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">0</span><span class="bl">2</span></div></td>
+    <td class="cell"><div class="po ne"><span class="tr">2</span><span class="bl">2</span><span class="star">NASH</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend"><span class="chip b"></span>Player 1 (row) &nbsp;·&nbsp; <span class="chip m"></span>Player 2 (column)</div>
+</div>
+<div class="box ex">
+  <span class="lab">Worked solution</span>
+  <ul style="margin-bottom:0">
+    <li>If P2 plays <strong>L</strong> → P1 best is <strong>T</strong> (2 &gt; 1 &gt; 0).</li>
+    <li>If P2 plays <strong>C</strong> → P1 best is <strong>B</strong> (2 &gt; 1 &gt; 0).</li>
+    <li>If P2 plays <strong>R</strong> → P1 best is <strong>B</strong> (2 &gt; 1 &gt; 0).</li>
+    <li>Likewise, if P1 plays <strong>B</strong> → P2 best is <strong>R</strong> (2 &gt; 1 &gt; 0).</li>
+  </ul>
+  <p style="margin-bottom:0">Only in cell <strong>(B, R)</strong> are both strategies best responses to each other → <strong>unique Nash equilibrium (2, 2)</strong>. No player can improve by unilaterally changing strategy.</p>
+</div>
+
+<!-- ============ DOMINANT STRATEGY ============ -->
+<h3 id="dom">Dominant strategies &amp; the prisoner's dilemma</h3>
+<div class="box def">
+  <span class="lab">Definitions</span>
+  <ul style="margin-bottom:0">
+    <li><strong>Dominant strategy</strong> — a strategy that is a player's best response <u>no matter what</u> the other player does. (It does <em>not</em> always exist!)</li>
+    <li><strong>Dominant strategy equilibrium</strong> — a Nash equilibrium in which <em>every</em> player is playing a dominant strategy.</li>
+  </ul>
+</div>
+
+<h4>Pest-control example → a prisoner's dilemma</h4>
+<p>Anil and Bala each choose how to deal with pest insects:</p>
+<ul>
+  <li><strong>Toxic Tide (T)</strong> — kills every insect but causes pollution (which spills onto the neighbour's farm).</li>
+  <li><strong>Integrated Pest Control (IPC, "I")</strong> — somewhat less effective, but no pollution.</li>
+</ul>
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="2">Bala</td>
+  </tr>
+  <tr><td class="strat">IPC</td><td class="strat">Toxic Tide</td></tr>
+  <tr>
+    <td class="prow" rowspan="2"><span>Anil</span></td>
+    <td class="strat">IPC</td>
+    <td class="cell"><div class="po ne2"><span class="tr">3</span><span class="bl">3</span><span class="star star2">social&nbsp;optimum</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">4</span><span class="bl">1</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">Toxic Tide</td>
+    <td class="cell"><div class="po"><span class="tr">1</span><span class="bl">4</span></div></td>
+    <td class="cell"><div class="po ne"><span class="tr">2</span><span class="bl">2</span><span class="star">NASH (dominant)</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend"><span class="chip b"></span>Anil (row) &nbsp;·&nbsp; <span class="chip m"></span>Bala (column) &nbsp;·&nbsp; <span class="chip ne"></span>equilibrium &nbsp;·&nbsp; <span class="chip ne2"></span>what both would prefer</div>
+</div>
+<div class="box ex">
+  <span class="lab">Why Toxic Tide is dominant</span>
+  <ul style="margin-bottom:0">
+    <li>If Bala plays <strong>IPC</strong>: Anil gets 4 (Toxic) vs 3 (IPC) → Toxic is better.</li>
+    <li>If Bala plays <strong>Toxic</strong>: Anil gets 2 (Toxic) vs 1 (IPC) → Toxic is better.</li>
+  </ul>
+  <p>Toxic Tide wins <em>regardless</em> of Bala → it is Anil's <strong>dominant strategy</strong> (and, by symmetry, Bala's). Both play their dominant strategy → equilibrium <strong>(Toxic, Toxic) = (2, 2)</strong>.</p>
+  <p style="margin-bottom:0"><strong>The twist:</strong> both would be <em>better off</em> at (IPC, IPC) = (3, 3). Individually rational behaviour makes them <em>collectively</em> worse off. That is the hallmark of a prisoner's dilemma.</p>
+</div>
+<div class="box def">
+  <span class="lab">Definition — Prisoner's Dilemma</span>
+  A game with a <strong>dominant-strategy equilibrium</strong> in which playing the dominant strategy yields
+  <strong>lower individual <em>and</em> total payoffs</strong> than some other (cooperative) outcome. Originally framed with
+  two burglars interrogated separately by police: each is tempted to confess, and both end up worse off than if
+  they had stayed silent.
+</div>
+<div class="box tip">
+  <span class="lab">Exam trap</span>
+  A prisoner's-dilemma outcome <em>is</em> a Nash equilibrium (nobody can improve by deviating <u>alone</u>). It is <em>not</em>
+  Pareto efficient, because both improve if they deviate <u>together</u>. "Nobody can improve alone" and "nobody can improve
+  at all" are different statements — do not confuse them.
+</div>
+
+<h4>Real-world illustration: "Split or Steal" (TV show <em>Golden Balls</em>)</h4>
+<p>Two contestants divide a jackpot. Each secretly chooses <strong>Split</strong> or <strong>Steal</strong>:</p>
+<ul>
+  <li>Both <strong>Steal</strong> → each gets <strong>0</strong>.</li>
+  <li>One Steals, other Splits → the stealer takes <strong>everything</strong>, the splitter gets nothing.</li>
+  <li>Both <strong>Split</strong> → each gets <strong>half</strong>.</li>
+</ul>
+<p>"Steal" weakly dominates, so pure self-interest predicts (Steal, Steal) → both get nothing. Yet in practice
+<strong>(Split, Split) is common</strong> — a first hint that real people are not purely self-interested. (The famous clip where a
+player <em>talks</em> his opponent into cooperating shows how communication and social norms bend the outcome.)</p>
+
+<h4 id="why">Why did the theory predict the bad outcome? (roadmap to the cures)</h4>
+<p>The pessimistic prediction rests on three assumptions. Relax each one and you get one of the three "cures" that structure the rest of the unit:</p>
+<table class="grid">
+  <tr><th style="width:48%">Assumption that produces the dilemma</th><th>The corresponding cure</th></tr>
+  <tr><td>1. Players care <strong>only about their own payoffs</strong>.</td><td>→ Introduce <strong>social preferences / altruism</strong> (§D-I)</td></tr>
+  <tr><td>2. Nobody can make players <strong>pay for the consequences</strong> of their actions on others.</td><td>→ Introduce <strong>repeated games, social norms &amp; peer punishment</strong> (§D-II)</td></tr>
+  <tr><td>3. Players <strong>cannot coordinate</strong> their actions beforehand.</td><td>→ <strong>Change the rules of the game</strong> — institutions &amp; policy (§D-III)</td></tr>
+</table>
+
+<div class="qa">
+<p><strong>Check-yourself question.</strong> Which statement is correct?</p>
+<ol type="a">
+  <li>An equilibrium in dominant strategies is always a Nash equilibrium.</li>
+  <li>The outcome of a prisoner's dilemma is never a Nash equilibrium, because all players can improve their payoffs by changing their strategies.</li>
+  <li>A combination of strategies that maximises the sum of all players' payoffs is always a Nash equilibrium.</li>
+</ol>
+<p class="answer">Answer: (a). A dominant-strategy equilibrium is by construction a Nash equilibrium (each dominant strategy is a best response to everything). (b) is false — the PD outcome <em>is</em> a Nash equilibrium; players can only improve by deviating <em>together</em>, not unilaterally. (c) is false — the social optimum (e.g. IPC, IPC) maximises the total but is <em>not</em> a Nash equilibrium.</p>
+</div>
+
+<!-- ============ C. EVALUATING OUTCOMES ============ -->
+<h2 class="sec pagebreak" id="c">C. Evaluating outcomes — the Pareto criterion</h2>
+<p>We can predict what <em>will</em> happen (Nash). We also need a yardstick for whether an outcome is <em>good</em>. The standard economic yardstick is due to <strong>Vilfredo Pareto</strong>.</p>
+<div class="box def">
+  <span class="lab">Definitions — Pareto</span>
+  <ul style="margin-bottom:0">
+    <li><strong>Pareto domination:</strong> allocation A <em>Pareto-dominates</em> B if at least one party is better off under A than B <u>and nobody is worse off</u>.</li>
+    <li><strong>Pareto efficiency:</strong> an allocation is <em>Pareto efficient</em> if <u>nobody can be made better off without making someone else worse off</u> — there is no "free" improvement left.</li>
+  </ul>
+</div>
+<div class="box intu">
+  <span class="lab">Intuition</span>
+  Pareto efficiency = "no money left on the table." If you could make someone happier at no cost to anyone,
+  the current outcome was wasteful. Note that <strong>many</strong> outcomes can be Pareto efficient at once: every way of
+  splitting €1000 between two people is Pareto efficient, as long as none of it is thrown away.
+</div>
+
+<h3>Plotting the four pest-control outcomes</h3>
+<p>Put Anil's payoff on the horizontal axis and Bala's on the vertical axis. The four cells of the pest-control game become four points:</p>
+
+<figure>
+<svg width="520" height="360" viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pareto plot of the four pest control outcomes">
+  <!-- axes -->
+  <line x1="60" y1="300" x2="470" y2="300" stroke="#8aa0ac" stroke-width="1.3"/>
+  <line x1="60" y1="40" x2="60" y2="300" stroke="#8aa0ac" stroke-width="1.3"/>
+  <text x="265" y="335" text-anchor="middle" font-size="12" fill="#33434c" font-family="sans-serif">Anil's payoff</text>
+  <text x="22" y="170" text-anchor="middle" font-size="12" fill="#33434c" font-family="sans-serif" transform="rotate(-90 22 170)">Bala's payoff</text>
+  <!-- ticks: 0..5 over 60..470 (x) and 300..40 (y). step=82 x, 52 y -->
+  <g font-size="10" fill="#6a7a83" font-family="sans-serif" text-anchor="middle">
+    <text x="60" y="316">0</text><text x="142" y="316">1</text><text x="224" y="316">2</text>
+    <text x="306" y="316">3</text><text x="388" y="316">4</text><text x="470" y="316">5</text>
+  </g>
+  <g font-size="10" fill="#6a7a83" font-family="sans-serif" text-anchor="end">
+    <text x="52" y="304">0</text><text x="52" y="252">1</text><text x="52" y="200">2</text>
+    <text x="52" y="148">3</text><text x="52" y="96">4</text><text x="52" y="44">5</text>
+  </g>
+  <!-- gridlines light -->
+  <g stroke="#eef3f5">
+    <line x1="142" y1="40" x2="142" y2="300"/><line x1="224" y1="40" x2="224" y2="300"/>
+    <line x1="306" y1="40" x2="306" y2="300"/><line x1="388" y1="40" x2="388" y2="300"/>
+    <line x1="60" y1="252" x2="470" y2="252"/><line x1="60" y1="200" x2="470" y2="200"/>
+    <line x1="60" y1="148" x2="470" y2="148"/><line x1="60" y1="96" x2="470" y2="96"/>
+  </g>
+  <!-- points:
+       I,I -> Anil3,Bala3 -> (306,148)
+       T,T -> Anil2,Bala2 -> (224,200)
+       I,T -> Anil1,Bala4 -> (142,96)
+       T,I -> Anil4,Bala1 -> (388,252) -->
+  <!-- dashed guide lines to axes for each -->
+  <g stroke="#b9c6cd" stroke-dasharray="3 3">
+    <line x1="306" y1="148" x2="306" y2="300"/><line x1="306" y1="148" x2="60" y2="148"/>
+    <line x1="224" y1="200" x2="224" y2="300"/><line x1="224" y1="200" x2="60" y2="200"/>
+    <line x1="142" y1="96" x2="142" y2="300"/><line x1="142" y1="96" x2="60" y2="96"/>
+    <line x1="388" y1="252" x2="388" y2="300"/><line x1="388" y1="252" x2="60" y2="252"/>
+  </g>
+  <!-- the points -->
+  <circle cx="306" cy="148" r="5.5" fill="#43793a"/><text x="316" y="143" font-size="11" font-weight="700" fill="#33434c" font-family="sans-serif">I, I  (3,3)</text>
+  <circle cx="224" cy="200" r="5.5" fill="#b0428a"/><text x="234" y="197" font-size="11" font-weight="700" fill="#33434c" font-family="sans-serif">T, T  (2,2)  ← Nash</text>
+  <circle cx="142" cy="96" r="5.5" fill="#1f7fb2"/><text x="152" y="92" font-size="11" font-weight="700" fill="#33434c" font-family="sans-serif">I, T  (1,4)</text>
+  <circle cx="388" cy="252" r="5.5" fill="#1f7fb2"/><text x="300" y="266" font-size="11" font-weight="700" fill="#33434c" font-family="sans-serif">T, I  (4,1)</text>
+</svg>
+<figcaption>I,I = both use IPC; T,T = both use Toxic Tide; I,T = Anil IPC / Bala Toxic; T,I = Anil Toxic / Bala IPC.
+Notice (I,I) sits up-and-right of (T,T): it Pareto-dominates the Nash outcome. Yet the players still land on (T,T).</figcaption>
+</figure>
+
+<div class="box intu">
+  <span class="lab">Reading the graph</span>
+  <strong>(I,I) Pareto-dominates (T,T)</strong> — it lies both further right (better for Anil) and higher (better for Bala).
+  So the equilibrium the players actually reach is Pareto <em>inefficient</em>. The corners <strong>(I,T)</strong> and <strong>(T,I)</strong> are Pareto
+  <em>efficient</em> (you can't move without hurting one of them), but they are extremely unequal.
+</div>
+
+<h3>Caveats — what Pareto efficiency does <em>not</em> tell you</h3>
+<ul>
+  <li>There is usually <strong>more than one</strong> Pareto-efficient allocation, and the criterion cannot rank them against each other.</li>
+  <li>The criterion may not even compare an efficient with an inefficient outcome: e.g. <strong>(T,I) is Pareto efficient but does not dominate (T,T)</strong>, because moving from (T,T) to (T,I) makes Bala worse off.</li>
+  <li><strong>Pareto efficiency is unrelated to fairness.</strong> Keeping €99.99 of found €100 and giving your friend 1 cent is Pareto efficient — and obviously unfair.</li>
+</ul>
+
+<!-- ============ D-I SOCIAL PREFERENCES ============ -->
+<h2 class="sec pagebreak" id="d1">D-I. Resolving dilemmas — social preferences &amp; altruism</h2>
+<p>Recall cure #1: dilemmas arise <em>because players care only about their own payoffs</em>. But in experiments many
+people choose the "dominated" cooperative action anyway — they display <strong>altruism</strong>.</p>
+<div class="box def">
+  <span class="lab">Definition — Altruism</span>
+  Placing positive weight on <em>other people's</em> payoffs in your own preferences. If altruism is <strong>sufficiently strong</strong>,
+  the socially desirable outcome can be reached even in a one-shot game — e.g. (Split, Split) in Golden Balls, or high
+  contributions in public-good games.
+</div>
+
+<h3>The public-good game (a prisoner's dilemma for <var>n</var> players)</h3>
+<div class="box def">
+  <span class="lab">Definition — Public good</span>
+  A good whose use by one person does <strong>not</strong> reduce its availability to others, so investment benefits everyone.
+  Examples: national defence, street lighting, clean air. Because everyone benefits whether or not they paid, public
+  goods invite <strong>free riding</strong>.
+</div>
+<p><strong>Set-up.</strong> Four farmers decide whether to contribute to an irrigation project. Contributing costs each farmer
+<strong>$10</strong>; every $10 contributed raises the crop yield on <em>each</em> of the four farms by <strong>$8</strong>.</p>
+<div class="box ex">
+  <span class="lab">Why nobody contributes (the free-rider logic)</span>
+  If you contribute $10, the total benefit created is 4 × $8 = $32 (great for society), but <em>your own</em> share is only
+  $8 — while you paid $10. Privately you <strong>lose $2</strong> per contribution, so a self-interested farmer contributes nothing.
+  All four reason identically → nobody contributes → the $32-per-contribution surplus is lost. Socially optimal:
+  everyone contributes. Privately optimal: everyone free-rides. A classic <var>n</var>-player prisoner's dilemma.
+</div>
+
+<h4>The general payoff formula</h4>
+<p>Each player receives <var>T</var> tokens and chooses how many to keep (<var>z<sub>i</sub></var>) versus contribute to the common pool
+(<var>g<sub>i</sub></var> = <var>T</var> − <var>z<sub>i</sub></var>). Player <var>i</var>'s payoff is:</p>
+<div class="formula">
+  payoff<sub><var>i</var></sub> &nbsp;=&nbsp; <var>z<sub>i</sub></var> &nbsp;+&nbsp;
+  <span class="frac"><span class="num"><var>β</var></span><span class="den"><var>n</var></span></span>
+  &nbsp;(<var>g</var><sub>1</sub> + <var>g</var><sub>2</sub> + ⋯ + <var>g<sub>n</sub></var>)
+</div>
+<p>Your payoff is what you kept, <em>plus</em> your equal share of the value the whole pool creates. The parameter
+<var>β</var> ("beta") sets how valuable a contributed token is:</p>
+<table class="grid">
+  <tr><th style="width:36%">Condition</th><th>Consequence</th></tr>
+  <tr><td><var>β</var>/<var>n</var> &lt; 1 &nbsp;(i.e. 1 &gt; <var>β</var>/<var>n</var>)</td><td>A purely self-interested player <strong>keeps all tokens</strong> — each token contributed returns less than $1 to you.</td></tr>
+  <tr><td><var>β</var> &gt; 1</td><td>It is <strong>socially optimal to invest all tokens</strong> — each token creates more than $1 of total value.</td></tr>
+  <tr><td>1 &lt; <var>β</var> &lt; <var>n</var></td><td>Both hold at once → private and social incentives conflict → the game is a <strong>social / prisoner's dilemma</strong>.</td></tr>
+</table>
+
+<h4>What experiments actually find</h4>
+<ul>
+  <li>Contributions are <strong>substantial but not universal</strong> — on average about <strong>50%</strong> of tokens in round 1; some players keep almost everything.</li>
+  <li>When the game is <strong>repeated</strong>, contributions <strong>decay</strong> — from ~50% in round 1 down toward ~10% by round 5, as cooperators get frustrated by free-riders.</li>
+  <li>Lower <var>β</var> → lower contributions.</li>
+  <li>Economics / business students appear to contribute <em>less</em> — either they are <em>taught</em> to be more self-interested, or more self-interested people <em>select into</em> economics. (An open, much-debated question.)</li>
+</ul>
+
+<figure>
+<svg width="560" height="290" viewBox="0 0 560 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Public good contributions decline over ten periods">
+  <text x="280" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#0f5a72" font-family="sans-serif">Public-good game: contributions fall as the game repeats</text>
+  <text x="280" y="32" text-anchor="middle" font-size="10" fill="#6a7a83" font-family="sans-serif">(20 tokens each, β = 1.6, n = 4 — representative of the multi-country experiment)</text>
+  <!-- axes -->
+  <line x1="55" y1="250" x2="470" y2="250" stroke="#8aa0ac" stroke-width="1.2"/>
+  <line x1="55" y1="55" x2="55" y2="250" stroke="#8aa0ac" stroke-width="1.2"/>
+  <!-- y ticks 0,4,8,12,16 over 250..55 (step ~48.75) -->
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif" text-anchor="end">
+    <text x="49" y="253">0</text><text x="49" y="204">4</text><text x="49" y="155">8</text>
+    <text x="49" y="106">12</text><text x="49" y="58">16</text>
+  </g>
+  <g stroke="#eef3f5"><line x1="55" y1="204" x2="470" y2="204"/><line x1="55" y1="155" x2="470" y2="155"/><line x1="55" y1="106" x2="470" y2="106"/></g>
+  <!-- x ticks 1..10 over 80..455 (step ~41.7) -->
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif" text-anchor="middle">
+    <text x="80" y="264">1</text><text x="122" y="264">2</text><text x="163" y="264">3</text><text x="205" y="264">4</text><text x="247" y="264">5</text>
+    <text x="288" y="264">6</text><text x="330" y="264">7</text><text x="372" y="264">8</text><text x="413" y="264">9</text><text x="455" y="264">10</text>
+  </g>
+  <text x="262" y="282" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif">Period</text>
+  <text x="18" y="152" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif" transform="rotate(-90 18 152)">Contribution</text>
+  <!-- three representative city lines declining. map contribution c to y=250 - c*12.1875 -->
+  <!-- high line: 14,14,13,12.5,11.5,10.5,9.5,8,6.5,5.8 -->
+  <polyline fill="none" stroke="#c0392b" stroke-width="2" points="80,79 122,79 163,92 205,98 247,110 288,122 330,134 372,153 413,171 455,179"/>
+  <!-- mid line: 11,12,11.5,10,9,8,7,6,4.5,3.8 -->
+  <polyline fill="none" stroke="#1f7fb2" stroke-width="2" points="80,116 122,104 163,110 205,128 247,140 288,153 330,165 372,177 413,195 455,204"/>
+  <!-- low line: 8,7,6.3,5.5,4.7,4,3.3,3,2.2,1.4 -->
+  <polyline fill="none" stroke="#7a5ba6" stroke-width="2" points="80,153 122,165 163,173 205,183 247,193 288,201 330,210 372,214 413,223 455,233"/>
+  <g font-size="9" font-family="sans-serif">
+    <circle cx="486" cy="88" r="3" fill="#c0392b"/><text x="493" y="91" fill="#33434c">high-trust city</text>
+    <circle cx="486" cy="108" r="3" fill="#1f7fb2"/><text x="493" y="111" fill="#33434c">typical city</text>
+    <circle cx="486" cy="128" r="3" fill="#7a5ba6"/><text x="493" y="131" fill="#33434c">low-trust city</text>
+  </g>
+</svg>
+<figcaption>Every group starts fairly cooperative, but contributions erode round after round — the decay that
+motivates the "peer punishment" fix in §D-II. (Schematic of Herrmann–Thöni–Gächter's 16-city experiment.)</figcaption>
+</figure>
+
+<h3>Modelling altruistic preferences with indifference curves</h3>
+<p>How do we <em>represent</em> altruism formally? Reuse the earlier-unit tool: <strong>indifference curves + a feasible set</strong>.
+<strong>Zoë</strong> wins £200 in a lottery and decides how much to keep vs. share with her flatmate <strong>Yvonne</strong>. The budget line
+(<em>feasible frontier</em>) runs from (£0 for Zoë, £200 for Yvonne) to (£200, £0): every pound Zoë keeps is a pound Yvonne loses.</p>
+
+<figure>
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Altruistic versus self-interested indifference curves">
+  <!-- ============ LEFT: altruistic ============ -->
+  <g>
+    <text x="150" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f5a72" font-family="sans-serif">Altruistic preferences</text>
+    <line x1="45" y1="250" x2="285" y2="250" stroke="#8aa0ac" stroke-width="1.2"/>
+    <line x1="45" y1="35" x2="45" y2="250" stroke="#8aa0ac" stroke-width="1.2"/>
+    <text x="165" y="278" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif">Amount for Zoë (£)</text>
+    <text x="15" y="145" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif" transform="rotate(-90 15 145)">Amount for Yvonne (£)</text>
+    <!-- budget line from (0,200)->(45,45) to (200,0)->(245,250). scale: 240 units over 200 => 1.2px/£, x0=45; y: 250 at 0, 45 at 200 (-1.025/£) -->
+    <line x1="45" y1="45" x2="245" y2="250" stroke="#e0553b" stroke-width="2"/>
+    <polygon points="45,250 45,45 245,250" fill="#f6d7cd" opacity="0.55"/>
+    <text x="95" y="238" font-size="9" fill="#a5432c" font-family="sans-serif">feasible set</text>
+    <!-- convex indifference curves (bowed toward origin) -->
+    <path d="M70,240 Q120,120 240,95" fill="none" stroke="#1f6fb2" stroke-width="1.4"/>
+    <path d="M95,245 Q150,135 255,120" fill="none" stroke="#1f6fb2" stroke-width="1.4"/>
+    <path d="M120,248 Q185,150 268,140" fill="none" stroke="#000" stroke-width="1.6"/>
+    <!-- tangency A: choose point on budget line around Zoë140,Yvonne60 -> x=45+140*1.2=213? too far. Use 150,? -->
+    <!-- pick A at Zoë ~120 => x=45+120*1.2=189 ; Yvonne on budget=200-120=80 => y=250-80*1.025=168 -->
+    <circle cx="189" cy="168" r="4" fill="#000"/><text x="196" y="164" font-size="11" font-weight="700" fill="#000" font-family="sans-serif">A</text>
+    <text x="150" y="45" font-size="9" fill="#1f6fb2" font-family="sans-serif">higher utility →</text>
+  </g>
+  <!-- ============ RIGHT: self-interested ============ -->
+  <g transform="translate(300,0)">
+    <text x="150" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f5a72" font-family="sans-serif">Self-interested preferences</text>
+    <line x1="45" y1="250" x2="285" y2="250" stroke="#8aa0ac" stroke-width="1.2"/>
+    <line x1="45" y1="35" x2="45" y2="250" stroke="#8aa0ac" stroke-width="1.2"/>
+    <text x="165" y="278" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif">Amount for Zoë (£)</text>
+    <text x="15" y="145" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif" transform="rotate(-90 15 145)">Amount for Yvonne (£)</text>
+    <line x1="45" y1="45" x2="245" y2="250" stroke="#e0553b" stroke-width="2"/>
+    <polygon points="45,250 45,45 245,250" fill="#f6d7cd" opacity="0.55"/>
+    <text x="95" y="238" font-size="9" fill="#a5432c" font-family="sans-serif">feasible set</text>
+    <!-- vertical indifference lines: utility depends only on Zoë's amount -->
+    <line x1="120" y1="55" x2="120" y2="250" stroke="#1f6fb2" stroke-width="1.4"/>
+    <line x1="170" y1="55" x2="170" y2="250" stroke="#1f6fb2" stroke-width="1.4"/>
+    <line x1="215" y1="55" x2="215" y2="250" stroke="#1f6fb2" stroke-width="1.4"/>
+    <text x="150" y="120" font-size="9" fill="#1f6fb2" font-family="sans-serif">Zoë's utility →</text>
+    <line x1="130" y1="110" x2="255" y2="110" stroke="#33434c" stroke-width="0.8" marker-end="url(#arr)"/>
+    <!-- optimum S at Zoë=200,Yvonne=0 -> x=245,y=250 -->
+    <circle cx="245" cy="250" r="4" fill="#000"/><text x="228" y="244" font-size="11" font-weight="700" fill="#000" font-family="sans-serif">S</text>
+  </g>
+  <defs><marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#33434c"/></marker></defs>
+</svg>
+<figcaption><strong>Left — altruistic Zoë:</strong> she cares about Yvonne too, so her indifference curves are convex and downward-sloping.
+The best feasible point <strong>A</strong> is an interior tangency — she <em>shares</em> some money.
+<strong>Right — self-interested Zoë:</strong> she cares only about her own amount, so indifference "curves" are vertical lines
+(more for Zoë is always better, Yvonne's amount is irrelevant). The optimum <strong>S</strong> is the corner — she keeps <em>everything</em>.</figcaption>
+</figure>
+
+<div class="box intu">
+  <span class="lab">The punch-line</span>
+  Altruism changes the <em>shape</em> of the indifference curves, which moves the optimum from the selfish corner (S) to an
+  interior sharing point (A). Formally, altruistic players are maximising a different utility function — one that
+  puts weight on others' payoffs — so the very same feasible set delivers a more cooperative choice.
+</div>
+
+<h3>Altruism inside the pest-control game</h3>
+<p>The same idea rescues the pest-control dilemma. If Anil is <strong>self-interested</strong>, his indifference "curves" over the
+four outcomes are vertical lines (only his own income matters) and he still ends at the Toxic-Tide equilibrium.
+If Anil is <strong>altruistic</strong> — his indifference curves become downward-sloping because he now dislikes polluting Bala —
+then IPC can become his best response and the cooperative outcome (I, I) can emerge as an equilibrium. Preferences,
+not just payoffs, determine the outcome.</p>
+
+<!-- ============ D-II REPEATED GAMES ============ -->
+<h2 class="sec pagebreak" id="d2">D-II. Resolving dilemmas — repeated games &amp; punishment</h2>
+<p>Cure #2: in a <strong>one-shot</strong> game nobody can make you pay for harming them. But most real interactions <strong>repeat</strong>.
+When they do, social norms, <strong>reciprocity</strong> and <strong>peer punishment</strong> become possible.</p>
+<div class="box def">
+  <span class="lab">Key idea — repeated games</span>
+  Behaving selfishly in one period has <strong>consequences in future periods</strong> (others can retaliate). So the selfish action
+  <strong>may no longer be a dominant strategy</strong> once the future is taken into account. Cooperation can be sustained as an
+  equilibrium of the repeated game even though it is not an equilibrium of the one-shot game.
+</div>
+
+<h3>Example: two petrol stations (a repeated cartel dilemma)</h3>
+<p>Stations <strong>Jupiter</strong> and <strong>Saturn</strong> each choose to <strong>Maintain</strong> a high price or <strong>Cut</strong> it. Weekly profits:</p>
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="2">Saturn</td>
+  </tr>
+  <tr><td class="strat">Maintain</td><td class="strat">Cut</td></tr>
+  <tr>
+    <td class="prow" rowspan="2"><span>Jupiter</span></td>
+    <td class="strat">Maintain</td>
+    <td class="cell"><div class="po ne2"><span class="tr">1000</span><span class="bl">1000</span><span class="star star2">both prefer</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">1300</span><span class="bl">700</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">Cut</td>
+    <td class="cell"><div class="po"><span class="tr">700</span><span class="bl">1300</span></div></td>
+    <td class="cell"><div class="po ne"><span class="tr">800</span><span class="bl">800</span><span class="star">one-shot Nash</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend"><span class="chip b"></span>Jupiter (row) &nbsp;·&nbsp; <span class="chip m"></span>Saturn (column)</div>
+</div>
+<p><strong>One-shot:</strong> Cutting is a dominant strategy for both → outcome (Cut, Cut) = (800, 800), even though both prefer
+(Maintain, Maintain) = (1000, 1000). This is the <em>cartel's dilemma</em>.</p>
+<div class="box ex">
+  <span class="lab">The trigger strategy (how repetition fixes it)</span>
+  Play a "grim/trigger" strategy: <em>start with the high price, and keep it as long as the rival keeps a high price.
+  If the rival ever cuts, retaliate by cutting for a stretch of periods before returning to the high price.</em>
+  <p style="margin-bottom:0">This creates a <strong>trade-off</strong>: cutting earns a one-time bonus <em>today</em> (1300 vs 1000), but triggers punishment
+  that lowers profit <em>tomorrow</em>. Cooperation is an equilibrium <strong>if players value future profits highly enough</strong> —
+  i.e. the future is not discounted too steeply — because only then does the threat of punishment outweigh the
+  short-term temptation.</p>
+</div>
+
+<h3>Peer punishment in the public-good game</h3>
+<p>Return to the public-good experiment. When a <strong>punishment option is added</strong> — players can pay a small cost to
+fine free-riders — contributions no longer collapse. Instead they <strong>rise and stay high</strong> across periods, the mirror image
+of the decay we saw without punishment.</p>
+
+<figure>
+<svg width="560" height="280" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="With punishment, contributions rise and stay high">
+  <text x="280" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#0f5a72" font-family="sans-serif">Add peer punishment → contributions climb instead of collapsing</text>
+  <line x1="55" y1="240" x2="470" y2="240" stroke="#8aa0ac" stroke-width="1.2"/>
+  <line x1="55" y1="45" x2="55" y2="240" stroke="#8aa0ac" stroke-width="1.2"/>
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif" text-anchor="end">
+    <text x="49" y="243">0</text><text x="49" y="195">5</text><text x="49" y="146">10</text><text x="49" y="97">15</text><text x="49" y="48">20</text>
+  </g>
+  <g stroke="#eef3f5"><line x1="55" y1="195" x2="470" y2="195"/><line x1="55" y1="146" x2="470" y2="146"/><line x1="55" y1="97" x2="470" y2="97"/></g>
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif" text-anchor="middle">
+    <text x="80" y="254">1</text><text x="122" y="254">2</text><text x="163" y="254">3</text><text x="205" y="254">4</text><text x="247" y="254">5</text>
+    <text x="288" y="254">6</text><text x="330" y="254">7</text><text x="372" y="254">8</text><text x="413" y="254">9</text><text x="455" y="254">10</text>
+  </g>
+  <text x="262" y="272" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif">Period</text>
+  <text x="18" y="145" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif" transform="rotate(-90 18 145)">Contribution</text>
+  <!-- y = 240 - c*9.75 -->
+  <!-- rising line: 11,13,14.5,15.5,16.5,17,17.5,18,18,17.5 -->
+  <polyline fill="none" stroke="#c0392b" stroke-width="2.2" points="80,133 122,113 163,99 205,89 247,79 288,74 330,69 372,65 413,65 455,69"/>
+  <!-- steady high line: 13,14,15,16,16.5,17,17,16.5,16.5,16 -->
+  <polyline fill="none" stroke="#1f7fb2" stroke-width="2.2" points="80,113 122,104 163,94 205,84 247,79 288,74 330,74 372,79 413,79 455,84"/>
+  <!-- moderate line: 8,9,9.5,10,10.5,11,11.5,11,11,10.5 -->
+  <polyline fill="none" stroke="#7a5ba6" stroke-width="2.2" points="80,162 122,152 163,147 205,143 247,138 288,133 330,128 372,133 413,133 455,138"/>
+</svg>
+<figcaption>Compare with the earlier decaying graph: the <em>only</em> change is that cooperators can now punish free-riders.
+The threat of punishment sustains high contributions — the same mechanism as the petrol-station trigger strategy.</figcaption>
+</figure>
+
+<!-- ============ D-III CHANGING RULES ============ -->
+<h2 class="sec pagebreak" id="d3">D-III. Resolving dilemmas — changing the rules (sequential games)</h2>
+<p>Cure #3: alter the <strong>rules of the game</strong> itself — the order of play, who can commit, what is enforceable. A leading
+example of how rules matter is the <strong>ultimatum game</strong>, our first <strong>sequential</strong> (rather than simultaneous) game.</p>
+
+<div class="box def">
+  <span class="lab">Definition — the Ultimatum Game</span>
+  A <strong>sequential</strong> game dividing an <strong>economic rent</strong> (e.g. a cash prize). The <strong>Proposer</strong> offers the <strong>Responder</strong> a share;
+  the Responder <em>observes</em> the offer and then <strong>accepts</strong> (both get the proposed split) or <strong>rejects</strong> (both get nothing).
+</div>
+
+<h3>The game tree</h3>
+<p>Sequential games are drawn as <strong>trees</strong>: nodes are decision points, branches are actions, and the numbers at the
+bottom are the (Proposer, Responder) payoffs.</p>
+
+<figure>
+<svg width="600" height="320" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ultimatum game tree">
+  <!-- Proposer node -->
+  <rect x="260" y="20" width="80" height="30" rx="4" fill="#2b3a67"/><text x="300" y="40" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif">Proposer</text>
+  <!-- branches to two offers -->
+  <line x1="290" y1="50" x2="160" y2="90" stroke="#8aa0ac"/><line x1="310" y1="50" x2="440" y2="90" stroke="#8aa0ac"/>
+  <text x="205" y="70" font-size="10" fill="#33434c" font-family="sans-serif">offer (50,50)</text>
+  <text x="360" y="70" font-size="10" fill="#33434c" font-family="sans-serif">offer (80,20)</text>
+  <!-- offer nodes -->
+  <rect x="115" y="90" width="90" height="28" rx="4" fill="#b0428a"/><text x="160" y="108" text-anchor="middle" font-size="10.5" fill="#fff" font-family="sans-serif">Offer 50/50</text>
+  <rect x="395" y="90" width="90" height="28" rx="4" fill="#b0428a"/><text x="440" y="108" text-anchor="middle" font-size="10.5" fill="#fff" font-family="sans-serif">Offer 80/20</text>
+  <!-- to responder -->
+  <line x1="160" y1="118" x2="160" y2="150" stroke="#8aa0ac"/><line x1="440" y1="118" x2="440" y2="150" stroke="#8aa0ac"/>
+  <rect x="118" y="150" width="84" height="28" rx="4" fill="#3f8f4f"/><text x="160" y="168" text-anchor="middle" font-size="10.5" fill="#fff" font-family="sans-serif">Responder</text>
+  <rect x="398" y="150" width="84" height="28" rx="4" fill="#3f8f4f"/><text x="440" y="168" text-anchor="middle" font-size="10.5" fill="#fff" font-family="sans-serif">Responder</text>
+  <!-- accept/reject branches left -->
+  <line x1="145" y1="178" x2="110" y2="215" stroke="#8aa0ac"/><line x1="175" y1="178" x2="210" y2="215" stroke="#8aa0ac"/>
+  <text x="95" y="205" font-size="9.5" fill="#33434c" font-family="sans-serif">Accept</text><text x="200" y="205" font-size="9.5" fill="#33434c" font-family="sans-serif">Reject</text>
+  <rect x="72" y="215" width="76" height="26" rx="4" fill="#c0392b"/><text x="110" y="232" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">(50, 50)</text>
+  <rect x="172" y="215" width="76" height="26" rx="4" fill="#c0392b"/><text x="210" y="232" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">(0, 0)</text>
+  <!-- accept/reject branches right -->
+  <line x1="425" y1="178" x2="390" y2="215" stroke="#8aa0ac"/><line x1="455" y1="178" x2="490" y2="215" stroke="#8aa0ac"/>
+  <text x="375" y="205" font-size="9.5" fill="#33434c" font-family="sans-serif">Accept</text><text x="480" y="205" font-size="9.5" fill="#33434c" font-family="sans-serif">Reject</text>
+  <rect x="352" y="215" width="76" height="26" rx="4" fill="#c0392b"/><text x="390" y="232" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">(80, 20)</text>
+  <rect x="452" y="215" width="76" height="26" rx="4" fill="#c0392b"/><text x="490" y="232" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">(0, 0)</text>
+  <text x="300" y="275" text-anchor="middle" font-size="9.5" fill="#6a7a83" font-family="sans-serif">Payoffs shown as (Proposer, Responder). Reject → both get 0.</text>
+</svg>
+<figcaption>The Proposer moves first and can foresee the Responder's reaction. A purely self-interested Responder accepts
+<em>any</em> positive amount (20 &gt; 0), so the self-interested prediction is a tiny offer that is accepted.</figcaption>
+</figure>
+
+<div class="box intu">
+  <span class="lab">Theory vs. behaviour</span>
+  <strong>Self-interested prediction:</strong> the Proposer offers (almost) nothing and the Responder accepts.
+  <strong>What people actually do:</strong> Proposers usually offer close to a <strong>50–50 split</strong>, and Responders <strong>reject</strong> low offers —
+  paying a personal cost to punish unfairness. This reveals <strong>fairness, inequality aversion, social norms and reciprocity</strong>
+  operating on top of raw payoffs.
+</div>
+
+<h3>Evidence: Kenyan farmers vs. US students</h3>
+<p>When the ultimatum game is run in different populations, offers cluster well above zero and are consistent with
+<strong>social preferences</strong> — though also, importantly, with <strong>expected-payoff maximisation</strong> once you account for the fact that
+low offers get rejected. For example, Kenyan-farmer responders were expected to reject a 30% offer about <strong>48%</strong> of the
+time but a 40% offer only <strong>4%</strong> of the time — so offering 40% can be smart <em>even for a purely selfish proposer</em>, because it
+avoids rejection. Roughly half of Kenyan-farmer proposers offered 40%.</p>
+<div class="box tip">
+  <span class="lab">Subtle but exam-worthy</span>
+  Generous offers are consistent with <em>two</em> different stories: (1) proposers genuinely care about fairness, or
+  (2) proposers are selfish but rationally avoid rejection. Behaviour alone often cannot distinguish them — a recurring
+  theme in behavioural economics.
+</div>
+
+<h3>The rules of the game matter</h3>
+<p>Change the rules and the outcome shifts predictably. Put <strong>two responders in competition</strong> (only one can accept, so if
+one rejects the other may still take the deal) and rejection of low offers <strong>falls sharply</strong>. Competition among responders
+pushes the outcome <strong>back toward the self-interested prediction</strong>: proposers can get away with meaner offers.</p>
+
+<figure>
+<svg width="560" height="280" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rejection rates fall with two competing responders">
+  <text x="280" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#0f5a72" font-family="sans-serif">Competition between responders → fewer rejections</text>
+  <line x1="55" y1="235" x2="500" y2="235" stroke="#8aa0ac" stroke-width="1.2"/>
+  <line x1="55" y1="45" x2="55" y2="235" stroke="#8aa0ac" stroke-width="1.2"/>
+  <g font-size="9" fill="#6a7a83" font-family="sans-serif" text-anchor="end">
+    <text x="49" y="238">0</text><text x="49" y="190">25</text><text x="49" y="142">50</text><text x="49" y="94">75</text><text x="49" y="48">100</text>
+  </g>
+  <g stroke="#eef3f5"><line x1="55" y1="190" x2="500" y2="190"/><line x1="55" y1="142" x2="500" y2="142"/><line x1="55" y1="94" x2="500" y2="94"/></g>
+  <text x="278" y="268" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif">Fraction of the pie offered to the responder(s) (%)</text>
+  <text x="16" y="140" text-anchor="middle" font-size="10" fill="#33434c" font-family="sans-serif" transform="rotate(-90 16 140)">Offers rejected (%)</text>
+  <!-- bars for offers 0,5,10,15,20,25,30,35,40,45 ; one vs two responders. x positions -->
+  <!-- y = 235 - pct*1.9 -->
+  <!-- one responder (red): 100,100,80,80,80,59,41,37,19,10 -->
+  <!-- two responders (blue): 75,58,56,45,29,23,10,8,19,16 -->
+  <g>
+    <!-- helper: each group width ~40, bars width 15 -->
+    <!-- offer 0 at x=80 -->
+    <rect x="72" y="45" width="14" height="190" fill="#c0392b"/><rect x="88" y="93" width="14" height="142" fill="#3454a0"/>
+    <rect x="116" y="45" width="14" height="190" fill="#c0392b"/><rect x="132" y="125" width="14" height="110" fill="#3454a0"/>
+    <rect x="160" y="83" width="14" height="152" fill="#c0392b"/><rect x="176" y="129" width="14" height="106" fill="#3454a0"/>
+    <rect x="204" y="83" width="14" height="152" fill="#c0392b"/><rect x="220" y="150" width="14" height="85" fill="#3454a0"/>
+    <rect x="248" y="83" width="14" height="152" fill="#c0392b"/><rect x="264" y="180" width="14" height="55" fill="#3454a0"/>
+    <rect x="292" y="123" width="14" height="112" fill="#c0392b"/><rect x="308" y="191" width="14" height="44" fill="#3454a0"/>
+    <rect x="336" y="157" width="14" height="78" fill="#c0392b"/><rect x="352" y="216" width="14" height="19" fill="#3454a0"/>
+    <rect x="380" y="165" width="14" height="70" fill="#c0392b"/><rect x="396" y="220" width="14" height="15" fill="#3454a0"/>
+    <rect x="424" y="199" width="14" height="36" fill="#c0392b"/><rect x="440" y="199" width="14" height="36" fill="#3454a0"/>
+    <rect x="468" y="216" width="14" height="19" fill="#c0392b"/><rect x="484" y="205" width="14" height="30" fill="#3454a0"/>
+  </g>
+  <g font-size="8" fill="#6a7a83" font-family="sans-serif" text-anchor="middle">
+    <text x="87" y="246">0</text><text x="131" y="246">5</text><text x="175" y="246">10</text><text x="219" y="246">15</text><text x="263" y="246">20</text>
+    <text x="307" y="246">25</text><text x="351" y="246">30</text><text x="395" y="246">35</text><text x="439" y="246">40</text><text x="483" y="246">45</text>
+  </g>
+  <g font-size="9" font-family="sans-serif">
+    <rect x="360" y="50" width="12" height="10" fill="#c0392b"/><text x="376" y="59" fill="#33434c">One responder</text>
+    <rect x="360" y="66" width="12" height="10" fill="#3454a0"/><text x="376" y="75" fill="#33434c">Two responders</text>
+  </g>
+</svg>
+<figcaption>At every offer level, adding a second, competing responder (blue) lowers the rejection rate versus a single
+responder (red). The <em>rules</em> — here, whether responders compete — reshape how much fairness the proposer must show.</figcaption>
+</figure>
+
+<div class="box intu">
+  <span class="lab">Policy reading of "changing the rules"</span>
+  Governments and institutions resolve social dilemmas precisely by changing rules: taxes/subsidies that make people
+  "pay" for external effects, binding treaties, property rights, regulation. Each rewrites the payoffs or the order of
+  play so that individually rational behaviour coincides with the social optimum.
+</div>
+
+<!-- ============ E. COORDINATION ============ -->
+<h2 class="sec pagebreak" id="e">E. Coordination games</h2>
+<p>So far the problem was that the equilibrium was <em>bad</em>. A different problem arises when there are <strong>several equilibria</strong>
+and players must somehow land on the same one.</p>
+<div class="box def">
+  <span class="lab">Coordination problem</span>
+  When a game has <strong>more than one Nash equilibrium</strong> and players choose independently, the <strong>socially optimal equilibrium
+  may not be selected</strong>. Society can get <strong>"stuck"</strong> in a worse equilibrium — because, being an equilibrium, no one gains by
+  deviating <em>alone</em>.
+</div>
+
+<h3>A coordination game between the two farmers</h3>
+<p>Now Anil and Bala benefit from <strong>specialising in different crops</strong> (so they can trade). There are two Nash equilibria — but one is better for both.</p>
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="2">Bala</td>
+  </tr>
+  <tr><td class="strat">Rice</td><td class="strat">Cassava</td></tr>
+  <tr>
+    <td class="prow" rowspan="2"><span>Anil</span></td>
+    <td class="strat">Rice</td>
+    <td class="cell"><div class="po"><span class="tr">1</span><span class="bl">0</span></div></td>
+    <td class="cell"><div class="po ne"><span class="tr">2</span><span class="bl">2</span><span class="star">Nash — but worse</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">Cassava</td>
+    <td class="cell"><div class="po ne2"><span class="tr">4</span><span class="bl">4</span><span class="star star2">Nash — better</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">0</span><span class="bl">1</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend"><span class="chip b"></span>Anil (row) &nbsp;·&nbsp; <span class="chip m"></span>Bala (column) &nbsp;·&nbsp; <span class="chip ne"></span>sub-optimal Nash &nbsp;·&nbsp; <span class="chip ne2"></span>optimal Nash</div>
+</div>
+<div class="box ex">
+  <span class="lab">Two equilibria — verify</span>
+  Both <strong>(Rice, Cassava) = (2,2)</strong> and <strong>(Cassava, Rice) = (4,4)</strong> are Nash: in each, given the other's crop, neither
+  farmer wants to switch. They coordinate on <em>different</em> crops in both. But (4,4) Pareto-dominates (2,2). If they
+  happen to be stuck at (2,2), <strong>no unilateral move helps</strong> — Anil switching alone would drop him from 2 to 1. They need
+  to move <em>together</em>, i.e. to <strong>coordinate</strong>.
+</div>
+
+<h3>Example: climate change as a coordination game</h3>
+<p>China and the US each choose <strong>Restrict</strong> emissions or <strong>Business-As-Usual (BAU)</strong>. Ranking outcomes BEST &gt; GOOD &gt; BAD &gt; WORST:</p>
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="2">US</td>
+  </tr>
+  <tr><td class="strat">Restrict</td><td class="strat">BAU</td></tr>
+  <tr>
+    <td class="prow" rowspan="2"><span>China</span></td>
+    <td class="strat">Restrict</td>
+    <td class="cell" style="height:70px"><div class="po ne2"><span class="tr" style="font-size:.8rem">BEST</span><span class="bl" style="font-size:.8rem">BEST</span><span class="star star2">social optimum</span></div></td>
+    <td class="cell" style="height:70px"><div class="po"><span class="tr" style="font-size:.8rem">GOOD</span><span class="bl" style="font-size:.8rem">WORST</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">BAU</td>
+    <td class="cell" style="height:70px"><div class="po"><span class="tr" style="font-size:.8rem">WORST</span><span class="bl" style="font-size:.8rem">GOOD</span></div></td>
+    <td class="cell" style="height:70px"><div class="po ne"><span class="tr" style="font-size:.8rem">BAD</span><span class="bl" style="font-size:.8rem">BAD</span><span class="star">other Nash</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend"><span class="chip b"></span>China (row) &nbsp;·&nbsp; <span class="chip m"></span>US (column)</div>
+</div>
+<ul>
+  <li>For purely self-interested players, <strong>BAU is the dominant-strategy</strong> instinct, and an <strong>emissions treaty</strong> would deliver the socially optimal (Restrict, Restrict).</li>
+  <li>With <strong>inequality aversion and reciprocity</strong> (each will restrict only if the other does), the game has <strong>two Nash equilibria</strong>: (Restrict, Restrict) = BEST and (BAU, BAU) = BAD. The social optimum is <em>one</em> of them — so coordination (a treaty, mutual commitment) is what selects it.</li>
+</ul>
+
+<h3>Driving on the left or the right</h3>
+<p>The purest coordination game. Each driver picks a side; matching is fine, mismatching is a crash.</p>
+<div class="pm-wrap">
+<table class="pm">
+  <tr>
+    <td class="blank" colspan="2" rowspan="2"></td>
+    <td class="pcol" colspan="2">Driver 2</td>
+  </tr>
+  <tr><td class="strat">Left</td><td class="strat">Right</td></tr>
+  <tr>
+    <td class="prow" rowspan="2"><span>Driver 1</span></td>
+    <td class="strat">Left</td>
+    <td class="cell"><div class="po ne"><span class="tr">0</span><span class="bl">0</span><span class="star">Nash</span></div></td>
+    <td class="cell"><div class="po"><span class="tr">−10</span><span class="bl">−10</span></div></td>
+  </tr>
+  <tr>
+    <td class="strat">Right</td>
+    <td class="cell"><div class="po"><span class="tr">−10</span><span class="bl">−10</span></div></td>
+    <td class="cell"><div class="po ne"><span class="tr">0</span><span class="bl">0</span><span class="star">Nash</span></div></td>
+  </tr>
+</table>
+<div class="pm-legend"><span class="chip b"></span>Driver 1 (row) &nbsp;·&nbsp; <span class="chip m"></span>Driver 2 (column)</div>
+</div>
+<div class="box intu">
+  <span class="lab">Two equilibria, and why the rule is decisive</span>
+  <strong>(Left, Left)</strong> and <strong>(Right, Right)</strong> are both Nash — neither is intrinsically better, but <strong>coordination is essential</strong>.
+  Which one a country lands on is a matter of convention and history. Most of the world drives on the right; a minority
+  (UK, India, Australia, Japan, much of southern Africa…) on the left. When Sweden switched from left to right overnight
+  on <strong>"Dagen H" (3 September 1967)</strong>, a central authority moved everyone from one equilibrium to the other simultaneously —
+  a vivid demonstration that escaping/selecting an equilibrium can require a coordinating institution.
+</div>
+<p>(The <strong>Dvorak vs. QWERTY keyboard</strong> is another classic: society can stay locked into an inferior standard simply because
+everyone has coordinated on it.)</p>
+
+<!-- ============ SUMMARY ============ -->
+<h2 class="sec pagebreak" id="sum">Summary</h2>
+<ol>
+  <li><strong>Social interactions can be modelled as games.</strong> Players choose <strong>best responses</strong> to others' strategies; a
+  <strong>Nash equilibrium</strong> is a mutual-best-response profile where no one gains by deviating alone.</li>
+  <li><strong>Social dilemmas</strong> (e.g. the prisoner's dilemma) have equilibria that are <em>not</em> socially optimal. They can be
+  resolved by: <strong>social preferences / altruism</strong>, <strong>repeated interaction with peer punishment</strong>, or <strong>binding agreements /
+  changing the rules</strong>. The <strong>rules of the game</strong> shape outcomes.</li>
+  <li><strong>Multiple Nash equilibria</strong> create <strong>coordination problems</strong>; society can get stuck in a bad equilibrium. <strong>Economic
+  and political institutions</strong> help select the socially optimal outcome.</li>
+</ol>
+
+<h3>Glossary — quick revision</h3>
+<table class="grid">
+  <tr><th style="width:200px">Term</th><th>One-line meaning</th></tr>
+  <tr><td>Social dilemma</td><td>Independent self-interest → socially sub-optimal outcome.</td></tr>
+  <tr><td>Tragedy of the commons</td><td>Shared resources get over-exploited.</td></tr>
+  <tr><td>Free riding</td><td>Enjoying others' contributions without contributing.</td></tr>
+  <tr><td>Strategy / dominant strategy</td><td>An action / an action that is best <em>whatever</em> others do.</td></tr>
+  <tr><td>Best response</td><td>Highest-payoff action <em>given</em> the others' choices.</td></tr>
+  <tr><td>Nash equilibrium</td><td>Everyone best-responding at once; no unilateral gain.</td></tr>
+  <tr><td>Dominant-strategy equilibrium</td><td>A Nash equilibrium of dominant strategies.</td></tr>
+  <tr><td>Prisoner's dilemma</td><td>Dominant-strategy equilibrium that is worse for all than cooperating.</td></tr>
+  <tr><td>Pareto domination</td><td>A makes someone better off and no one worse off than B.</td></tr>
+  <tr><td>Pareto efficiency</td><td>No one can be made better off without hurting someone.</td></tr>
+  <tr><td>Altruism / social preferences</td><td>Caring about others' payoffs, not just your own.</td></tr>
+  <tr><td>Public good</td><td>Non-rival good; one person's use doesn't reduce others' availability.</td></tr>
+  <tr><td>Repeated game / trigger strategy</td><td>Interaction repeats; retaliation can sustain cooperation.</td></tr>
+  <tr><td>Ultimatum game</td><td>Sequential split-the-rent game; proposer offers, responder accepts/rejects.</td></tr>
+  <tr><td>Coordination game</td><td>Multiple equilibria; players must land on the same one.</td></tr>
+</table>
+
+<h3>Self-test questions</h3>
+<div class="qa">
+  <p><strong>1.</strong> In the pest-control game, explain why (Toxic, Toxic) is a Nash equilibrium even though both players prefer (IPC, IPC).</p>
+  <p class="answer">Because from (Toxic, Toxic) neither can improve by switching <em>alone</em> (Toxic gives 2 vs 1 if you unilaterally move to IPC). The improvement to (IPC, IPC) requires <em>both</em> to move together, which the equilibrium concept does not allow.</p>
+</div>
+<div class="qa">
+  <p><strong>2.</strong> A public-good game has <var>T</var> = 20 tokens per player, <var>n</var> = 4, <var>β</var> = 1.6. Is contributing individually rational? Is it socially optimal?</p>
+  <p class="answer">Each contributed token returns <var>β</var>/<var>n</var> = 1.6/4 = 0.4 to <em>you</em> — less than 1 — so a selfish player keeps everything (not individually rational to contribute). But each token creates <var>β</var> = 1.6 &gt; 1 of <em>total</em> value, so full contribution is socially optimal. Private and social incentives conflict → prisoner's dilemma.</p>
+</div>
+<div class="qa">
+  <p><strong>3.</strong> Why can a low ultimatum-game offer be rejected even by a "rational" responder — and how does adding a second responder change this?</p>
+  <p class="answer">A responder with <em>social preferences</em> (fairness / inequality aversion) gets negative utility from an unfair split and will pay the cost of rejecting to punish it. Adding a competing second responder means rejecting no longer denies the proposer the deal (the other can accept), so rejection becomes costly and pointless — rejection rates fall and offers drift toward the self-interested outcome. The rules of the game changed the behaviour.</p>
+</div>
+<div class="qa">
+  <p><strong>4.</strong> Driving-side and climate-treaty games both have two Nash equilibria. What is the key difference?</p>
+  <p class="answer">In driving, the two equilibria are equally good — the only thing that matters is <em>coordinating</em> on the same one. In the climate game the two equilibria differ in welfare (BEST,BEST vs BAD,BAD), so coordination must not only match players but steer them to the <em>better</em> equilibrium — hence the role of a treaty/institution.</p>
+</div>
+
+<div class="footer-note">
+  Study guide compiled from <em>Microeconomics — Unit 4: Social Interactions</em> (KU Leuven, 2025–2026).
+  All payoff matrices, game trees and graphs redrawn to match the lecture slides. Use alongside the lectures and the CORE
+  <em>Economy</em> textbook chapters on strategic interaction.
+</div>
+
+</div>
+</body>
+</html>
