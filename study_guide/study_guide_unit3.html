@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Microeconomics — Unit 3 Study Guide</title>
+<style>
+  :root{
+    --ink:#1f2a33; --muted:#5a6b78; --line:#d7e0e6;
+    --blue:#1f8fb2; --blue-dark:#2a5566; --blue-soft:#e3eef3;
+    --accent:#e8814a; --red:#c0392b; --green:#2e8b57;
+    --note:#fff8ec; --note-b:#e9c46a;
+    --def:#eef6f9; --def-b:#1f8fb2;
+    --cue:#f2ecf7; --cue-b:#8e6fb0;
+    --test:#eef7f0; --test-b:#2e8b57;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:15px;}
+  body{
+    font-family:"Georgia","Times New Roman",serif;
+    color:var(--ink); line-height:1.55; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{
+    max-width:820px; margin:0 auto; padding:34px 46px;
+  }
+  h1,h2,h3,h4{font-family:"Helvetica Neue",Arial,sans-serif; line-height:1.2;}
+  h2.section{
+    font-size:1.7rem; color:#fff; background:var(--blue-dark);
+    padding:16px 22px; border-radius:8px; margin:0 0 6px;
+    letter-spacing:.3px;
+  }
+  h2.section .tag{display:block;font-size:.8rem;color:#b9d6e0;font-weight:400;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  h3{font-size:1.22rem; color:var(--blue-dark); margin:26px 0 8px; border-bottom:2px solid var(--blue-soft); padding-bottom:5px;}
+  h4{font-size:1.02rem; color:var(--blue); margin:18px 0 4px;}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0 8px 4px; padding-left:22px;}
+  li{margin:5px 0;}
+  b,strong{color:#14323e;}
+  .term{color:var(--blue-dark); font-weight:700;}
+  code,.mono{font-family:"SFMono-Regular",Consolas,monospace; font-size:.92em;}
+  .eq{font-style:italic; font-family:"Cambria","Georgia",serif; background:#f6f9fb; border:1px solid var(--line);
+      padding:8px 14px; border-radius:6px; margin:10px 0; display:block; text-align:center; font-size:1.05rem;}
+  .frac{display:inline-block; vertical-align:middle; text-align:center; font-size:.85em;}
+  .frac .n{display:block; border-bottom:1px solid currentColor; padding:0 3px;}
+  .frac .d{display:block; padding:0 3px;}
+  /* callout boxes */
+  .box{border-radius:8px; padding:12px 16px 12px 16px; margin:14px 0; border-left:5px solid;}
+  .box .lbl{font-family:"Helvetica Neue",Arial,sans-serif; font-size:.72rem; font-weight:700;
+            letter-spacing:1.5px; text-transform:uppercase; display:block; margin-bottom:4px;}
+  .def{background:var(--def); border-color:var(--def-b);} .def .lbl{color:var(--def-b);}
+  .note{background:var(--note); border-color:var(--note-b);} .note .lbl{color:#b8860b;}
+  .cue{background:var(--cue); border-color:var(--cue-b);} .cue .lbl{color:var(--cue-b);}
+  .test{background:var(--test); border-color:var(--test-b);} .test .lbl{color:var(--test-b);}
+  .cue ul{margin-bottom:0;}
+  /* tables */
+  table.data{border-collapse:collapse; margin:12px 0; font-family:"Helvetica Neue",Arial,sans-serif; font-size:.9rem; width:100%;}
+  table.data th{background:var(--blue); color:#fff; text-align:left; padding:7px 12px; font-weight:600;}
+  table.data td{padding:6px 12px; border-bottom:1px solid var(--line);}
+  table.data tr:nth-child(even) td{background:#f4f8fa;}
+  table.data td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .profit-tbl{width:100%; border-collapse:collapse; font-family:"Helvetica Neue",Arial,sans-serif; font-size:.9rem; margin:8px 0;}
+  .profit-tbl caption{background:var(--blue); color:#fff; padding:6px 10px; font-weight:700; text-align:left; border-radius:5px 5px 0 0;}
+  .profit-tbl td{padding:5px 12px; border-bottom:1px solid var(--line);}
+  .profit-tbl td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .profit-tbl tr.total td{font-weight:700; background:var(--blue-soft); border-top:2px solid var(--blue);}
+  .profit-tbl tr.sub td{color:var(--muted); padding-left:26px;}
+  /* figures */
+  figure{margin:18px 0; padding:14px; background:#fff; border:1px solid var(--line); border-radius:8px;}
+  figure svg{display:block; width:100%; height:auto; max-width:100%;}
+  figcaption{font-family:"Helvetica Neue",Arial,sans-serif; font-size:.82rem; color:var(--muted); margin-top:8px; text-align:center;}
+  figcaption b{color:var(--blue-dark);}
+  .two{display:flex; gap:16px; flex-wrap:wrap;} .two>div{flex:1 1 300px;}
+  /* cover */
+  .cover{height:1000px; display:flex; flex-direction:column; justify-content:center; padding:60px;
+         background:linear-gradient(135deg,#2a5566 0%,#1f8fb2 100%); color:#fff;}
+  .cover .kicker{font-family:"Helvetica Neue",Arial,sans-serif; letter-spacing:4px; text-transform:uppercase; font-size:.9rem; opacity:.85;}
+  .cover h1{font-size:3.2rem; margin:12px 0 6px; line-height:1.08;}
+  .cover .sub{font-size:1.5rem; font-weight:300; font-family:"Helvetica Neue",Arial,sans-serif; opacity:.95;}
+  .cover .rule{width:90px; height:5px; background:#e8814a; margin:26px 0;}
+  .cover .meta{font-family:"Helvetica Neue",Arial,sans-serif; font-size:1rem; opacity:.9; margin-top:auto;}
+  .cover ul{list-style:none; padding:0; font-family:"Helvetica Neue",Arial,sans-serif; font-size:1.05rem;}
+  .cover ul li{margin:7px 0; padding-left:26px; position:relative;}
+  .cover ul li::before{content:"›"; position:absolute; left:0; color:#e8814a; font-size:1.4rem; line-height:1;}
+  .toc{font-family:"Helvetica Neue",Arial,sans-serif;}
+  .toc li{margin:9px 0; font-size:1.05rem;}
+  .toc b{color:var(--blue-dark);}
+  .lead{font-size:1.05rem; color:var(--muted);}
+  @page{size:A4; margin:14mm;}
+  .pb{page-break-before:always;}
+  .avoid{page-break-inside:avoid;}
+  figure,.box,.profit-tbl,table.data{page-break-inside:avoid;}
+  h3{page-break-after:avoid;}
+  .footer-note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line); font-size:.8rem; color:var(--muted); font-family:"Helvetica Neue",Arial,sans-serif;}
+</style>
+</head>
+<body>
+<section class="cover">
+  <div class="kicker">Microeconomics · Scarcity and Choice</div>
+  <h1>Scarcity, Work<br>&amp; Choice</h1>
+  <div class="sub">Unit 3 — Study Guide &amp; Lecture Notes</div>
+  <div class="rule"></div>
+  <ul>
+    <li>Preferences, utility &amp; indifference curves</li>
+    <li>The feasible frontier, MRS and MRT</li>
+    <li>The utility-maximising choice: MRS = MRT</li>
+    <li>Income &amp; substitution effects and working hours</li>
+  </ul>
+  <div class="meta">Academic year 2025–2026 · Companion to the lecture slides &amp; CORE handbook</div>
+</section>
+<section class="page pb">
+  <h2 class="section"><span class="tag">Before you begin</span>How to use these notes &amp; where this unit fits</h2>
+  <p class="lead">This guide follows the Unit 3 slides section-by-section and expands the reasoning so you can read it on its own or annotate it in class. Every diagram — indifference curves, the feasible frontier, the tangency condition, and the income/substitution decomposition — is redrawn cleanly, with the convex curves computed rather than sketched so the geometry is exactly right.</p>
+  <div class="two">
+    <div>
+      <div class="box def"><span class="lbl">Definition box</span>The precise definition to reproduce in the exam.</div>
+      <div class="box note"><span class="lbl">Worked example</span>Numbers carried through, matching the slide examples.</div>
+    </div>
+    <div>
+      <div class="box cue"><span class="lbl">Listen for in the lecture</span>Points usually stressed verbally — leave room for your own notes.</div>
+      <div class="box test"><span class="lbl">Check yourself</span>Quick questions to test recall.</div>
+    </div>
+  </div>
+  <h3>The thread from Units 1–2</h3>
+  <ul>
+    <li><b>Unit 1:</b> labour is <b>work</b>.</li>
+    <li><b>Unit 2:</b> labour is an <b>input</b> in production, and new technologies raise the <b>productivity of labour</b>.</li>
+    <li><b>Unit 3 (this unit):</b> if technology makes an hour of work more productive (higher wage), <b>how does an individual respond?</b> Do they take the gain as more <b>consumption</b>, more <b>free time</b>, or both?</li>
+  </ul>
+  <div class="box def"><span class="lbl">The question this unit answers</span>Build a <b>model of individual choice</b> that explains the differences in <b>work hours</b> across countries and over time — and, in particular, why rising wages have historically been taken partly as <b>more leisure</b>.</div>
+  <h3>Outline</h3>
+  <ol class="toc">
+    <li><b>A.</b> Introduction — the puzzle of hours and income</li>
+    <li><b>B.</b> Scarcity and choice: preferences, indifference curves, MRS, the feasible frontier and MRT</li>
+    <li><b>C.</b> Decision-making under scarcity: the optimal choice, MRS = MRT</li>
+    <li><b>D.</b> Income and substitution effects</li>
+    <li><b>E.</b> Application to technological change</li>
+  </ol>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section A</span>Introduction</h2>
+<p>Since 1870, living standards have risen enormously in most countries. But the gains have <b>not</b> all been taken as extra income: there are large disparities in <b>free time</b> and <b>income</b> across countries. Some rich countries work long hours; others have converted much of their productivity gains into shorter working weeks and longer holidays.</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Working hours vs income across countries">
+  <line x1="72" y1="44" x2="72" y2="316" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="316" x2="606" y2="316" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="40" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">GDP per capita ($)</text>
+  <text x="610" y="332" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Annual hours worked</text>
+  <text x="66" y="332" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <text x="66.0" y="247.5" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">20k</text>
+  <text x="66.0" y="176.1" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">40k</text>
+  <text x="66.0" y="104.6" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">60k</text>
+  <line x1="380.0" y1="316.0" x2="380.0" y2="48.0" stroke="#eef2f4" stroke-width="1" stroke-dasharray=""/>
+  <text x="380.0" y="332.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">1400</text>
+  <line x1="446.0" y1="316.0" x2="446.0" y2="48.0" stroke="#eef2f4" stroke-width="1" stroke-dasharray=""/>
+  <text x="446.0" y="332.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">1700</text>
+  <line x1="512.0" y1="316.0" x2="512.0" y2="48.0" stroke="#eef2f4" stroke-width="1" stroke-dasharray=""/>
+  <circle cx="369.0" cy="108.7" r="4" fill="#1f8fb2"/>
+  <text x="361.0" y="102.7" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="end">Germany</text>
+  <circle cx="384.4" cy="101.6" r="4" fill="#1f8fb2"/>
+  <text x="392.4" y="95.6" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="start">Netherlands</text>
+  <circle cx="384.4" cy="73.0" r="4" fill="#1f8fb2"/>
+  <text x="392.4" y="71.0" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="start">Norway</text>
+  <circle cx="402.0" cy="130.2" r="4" fill="#1f8fb2"/>
+  <text x="394.0" y="124.2" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="end">France</text>
+  <circle cx="461.4" cy="80.2" r="4" fill="#1f8fb2"/>
+  <text x="469.4" y="78.2" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="start">US</text>
+  <circle cx="426.2" cy="158.8" r="4" fill="#1f8fb2"/>
+  <text x="418.2" y="170.8" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="end">Japan</text>
+  <circle cx="450.4" cy="158.8" r="4" fill="#1f8fb2"/>
+  <text x="458.4" y="170.8" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="start">Italy</text>
+  <circle cx="490.0" cy="155.2" r="4" fill="#1f8fb2"/>
+  <text x="498.0" y="153.2" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="start">Korea</text>
+  <circle cx="474.6" cy="194.5" r="4" fill="#1f8fb2"/>
+  <text x="466.6" y="188.5" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="end">Poland</text>
+  <circle cx="540.6" cy="244.5" r="4" fill="#1f8fb2"/>
+  <text x="532.6" y="256.5" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="end">Mexico</text>
+  <circle cx="483.4" cy="212.4" r="4" fill="#1f8fb2"/>
+  <text x="493.4" y="222.4" font-family="Arial" font-size="9.5" fill="#14323e" text-anchor="start">Greece</text>
+  <text x="150.0" y="250.0" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="start">richer countries tend to</text>
+  <text x="150.0" y="266.0" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="start">work fewer hours</text>
+</svg>
+<figcaption><b>Figure 1.</b> Across richer countries, higher income per person tends to come with <b>fewer</b> annual hours worked (e.g. Germany, the Netherlands, France) — while some equally rich countries (e.g. the US, Korea) work much more. Income alone does not pin down hours; <b>preferences</b> (and culture, and politics) do. This unit builds the model that makes sense of the scatter.</figcaption>
+</figure>
+<div class="box cue"><span class="lbl">Listen for in the lecture</span>The framing question for the whole unit: <i>a new technology raises the productivity of labour — how does that affect (i) living standards and (ii) the free time and working hours people choose?</i> Keep both halves in mind; the answer turns out to hinge on two opposing forces (income and substitution effects).</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section B</span>Scarcity &amp; Choice: Key Concepts</h2>
+<p>Individuals want to consume as much as possible <b>and</b> have as much free time as possible. But a day has only a limited number of hours — this is <b>scarcity</b>. Increasing consumption means <b>sacrificing free time</b> (you must work to earn). So we need a model of how a person picks the best combination of the two.</p>
+<div class="box def"><span class="lbl">Two ingredients of the model of constrained choice</span>
+  <ul style="margin:2px 0">
+    <li><b>Preferences</b> — how the individual ranks combinations of consumption and free time.</li>
+    <li><b>The trade-off (constraint)</b> — the feasible combinations of consumption and free time, i.e. how much consumption an hour of free time costs.</li>
+  </ul></div>
+<h3>Simplifying assumptions</h3>
+  <ul>
+    <li>Individuals <b>don't care about the future</b>, so there are <b>no savings</b>.</li>
+    <li>Individuals <b>cannot borrow</b>.</li>
+    <li>Therefore <b>income = consumption</b> (whatever you earn, you spend now).</li>
+  </ul>
+  <div class="box note"><span class="lbl">Why make "unrealistic" assumptions?</span>Recall from Unit 2: a model deliberately omits detail to expose the essential mechanism. Ruling out saving/borrowing lets us focus cleanly on the one trade-off that matters here — <b>free time vs consumption</b>.</div>
+<h3>Preferences and utility</h3>
+  <p>People like <b>both</b> free time and consumption, and can <b>rank</b> the many possible combinations.</p>
+  <div class="box def"><span class="lbl">Definition — utility</span><b>Utility</b> is a numerical indicator of the value a person places on an outcome. Higher-utility combinations are preferred to (chosen over) lower-utility ones.</div>
+<h3>Indifference curves</h3>
+  <div class="box def"><span class="lbl">Definition — indifference curve</span>An <b>indifference curve</b> shows all combinations of two goods that give the <b>same utility</b> (the person is "indifferent" between them).</div>
+  <p>Four properties you must know and be able to justify:</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Indifference curve family">
+  <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#e8814a"/></marker></defs>
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <polyline fill="none" stroke="#9cc3d1" stroke-width="2.4" points="105.8,44.0 118.4,122.0 131.1,166.6 143.7,195.4 156.4,215.6 169.0,230.5 181.7,242.0 194.3,251.1 207.0,258.5 219.7,264.6 232.3,269.8 245.0,274.2 257.6,278.0 270.3,281.3 282.9,284.2 295.6,286.8 308.2,289.1 320.9,291.2 333.6,293.1 346.2,294.8 358.9,296.4 371.5,297.8 384.2,299.1 396.8,300.3 409.5,301.4 422.2,302.4 434.8,303.4 447.5,304.3 460.1,305.1 472.8,305.9 485.4,306.7 498.1,307.3 510.8,308.0 523.4,308.6 536.1,309.2 548.7,309.8 561.4,310.3 574.0,310.8 586.7,311.2 599.3,311.7 612.0,312.1"/>
+  <polyline fill="none" stroke="#4d9db5" stroke-width="2.4" points="144.0,44.0 155.7,84.0 167.4,114.2 179.1,137.7 190.8,156.7 202.5,172.2 214.2,185.2 225.9,196.2 237.6,205.7 249.3,213.9 261.0,221.0 272.7,227.4 284.4,233.1 296.1,238.1 307.8,242.7 319.5,246.8 331.2,250.6 342.9,254.0 354.6,257.1 366.3,260.0 378.0,262.7 389.7,265.2 401.4,267.5 413.1,269.6 424.8,271.6 436.5,273.5 448.2,275.3 459.9,276.9 471.6,278.5 483.3,279.9 495.0,281.3 506.7,282.6 518.4,283.9 530.1,285.0 541.8,286.2 553.5,287.2 565.2,288.2 576.9,289.2 588.6,290.1 600.3,291.0 612.0,291.9"/>
+  <polyline fill="none" stroke="#1f6f8b" stroke-width="2.4" points="189.0,44.0 199.6,67.7 210.2,87.8 220.7,105.0 231.3,119.9 241.9,133.0 252.4,144.6 263.0,154.8 273.6,164.0 284.2,172.3 294.8,179.8 305.3,186.6 315.9,192.8 326.5,198.5 337.1,203.8 347.6,208.6 358.2,213.1 368.8,217.2 379.4,221.1 389.9,224.7 400.5,228.1 411.1,231.3 421.6,234.3 432.2,237.1 442.8,239.8 453.4,242.3 464.0,244.6 474.5,246.9 485.1,249.0 495.7,251.0 506.2,252.9 516.8,254.8 527.4,256.5 538.0,258.2 548.5,259.8 559.1,261.3 569.7,262.8 580.3,264.2 590.9,265.5 601.4,266.8 612.0,268.0"/>
+  <line x1="150" y1="300" x2="470" y2="120" stroke="#e8814a" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="360.0" y="150.0" font-family="Arial" font-size="12" fill="#e8814a" text-anchor="start">higher utility</text>
+</svg>
+<figcaption><b>Figure 2.</b> A family of indifference curves for free time and consumption. <b>Property 1:</b> they slope <b>downward</b> (more is better, so to stay equally happy you give up one good to get more of the other). <b>Property 2:</b> curves <b>further from the origin</b> mean <b>higher utility</b> (more of both goods).</figcaption>
+</figure>
+<div class="box def"><span class="lbl">The four properties</span>
+  <ol style="margin:2px 0">
+    <li><b>Downward-sloping</b> — because more of a good is better.</li>
+    <li><b>Higher curves = higher utility</b> — they contain bundles with more of both goods.</li>
+    <li><b>They never cross</b> (see below).</li>
+    <li><b>They get flatter to the right</b> — a diminishing marginal rate of substitution (convex to the origin).</li>
+  </ol></div>
+<h4>Property 3 — why indifference curves cannot cross</h4>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Indifference curves cannot cross">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <polyline fill="none" stroke="#1f8fb2" stroke-width="2.4" points="162.0,129.8 174.0,143.1 186.0,155.6 198.0,167.3 210.0,178.3 222.0,188.5 234.0,198.0 246.0,206.9 258.0,215.1 270.0,222.7 282.0,229.8 294.0,236.2 306.0,242.2 318.0,247.7 330.0,252.7 342.0,257.4 354.0,261.6 366.0,265.4 378.0,268.9 390.0,272.1 402.0,275.0 414.0,277.7 426.0,280.2 438.0,282.5 450.0,284.6 462.0,286.6 474.0,288.5 486.0,290.3 498.0,292.1 510.0,293.9 522.0,295.7"/>
+  <polyline fill="none" stroke="#c0392b" stroke-width="2.4" points="162.0,181.3 174.0,191.5 186.0,200.7 198.0,209.1 210.0,216.7 222.0,223.4 234.0,229.5 246.0,234.8 258.0,239.5 270.0,243.5 282.0,247.0 294.0,250.0 306.0,252.6 318.0,254.7 330.0,256.5 342.0,257.9 354.0,259.1 366.0,260.0 378.0,260.8 390.0,261.4 402.0,262.0 414.0,262.4 426.0,263.0 438.0,263.5 450.0,264.2 462.0,265.0 474.0,266.0 486.0,267.2 498.0,268.7 510.0,270.6 522.0,272.8"/>
+  <circle cx="319.5" cy="251.3" r="4" fill="#14323e"/>
+  <text x="303.5" y="247.3" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">Z</text>
+  <circle cx="443.2" cy="277.1" r="4" fill="#1f8fb2"/>
+  <text x="451.2" y="291.1" font-family="Arial" font-size="13" font-weight="bold" fill="#1f8fb2">R</text>
+  <circle cx="443.2" cy="262.8" r="4" fill="#c0392b"/>
+  <text x="451.2" y="256.8" font-family="Arial" font-size="13" font-weight="bold" fill="#c0392b">T</text>
+  <text x="150.0" y="95.0" font-family="Arial" font-size="13" fill="#1f8fb2" text-anchor="start">I₁</text>
+  <text x="150.0" y="130.0" font-family="Arial" font-size="13" fill="#c0392b" text-anchor="start">I₂</text>
+  <line x1="443.2" y1="330.0" x2="443.2" y2="262.8" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+</svg>
+<figcaption><b>Figure 3.</b> Suppose two indifference curves crossed at Z. Take points R (on I₁) and T (on I₂) directly above one another. Being on the same curve as Z, R gives the same utility as Z, and T also gives the same utility as Z — so R and T must be equally good. But T has <b>more consumption than R for the same free time</b>, so T is strictly better. Contradiction — therefore curves <b>cannot cross</b>.</figcaption>
+</figure>
+<h4>Property 4 — the marginal rate of substitution (MRS)</h4>
+  <div class="box def"><span class="lbl">Definition — marginal rate of substitution</span>The <b>MRS</b> is the amount of one good a person is <b>willing to give up</b> to get one more unit of the other, holding utility constant. Graphically it is the <b>(magnitude of the) slope of the indifference curve</b> at a point. It <b>diminishes</b> as you move right: the more you already have of a good, the less of the other you'll sacrifice for still more of it.</div>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Marginal rate of substitution">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">q₂ — books</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">q₁ — games</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <polyline fill="none" stroke="#1f8fb2" stroke-width="2.6" points="153.0,44.0 164.5,79.5 175.9,107.1 187.4,129.3 198.9,147.4 210.4,162.6 221.9,175.4 233.3,186.4 244.8,195.9 256.3,204.3 267.8,211.7 279.2,218.2 290.7,224.1 302.2,229.4 313.6,234.1 325.1,238.5 336.6,242.4 348.1,246.1 359.6,249.4 371.0,252.5 382.5,255.4 394.0,258.1 405.4,260.5 416.9,262.8 428.4,265.0 439.9,267.0 451.4,268.9 462.8,270.7 474.3,272.4 485.8,274.0 497.3,275.5 508.7,277.0 520.2,278.3 531.7,279.6 543.1,280.8 554.6,282.0 566.1,283.1 577.6,284.2 589.0,285.2 600.5,286.2 612.0,287.1"/>
+  <line x1="319.5" y1="245.5" x2="544.5" y2="285.8" stroke="#e8814a" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <circle cx="432.0" cy="265.6" r="4" fill="#14323e"/>
+  <text x="441.0" y="261.6" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">Z</text>
+  <text x="250.0" y="90.0" font-family="Arial" font-size="10.5" fill="#7a5230" text-anchor="start">flatter MRS: willing to give up</text>
+  <text x="250.0" y="105.0" font-family="Arial" font-size="10.5" fill="#7a5230" text-anchor="start">few books for one more game</text>
+  <line x1="135.0" y1="66.9" x2="279.0" y2="249.9" stroke="#8e6fb0" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <circle cx="207.0" cy="158.4" r="3.5" fill="#8e6fb0"/>
+  <text x="118.0" y="120.0" font-family="Arial" font-size="10.5" fill="#8e6fb0" text-anchor="start">steep MRS</text>
+</svg>
+<figcaption><b>Figure 4.</b> A consumer choosing between games (q₁) and books (q₂). At bundle <b>Z</b> she already has <b>many games and few books</b>, so she will give up only a <b>few books</b> for one more game — the curve is <b>flat</b> (small MRS). Far to the left, with few games, she'd sacrifice <b>many</b> books for a game (steep, large MRS). The MRS is the slope of the tangent.</figcaption>
+</figure>
+<div class="box cue"><span class="lbl">Listen for in the lecture</span>The MRS is a <b>subjective willingness to trade</b>, read off preferences. Later it will be set equal to the MRT (an <b>objective</b> trade-off read off the constraint) to find the optimum. Keep the two straight: <b>MRS = preferences, MRT = constraint.</b></div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section B · application</span>Putting a Price on the Priceless</h2>
+<p>The MRS is powerful because it lets us value things that have <b>no market price</b> — marriage, children, health. There's no market, so no observed monetary value, and asking "how much would you pay for…?" directly is unreliable. The trick is <b>indirect measurement via happiness</b>.</p>
+  <ul>
+    <li>Ask people "<b>How satisfied are you with your life?</b>" and relate the answer to observable characteristics (income, marital status, health, employment…).</li>
+    <li>The <b>MRS between, say, marriage and income</b> then reveals the willingness to pay for marriage — how much extra income would compensate a single person for being unmarried, at constant happiness.</li>
+  </ul>
+<figure class="avoid">
+<svg viewBox="0 0 660 340" role="img" aria-label="Monetary value of marriage">
+  <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#e8814a"/></marker></defs>
+  <line x1="72" y1="56" x2="72" y2="300" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="300" x2="618" y2="300" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="52" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle"></text>
+  <text x="622" y="316" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Income ($/year)</text>
+  <text x="66" y="316" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72" y1="132.0" x2="612" y2="132.0" stroke="#c9c0e0" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="72" y1="228.0" x2="612" y2="228.0" stroke="#c9c0e0" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="78.0" y="124.0" font-family="Arial" font-size="11" fill="#6f4fb0" text-anchor="start">married</text>
+  <text x="78.0" y="220.0" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="start">single</text>
+  <circle cx="193.5" cy="132.0" r="4" fill="#6f4fb0"/>
+  <text x="187.5" y="122.0" font-family="Arial" font-size="13" font-weight="bold" fill="#6f4fb0">Z</text>
+  <circle cx="477.0" cy="228.0" r="4" fill="#5a6b78"/>
+  <text x="485.0" y="220.0" font-family="Arial" font-size="13" font-weight="bold" fill="#5a6b78">T</text>
+  <polyline fill="none" stroke="#1f8fb2" stroke-width="2.2" points="193.5,132.0 202.9,133.9 212.4,136.0 221.9,138.5 231.3,141.3 240.8,144.4 250.2,147.6 259.6,151.1 269.1,154.8 278.6,158.6 288.0,162.5 297.4,166.5 306.9,170.6 316.4,174.8 325.8,179.0 335.2,183.2 344.7,187.3 354.1,191.4 363.6,195.4 373.1,199.3 382.5,203.1 391.9,206.7 401.4,210.2 410.8,213.4 420.3,216.4 429.8,219.1 439.2,221.6 448.6,223.7 458.1,225.5 467.6,227.0 477.0,228.0"/>
+  <line x1="193.5" y1="271.2" x2="477.0" y2="271.2" stroke="#e8814a" stroke-width="1.4" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+  <text x="333.9" y="263.2" font-family="Arial" font-size="10.5" fill="#e8814a" text-anchor="middle">value of marriage ≈ $105,000/yr</text>
+</svg>
+<figcaption><b>Figure 5.</b> Same-happiness (indifference) reasoning applied to marriage. A married person at income Z is exactly as happy as a single person at the higher income T. The horizontal gap — the extra income needed to keep a single person as happy — is the <b>monetary value of marriage</b>, estimated at roughly <b>$105,000 per year</b>.</figcaption>
+</figure>
+<table class="data avoid">
+  <tr><th>What?</th><th>In comparison to?</th><th>Value (per year)</th></tr>
+  <tr><td>Excellent health</td><td>Very bad health</td><td class="num">+$463,170</td></tr>
+  <tr><td>Married</td><td>Single</td><td class="num">+$105,000</td></tr>
+  <tr><td>Divorce</td><td>No divorce</td><td class="num">−$34,000</td></tr>
+  <tr><td>Unemployed</td><td>Full-time job</td><td class="num">−$114,248</td></tr>
+  <tr><td>Death of partner</td><td>No death of partner</td><td class="num">−$308,780</td></tr>
+</table>
+  <p style="font-size:.85rem;color:#5a6b78">Source: estimates via life-satisfaction regressions (Blanchflower &amp; Oswald-style; slide cites bakadesuyo.com). Signs show whether the event raises or lowers well-being.</p>
+<h3>But do we get used to everything? Hedonic adaptation</h3>
+  <p>A caveat to these numbers: over time people tend to <b>return to a long-run "set-point"</b> of happiness after major life events. The initial jump (or drop) in satisfaction fades.</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 290" role="img" aria-label="Hedonic adaptation over time">
+  <line x1="72" y1="145.0" x2="612" y2="145.0" stroke="#b7c3cb" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="72" y1="36" x2="72" y2="250" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="250" x2="618" y2="250" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="32" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Life satisfaction</text>
+  <text x="622" y="266" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Years around event</text>
+  <text x="66" y="266" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <polyline fill="none" stroke="#1f8fb2" stroke-width="2.4" points="72.0,145.0 126.0,145.0 180.0,142.9 234.0,90.4 288.0,111.4 342.0,126.1 396.0,136.6 450.0,141.8 504.0,143.9 558.0,145.0 612.0,145.0"/>
+  <line x1="234.0" y1="40" x2="234.0" y2="250" stroke="#e8814a" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="240.0" y="60.0" font-family="Arial" font-size="10.5" fill="#e8814a" text-anchor="start">event (e.g. marriage)</text>
+  <text x="606.0" y="139.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">baseline (set-point)</text>
+</svg>
+<figcaption><b>Figure 6.</b> Life satisfaction around a major event (e.g. marriage). There is a spike, but within a few years people drift back toward their <b>baseline</b>. (Source: Clark, Diener, Georgellis &amp; Lucas, 2008.) This <b>adaptation</b> means the money-values above should be read as short-to-medium-run, not permanent.</figcaption>
+</figure>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section B · the constraint</span>The Feasible Frontier &amp; the MRT</h2>
+<p>Preferences tell us what the person <b>wants</b>; now we need what is <b>possible</b>. The trade-off between consumption and free time is drawn as the <b>feasible frontier</b>.</p>
+  <div class="box def"><span class="lbl">Definitions</span>
+    <ul style="margin:2px 0">
+      <li><b>Feasible frontier</b> — the combinations of free time and consumption that can just be <b>reached</b> (work all available hours → max consumption, no free time; work none → max free time, no consumption).</li>
+      <li><b>Feasible set</b> — the frontier <b>plus everything inside it</b> (all attainable combinations).</li>
+    </ul></div>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Feasible frontier and feasible set">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption ($)</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time (hours)</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <polygon points="72.0,330.0 72.0,72.59999999999997 612.0,330.0" fill="#1f8fb2" opacity="0.10"/>
+  <line x1="72.0" y1="72.6" x2="612.0" y2="330.0" stroke="#14323e" stroke-width="2.6"/>
+  <text x="330.0" y="150.0" font-family="Arial" font-size="12" fill="#14323e" text-anchor="start">Feasible frontier</text>
+  <text x="150.0" y="250.0" font-family="Arial" font-size="12" fill="#1f6f8b" text-anchor="start">Feasible set</text>
+</svg>
+<figcaption><b>Figure 7.</b> The feasible frontier and the feasible set. Points on the frontier use all available time; points inside waste some potential consumption or time; points outside are unattainable.</figcaption>
+</figure>
+<div class="box def"><span class="lbl">Definition — marginal rate of transformation</span>The <b>slope of the feasible frontier</b> is the <b>opportunity cost of free time</b> — the consumption you forgo for one more hour off. This is the <b>marginal rate of transformation (MRT)</b>: the rate at which free time can be <b>transformed</b> into consumption (i.e. the wage).</div>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Marginal rate of transformation">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption ($)</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time (hours)</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72.0" y1="72.6" x2="612.0" y2="330.0" stroke="#14323e" stroke-width="2.6"/>
+  <line x1="274.5" y1="169.1" x2="364.5" y2="169.1" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="364.5" y1="169.1" x2="364.5" y2="212.0" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="319.5" y="163.1" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">Δ free time</text>
+  <text x="370.5" y="190.6" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="start">Δ consumption</text>
+  <text x="250.0" y="90.0" font-family="Arial" font-size="11" fill="#c0392b" text-anchor="start">slope = −MRT = −opportunity cost of free time</text>
+</svg>
+<figcaption><b>Figure 8.</b> The MRT is the frontier's slope. If an hour of free time costs $w of consumption (the wage), the frontier has slope −w and the MRT = w. A <b>higher wage → steeper frontier → higher opportunity cost of free time.</b></figcaption>
+</figure>
+<div class="box test"><span class="lbl">Check yourself</span>
+  <ul>
+    <li>Why must indifference curves be convex (flatten to the right)? What would a <i>concave</i> one imply about willingness to trade?</li>
+    <li>The MRS and MRT are both "slopes" — whose slope is each, and what does each measure (willingness vs ability to trade)?</li>
+  </ul></div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section C</span>Decision-Making Under Scarcity</h2>
+<p>Now combine the two halves. Which feasible combination will the person choose? This is a <b>constrained choice problem</b>: pursue an <b>objective</b> subject to a <b>constraint</b>.</p>
+  <div class="box def"><span class="lbl">The constrained optimisation</span>
+    <ul style="margin:2px 0">
+      <li><b>Objective:</b> maximise <b>utility</b>.</li>
+      <li><b>Constraint:</b> the <b>feasible frontier</b>.</li>
+    </ul>
+    The optimal choice is the combination lying on an indifference curve <b>as far from the origin as possible</b> while still being feasible.</div>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Optimal choice MRS = MRT">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72.0" y1="72.6" x2="612.0" y2="330.0" stroke="#14323e" stroke-width="2.6"/>
+  <polyline fill="none" stroke="#c9c0e0" stroke-width="1.8" points="139.5,44.0 151.3,86.6 163.1,118.1 174.9,142.5 186.8,161.8 198.6,177.5 210.4,190.5 222.2,201.5 234.0,210.8 245.8,218.9 257.6,226.0 269.4,232.2 281.2,237.7 293.1,242.7 304.9,247.1 316.7,251.1 328.5,254.7 340.3,258.1 352.1,261.1 363.9,263.9 375.8,266.4 387.6,268.8 399.4,271.0 411.2,273.1 423.0,275.0 434.8,276.8 446.6,278.5 458.4,280.0 470.2,281.5 482.1,282.9 493.9,284.2 505.7,285.5 517.5,286.7 529.3,287.8 541.1,288.8 552.9,289.9 564.8,290.8 576.6,291.7 588.4,292.6 600.2,293.5 612.0,294.2"/>
+  <polyline fill="none" stroke="#a58fd0" stroke-width="1.8" points="168.8,44.0 179.8,73.4 190.9,97.3 202.0,117.1 213.1,133.9 224.2,148.1 235.2,160.5 246.3,171.3 257.4,180.8 268.5,189.2 279.6,196.7 290.6,203.4 301.7,209.5 312.8,215.1 323.9,220.1 335.0,224.8 346.0,229.0 357.1,233.0 368.2,236.6 379.3,240.0 390.4,243.1 401.5,246.0 412.5,248.7 423.6,251.3 434.7,253.7 445.8,256.0 456.9,258.1 467.9,260.1 479.0,262.0 490.1,263.8 501.2,265.5 512.3,267.2 523.3,268.7 534.4,270.2 545.5,271.6 556.6,272.9 567.7,274.2 578.8,275.4 589.8,276.6 600.9,277.7 612.0,278.8"/>
+  <polyline fill="none" stroke="#6f4fb0" stroke-width="2.4" points="193.5,44.0 204.0,66.7 214.4,86.0 224.9,102.7 235.4,117.3 245.8,130.1 256.3,141.4 266.7,151.6 277.2,160.7 287.7,168.9 298.1,176.3 308.6,183.1 319.1,189.3 329.5,195.1 340.0,200.3 350.4,205.2 360.9,209.7 371.4,213.9 381.8,217.8 392.3,221.5 402.8,224.9 413.2,228.2 423.7,231.2 434.1,234.0 444.6,236.7 455.1,239.3 465.5,241.7 476.0,244.0 486.5,246.2 496.9,248.2 507.4,250.2 517.8,252.1 528.3,253.8 538.8,255.6 549.2,257.2 559.7,258.7 570.1,260.2 580.6,261.7 591.1,263.1 601.5,264.4 612.0,265.6"/>
+  <polyline fill="none" stroke="#c9c0e0" stroke-width="1.8" stroke-dasharray="4 3" points="220.5,44.0 230.3,61.7 240.1,77.3 249.9,91.2 259.6,103.7 269.4,114.9 279.2,125.0 289.0,134.3 298.8,142.7 308.6,150.5 318.4,157.6 328.2,164.2 337.9,170.3 347.7,176.0 357.5,181.3 367.3,186.2 377.1,190.8 386.9,195.1 396.7,199.2 406.5,203.0 416.2,206.6 426.0,210.0 435.8,213.3 445.6,216.3 455.4,219.2 465.2,222.0 475.0,224.6 484.8,227.1 494.5,229.5 504.3,231.8 514.1,233.9 523.9,236.0 533.7,238.0 543.5,239.9 553.3,241.8 563.1,243.5 572.8,245.2 582.6,246.8 592.4,248.4 602.2,249.9 612.0,251.3"/>
+  <circle cx="342.0" cy="201.3" r="4" fill="#14323e"/>
+  <text x="352.0" y="195.3" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">A</text>
+  <text x="150.0" y="280.0" font-family="Arial" font-size="11" fill="#a58fd0" text-anchor="start">IC₁</text>
+  <text x="350.0" y="120.0" font-family="Arial" font-size="11" fill="#6f4fb0" text-anchor="start">IC₃ (tangent: MRS = MRT)</text>
+  <text x="430.0" y="95.0" font-family="Arial" font-size="10" fill="#8a97a0" text-anchor="start">IC₄ unreachable</text>
+</svg>
+<figcaption><b>Figure 9.</b> Overlay the indifference curves on the feasible frontier. IC₄ would be nicer but is <b>unreachable</b>; IC₁ is feasible but wasteful (you can do better). The best attainable curve just <b>touches</b> the frontier — the tangency point <b>A</b>.</figcaption>
+</figure>
+<div class="box def"><span class="lbl">Optimality condition — MRS = MRT</span>The utility-maximising choice is where the <b>indifference curve is tangent to the feasible frontier</b>. At that point the rate at which the person is <b>willing</b> to trade the goods (MRS) equals the rate at which they <b>can</b> trade them (MRT):
+    <span class="eq" style="margin:8px 0">MRS = MRT</span></div>
+<h3>Why the tangency is best — the intuition</h3>
+  <p>At a non-tangency point the two rates differ, and you can always improve. Consider a point <b>D</b> where the indifference curve is <b>steeper</b> than the frontier (MRS &gt; MRT):</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Why the tangency is optimal">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72.0" y1="72.6" x2="612.0" y2="330.0" stroke="#14323e" stroke-width="2.6"/>
+  <polyline fill="none" stroke="#6f4fb0" stroke-width="2.2" points="193.5,44.0 204.0,66.7 214.4,86.0 224.9,102.7 235.4,117.3 245.8,130.1 256.3,141.4 266.7,151.6 277.2,160.7 287.7,168.9 298.1,176.3 308.6,183.1 319.1,189.3 329.5,195.1 340.0,200.3 350.4,205.2 360.9,209.7 371.4,213.9 381.8,217.8 392.3,221.5 402.8,224.9 413.2,228.2 423.7,231.2 434.1,234.0 444.6,236.7 455.1,239.3 465.5,241.7 476.0,244.0 486.5,246.2 496.9,248.2 507.4,250.2 517.8,252.1 528.3,253.8 538.8,255.6 549.2,257.2 559.7,258.7 570.1,260.2 580.6,261.7 591.1,263.1 601.5,264.4 612.0,265.6"/>
+  <polyline fill="none" stroke="#b6a6dc" stroke-width="2.0" points="180.0,44.0 190.8,70.0 201.6,91.7 212.4,110.0 223.2,125.7 234.0,139.3 244.8,151.2 255.6,161.8 266.4,171.1 277.2,179.5 288.0,187.0 298.8,193.8 309.6,200.0 320.4,205.7 331.2,210.8 342.0,215.6 352.8,220.0 363.6,224.1 374.4,227.9 385.2,231.4 396.0,234.7 406.8,237.7 417.6,240.6 428.4,243.3 439.2,245.9 450.0,248.3 460.8,250.6 471.6,252.7 482.4,254.7 493.2,256.7 504.0,258.5 514.8,260.2 525.6,261.9 536.4,263.5 547.2,265.0 558.0,266.4 568.8,267.8 579.6,269.1 590.4,270.4 601.2,271.6 612.0,272.8"/>
+  <line x1="252.0" y1="330.0" x2="252.0" y2="158.4" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="252.0" cy="158.4" r="4" fill="#c0392b"/>
+  <text x="236.0" y="160.4" font-family="Arial" font-size="13" font-weight="bold" fill="#c0392b">D</text>
+  <line x1="252.0" y1="158.4" x2="330.8" y2="195.9" stroke="#14323e" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <line x1="252.0" y1="158.4" x2="330.8" y2="233.5" stroke="#8e6fb0" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <line x1="330.8" y1="195.9" x2="330.8" y2="233.5" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="330.8" cy="195.9" r="3" fill="#14323e"/>
+  <text x="337.8" y="192.9" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">G</text>
+  <circle cx="330.8" cy="233.5" r="3" fill="#8e6fb0"/>
+  <text x="337.8" y="241.5" font-family="Arial" font-size="13" font-weight="bold" fill="#8e6fb0">F</text>
+  <text x="330.0" y="110.0" font-family="Arial" font-size="10.5" fill="#5a6b78" text-anchor="start">willing to give up DF,</text>
+  <text x="330.0" y="125.0" font-family="Arial" font-size="10.5" fill="#5a6b78" text-anchor="start">only gives up DG → utility ↑</text>
+  <circle cx="342.0" cy="201.3" r="3" fill="#6f4fb0"/>
+  <text x="350.0" y="195.3" font-family="Arial" font-size="10" font-weight="bold" fill="#6f4fb0">opt</text>
+</svg>
+<figcaption><b>Figure 10.</b> At D, to gain one more hour of free time the consumer is <b>willing</b> to give up DF of consumption (her steep MRS), but the frontier only <b>makes</b> her give up DG (the flatter MRT). Since she sacrifices <b>less than she was willing to</b> (DG &lt; DF), taking more free time raises her utility — she moves to a higher indifference curve. She keeps going until MRS = MRT (the optimum).</figcaption>
+</figure>
+<div class="box cue"><span class="lbl">Listen for in the lecture</span>The logic is completely general: whenever <b>MRS ≠ MRT</b> there is an unexploited gain, so only the tangency can be optimal. If MRS &gt; MRT, take more free time; if MRS &lt; MRT, work more. This is the same "equate the margins" idea you'll meet again and again in microeconomics.</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section D</span>Income &amp; Substitution Effects</h2>
+<h3>Set-up — the summer-job example</h3>
+  <p>You are planning your <b>10-week summer break</b>. You can work at <b>$90 per day</b>, but you also value time for friends, holiday and study. How many days should you work?</p>
+  <p>Your feasible frontier has slope <b>−$90/day</b> (the wage = the MRT = the opportunity cost of a day off). The optimum is the tangency <b>A</b>.</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Summer job feasible frontier">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption ($)</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time (days)</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72.0" y1="72.6" x2="612.0" y2="330.0" stroke="#14323e" stroke-width="2.6"/>
+  <polyline fill="none" stroke="#6f4fb0" stroke-width="2.2" points="315.0,44.0 322.4,52.5 329.8,60.5 337.3,68.0 344.7,75.1 352.1,81.9 359.6,88.3 367.0,94.4 374.4,100.2 381.8,105.7 389.2,110.9 396.7,115.9 404.1,120.7 411.5,125.3 419.0,129.7 426.4,133.9 433.8,137.9 441.2,141.8 448.6,145.5 456.1,149.1 463.5,152.5 470.9,155.8 478.3,159.0 485.8,162.0 493.2,165.0 500.6,167.9 508.1,170.6 515.5,173.3 522.9,175.9 530.3,178.4 537.8,180.8 545.2,183.1 552.6,185.4 560.0,187.6 567.4,189.7 574.9,191.8 582.3,193.8 589.7,195.8 597.1,197.7 604.6,199.5 612.0,201.3"/>
+  <circle cx="342.0" cy="201.3" r="4" fill="#14323e"/>
+  <text x="352.0" y="195.3" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">A</text>
+  <text x="66.0" y="251.3" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">2000</text>
+  <text x="66.0" y="169.6" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">4000</text>
+  <text x="66.0" y="87.9" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">6000</text>
+  <text x="226.3" y="345.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">20</text>
+  <text x="380.6" y="345.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">40</text>
+  <text x="534.9" y="345.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">60</text>
+  <text x="330.0" y="130.0" font-family="Arial" font-size="11" fill="#c0392b" text-anchor="start">slope = −$90/day</text>
+</svg>
+<figcaption><b>Figure 11.</b> The summer-job feasible frontier: work all days → maximum consumption, no free time; take all days off → maximum free time, no consumption. Slope = −$90/day. The chosen point A is where MRS = MRT.</figcaption>
+</figure>
+<h3>A pure increase in income (a gift)</h3>
+  <p>Your mother gives you <b>$1000</b>, no strings attached. This does <b>not</b> change the wage, so the frontier shifts <b>up in parallel by $1000</b> — the opportunity cost of free time is unchanged. You re-optimise at a new tangency.</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 372" role="img" aria-label="Extra income parallel shift">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption ($)</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time (days)</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72.0" y1="104.8" x2="612.0" y2="330.0" stroke="#9aa6ad" stroke-width="2.0" stroke-dasharray="5 4"/>
+  <line x1="72.0" y1="69.0" x2="612.0" y2="294.2" stroke="#14323e" stroke-width="2.4"/>
+  <polyline fill="none" stroke="#b6a6dc" stroke-width="1.8" points="178.3,44.0 189.2,70.5 200.0,92.5 210.8,111.0 221.7,126.9 232.5,140.6 243.4,152.6 254.2,163.1 265.0,172.5 275.9,180.9 286.7,188.4 297.6,195.2 308.4,201.4 319.3,207.0 330.1,212.2 340.9,216.9 351.8,221.3 362.6,225.4 373.5,229.1 384.3,232.6 395.2,235.9 406.0,239.0 416.8,241.8 427.7,244.5 438.5,247.0 449.4,249.4 460.2,251.7 471.1,253.8 481.9,255.8 492.7,257.7 503.6,259.5 514.4,261.3 525.3,262.9 536.1,264.5 546.9,266.0 557.8,267.4 568.6,268.8 579.5,270.1 590.3,271.3 601.2,272.5 612.0,273.7"/>
+  <polyline fill="none" stroke="#6f4fb0" stroke-width="2.2" points="226.2,44.0 235.8,60.8 245.4,75.8 255.1,89.2 264.7,101.3 274.4,112.2 284.0,122.1 293.7,131.1 303.3,139.4 313.0,147.0 322.6,154.1 332.3,160.6 341.9,166.7 351.6,172.3 361.2,177.6 370.8,182.5 380.5,187.1 390.1,191.4 399.8,195.5 409.4,199.3 419.1,203.0 428.7,206.4 438.4,209.7 448.0,212.7 457.7,215.7 467.3,218.5 477.0,221.1 486.6,223.7 496.2,226.1 505.9,228.4 515.5,230.6 525.2,232.7 534.8,234.7 544.5,236.7 554.1,238.6 563.8,240.3 573.4,242.1 583.1,243.7 592.7,245.3 602.4,246.9 612.0,248.4"/>
+  <circle cx="342.0" cy="217.4" r="4" fill="#9aa6ad"/>
+  <text x="326.0" y="231.4" font-family="Arial" font-size="13" font-weight="bold" fill="#5a6b78">A</text>
+  <circle cx="365.1" cy="191.3" r="4" fill="#14323e"/>
+  <text x="374.1" y="185.3" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">B</text>
+  <text x="300.0" y="90.0" font-family="Arial" font-size="11" fill="#14323e" text-anchor="start">+$1000 (parallel shift up)</text>
+  <text x="300.0" y="108.0" font-family="Arial" font-size="10.5" fill="#5a6b78" text-anchor="start">both free time & consumption ↑</text>
+  <text x="66.0" y="261.5" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">2000</text>
+  <text x="66.0" y="190.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">4000</text>
+  <text x="66.0" y="118.5" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">6000</text>
+</svg>
+<figcaption><b>Figure 12.</b> A $1000 gift shifts the frontier up in <b>parallel</b> (same slope). The new optimum B typically has <b>both more consumption and more free time</b> — free time is a <b>normal good</b>. (With particular preferences free time might stay the same, but it should never <b>fall</b>.)</figcaption>
+</figure>
+<div class="box note"><span class="lbl">Key takeaway</span>A rise in <b>unearned</b> income (no change in the wage) has only an <b>income effect</b>: more of everything you value, including free time. We expect free time to <b>rise or stay equal — never fall.</b></div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section D · cont.</span>A Wage Rise: Two Opposing Effects</h2>
+<p>Now a genuinely different job pays <b>$130 per day</b>. Unlike the gift, a higher <b>wage</b> does two things at once, and they pull free time in <b>opposite</b> directions:</p>
+  <div class="box def"><span class="lbl">The two effects of a wage increase</span>
+    <ul style="margin:2px 0">
+      <li><b>Income effect</b> — at your old hours you now earn more, so you can afford more of everything, including <b>more free time</b> (free time is normal). <b>Pushes free time up.</b></li>
+      <li><b>Substitution effect</b> — free time is now more <b>expensive</b> (each hour off costs $130 rather than $90 of consumption), so you substitute away from it. <b>Pushes free time down.</b></li>
+    </ul></div>
+  <p>We separate them with a <b>hypothetical</b> frontier: a line with the <b>old slope</b> (−$90) drawn tangent to the <b>new, higher</b> indifference curve.</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 406" role="img" aria-label="Income and substitution effects">
+  <line x1="72" y1="40" x2="72" y2="330" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="330" x2="618" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="64" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Consumption ($)</text>
+  <text x="622" y="346" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="end">Free time (days)</text>
+  <text x="66" y="346" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">0</text>
+  <line x1="72.0" y1="140.3" x2="612.0" y2="330.0" stroke="#9aa6ad" stroke-width="2.0" stroke-dasharray="5 4"/>
+  <line x1="72.0" y1="56.0" x2="612.0" y2="330.0" stroke="#14323e" stroke-width="2.4"/>
+  <polyline fill="none" stroke="#6f4fb0" stroke-width="2.3" points="365.1,204.8 396.0,220.4 397.0,220.9 398.1,221.3 399.1,221.6 400.1,221.9 401.1,222.1 402.2,222.2 403.2,222.3 404.2,222.3 405.3,222.3 406.3,222.2 407.3,222.2 408.3,222.1 409.4,221.9 410.4,221.8 411.4,221.6 412.5,221.5 413.5,221.3 414.5,221.1 415.5,221.0 416.6,220.9 417.6,220.8 418.6,220.7 419.7,220.6 420.7,220.6 421.7,220.6 422.7,220.7 423.8,220.9 424.8,221.0 425.8,221.3 426.9,221.6 473.1,237.9"/>
+  <polyline fill="none" stroke="#b6a6dc" stroke-width="1.9" points="264.9,201.5 271.3,204.2 277.7,207.0 284.1,209.7 290.6,212.3 297.0,214.9 303.4,217.5 309.9,220.0 316.3,222.4 322.7,224.8 329.1,227.1 335.6,229.4 342.0,231.7 348.4,233.9 354.9,236.0 361.3,238.1 367.7,240.1 374.1,242.1 380.6,244.0 387.0,245.8 393.4,247.6 399.9,249.3 406.3,251.0 412.7,252.6 419.1,254.2 425.6,255.7 432.0,257.1 438.4,258.5 444.9,259.8 451.3,261.1 457.7,262.3"/>
+  <line x1="72.0" y1="97.0" x2="735.4" y2="330.0" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="342.0" y1="330.0" x2="342.0" y2="235.2" stroke="#9aa6ad" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="396.0" y1="330.0" x2="396.0" y2="220.4" stroke="#14323e" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="426.9" y1="330.0" x2="426.9" y2="221.6" stroke="#c0392b" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="342.0" cy="235.2" r="4" fill="#9aa6ad"/>
+  <text x="327.0" y="231.2" font-family="Arial" font-size="13" font-weight="bold" fill="#5a6b78">A</text>
+  <circle cx="396.0" cy="220.4" r="4" fill="#14323e"/>
+  <text x="382.0" y="214.4" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">D</text>
+  <circle cx="426.9" cy="221.6" r="4" fill="#c0392b"/>
+  <text x="435.9" y="215.6" font-family="Arial" font-size="13" font-weight="bold" fill="#c0392b">C</text>
+  <line x1="342.0" y1="352" x2="426.9" y2="352" stroke="#c0392b" stroke-width="1.2"/>
+  <line x1="426.9" y1="364" x2="396.0" y2="364" stroke="#6f4fb0" stroke-width="1.2"/>
+  <text x="380.6" y="349.0" font-family="Arial" font-size="10" fill="#c0392b" text-anchor="middle">income effect A→C (free time ↑)</text>
+  <text x="473.1" y="375.0" font-family="Arial" font-size="10" fill="#6f4fb0" text-anchor="middle">substitution C→D (free time ↓)</text>
+  <text x="66.0" y="272.8" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">2000</text>
+  <text x="66.0" y="212.6" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">4000</text>
+  <text x="66.0" y="152.4" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">6000</text>
+  <text x="66.0" y="92.2" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">8000</text>
+</svg>
+<figcaption><b>Figure 13.</b> Decomposing a wage rise. <b>A → C (income effect):</b> a parallel move to the new higher indifference curve at the <b>old</b> relative price — free time rises. <b>C → D (substitution effect):</b> along the <b>same</b> indifference curve, the frontier steepens to the true new wage — free time falls. The <b>net</b> move A → D here shows free time <b>rising</b>, so the income effect dominates.</figcaption>
+</figure>
+<div class="box def"><span class="lbl">The overall effect</span>
+    <span class="eq" style="margin:8px 0">Overall effect = Income effect + Substitution effect</span>
+    Because the two effects have <b>opposite signs</b> for free time, the net direction depends on <b>which is larger</b> — and that depends on <b>individual preferences</b>. Free time (and hence hours worked) can rise <b>or</b> fall when the wage rises.</div>
+<div class="box cue"><span class="lbl">Listen for in the lecture</span>The construction is fiddly the first time. Anchor it on three points: <b>A</b> (old optimum), <b>D</b> (new optimum, on the true new frontier), and <b>C</b> (the hypothetical point — <b>same slope as old, same indifference curve as new</b>). Income effect = A→C, substitution = C→D. The consumption axis reveals the puzzle's resolution; the free-time axis reveals its sign.</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Section E</span>Application to Technological Change</h2>
+<h3>Differences over time</h3>
+  <p>Now use the model to explain the historical fall in working hours. Take a US worker in <b>1900</b> at point A. Over the century, technological progress raised the wage, <b>steepening</b> the budget constraint. Decompose exactly as in Figure 13:</p>
+  <ul>
+    <li><b>Income effect:</b> higher wage → afford more → <b>free time and consumption both rise</b> (A → C).</li>
+    <li><b>Substitution effect:</b> free time dearer → <b>free time falls</b>, consumption rises (C → D).</li>
+    <li><b>Net:</b> historically the <b>income effect dominated</b>, so <b>free time increased</b> — the working week and working year got shorter as countries got richer.</li>
+  </ul>
+  <div class="box note"><span class="lbl">This is exactly Figure 13</span>The "technological change over time" diagram <b>is</b> the wage-rise decomposition, with the income effect winning. That is the model's explanation for the long-run decline in hours worked in rich economies.</div>
+<h3>Cross-country differences</h3>
+  <p>Why do equally rich countries choose such different hours (Figure 1)? The model's baseline answer is <b>differences in preferences</b>. But preferences are shaped by more than taste:</p>
+  <ul>
+    <li><b>Culture / norms</b> — differing attitudes to work and leisure.</li>
+    <li><b>Politics</b> — legal limits on working hours, mandated holidays.</li>
+    <li><b>Social preferences</b> — e.g. "keeping up with the Joneses": if status depends on relative consumption, people over-work.</li>
+  </ul>
+<h3>Is this a good model?</h3>
+  <div class="two">
+    <div><div class="box test"><span class="lbl">Weaknesses</span>Not literally realistic: people don't compute MRS/MRT, and <b>most cannot freely choose their hours.</b></div></div>
+    <div><div class="box def"><span class="lbl">Why it still works</span>A good <b>approximation</b>: over time people <b>learn</b> the mix that suits them; hours shift through culture and politics (<b>indirect</b> choice); and people choose <b>which jobs to apply for</b>. It <b>explains real patterns</b> — hours across countries and over time — via preferences and income/substitution effects.</div></div>
+  </div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Wrap-up</span>Summary, Formulas &amp; Glossary</h2>
+<h3>The unit in one paragraph</h3>
+  <p>A person chooses between <b>consumption</b> and <b>free time</b> under scarcity. <b>Preferences</b> are drawn as convex, non-crossing <b>indifference curves</b>, whose slope is the <b>MRS</b> (willingness to trade). The <b>feasible frontier</b> is the constraint, whose slope is the <b>MRT</b> = the wage = the opportunity cost of free time. The best feasible bundle is the <b>tangency</b> where <b>MRS = MRT</b>. A pure income gain shifts the frontier out in parallel (only an <b>income effect</b>: free time rises or stays equal). A <b>wage rise</b> rotates the frontier and triggers <b>two opposing forces</b> — an income effect (free time ↑) and a substitution effect (free time ↓) — whose net depends on preferences. Historically the income effect has dominated, so richer societies work <b>fewer</b> hours.</p>
+<h3>Formula &amp; concept sheet</h3>
+  <table class="data avoid">
+    <tr><th>Concept</th><th>Meaning / expression</th></tr>
+    <tr><td>Utility</td><td class="mono">numerical ranking of bundles; higher = preferred</td></tr>
+    <tr><td>Indifference curve</td><td class="mono">bundles with equal utility; convex, downward, never cross</td></tr>
+    <tr><td>MRS (marginal rate of substitution)</td><td class="mono">|slope of indifference curve| = willingness to trade</td></tr>
+    <tr><td>Feasible frontier</td><td class="mono">consumption = wage × (hours available − free time)</td></tr>
+    <tr><td>MRT (marginal rate of transformation)</td><td class="mono">|slope of frontier| = wage = opp. cost of free time</td></tr>
+    <tr><td>Optimal choice</td><td class="mono">MRS = MRT (tangency)</td></tr>
+    <tr><td>Income effect (wage ↑)</td><td class="mono">free time ↑ (normal good)</td></tr>
+    <tr><td>Substitution effect (wage ↑)</td><td class="mono">free time ↓ (leisure dearer)</td></tr>
+    <tr><td>Overall effect</td><td class="mono">income effect + substitution effect</td></tr>
+  </table>
+<h3>Glossary</h3>
+  <table class="data avoid">
+    <tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Scarcity</td><td>Limited time (and resources) forces trade-offs.</td></tr>
+    <tr><td>Constrained choice</td><td>Maximising an objective (utility) subject to a constraint (the frontier).</td></tr>
+    <tr><td>Utility</td><td>Numerical index of preference satisfaction.</td></tr>
+    <tr><td>Indifference curve</td><td>Equal-utility combinations of two goods.</td></tr>
+    <tr><td>MRS</td><td>Willingness to give up one good for one more unit of the other; slope of the IC; diminishing.</td></tr>
+    <tr><td>Feasible frontier / set</td><td>Attainable boundary / all attainable bundles.</td></tr>
+    <tr><td>MRT</td><td>Rate free time converts into consumption; slope of the frontier; the wage.</td></tr>
+    <tr><td>Income effect</td><td>Response to being richer at unchanged relative prices.</td></tr>
+    <tr><td>Substitution effect</td><td>Response to a changed relative price at constant utility.</td></tr>
+    <tr><td>Normal good</td><td>Demand rises with income (free time is one).</td></tr>
+    <tr><td>Hedonic adaptation</td><td>Tendency to return to a happiness set-point after events.</td></tr>
+  </table>
+<h3>Exam-style questions to practise</h3>
+  <ol>
+    <li>Draw a feasible frontier for a wage of $15/hour over a 16-hour day and mark the optimum. What is the MRT?</li>
+    <li>Explain, using MRS and MRT, why a point inside the feasible set can never be optimal.</li>
+    <li>A worker's wage doubles but she works <i>the same</i> hours. What does this tell you about the relative size of her income and substitution effects?</li>
+    <li>Use an income/substitution diagram to explain why average annual hours fell across the 20th century in rich countries.</li>
+    <li>Two countries have identical technology and wages but very different working hours. Give three model-consistent explanations.</li>
+    <li>Why can indifference curves not cross? Prove it with a diagram.</li>
+  </ol>
+  <div class="footer-note">Study guide prepared as a companion to <i>Microeconomics — Scarcity and Choice, Unit 3: Scarcity, Work, and Choice</i> (KU Leuven, 2025–2026). All indifference curves and frontiers are computed (not sketched) so slopes and tangencies are geometrically accurate; data figures are clean redrawings of the lecture charts for study purposes.</div>
+</section>
+</body>
+</html>
