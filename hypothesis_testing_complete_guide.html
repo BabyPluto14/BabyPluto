@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Complete Guide to Hypothesis Testing</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --card: #ffffff; --text: #1a1a2e; --muted: #6c757d;
+    --blue: #2563eb; --green: #16a34a; --red: #dc2626; --orange: #ea580c;
+    --purple: #7c3aed; --teal: #0d9488;
+    --blue-light: #dbeafe; --green-light: #dcfce7; --red-light: #fee2e2;
+    --orange-light: #ffedd5; --purple-light: #ede9fe; --teal-light: #ccfbf1;
+    --border: #e2e8f0; --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8;
+      --blue-light: #1e3a5f; --green-light: #14532d; --red-light: #450a0a;
+      --orange-light: #431407; --purple-light: #2e1065; --teal-light: #042f2e;
+      --border: #334155; --shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .container { max-width: 920px; margin: 0 auto; padding: 32px 20px; }
+  h1 { font-size: 2.1rem; font-weight: 800; color: var(--blue); margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 1rem; margin-bottom: 28px; }
+  h2 { font-size: 1.4rem; font-weight: 700; margin: 38px 0 14px; border-left: 4px solid var(--blue); padding-left: 12px; scroll-margin-top: 16px; }
+  h3 { font-size: 1.1rem; font-weight: 700; margin: 20px 0 8px; color: var(--blue); }
+  p { margin-bottom: 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 18px; box-shadow: var(--shadow); }
+  .section-header { background: var(--blue); color: white; border-radius: 10px; padding: 12px 22px; margin: 40px 0 18px; font-size: 1.15rem; font-weight: 700; scroll-margin-top: 16px; }
+  .part-header { background: linear-gradient(135deg, var(--purple), var(--blue)); color: white; border-radius: 12px; padding: 18px 24px; margin: 48px 0 20px; scroll-margin-top: 16px; }
+  .part-header .k { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; font-weight: 700; }
+  .part-header h2 { border: none; padding: 0; margin: 4px 0 0; color: white; font-size: 1.55rem; }
+  .formula-box { background: var(--blue-light); border: 2px solid var(--blue); border-radius: 10px; padding: 14px 18px; margin: 14px 0; }
+  .formula-box .label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--blue); margin-bottom: 5px; letter-spacing: 0.05em; }
+  .formula-box .main { font-family: 'Courier New', monospace; font-size: 1.05rem; font-weight: 700; color: var(--blue); }
+  .warning { background: var(--red-light); border-left: 4px solid var(--red); border-radius: 8px; padding: 13px 16px; margin: 12px 0; }
+  .warning strong { color: var(--red); }
+  .tip { background: var(--green-light); border-left: 4px solid var(--green); border-radius: 8px; padding: 13px 16px; margin: 12px 0; }
+  .tip strong { color: var(--green); }
+  .note { background: var(--orange-light); border-left: 4px solid var(--orange); border-radius: 8px; padding: 13px 16px; margin: 12px 0; }
+  .note strong { color: var(--orange); }
+  .highlight { background: var(--purple-light); border: 1px solid var(--purple); border-radius: 8px; padding: 13px 16px; margin: 12px 0; }
+  .highlight strong { color: var(--purple); }
+  .story { background: var(--teal-light); border: 1px solid var(--teal); border-left: 5px solid var(--teal); border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+  .story strong { color: var(--teal); }
+  .story .st-label { display:block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 6px; }
+  .step { display: flex; gap: 14px; margin: 10px 0; align-items: flex-start; }
+  .step-num { background: var(--blue); color: white; border-radius: 50%; width: 27px; height: 27px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.83rem; flex-shrink: 0; margin-top: 2px; }
+  .step-content { flex: 1; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+  th { background: var(--blue); color: white; padding: 9px 12px; text-align: left; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--blue-light); }
+  code { background: var(--border); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.88em; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-left: 6px; }
+  .tag-exam { background: var(--red); color: white; }
+  .tag-key { background: var(--purple); color: white; }
+  ul, ol { padding-left: 22px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+  .chapter-badge { display: inline-block; background: var(--teal); color: white; border-radius: 6px; padding: 2px 10px; font-size: 0.8rem; font-weight: 700; margin-right: 6px; }
+  .anova-table td, .anova-table th, .ct td, .ct th { text-align: center; }
+  .anova-table td:first-child, .anova-table th:first-child, .ct td:first-child, .ct th:first-child { text-align: left; }
+  .ct-obs { background: var(--blue-light) !important; }
+  .ct-exp { background: var(--orange-light) !important; color: var(--orange); font-style: italic; }
+  .diff-row { display: grid; grid-template-columns: auto 1fr 1fr; gap: 0; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; margin: 14px 0; }
+  .diff-cell { padding: 10px 14px; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
+  .diff-label { background: var(--blue); color: white; font-weight: 700; }
+  .diff-z { background: var(--blue-light); }
+  .diff-t { background: var(--purple-light); }
+  .toc { columns: 2; column-gap: 26px; }
+  @media (max-width: 600px) { .toc { columns: 1; } }
+  .toc a { display: block; color: var(--blue); text-decoration: none; padding: 3px 0; font-size: 0.92rem; break-inside: avoid; }
+  .toc a:hover { text-decoration: underline; }
+  .toc a.lead { font-weight: 700; margin-top: 8px; }
+  .pill { display:inline-block; background: var(--purple); color:#fff; font-size:0.72rem; font-weight:700; border-radius:20px; padding:2px 10px; margin-bottom:6px; letter-spacing:0.04em; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>The Complete Guide to Hypothesis Testing</h1>
+<p class="subtitle">One mean · Normality · Two means · ANOVA · Correlation &amp; Chi-square — merged, expanded, and told as one story</p>
+
+<!-- ============================ TOC ============================ -->
+<div class="card">
+  <span class="pill">Navigation</span>
+  <div class="toc">
+    <a class="lead" href="#story">★ The Story — Statistics as a Courtroom</a>
+    <a href="#framework">0. The Universal 5-Step Recipe</a>
+    <a href="#pvalue">0b. p-values, α, and the Two Errors</a>
+    <a class="lead" href="#h11">H1.1 — Test for One Mean</a>
+    <a href="#h11-why">Why a new test? The σ problem</a>
+    <a href="#h11-tdist">The t-distribution</a>
+    <a href="#h11-ex">Worked examples</a>
+    <a class="lead" href="#h12">H1.2 — Tests for Normality</a>
+    <a href="#h12-ks">Kolmogorov–Smirnov</a>
+    <a href="#h12-sw">Shapiro–Wilk</a>
+    <a class="lead" href="#h2">H2 — Comparing Two Means</a>
+    <a href="#h2-tree">Paired vs unpaired decision</a>
+    <a href="#h2-paired">Paired t-test</a>
+    <a href="#h2-unpaired">Unpaired &amp; Levene's test</a>
+    <a class="lead" href="#h3">H3 — ANOVA &amp; Post-Hoc</a>
+    <a href="#h3-idea">Between vs within variability</a>
+    <a href="#h3-bonf">Bonferroni post-hoc</a>
+    <a class="lead" href="#h4">H4 — Correlation &amp; Chi-Square</a>
+    <a href="#h4-corr">Pearson correlation test</a>
+    <a href="#h4-chi">Chi-square independence</a>
+    <a class="lead" href="#master">★ Master Decision Tree</a>
+    <a href="#cheatsheet">Master Cheat-Sheet</a>
+    <a href="#glossary">Glossary</a>
+  </div>
+</div>
+
+<!-- ============================ STORY ============================ -->
+<div class="part-header" id="story">
+  <div class="k">Read this first</div>
+  <h2>The Story — Statistics as a Courtroom</h2>
+</div>
+
+<div class="card">
+  <p>Every single test in this chapter — one mean, two means, ANOVA, correlation, chi-square — is the <strong>same courtroom drama</strong> wearing different costumes. If you understand the trial, you understand the whole chapter. So before any formulas, here is the story.</p>
+
+  <div class="story">
+    <span class="st-label">The trial</span>
+    Imagine you're a juror. On trial is a claim about the world — say, <em>"this new medicine lowers blood pressure."</em> In court there is a golden rule: <strong>the defendant is presumed innocent until proven guilty.</strong> The prosecution must prove guilt <em>beyond reasonable doubt</em>. If they can't, the defendant walks free — not because they're proven innocent, but because there wasn't enough evidence to convict.
+  </div>
+
+  <p>Statistics runs the exact same trial. The roles map perfectly:</p>
+
+  <table>
+    <tr><th>Courtroom</th><th>Hypothesis test</th><th>Meaning</th></tr>
+    <tr><td>Presumption of innocence</td><td><strong>H₀ (null hypothesis)</strong></td><td>The "boring" default: no effect, no difference, no relationship. We assume it's true until the data forces us to abandon it.</td></tr>
+    <tr><td>The accusation</td><td><strong>H₁ (alternative)</strong></td><td>The interesting claim we're trying to establish: there <em>is</em> an effect / difference / relationship.</td></tr>
+    <tr><td>The evidence</td><td><strong>The data (test statistic)</strong></td><td>What we actually observed, boiled down to a single number (a T, F, or χ²).</td></tr>
+    <tr><td>"Beyond reasonable doubt"</td><td><strong>Significance level α (usually 0.05)</strong></td><td>How much doubt we tolerate before convicting. 5% = we accept a 1-in-20 chance of convicting an innocent H₀.</td></tr>
+    <tr><td>Strength of evidence</td><td><strong>p-value</strong></td><td>If H₀ really were innocent, how surprising is evidence <em>this</em> extreme? A tiny p-value = very surprising = convict.</td></tr>
+    <tr><td>"Guilty"</td><td><strong>Reject H₀</strong></td><td>Evidence was strong enough. We conclude H₁.</td></tr>
+    <tr><td>"Not guilty"</td><td><strong>Do not reject H₀</strong></td><td>Not enough evidence. Note: this is <em>not</em> "proven innocent."</td></tr>
+  </table>
+
+  <div class="highlight">
+    <strong>The single most important idea in the whole chapter:</strong> "Do not reject H₀" never means "H₀ is true." A jury that acquits hasn't proven innocence — it just didn't see enough evidence for guilt. Likewise, failing to reject H₀ only means <em>your data didn't provide enough evidence against it.</em> This is the "weak conclusion" and it trips up everyone at least once.
+  </div>
+
+  <div class="story">
+    <span class="st-label">Two ways to get it wrong</span>
+    A jury can make two kinds of mistake. It can convict an innocent person (<strong>Type I error</strong> — a "false alarm"), or it can let a guilty person go free (<strong>Type II error</strong> — a "miss"). You can't drive both to zero at once: a jury that never convicts anyone never jails the innocent but also never catches the guilty. Statistics faces the same trade-off, and α = 0.05 is our chosen tolerance for false alarms.
+  </div>
+
+  <h3>Our recurring cast</h3>
+  <p>Rather than one story, this chapter throws a series of little cases at you. To keep them straight, meet the cast you'll see again and again — each one is really the same trial with different evidence:</p>
+  <table>
+    <tr><th>Case</th><th>The question on trial</th><th>Which test</th></tr>
+    <tr><td>🏢 The Leuven apartments</td><td>Is the average price really above €350k?</td><td>One-mean t-test (H1.1)</td></tr>
+    <tr><td>🍅 The ketchup bottles</td><td>Are bottles secretly underfilled below 750ml?</td><td>One-mean t-test (H1.1)</td></tr>
+    <tr><td>🍷 The wine prices</td><td>Is this data even bell-shaped enough to trust a t-test?</td><td>Normality tests (H1.2)</td></tr>
+    <tr><td>💊 The blood-pressure trial</td><td>Does Captopril lower each patient's pressure?</td><td>Paired t-test (H2)</td></tr>
+    <tr><td>🧪 The calcium study</td><td>Do men and women differ in calcium levels?</td><td>Unpaired t-test (H2)</td></tr>
+    <tr><td>👕 The clothing chain</td><td>Do four store locations sell differently?</td><td>ANOVA + post-hoc (H3)</td></tr>
+    <tr><td>🎬 The movie archive</td><td>Are older movies shorter?</td><td>Correlation test (H4.1)</td></tr>
+    <tr><td>🌐 The internet providers</td><td>Does job type affect provider choice?</td><td>Chi-square test (H4.2)</td></tr>
+  </table>
+
+  <div class="tip">
+    <strong>How to read the rest of this guide:</strong> whenever you meet a new test, don't ask "what's the new formula?" Ask "who's the defendant (H₀), what's the evidence (test statistic), and what counts as reasonable doubt (the distribution &amp; p-value)?" The costume changes; the trial never does.
+  </div>
+</div>
+
+<!-- ============================ FRAMEWORK ============================ -->
+<h2 id="framework">0. The Universal 5-Step Recipe <span class="tag tag-key">MEMORISE</span></h2>
+<div class="card">
+  <p>Because every test is the same trial, every test follows the same five steps. Learn this skeleton once and you only ever have to swap in the details.</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content"><strong>State the hypotheses.</strong> Write H₀ (the boring default) and H₁ (your research claim). Decide one-sided (&lt; or &gt;) or two-sided (≠) from the question's wording, <em>before</em> looking at the data.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content"><strong>Explore &amp; check assumptions.</strong> Look at the data (histogram, boxplot, scatterplot, contingency table). Verify the conditions the test needs — normality, equal variances, independence, expected counts, etc.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content"><strong>Compute the test statistic.</strong> Squeeze all the evidence into one number (T, F, or χ²) that measures "how far is the data from what H₀ predicts?"</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content"><strong>Find the p-value.</strong> Ask: <em>if H₀ were true, how likely is a statistic this extreme?</em> Read it off the reference distribution (t, F, or χ²) with the right degrees of freedom and the right tail(s).</div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content"><strong>Decide &amp; conclude in words.</strong> If p ≤ α → reject H₀. If p &gt; α → do not reject H₀. Then translate back into a sentence about the real-world question.</div>
+  </div>
+
+  <div class="note">
+    <strong>The only things that change between tests</strong> are: the formula in Step 3, the distribution in Step 4, and the assumptions in Step 2. Steps 1 and 5 are literally always the same shape. That's the whole secret of this chapter.</div>
+</div>
+
+<!-- ============================ P-VALUE DEEP DIVE ============================ -->
+<h2 id="pvalue">0b. p-values, α, and the Two Errors — Really Understanding Them <span class="tag tag-key">KEY</span></h2>
+<div class="card">
+  <p>These three ideas power every conclusion you'll ever write, so it's worth slowing down.</p>
+
+  <h3>What a p-value actually is</h3>
+  <div class="formula-box">
+    <div class="label">Definition</div>
+    <div class="main">p-value = P( evidence at least this extreme │ H₀ is true )</div>
+  </div>
+  <p>Read it as a conditional: "<em>Assuming the defendant is innocent</em>, how often would pure chance hand me data this damning?" If the answer is "almost never" (small p), then either an extraordinary coincidence happened, or H₀ is false. We bet on the latter.</p>
+
+  <div class="warning">
+    <strong>What a p-value is NOT:</strong> it is <em>not</em> the probability that H₀ is true. H₀ is either true or false; it has no probability. The p-value is a property of the <em>data given H₀</em>, not of H₀ given the data. Saying "p = 0.03, so there's a 3% chance H₀ is true" is the classic blunder.
+  </div>
+
+  <h3>The decision rule</h3>
+  <table>
+    <tr><th>Situation</th><th>Verdict</th><th>Wording</th></tr>
+    <tr><td><strong>p ≤ α</strong> (e.g. ≤ 0.05)</td><td>Reject H₀</td><td>"There is significant evidence that … (H₁)."</td></tr>
+    <tr><td><strong>p &gt; α</strong></td><td>Do not reject H₀</td><td>"There is insufficient evidence that … (H₁)."</td></tr>
+  </table>
+
+  <h3>The two errors — and why α is exactly the false-alarm rate</h3>
+  <table>
+    <tr><th></th><th>H₀ really true</th><th>H₀ really false</th></tr>
+    <tr><td><strong>We reject H₀</strong></td><td style="color:var(--red)"><strong>Type I error</strong> (false alarm) — probability = α</td><td style="color:var(--green)">Correct! (power = 1−β)</td></tr>
+    <tr><td><strong>We don't reject H₀</strong></td><td style="color:var(--green)">Correct!</td><td style="color:var(--red)"><strong>Type II error</strong> (miss) — probability = β</td></tr>
+  </table>
+  <p>Choosing α = 0.05 literally <em>sets</em> the Type I error rate at 5%: over many trials where H₀ is true, we'll wrongly "convict" 1 time in 20. Lowering α (say to 0.01) makes false alarms rarer but makes misses (β) more common — the courtroom trade-off again.</p>
+
+  <div class="tip">
+    <strong>Power</strong> (= 1 − β) is the test's ability to catch a real effect. It goes <em>up</em> with larger sample size, larger true effect, and smaller noise. This is why "collect more data" is the universal fix for a test that can't detect anything: bigger n → more power.
+  </div>
+
+  <h3>One-sided vs two-sided — decide from the question</h3>
+  <div class="two-col">
+    <div class="card" style="background:var(--blue-light);border-color:var(--blue)">
+      <strong style="color:var(--blue)">One-sided</strong><br>
+      The question points in a direction: "is it <em>larger</em> than…", "does it <em>lower</em>…", "is it <em>less</em> than…". H₁ uses &gt; or &lt;. All of α goes in one tail — easier to reach significance in that direction.
+    </div>
+    <div class="card" style="background:var(--purple-light);border-color:var(--purple)">
+      <strong style="color:var(--purple)">Two-sided</strong><br>
+      The question is just "is there a <em>difference</em>?", with no prior direction. H₁ uses ≠. α is split between both tails (2.5% each), so the two-sided p-value is double the one-sided one.
+    </div>
+  </div>
+  <div class="warning">
+    <strong>Golden rule:</strong> pick the direction from the research question <em>before</em> seeing the data. Choosing one-sided after peeking at which way the data leans is cheating (it secretly doubles your false-alarm rate).
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- =============================== H1.1 =============================== -->
+<!-- ==================================================================== -->
+<div class="part-header" id="h11">
+  <div class="k"><span class="chapter-badge" style="background:rgba(255,255,255,0.25)">H1.1</span> Part 1</div>
+  <h2>Test for One Mean (σ Unknown) — the t-test</h2>
+</div>
+
+<div class="story">
+  <span class="st-label">🏢 The case of the Leuven apartments</span>
+  You have a €350,000 budget for a two-bedroom flat in Leuven. A friend insists "forget it, the average is way above that." You can't measure every apartment in the city — but you can sample 23 of them and put the claim on trial. This is the simplest trial of all: <strong>one sample, one mean, one number to beat.</strong>
+</div>
+
+<h2 id="h11-why">1. Why a New Test? The σ Problem</h2>
+<div class="card">
+  <p>Earlier in the course you tested a mean μ when the population standard deviation σ was <em>known</em>, using the Z-test:</p>
+  <div class="formula-box">
+    <div class="label">Z-test (σ known)</div>
+    <div class="main">Z = (X̄ − μ₀) / (σ/√n)  ~  N(0,1)  under H₀</div>
+  </div>
+  <p>But here's the catch that makes this whole section necessary: <strong>in real life you almost never know σ.</strong> If you don't know the true mean μ, how would you know the true spread σ? You wouldn't. All you have is the sample standard deviation <strong>s</strong>.</p>
+  <p>The fix seems trivial — just swap σ for s. And that's exactly what we do. But swapping in an <em>estimate</em> injects extra uncertainty: s itself jumps around from sample to sample. Because of that extra wobble, the standardised statistic no longer follows the tidy N(0,1) curve. It follows a slightly heavier-tailed cousin: the <strong>t-distribution</strong>.</p>
+  <div class="formula-box">
+    <div class="label">T-test (σ unknown — the realistic case)</div>
+    <div class="main">T = (X̄ − μ₀) / (s/√n)  ~  t<sub>n−1</sub>  under H₀</div>
+  </div>
+  <div class="note">
+    <strong>Everything else is unchanged.</strong> The 5-step recipe is identical. Only three things differ from the Z-test: (1) use s instead of σ, (2) use the t-distribution instead of N(0,1), (3) degrees of freedom = n − 1.
+  </div>
+</div>
+
+<h2 id="h11-tdist">2. The t-Distribution <span class="tag tag-key">KEY</span></h2>
+<div class="card">
+  <p>The t-distribution has a single dial: <strong>degrees of freedom (df) = n − 1</strong>. Intuitively, df counts "how much independent information you have to estimate the spread." More data → more df → less wobble.</p>
+
+  <svg viewBox="0 0 500 160" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:500px;display:block;margin:12px auto">
+    <text x="250" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="currentColor">t-distribution vs Normal (both centred at 0)</text>
+    <path d="M30,135 Q100,30 250,30 Q400,30 470,135Z" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+    <path d="M10,135 Q90,45 250,45 Q410,45 490,135Z" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="250" y="22" text-anchor="middle" font-size="10" fill="#2563eb">N(0,1)</text>
+    <text x="60" y="75" font-size="10" fill="#dc2626">t (df=5)</text>
+    <text x="390" y="75" font-size="10" fill="#dc2626">fatter tails</text>
+    <line x1="30" y1="135" x2="470" y2="135" stroke="currentColor" stroke-width="1"/>
+    <text x="250" y="150" text-anchor="middle" font-size="9" fill="currentColor">0</text>
+  </svg>
+
+  <ul>
+    <li>Same shape family as N(0,1) — symmetric, bell-shaped, centred at 0.</li>
+    <li><strong>Fatter tails</strong> than the normal — this is the "extra uncertainty tax" for estimating σ with s. Fatter tails mean extreme values are a bit more likely, so you need <em>more</em> evidence to reject H₀.</li>
+    <li>As df → ∞ the tails thin out and t<sub>n−1</sub> → N(0,1). For n ≥ 30 they're already almost identical.</li>
+  </ul>
+
+  <table>
+    <tr><th>df (= n−1)</th><th>t critical value (95%, two-sided)</th><th>vs z = 1.96</th></tr>
+    <tr><td>5</td><td>2.571</td><td>Much wider</td></tr>
+    <tr><td>10</td><td>2.228</td><td>Wider</td></tr>
+    <tr><td>22</td><td>2.074</td><td>Slightly wider</td></tr>
+    <tr><td>30</td><td>2.042</td><td>Close to 1.96</td></tr>
+    <tr><td>∞</td><td>1.960</td><td>= Z (identical)</td></tr>
+  </table>
+
+  <div class="tip">
+    <strong>Takeaway:</strong> smaller n → more uncertainty → heavier tails → larger critical values → harder to reject H₀. That's the distribution <em>protecting</em> you from over-claiming on thin data.
+  </div>
+
+  <h3>Z-test vs t-test — exactly what changes</h3>
+  <div class="diff-row">
+    <div class="diff-cell diff-label"></div>
+    <div class="diff-cell diff-label" style="text-align:center">Z-test (σ known)</div>
+    <div class="diff-cell diff-label" style="text-align:center">T-test (σ unknown)</div>
+    <div class="diff-cell diff-label">Test statistic</div>
+    <div class="diff-cell diff-z">Z = (X̄ − μ₀) / (σ/√n)</div>
+    <div class="diff-cell diff-t">T = (X̄ − μ₀) / (s/√n)</div>
+    <div class="diff-cell diff-label">Distribution under H₀</div>
+    <div class="diff-cell diff-z">N(0,1)</div>
+    <div class="diff-cell diff-t">t<sub>n−1</sub></div>
+    <div class="diff-cell diff-label">P-value (left)</div>
+    <div class="diff-cell diff-z">NORM.DIST(z;0;1;TRUE)</div>
+    <div class="diff-cell diff-t">T.DIST(t;n−1;TRUE)</div>
+    <div class="diff-cell diff-label">P-value (right)</div>
+    <div class="diff-cell diff-z">1−NORM.DIST(z;0;1;TRUE)</div>
+    <div class="diff-cell diff-t">1−T.DIST(t;n−1;TRUE)</div>
+    <div class="diff-cell diff-label">P-value (two-sided)</div>
+    <div class="diff-cell diff-z">2·(1−NORM.DIST(|z|;0;1;TRUE))</div>
+    <div class="diff-cell diff-t">T.DIST.2T(|t|;n−1)</div>
+    <div class="diff-cell diff-label">CI for μ</div>
+    <div class="diff-cell diff-z">X̄ ± 1.96 · σ/√n</div>
+    <div class="diff-cell diff-t">X̄ ± t* · s/√n</div>
+    <div class="diff-cell diff-label">Everything else</div>
+    <div class="diff-cell diff-z" style="text-align:center;grid-column:span 2">Hypotheses, assumptions, conclusion wording — identical ✓</div>
+  </div>
+</div>
+
+<h2 id="h11-ex">3. Worked Example 1 — Apartment Prices <span class="tag tag-exam">EXAM</span></h2>
+<div class="card">
+  <p><em>n = 23 Leuven 2-bedroom apartments. X̄ = €377,557, s = €106,947. Is the mean price larger than €350,000? α = 0.05.</em></p>
+
+  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Hypotheses.</strong> H₀: μ = 350,000 &nbsp; H₁: μ &gt; 350,000 &nbsp;<small>(one-sided right — the claim is "larger than")</small></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Assumptions.</strong> Random sample ✓; σ unknown → t-test; n = 23 &lt; 30 so we need prices to be roughly normal (check histogram/QQ-plot — reasonable for prices). → use t<sub>22</sub>.</div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Test statistic.</strong> SE = s/√n = 106,947/√23 = 22,298.<br>T = (377,557 − 350,000)/22,298 = 27,557/22,298 = <strong>1.236</strong>.</div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>P-value.</strong> Right-sided: p = 1 − T.DIST(1.236; 22; TRUE) = <strong>0.115</strong>.</div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Conclusion.</strong> p = 0.115 &gt; 0.05 → <strong>do not reject H₀</strong>. "There is insufficient evidence that the mean Leuven apartment price exceeds €350,000." <small>Note the courtroom logic: we did NOT prove prices are below €350k — our 23-flat sample simply wasn't damning enough.</small></div></div>
+
+  <svg viewBox="0 0 440 120" width="100%" xmlns="http://www.w3.org/2000/svg" style="margin-top:14px;max-width:440px;display:block">
+    <text x="220" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor">t₂₂ under H₀ — right-sided test</text>
+    <path d="M20,100 Q80,20 220,20 Q360,20 420,100Z" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+    <line x1="20" y1="100" x2="420" y2="100" stroke="#2563eb" stroke-width="1"/>
+    <line x1="268" y1="25" x2="268" y2="100" stroke="#ea580c" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="268" y="20" text-anchor="middle" font-size="10" fill="#ea580c">t = 1.236</text>
+    <line x1="318" y1="70" x2="318" y2="100" stroke="#dc2626" stroke-width="2"/>
+    <text x="318" y="66" text-anchor="middle" font-size="9" fill="#dc2626">t_c = 1.717</text>
+    <path d="M318,100 Q360,80 420,100Z" fill="#dc2626" opacity="0.4"/>
+    <text x="370" y="110" font-size="9" fill="#dc2626">Reject (5%)</text>
+    <text x="350" y="50" font-size="9" fill="#ea580c">p = 0.115</text>
+    <text x="220" y="110" text-anchor="middle" font-size="9" fill="currentColor">0</text>
+  </svg>
+  <div class="tip"><strong>Reading it:</strong> T = 1.236 never reaches the critical value t_c = 1.717. The tail area beyond it (11.5%) is far bigger than 5%. Not guilty.</div>
+</div>
+
+<div class="card">
+  <h3>Worked Example 2 — Ketchup Bottles <span class="tag tag-exam">EXAM</span></h3>
+  <div class="story"><span class="st-label">🍅 The case of the underfilled bottles</span> The label promises 750 ml. A consumer watchdog suspects the factory is quietly shorting customers. They grab 40 bottles off the shelf. Same trial, opposite direction — and this time the evidence is overwhelming.</div>
+  <p><em>Label = 750 ml. Suspect underfilling. n = 40, X̄ = 742 ml, s = 4 ml. α = 0.05.</em></p>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Hypotheses.</strong> H₀: μ = 750 &nbsp; H₁: μ &lt; 750 &nbsp;<small>(one-sided left — suspect "less than")</small></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Assumptions.</strong> Random sample ✓; σ unknown → t-test; n = 40 ≥ 30 so the CLT covers normality regardless of shape. → t<sub>39</sub>.</div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Test statistic.</strong> SE = 4/√40 = 0.6325. T = (742 − 750)/0.6325 = <strong>−12.65</strong>.</div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>P-value.</strong> Left-sided: p = T.DIST(−12.65; 39; TRUE) ≈ <strong>0.000</strong> (essentially zero).</div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Conclusion.</strong> p ≈ 0 &lt; 0.05 → <strong>reject H₀</strong>. "There is very strong evidence that bottles contain less than 750 ml on average." Guilty.</div></div>
+  <div class="note"><strong>Why so different from the apartments?</strong> Same test, but here the signal (8 ml short) is huge relative to the noise (SE ≈ 0.63 ml). A 20-standard-error gap is unmissable. The apartment gap was barely one standard error — buried in noise.</div>
+</div>
+
+<h2 id="h11-ci">4. Confidence Interval &amp; Excel Functions <span class="tag tag-exam">EXAM</span></h2>
+<div class="card">
+  <p>The CI changes the same way the test did: σ → s and z* → t*.</p>
+  <div class="formula-box">
+    <div class="label">CI for μ — σ unknown (t-interval)</div>
+    <div class="main">CI = X̄ ± t* · s/√n,  where t* = T.INV.2T(α; n−1)</div>
+  </div>
+  <div class="highlight">
+    <strong>Apartment 95% CI:</strong> t* = T.INV.2T(0.05; 22) = 2.074. ME = 2.074 × 22,298 = 46,246.<br>
+    CI = [377,557 ∓ 46,246] = <strong>[331,311 ; 423,803]</strong>. This interval <em>contains</em> 350,000 — perfectly consistent with "do not reject H₀."
+  </div>
+  <div class="tip"><strong>CI ↔ test always agree.</strong> A two-sided 95% CI contains μ₀ ⟺ the two-sided test at α = 0.05 fails to reject H₀. The CI is just the test viewed from the other side.</div>
+
+  <table>
+    <tr><th>What you need</th><th>Excel</th><th>Use for</th></tr>
+    <tr><td>P-value (left)</td><td><code>=T.DIST(t; df; TRUE)</code></td><td>H₁: μ &lt; μ₀</td></tr>
+    <tr><td>P-value (right)</td><td><code>=1-T.DIST(t; df; TRUE)</code></td><td>H₁: μ &gt; μ₀</td></tr>
+    <tr><td>P-value (two-sided)</td><td><code>=T.DIST.2T(ABS(t); df)</code></td><td>H₁: μ ≠ μ₀</td></tr>
+    <tr><td>t* two-sided</td><td><code>=T.INV.2T(alpha; df)</code></td><td>CI half-width</td></tr>
+    <tr><td>t_c one-sided right</td><td><code>=T.INV(1-alpha; df)</code></td><td>critical value</td></tr>
+  </table>
+  <div class="warning"><strong>Common mistakes:</strong> using NORM.DIST instead of T.DIST · df = n instead of n−1 · putting σ in the formula when you only have s · using T.DIST.2T for a one-sided test (it already doubles the tail).</div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- =============================== H1.2 =============================== -->
+<!-- ==================================================================== -->
+<div class="part-header" id="h12">
+  <div class="k"><span class="chapter-badge" style="background:rgba(255,255,255,0.25)">H1.2</span> Part 2</div>
+  <h2>Tests for Normality — the prerequisite check</h2>
+</div>
+
+<div class="story">
+  <span class="st-label">🍷 The case of the wine prices</span>
+  Before the t-test can testify in court, we have to make sure it's a <em>reliable witness</em>. The t-test's testimony is only trustworthy if the data is roughly bell-shaped (or n is large). So H1.2 is a background check on the witness: <strong>is this data normal enough?</strong> A sommelier hands you 45 bottle prices and asks whether they follow a normal distribution.
+</div>
+
+<h2 id="h12-why">5. Why Test Normality — and the Sneaky Reversed Hypotheses</h2>
+<div class="card">
+  <p>The t-test needs data that is normal <em>or</em> n ≥ 30. When n is small, you must verify normality first. Two toolkits:</p>
+  <div class="two-col">
+    <div class="card" style="background:var(--blue-light);border-color:var(--blue)">
+      <strong style="color:var(--blue)">Visual / graphical</strong>
+      <ul style="margin-top:8px"><li>Histogram — bell-shaped?</li><li>Boxplot — symmetric, no outliers?</li><li>Normal QQ-plot — points on a straight line?</li></ul>
+      <small>Fast, but subjective</small>
+    </div>
+    <div class="card" style="background:var(--purple-light);border-color:var(--purple)">
+      <strong style="color:var(--purple)">Formal tests ← this section</strong>
+      <ul style="margin-top:8px"><li>Kolmogorov–Smirnov (KS)</li><li>Shapiro–Wilk (SW)</li></ul>
+      <small>Objective, give a p-value</small>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">Normality test hypotheses — always these</div>
+    <div class="main">H₀: the variable IS normally distributed<br>H₁: the variable is NOT normally distributed</div>
+  </div>
+
+  <div class="warning">
+    <strong>The plot twist:</strong> here H₀ is the thing you're <em>hoping</em> for. When checking a t-test assumption, you <em>want</em> a large p-value (do not reject H₀) — it means "no evidence against normality, carry on." This is the opposite of most tests, where you hope to reject. Recall the courtroom: acquitting normality ("not guilty of being non-normal") is not proof it's perfectly normal — which is exactly why you always pair the formal test with the plots.
+  </div>
+</div>
+
+<h2 id="h12-descr">6. Step 1 — Always Look First</h2>
+<div class="card">
+  <p>Before any formal test, eyeball the three standard diagnostics:</p>
+  <svg viewBox="0 0 540 160" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:540px;display:block;margin:12px auto">
+    <text x="90" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor">Histogram</text>
+    <line x1="20" y1="130" x2="160" y2="130" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="20" y1="20" x2="20" y2="130" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="28" y="110" width="16" height="20" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="46" y="90" width="16" height="40" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="64" y="55" width="16" height="75" fill="#2563eb" stroke="#2563eb"/>
+    <rect x="82" y="65" width="16" height="65" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="100" y="88" width="16" height="42" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="118" y="110" width="16" height="20" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="90" y="148" text-anchor="middle" font-size="9" fill="currentColor">Look for bell shape</text>
+    <text x="270" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor">Boxplot</text>
+    <line x1="270" y1="40" x2="270" y2="60" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="230" y="60" width="80" height="55" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+    <line x1="230" y1="87" x2="310" y2="87" stroke="#2563eb" stroke-width="2"/>
+    <line x1="270" y1="115" x2="270" y2="135" stroke="#2563eb" stroke-width="1.5"/>
+    <line x1="255" y1="40" x2="285" y2="40" stroke="#2563eb" stroke-width="1.5"/>
+    <line x1="255" y1="135" x2="285" y2="135" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="270" y="148" text-anchor="middle" font-size="9" fill="currentColor">Median centred, no outliers</text>
+    <text x="450" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor">Normal QQ-plot</text>
+    <line x1="390" y1="130" x2="510" y2="130" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="390" y1="30" x2="390" y2="130" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="400" y1="120" x2="500" y2="40" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+    <circle cx="406" cy="116" r="3" fill="#2563eb"/><circle cx="420" cy="104" r="3" fill="#2563eb"/><circle cx="435" cy="90" r="3" fill="#2563eb"/><circle cx="450" cy="80" r="3" fill="#2563eb"/><circle cx="465" cy="66" r="3" fill="#2563eb"/><circle cx="480" cy="55" r="3" fill="#2563eb"/><circle cx="494" cy="44" r="3" fill="#2563eb"/>
+    <text x="450" y="148" text-anchor="middle" font-size="9" fill="currentColor">Points on the diagonal</text>
+  </svg>
+  <table>
+    <tr><th>Plot</th><th>Normal looks like…</th><th>Non-normal looks like…</th></tr>
+    <tr><td>Histogram</td><td>Symmetric bell</td><td>Skewed, bimodal, flat</td></tr>
+    <tr><td>Boxplot</td><td>Median centred, equal whiskers</td><td>Outlier dots, lopsided box</td></tr>
+    <tr><td>QQ-plot</td><td>Points hug the diagonal</td><td>S-curve (heavy tails), bending</td></tr>
+  </table>
+</div>
+
+<h2 id="h12-ks">7. Kolmogorov–Smirnov (KS) Test</h2>
+<div class="card">
+  <p><strong>The idea:</strong> compare two "climbing" curves — the cumulative distribution functions (CDFs).</p>
+  <ul>
+    <li><strong>Empirical CDF F̂(x)</strong> — a staircase built from your actual data.</li>
+    <li><strong>Theoretical CDF F(x)</strong> — the smooth S-curve of a normal with the same mean and SD as your sample.</li>
+  </ul>
+  <p>If the data really is normal, the staircase should hug the smooth curve. The test measures the single <strong>biggest vertical gap</strong> between them:</p>
+  <div class="formula-box"><div class="label">KS statistic</div><div class="main">D = max │ F̂(x) − F(x) │</div></div>
+
+  <svg viewBox="0 0 420 170" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:420px;display:block;margin:12px auto">
+    <text x="210" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor">KS test — max gap between CDFs</text>
+    <line x1="40" y1="145" x2="390" y2="145" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="40" y1="25" x2="40" y2="145" stroke="currentColor" stroke-width="1.5"/>
+    <text x="33" y="148" text-anchor="end" font-size="8">0</text><text x="33" y="28" text-anchor="end" font-size="8">1</text>
+    <path d="M60,143 Q100,140 140,120 Q180,95 210,80 Q240,65 280,45 Q320,32 370,28" fill="none" stroke="#2563eb" stroke-width="2"/>
+    <polyline points="60,143 80,143 80,135 110,135 110,122 140,122 140,108 170,108 170,94 200,94 200,78 230,78 230,65 260,65 260,52 290,52 290,40 320,40 320,30 370,30" fill="none" stroke="#16a34a" stroke-width="2"/>
+    <line x1="200" y1="78" x2="200" y2="93" stroke="#dc2626" stroke-width="2"/>
+    <text x="210" y="85" font-size="9" fill="#dc2626">D = max gap</text>
+    <line x1="50" y1="22" x2="70" y2="22" stroke="#2563eb" stroke-width="2"/><text x="75" y="26" font-size="9" fill="#2563eb">Theoretical F(x)</text>
+    <polyline points="160,22 175,22 175,18 190,18" fill="none" stroke="#16a34a" stroke-width="2"/><text x="195" y="26" font-size="9" fill="#16a34a">Empirical F̂(x)</text>
+  </svg>
+
+  <div class="highlight">
+    <strong>🍷 Wine example:</strong> X̄ = 17.7298, s = 8.97385.<br>
+    F(10.29) = NORM.DIST(10.29; 17.7298; 8.97385; TRUE) = <strong>0.2035</strong> → if prices were truly normal, 20.35% of bottles should cost ≤ €10.29. Compare that to the real fraction ≤ €10.29 to get one gap; D is the biggest such gap over all x.
+  </div>
+
+  <h3>The Lilliefors correction — a subtle but examinable point</h3>
+  <p>We cheated slightly: we estimated μ and σ <em>from the very same data</em> we're testing. That makes the normal curve fit "too well," so the plain KS p-value is too lenient (it under-rejects). The <strong>Lilliefors correction</strong> replaces the reference distribution with a simulated one that accounts for this, giving an honest p-value.</p>
+  <div class="note"><strong>In practice:</strong> SPSS applies Lilliefors automatically for a normality KS test — you just read the corrected "Sig." Reject H₀ if p ≤ 0.05 (large D = data strays from the curve = evidence against normality).</div>
+</div>
+
+<h2 id="h12-sw">8. Shapiro–Wilk (SW) Test <span class="tag tag-key">HIGHER POWER</span></h2>
+<div class="card">
+  <p><strong>The idea:</strong> the SW test asks "how straight is the normal QQ-plot?" Its statistic is essentially the <em>correlation</em> between your sorted data and the values a perfect normal would produce. Straight line = normal.</p>
+  <div class="formula-box"><div class="label">Shapiro–Wilk statistic</div><div class="main">SW ≈ correlation between observed data and expected normal quantiles</div></div>
+  <ul>
+    <li><strong>Under H₀</strong> (normal): QQ-plot is a straight line → SW ≈ 1.</li>
+    <li><strong>Reject H₀</strong> if SW is meaningfully below 1 (points bend off the line).</li>
+  </ul>
+
+  <svg viewBox="0 0 480 155" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;display:block;margin:12px auto">
+    <text x="120" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="#16a34a">SW ≈ 1 (normal)</text>
+    <line x1="30" y1="130" x2="210" y2="130" stroke="currentColor" stroke-width="1.5"/><line x1="30" y1="20" x2="30" y2="130" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="40" y1="120" x2="200" y2="30" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+    <circle cx="47" cy="115" r="3" fill="#16a34a"/><circle cx="68" cy="98" r="3" fill="#16a34a"/><circle cx="90" cy="82" r="3" fill="#16a34a"/><circle cx="112" cy="71" r="3" fill="#16a34a"/><circle cx="135" cy="60" r="3" fill="#16a34a"/><circle cx="158" cy="48" r="3" fill="#16a34a"/><circle cx="180" cy="36" r="3" fill="#16a34a"/>
+    <text x="120" y="148" text-anchor="middle" font-size="9" fill="currentColor">Points on diagonal → normal</text>
+    <text x="360" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="#dc2626">SW ≪ 1 (not normal)</text>
+    <line x1="270" y1="130" x2="450" y2="130" stroke="currentColor" stroke-width="1.5"/><line x1="270" y1="20" x2="270" y2="130" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="280" y1="120" x2="440" y2="30" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+    <circle cx="287" cy="125" r="3" fill="#dc2626"/><circle cx="305" cy="115" r="3" fill="#dc2626"/><circle cx="322" cy="100" r="3" fill="#dc2626"/><circle cx="340" cy="80" r="3" fill="#dc2626"/><circle cx="360" cy="55" r="3" fill="#dc2626"/><circle cx="385" cy="38" r="3" fill="#dc2626"/><circle cx="415" cy="28" r="3" fill="#dc2626"/>
+    <text x="360" y="148" text-anchor="middle" font-size="9" fill="currentColor">S-curve → heavy tails</text>
+  </svg>
+
+  <div class="tip"><strong>Prefer Shapiro–Wilk.</strong> It usually has higher power — it's better at catching genuine non-normality. When SPSS prints both, lead with the SW result.</div>
+
+  <table>
+    <tr><th></th><th>Kolmogorov–Smirnov (+ Lilliefors)</th><th>Shapiro–Wilk</th></tr>
+    <tr><td><strong>Based on</strong></td><td>Max CDF gap</td><td>QQ-plot linearity</td></tr>
+    <tr><td><strong>Statistic</strong></td><td>D (small under H₀)</td><td>SW (≈1 under H₀)</td></tr>
+    <tr><td><strong>Reject H₀ if</strong></td><td>D large, p ≤ 0.05</td><td>SW ≪ 1, p ≤ 0.05</td></tr>
+    <tr><td><strong>Power</strong></td><td>Lower</td><td><strong>Higher — preferred</strong></td></tr>
+  </table>
+</div>
+
+<h2 id="h12-nuance">9. The n Nuances Everyone Forgets <span class="tag tag-exam">EXAM</span></h2>
+<div class="card">
+  <div class="warning"><strong>Large n → the test almost always rejects.</strong> With huge samples, even trivial, harmless deviations become "significant." But for n ≥ 30 the CLT already makes X̄ normal, so you don't <em>need</em> the assumption anyway. Don't let a significant normality test on n = 500 scare you off a t-test.</div>
+  <div class="warning"><strong>Small n → the test barely rejects anything.</strong> For n &lt; 15 the test has low power; "not significant" doesn't mean "normal." Lean on the plots.</div>
+  <div class="tip">
+    <strong>The practical rule:</strong>
+    <ul style="margin-top:6px">
+      <li><strong>n ≥ 30:</strong> don't worry — CLT handles it, use the t-test freely.</li>
+      <li><strong>15 ≤ n &lt; 30:</strong> check plots <em>and</em> run the test; both should support normality.</li>
+      <li><strong>n &lt; 15:</strong> be cautious — plots + Shapiro–Wilk; if in doubt, use a non-parametric test.</li>
+    </ul>
+  </div>
+  <p><strong>SPSS path:</strong> Analyze → Descriptive Statistics → Explore → Plots → tick "Normality plots with tests." Read the Shapiro–Wilk row's Statistic and Sig.</p>
+</div>
+
+<!-- ==================================================================== -->
+<!-- =============================== H2 ================================ -->
+<!-- ==================================================================== -->
+<div class="part-header" id="h2">
+  <div class="k"><span class="chapter-badge" style="background:rgba(255,255,255,0.25)">H2</span> Part 3</div>
+  <h2>Comparing Two Means</h2>
+</div>
+
+<div class="story">
+  <span class="st-label">💊 The case of the two groups</span>
+  So far we compared one sample to a fixed number. Now the questions get more interesting: does a <em>medicine</em> change patients? Do <em>men and women</em> differ? These pit two means against each other — H₀: μ₁ = μ₂. But there's a fork in the road that decides everything: <strong>are the two measurements linked to the same subjects, or from separate groups?</strong>
+</div>
+
+<h2 id="h2-tree">10. The Big Decision — Paired or Unpaired?</h2>
+<div class="card">
+  <svg viewBox="0 0 620 290" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:620px;display:block;margin:10px auto">
+    <rect x="210" y="10" width="200" height="44" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="310" y="29" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e3a5f">Compare two means</text>
+    <text x="310" y="45" text-anchor="middle" font-size="10" fill="#1e3a5f">H₀: μ₁ = μ₂</text>
+    <line x1="310" y1="54" x2="310" y2="78" stroke="#6c757d" stroke-width="1.5" marker-end="url(#arr)"/>
+    <polygon points="310,78 430,113 310,148 190,113" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="310" y="109" text-anchor="middle" font-size="12" font-weight="bold" fill="#431407">Paired or</text>
+    <text x="310" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#431407">unpaired?</text>
+    <line x1="190" y1="113" x2="90" y2="113" stroke="#6c757d" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="138" y="105" text-anchor="middle" font-size="10" fill="#6c757d">Paired</text>
+    <rect x="10" y="93" width="80" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="50" y="109" text-anchor="middle" font-size="10" font-weight="bold" fill="#14532d">Paired</text><text x="50" y="123" text-anchor="middle" font-size="10" fill="#14532d">t-test</text>
+    <line x1="430" y1="113" x2="530" y2="113" stroke="#6c757d" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="480" y="105" text-anchor="middle" font-size="10" fill="#6c757d">Unpaired</text>
+    <polygon points="530,113 620,148 530,183 440,148" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="530" y="144" text-anchor="middle" font-size="11" font-weight="bold" fill="#431407">σ₁ = σ₂?</text>
+    <text x="530" y="158" text-anchor="middle" font-size="9" fill="#431407">(Levene's test)</text>
+    <line x1="530" y1="183" x2="530" y2="213" stroke="#6c757d" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="545" y="200" font-size="9" fill="#6c757d">Yes</text>
+    <rect x="470" y="213" width="120" height="44" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="530" y="230" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e1065">Pooled t-test</text><text x="530" y="244" text-anchor="middle" font-size="9" fill="#2e1065">df = n₁+n₂−2</text>
+    <line x1="440" y1="148" x2="350" y2="148" stroke="#6c757d" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="394" y="140" text-anchor="middle" font-size="9" fill="#6c757d">No</text>
+    <rect x="270" y="128" width="80" height="40" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+    <text x="310" y="145" text-anchor="middle" font-size="10" font-weight="bold" fill="#042f2e">Welch t-test</text><text x="310" y="158" text-anchor="middle" font-size="9" fill="#042f2e">Welch df</text>
+    <line x1="50" y1="133" x2="50" y2="193" stroke="#6c757d" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="10" y="193" width="80" height="52" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="50" y="208" text-anchor="middle" font-size="9" font-weight="bold" fill="#14532d">D = X − Y</text><text x="50" y="220" text-anchor="middle" font-size="9" fill="#14532d">One-sample</text><text x="50" y="232" text-anchor="middle" font-size="9" fill="#14532d">t-test on D</text><text x="50" y="244" text-anchor="middle" font-size="9" fill="#14532d">H₀: μD = 0</text>
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 Z" fill="#6c757d"/></marker></defs>
+  </svg>
+
+  <div class="two-col">
+    <div class="card" style="background:var(--green-light);border-color:var(--green)">
+      <strong style="color:var(--green)">Paired data</strong>
+      <ul style="margin-top:8px"><li>One group of subjects</li><li>Two measurements each (X and Y)</li><li>X and Y are <strong>dependent</strong> — same person/object</li><li>before/after, left/right, two treatments on the same unit</li></ul>
+    </div>
+    <div class="card" style="background:var(--purple-light);border-color:var(--purple)">
+      <strong style="color:var(--purple)">Unpaired (independent) data</strong>
+      <ul style="margin-top:8px"><li>Two separate groups</li><li>One measurement per subject</li><li>Groups are <strong>independent</strong> — different people</li><li>treatment group vs control group</li></ul>
+    </div>
+  </div>
+
+  <div class="tip"><strong>The one question that decides it:</strong> "Is each observation in group 1 naturally matched to a specific observation in group 2?" Before/after on the same person → paired. Two different sets of people → unpaired.</div>
+
+  <table>
+    <tr><th></th><th>Shoe soles, Experiment 1 (Unpaired)</th><th>Shoe soles, Experiment 2 (Paired)</th></tr>
+    <tr><td><strong>Design</strong></td><td>50 people wear old soles, 50 others wear new</td><td>100 people each wear one old + one new sole</td></tr>
+    <tr><td><strong>X↔Y</strong></td><td>Independent — different feet</td><td>Dependent — same person's two feet</td></tr>
+    <tr><td><strong>Advantage</strong></td><td>Simpler</td><td>Cancels between-person differences → more powerful</td></tr>
+  </table>
+</div>
+
+<h2 id="h2-paired">11. Paired t-Test — the "Reduce to One Sample" Trick <span class="tag tag-key">KEY</span></h2>
+<div class="card">
+  <p>The elegant move: for paired data, don't wrestle with two means. Instead compute each pair's <strong>difference D = X − Y</strong>, then run a one-sample t-test (H1.1!) on those differences against 0.</p>
+  <div class="formula-box"><div class="label">The equivalence that makes it work</div><div class="main">H₀: μX = μY ⟺ H₀: μX − μY = 0 ⟺ H₀: μD = 0</div></div>
+  <div class="formula-box"><div class="label">Paired t-statistic</div><div class="main">T = (D̄ − 0) / (s_D/√n) ~ t<sub>n−1</sub></div></div>
+  <p>where D̄ and s_D are the mean and SD of the n differences.</p>
+  <div class="highlight">
+    <strong>Why pairing is powerful:</strong> subtracting X − Y for each person deletes all the between-person variation (some people just naturally run high). What's left in D is <em>only</em> the within-person treatment effect — a cleaner, smaller-noise signal. Same reason a before/after weight-loss study beats comparing two random groups.
+  </div>
+
+  <div class="story"><span class="st-label">💊 Captopril worked example</span> 15 patients have diastolic blood pressure measured before (X) and after (Y) treatment. Does the drug lower it? α = 0.05.</div>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Hypotheses.</strong> D = before − after. H₀: μ_D = 0 &nbsp; H₁: μ_D &gt; 0 <small>(if the drug works, before &gt; after → D &gt; 0)</small></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Compute D</strong> for each of the 15 patients; find D̄ and s_D.</div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Assumptions.</strong> Paired ✓; n = 15 &lt; 30 → check that the <em>differences</em> D are roughly normal (histogram/QQ of D).</div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Statistic.</strong> T = D̄ / (s_D/√15) ~ t<sub>14</sub>.</div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>P-value.</strong> Right-sided: p = 1 − T.DIST(t; 14; TRUE). If p ≤ 0.05 → "Captopril significantly reduces diastolic blood pressure."</div></div>
+  <div class="two-col" style="margin-top:12px">
+    <div class="card" style="background:var(--teal-light);border-color:var(--teal)"><strong style="color:var(--teal)">SPSS — direct</strong><br>Analyze → Compare Means → Paired-Samples T-Test → put before &amp; after as the pair.</div>
+    <div class="card" style="background:var(--blue-light);border-color:var(--blue)"><strong style="color:var(--blue)">SPSS — manual</strong><br>Transform → Compute D = before − after, then One-Sample T-Test on D with test value 0.</div>
+  </div>
+  <div class="warning"><strong>Direction matters:</strong> define D so that H₁ points the way your research question does. If you write D = after − before but H₁ says "before &gt; after," your sign flips and you'll misread the p-value.</div>
+</div>
+
+<h2 id="h2-unpaired">12. Unpaired t-Tests &amp; the Variance Question <span class="tag tag-key">KEY</span></h2>
+<div class="card">
+  <p>For two independent groups, the statistic is built on the difference of sample means X̄₁ − X̄₂:</p>
+  <div class="formula-box"><div class="label">General form (σ unknown)</div><div class="main">T = (X̄₁ − X̄₂ − a) / √(s₁²/n₁ + s₂²/n₂)</div></div>
+  <p>where <strong>a</strong> is the hypothesised difference — usually 0 (H₀: μ₁ = μ₂), but not always:</p>
+  <div class="note"><strong>Non-zero a:</strong> "SlimDrink claims you lose <em>at least</em> 5 kg." You're sceptical. H₀: μ_before − μ_after = 5 vs H₁: μ_before − μ_after &lt; 5 → here a = 5.</div>
+
+  <p>But there are <strong>two versions</strong> of the unpaired test, depending on whether the two populations have equal spread:</p>
+  <div class="two-col">
+    <div class="card" style="background:var(--purple-light);border-color:var(--purple)">
+      <strong style="color:var(--purple)">Case 1: σ₁ = σ₂ (equal — pooled)</strong><br>
+      Combine both groups' spread into one pooled estimate:<br>
+      <div style="font-family:monospace;font-size:0.88rem;margin:6px 0">s²_p = [(n₁−1)s₁² + (n₂−1)s₂²]/(n₁+n₂−2)</div>
+      <div style="font-family:monospace;font-size:0.88rem">T = (X̄₁−X̄₂−a)/(s_p·√(1/n₁+1/n₂))</div><br>
+      df = n₁ + n₂ − 2
+    </div>
+    <div class="card" style="background:var(--teal-light);border-color:var(--teal)">
+      <strong style="color:var(--teal)">Case 2: σ₁ ≠ σ₂ (unequal — Welch)</strong><br>
+      Keep the variances separate:<br>
+      <div style="font-family:monospace;font-size:0.88rem;margin:6px 0">T = (X̄₁−X̄₂−a)/√(s₁²/n₁ + s₂²/n₂)</div>
+      df = Welch's messy formula (SPSS computes it)<br><br>
+      <strong>Conservative shortcut:</strong> df = min(n₁−1, n₂−1) — safe, gives a larger p-value.
+    </div>
+  </div>
+
+  <h3>Levene's test — the pre-test that picks the version <span class="tag tag-exam">EXAM</span></h3>
+  <p>Which column do you read? A little test-before-the-test decides. Levene's test checks equal variances:</p>
+  <div class="formula-box"><div class="label">Levene's hypotheses</div><div class="main">H₀: σ₁² = σ₂²  vs  H₁: σ₁² ≠ σ₂²</div></div>
+  <table>
+    <tr><th>Levene's p</th><th>Verdict on variances</th><th>Which SPSS row?</th></tr>
+    <tr><td><strong>p &gt; 0.05</strong></td><td>Assume equal</td><td>"Equal variances assumed" (pooled)</td></tr>
+    <tr><td><strong>p ≤ 0.05</strong></td><td>Significantly different</td><td>"Equal variances not assumed" (Welch)</td></tr>
+  </table>
+  <div class="warning"><strong>Two-step SPSS reading:</strong> (1) look at Levene's Sig. to choose the row; (2) read t, df, and Sig. (2-tailed) from that chosen row. Don't skip step 1.</div>
+
+  <div class="story"><span class="st-label">🧪 Calcium worked example</span> Calcium (CAMMOL) for males (n₁ = 91, s₁ = 0.1217) vs females (n₂ = 86, s₂ = 0.1403). H₀: μ₁ = μ₂ vs H₁: μ₁ ≠ μ₂ (two-sided). α = 0.05.</div>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Hypotheses.</strong> H₀: μ₁ = μ₂ &nbsp; H₁: μ₁ ≠ μ₂ (no prior direction → two-sided).</div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Explore.</strong> Two histograms &amp; boxplots on the same scale; roughly symmetric, no wild outliers. n₁+n₂ = 177 ≥ 40 → CLT fine.</div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Levene.</strong> Suppose p &gt; 0.05 → equal variances. s²_p = [90·0.1217² + 85·0.1403²]/175 = 0.01718 → s_p = 0.131.</div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Statistic.</strong> SE = 0.131·√(1/91 + 1/86) = 0.0197. T = (X̄₁−X̄₂)/0.0197 = <strong>−3.841</strong>, df = 175.</div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>P-value &amp; conclusion.</strong> Two-sided: p = T.DIST.2T(3.841; 175) = <strong>0.000171</strong> &lt; 0.05 → reject H₀. "Mean calcium differs significantly between males and females (p &lt; 0.001)."</div></div>
+  <div class="note"><strong>Welch cross-check:</strong> T = −3.825, df = 168.4, p = 0.000184 — virtually identical. When groups are large, pooled and Welch usually agree, so the Levene decision rarely changes the story here.</div>
+
+  <div class="tip"><strong>CI ↔ test, again:</strong> if the 95% CI for μ₁ − μ₂ excludes 0, the two-sided test rejects H₀. Pooled CI uses s_p and df = n₁+n₂−2; Welch CI uses separate variances and Welch df.</div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- =============================== H3 ================================ -->
+<!-- ==================================================================== -->
+<div class="part-header" id="h3">
+  <div class="k"><span class="chapter-badge" style="background:rgba(255,255,255,0.25)">H3</span> Part 4</div>
+  <h2>ANOVA &amp; Post-Hoc Tests</h2>
+</div>
+
+<div class="story">
+  <span class="st-label">👕 The case of the four stores</span>
+  A clothing chain runs four shops — Antwerp, Brussels, Ghent, Hasselt. Head office asks: "do these stores sell differently, or is it all random week-to-week wobble?" Now there are <em>four</em> means, not two. Your first instinct — "just run a t-test on every pair" — is a trap, and understanding why is the whole point of ANOVA.
+</div>
+
+<h2 id="h3-why">13. Why Not Just Do Many t-Tests?</h2>
+<div class="card">
+  <p>Four groups make 6 pairwise comparisons. Each t-test carries a 5% false-alarm risk. Run 6 of them and the chance that <em>at least one</em> fires falsely balloons:</p>
+  <div class="formula-box"><div class="label">Family-wise error with k independent tests</div><div class="main">P(≥ 1 false positive) = 1 − (1 − 0.05)^k</div></div>
+  <p>For k = 6: 1 − 0.95⁶ = <strong>26.5%</strong>. More than one in four "findings" would be pure noise. That's the courtroom equivalent of holding 6 trials and calling it a win if any jury convicts.</p>
+  <div class="tip"><strong>ANOVA's fix:</strong> one single F-test asks "are these groups all the same?" while holding the overall false-alarm rate at exactly 5%. Only <em>after</em> it rejects do we go hunting for which pairs differ — with a corrected threshold (post-hoc).</div>
+</div>
+
+<h2 id="h3-idea">14. The Core Idea — Between vs Within Variability <span class="tag tag-key">KEY</span></h2>
+<div class="card">
+  <p>ANOVA's insight is beautiful: to tell if group means truly differ, compare <strong>two kinds of spread</strong>.</p>
+  <div class="two-col">
+    <div class="card" style="background:var(--blue-light);border-color:var(--blue)"><strong style="color:var(--blue)">Between-group variability</strong><br>How far apart are the <em>group means</em>?<br><br>Large → groups really differ.<br><em>This is the signal.</em></div>
+    <div class="card" style="background:var(--orange-light);border-color:var(--orange)"><strong style="color:var(--orange)">Within-group variability</strong><br>How much do <em>individuals</em> scatter around their own group mean?<br><br>Large → noisy even inside one group.<br><em>This is the noise.</em></div>
+  </div>
+
+  <svg viewBox="0 0 560 170" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;display:block;margin:12px auto">
+    <text x="280" y="15" text-anchor="middle" font-size="12" font-weight="bold" fill="currentColor">Between-group vs Within-group variability</text>
+    <text x="140" y="32" text-anchor="middle" font-size="10" font-weight="bold" fill="#16a34a">Large F: reject H₀</text>
+    <circle cx="60" cy="80" r="4" fill="#2563eb"/><circle cx="65" cy="90" r="4" fill="#2563eb"/><circle cx="55" cy="75" r="4" fill="#2563eb"/><circle cx="70" cy="85" r="4" fill="#2563eb"/>
+    <line x1="40" y1="82" x2="90" y2="82" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,2"/><text x="50" y="110" font-size="9" fill="#2563eb">μ₁≈10</text>
+    <circle cx="150" cy="115" r="4" fill="#dc2626"/><circle cx="158" cy="108" r="4" fill="#dc2626"/><circle cx="143" cy="120" r="4" fill="#dc2626"/><circle cx="162" cy="118" r="4" fill="#dc2626"/>
+    <line x1="130" y1="115" x2="180" y2="115" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/><text x="138" y="135" font-size="9" fill="#dc2626">μ₂≈40</text>
+    <circle cx="228" cy="148" r="4" fill="#16a34a"/><circle cx="222" cy="142" r="4" fill="#16a34a"/><circle cx="235" cy="152" r="4" fill="#16a34a"/><circle cx="218" cy="150" r="4" fill="#16a34a"/>
+    <line x1="200" y1="148" x2="250" y2="148" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,2"/><text x="210" y="165" font-size="9" fill="#16a34a">μ₃≈70</text>
+    <text x="140" y="156" text-anchor="middle" font-size="9" fill="#16a34a">Tight clusters, far apart</text>
+    <line x1="285" y1="25" x2="285" y2="165" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="420" y="32" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">Small F: don't reject H₀</text>
+    <circle cx="330" cy="95" r="4" fill="#2563eb"/><circle cx="360" cy="110" r="4" fill="#2563eb"/><circle cx="340" cy="130" r="4" fill="#2563eb"/><circle cx="380" cy="80" r="4" fill="#2563eb"/>
+    <circle cx="410" cy="115" r="4" fill="#dc2626"/><circle cx="350" cy="75" r="4" fill="#dc2626"/><circle cx="430" cy="100" r="4" fill="#dc2626"/><circle cx="395" cy="140" r="4" fill="#dc2626"/>
+    <circle cx="460" cy="90" r="4" fill="#16a34a"/><circle cx="470" cy="130" r="4" fill="#16a34a"/><circle cx="440" cy="70" r="4" fill="#16a34a"/><circle cx="490" cy="115" r="4" fill="#16a34a"/>
+    <line x1="305" y1="105" x2="540" y2="105" stroke="#6c757d" stroke-width="1.5" stroke-dasharray="4,2"/>
+    <text x="420" y="157" text-anchor="middle" font-size="9" fill="#6c757d">Wide scatter, groups overlap</text>
+  </svg>
+
+  <div class="formula-box"><div class="label">F-statistic — signal-to-noise ratio</div><div class="main">F = MS_between / MS_within = s²_between / s²_within</div></div>
+  <ul>
+    <li><strong>Under H₀</strong> (all means equal): signal ≈ noise → F ≈ 1.</li>
+    <li><strong>Reject H₀</strong> when F is much bigger than 1 (signal drowns out noise).</li>
+    <li>Always one-sided right — only large F counts as evidence.</li>
+  </ul>
+</div>
+
+<h2 id="h3-formulas">15. The Formulas &amp; the ANOVA Table <span class="tag tag-exam">EXAM</span></h2>
+<div class="card">
+  <p>Notation: g = number of groups, nᵢ = size of group i, N = total, X̄ᵢ = group mean, X̄ = overall (grand) mean.</p>
+  <div class="two-col">
+    <div>
+      <div class="formula-box"><div class="label">Between-group SS</div><div class="main">SS_between = Σᵢ nᵢ (X̄ᵢ − X̄)²</div></div>
+      <div class="formula-box"><div class="label">Between df / MS</div><div class="main">df = g − 1 &nbsp; MS_b = SS_b/(g−1)</div></div>
+    </div>
+    <div>
+      <div class="formula-box"><div class="label">Within-group SS</div><div class="main">SS_within = Σᵢ Σⱼ (Xᵢⱼ − X̄ᵢ)²</div></div>
+      <div class="formula-box"><div class="label">Within df / MS</div><div class="main">df = N − g &nbsp; MS_w = SS_w/(N−g)</div></div>
+    </div>
+  </div>
+  <div class="formula-box" style="background:var(--purple-light);border-color:var(--purple)"><div class="label" style="color:var(--purple)">The key decomposition</div><div class="main" style="color:var(--purple)">SS_total = SS_between + SS_within &nbsp;&nbsp; (N−1) = (g−1) + (N−g)</div></div>
+
+  <table class="anova-table">
+    <tr><th>Source</th><th>SS</th><th>df</th><th>MS = SS/df</th><th>F</th><th>p</th></tr>
+    <tr><td><strong>Between groups</strong></td><td>SS_b</td><td>g−1</td><td>MS_b</td><td>MS_b/MS_w</td><td>P(F ≥ f)</td></tr>
+    <tr><td><strong>Within (error)</strong></td><td>SS_w</td><td>N−g</td><td>MS_w</td><td>—</td><td>—</td></tr>
+    <tr><td><strong>Total</strong></td><td>SS_t</td><td>N−1</td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+  <p>P-value in Excel: <code>=F.DIST.RT(f_obs; g−1; N−g)</code> — always the right tail.</p>
+</div>
+
+<h2 id="h3-example">16. Worked Example — Clothing Sales <span class="tag tag-exam">EXAM</span></h2>
+<div class="card">
+  <p><em>4 stores × 5 weeks. Means: Antwerp 14.6, Brussels 27.2, Ghent 20.0, Hasselt 13.4. N = 20. α = 0.05.</em></p>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Hypotheses.</strong> H₀: μ_A = μ_B = μ_G = μ_H &nbsp; H₁: not all equal.</div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Descriptives.</strong> Grand mean X̄ = (14.6+27.2+20.0+13.4)/4 = <strong>18.8</strong> (equal group sizes → grand mean = average of group means). Boxplots per store; Levene's test for equal variances.</div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><strong>SS_between.</strong> = 5(14.6−18.8)² + 5(27.2−18.8)² + 5(20−18.8)² + 5(13.4−18.8)² = 88.2 + 352.8 + 7.2 + 145.8 = <strong>594.0</strong>. df = 3 → MS_b = 198.0.</div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><strong>SS_within.</strong> From SPSS, MS_within = pooled variance = <strong>10.2</strong>. df = N−g = 16 → SS_w = 163.2.</div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><strong>F.</strong> F = 198.0/10.2 = <strong>19.41</strong> ~ F(3, 16).</div></div>
+  <div class="step"><div class="step-num">6</div><div class="step-content"><strong>P-value.</strong> F.DIST.RT(19.41; 3; 16) ≈ <strong>&lt; 0.001</strong> → reject H₀. "Average weekly sales differ across the four locations."</div></div>
+  <table class="anova-table" style="margin-top:14px">
+    <tr><th>Source</th><th>SS</th><th>df</th><th>MS</th><th>F</th><th>p</th></tr>
+    <tr><td>Between (Location)</td><td>594.0</td><td>3</td><td>198.0</td><td>19.41</td><td>&lt;0.001</td></tr>
+    <tr><td>Within (Error)</td><td>163.2</td><td>16</td><td>10.2</td><td>—</td><td>—</td></tr>
+    <tr><td>Total</td><td>757.2</td><td>19</td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+  <div class="warning"><strong>What the F-test does NOT tell you:</strong> it says "at least one store differs," not "all differ" and not "which one." That's the cliffhanger — and post-hoc tests are the sequel.</div>
+  <div class="note"><strong>Assumptions:</strong> random samples; independent (unpaired) groups; each group normal or CLT (rule of thumb total n ≥ 40); <strong>equal variances</strong> (Levene's test) — important because ANOVA leans on a single pooled MS_within. Practical variance rule: largest s &lt; 2 × smallest s.</div>
+</div>
+
+<h2 id="h3-bonf">17. Post-Hoc — Which Groups Differ? (Bonferroni) <span class="tag tag-key">KEY</span></h2>
+<div class="card">
+  <p>Once ANOVA rejects, we do all g(g−1)/2 pairwise comparisons — for g = 4 that's <strong>6</strong>. Each is a t-test with two twists:</p>
+
+  <h3>Twist 1 — borrow the pooled variance from ALL groups</h3>
+  <p>Instead of pooling only the two groups being compared, use MS_within from the full ANOVA (built on <em>all</em> g groups). More data behind the estimate → more power.</p>
+  <div class="formula-box"><div class="label">Post-hoc t-statistic (groups i, j)</div><div class="main">T = (X̄ᵢ − X̄ⱼ) / √(MS_within/nᵢ + MS_within/nⱼ), &nbsp; df = N − g</div></div>
+  <div class="warning"><strong>df = N − g</strong>, not nᵢ+nⱼ−2. This is the single most-missed detail in post-hoc tests.</div>
+  <div class="highlight"><strong>Antwerp vs Brussels:</strong> MS_within = 10.2, n = 5 each. SE = √(10.2/5 + 10.2/5) = √4.08 = 2.02. T = (14.6 − 27.2)/2.02 = <strong>−6.24</strong>, df = 16. Two-sided raw p = 2·P(T ≤ −6.24) = 1.186 × 10⁻⁵.</div>
+
+  <h3>Twist 2 — the Bonferroni correction <span class="tag tag-exam">EXAM</span></h3>
+  <p>Running k tests inflates the family-wise error (the 26.5% problem). Bonferroni simply splits the budget: test each pair at α/k.</p>
+  <div class="formula-box"><div class="label">Bonferroni threshold per test</div><div class="main">α_Bonf = α / k = 0.05 / (g(g−1)/2)</div></div>
+  <div class="highlight"><strong>Sales (g=4, k=6):</strong> α_Bonf = 0.05/6 = <strong>0.00833</strong>. Antwerp vs Brussels: raw p = 1.2×10⁻⁵ &lt; 0.00833 → significantly different ✓</div>
+  <div class="note"><strong>SPSS shortcut:</strong> SPSS's Bonferroni "Sig." is already the <em>adjusted</em> p-value (raw p × k). So you compare it directly to 0.05 — don't divide α yourself. Both routes agree: (raw p &lt; α/k) ⟺ (k·raw p &lt; α).</div>
+
+  <p>Results across all 6 pairs (means: Brussels 27.2 &gt; Ghent 20.0 &gt; Antwerp 14.6 &gt; Hasselt 13.4):</p>
+  <table>
+    <tr><th>Comparison</th><th>Diff</th><th>Conclusion (α=0.05)</th></tr>
+    <tr><td>Brussels − Antwerp</td><td>+12.6</td><td style="color:var(--red)"><strong>Different</strong></td></tr>
+    <tr><td>Brussels − Ghent</td><td>+7.2</td><td style="color:var(--red)"><strong>Different</strong></td></tr>
+    <tr><td>Brussels − Hasselt</td><td>+13.8</td><td style="color:var(--red)"><strong>Different</strong></td></tr>
+    <tr><td>Antwerp − Hasselt</td><td>+1.2</td><td style="color:var(--green)">Not different</td></tr>
+  </table>
+  <div class="tip"><strong>The story's punchline:</strong> Brussels is the star — significantly ahead of all three others. Antwerp and Hasselt are near-twins (14.6 vs 13.4) and statistically indistinguishable. That nuance is exactly what the single F-test could never have told you.</div>
+  <p><strong>Post-hoc CIs:</strong> CI = (X̄ᵢ−X̄ⱼ) ± t*·√(MS_within/nᵢ + MS_within/nⱼ) with t* = T.INV.2T(α/k; N−g). If a CI excludes 0 → that pair differs at the family-wise 5% level.</p>
+</div>
+
+<!-- ==================================================================== -->
+<!-- =============================== H4 ================================ -->
+<!-- ==================================================================== -->
+<div class="part-header" id="h4">
+  <div class="k"><span class="chapter-badge" style="background:rgba(255,255,255,0.25)">H4</span> Part 5</div>
+  <h2>Correlation &amp; Chi-Square — testing relationships</h2>
+</div>
+
+<div class="story">
+  <span class="st-label">🎬🌐 Two new kinds of question</span>
+  Everything so far compared <em>means</em>. But sometimes the question is about a <em>relationship between two variables</em>: do older movies tend to be shorter? Does someone's job type relate to which internet provider they pick? The right test depends entirely on what <em>kind</em> of variables you have.
+</div>
+
+<h2 id="h4-overview">18. Which Test for Which Variable Types?</h2>
+<div class="card">
+  <table>
+    <tr><th>Variable X</th><th>Variable Y</th><th>Question</th><th>Test</th></tr>
+    <tr><td>Quantitative</td><td>Quantitative</td><td>Linear relationship?</td><td><strong>Pearson correlation t-test (H4.1)</strong></td></tr>
+    <tr><td>Qualitative</td><td>Qualitative</td><td>Are they associated?</td><td><strong>Chi-square independence (H4.2)</strong></td></tr>
+    <tr><td>Qualitative (groups)</td><td>Quantitative</td><td>Do group means differ?</td><td>t-test / ANOVA (H2–H3)</td></tr>
+  </table>
+</div>
+
+<h2 id="h4-corr">19. Pearson Correlation Test <span class="chapter-badge">H4.1</span></h2>
+<div class="card">
+  <p>Two quantitative measurements per observation. The sample gives you <strong>r</strong> (−1 ≤ r ≤ 1); you want to know about the population <strong>ρ</strong> (rho).</p>
+  <div class="two-col">
+    <div class="card" style="background:var(--blue-light);border-color:var(--blue)"><strong style="color:var(--blue)">r — sample correlation</strong><br>r &gt; 0 positive · r &lt; 0 negative · |r|→1 strong · |r|→0 weak</div>
+    <div class="card" style="background:var(--purple-light);border-color:var(--purple)"><strong style="color:var(--purple)">ρ — population correlation</strong><br>The truth we're after. We see r, we test ρ.</div>
+  </div>
+  <div class="story"><span class="st-label">🎬 Movies</span> 100 movies. X = age (years since release), Y = length (minutes). r = −0.5091 — a moderate negative link in the sample. Is ρ &lt; 0 in the whole population, or is −0.51 just luck?</div>
+
+  <div class="formula-box"><div class="label">Hypotheses (only ρ = 0 is examinable)</div><div class="main">H₀: ρ = 0 (no linear relationship) &nbsp; H₁: ρ &lt; 0 / &gt; 0 / ≠ 0</div></div>
+  <div class="warning"><strong>H₀: ρ = 0 means no <em>LINEAR</em> relationship</strong> — a curved relationship could still exist with r ≈ 0. Always look at the scatterplot first. (Testing H₀: ρ = 0.5 needs Fisher's z — not in this course.)</div>
+
+  <div class="formula-box"><div class="label">Test statistic <span style="font-size:0.7rem">(rescales r into a t)</span></div><div class="main">T = r·√(n−2) / √(1−r²) ~ t<sub>n−2</sub> under H₀</div></div>
+  <div class="highlight"><strong>Movies:</strong> r = −0.5091, n = 100, df = 98. T = (−0.5091·√98)/√(1−0.5091²) = −5.039/0.8607 = <strong>−5.86</strong>. H₁: ρ &lt; 0 → left-sided. p = P(T ≤ −5.86) ≈ <strong>3.2 × 10⁻⁸</strong> ≪ 0.05 → reject H₀. "Strong evidence that older movies are shorter (negative linear relationship)."</div>
+
+  <table>
+    <tr><th>H₁</th><th>P-value</th><th>Excel</th></tr>
+    <tr><td>ρ &lt; 0</td><td>P(T ≤ t)</td><td><code>=T.DIST(t; n-2; TRUE)</code></td></tr>
+    <tr><td>ρ &gt; 0</td><td>P(T ≥ t)</td><td><code>=1-T.DIST(t; n-2; TRUE)</code></td></tr>
+    <tr><td>ρ ≠ 0</td><td>2·P(T ≥ |t|)</td><td><code>=T.DIST.2T(ABS(t); n-2)</code></td></tr>
+  </table>
+
+  <div class="note"><strong>Assumptions:</strong> bivariate normality — X normal, Y normal, and the scatterplot roughly <em>elliptical</em> (not banana or funnel shaped). For n &gt; 50 with no severe skew/outliers, the test is robust.</div>
+  <div class="warning"><strong>Outliers are lethal to r.</strong> A single extreme point can manufacture or destroy a correlation. Always inspect the scatterplot before trusting r.</div>
+  <p><strong>SPSS:</strong> Analyze → Correlate → Bivariate → tick Pearson, choose one/two-tailed. Read r, N, and Sig.</p>
+</div>
+
+<h2 id="h4-chi">20. Chi-Square Test of Independence <span class="chapter-badge">H4.2</span></h2>
+<div class="card">
+  <p>Both variables categorical — no means, no correlation. We test whether the distribution of one depends on the other, i.e. whether they're <strong>independent</strong>.</p>
+  <div class="story"><span class="st-label">🌐 Internet providers</span> X = provider (Belgacom / Telenet / Other), Y = employment (Blue collar / White collar / Self-employed), n = 100. Is provider choice independent of job type?</div>
+  <div class="formula-box"><div class="label">Hypotheses (always these)</div><div class="main">H₀: X and Y are independent &nbsp; H₁: X and Y are associated</div></div>
+  <div class="warning"><strong>Chi-square only detects <em>whether</em> an association exists</strong> — never its direction or strength. For that, read the table proportions or a stacked bar chart.</div>
+
+  <h3>Observed table (the data)</h3>
+  <table class="ct">
+    <tr><th></th><th>Belgacom</th><th>Telenet</th><th>Other</th><th>Total</th></tr>
+    <tr><td><strong>Blue collar</strong></td><td class="ct-obs">20</td><td class="ct-obs">15</td><td class="ct-obs">5</td><td>40</td></tr>
+    <tr><td><strong>White collar</strong></td><td class="ct-obs">15</td><td class="ct-obs">17</td><td class="ct-obs">8</td><td>40</td></tr>
+    <tr><td><strong>Self-employed</strong></td><td class="ct-obs">6</td><td class="ct-obs">6</td><td class="ct-obs">8</td><td>20</td></tr>
+    <tr><td><strong>Total</strong></td><td>41</td><td>38</td><td>21</td><td>100</td></tr>
+  </table>
+
+  <h3>Expected counts under H₀ <span class="tag tag-key">KEY</span></h3>
+  <div class="formula-box"><div class="label">Expected frequency</div><div class="main">E_{ij} = (row total_i × column total_j) / n</div></div>
+  <p><strong>Why?</strong> If independent, P(blue ∩ Belgacom) = P(blue)·P(Belgacom) = (40/100)(41/100), so expected count = 100·that = 40·41/100 = <strong>16.4</strong>.</p>
+  <table class="ct">
+    <tr><th></th><th>Belgacom</th><th>Telenet</th><th>Other</th></tr>
+    <tr><td><strong>Blue (40)</strong></td><td class="ct-exp">16.4</td><td class="ct-exp">15.2</td><td class="ct-exp">8.4</td></tr>
+    <tr><td><strong>White (40)</strong></td><td class="ct-exp">16.4</td><td class="ct-exp">15.2</td><td class="ct-exp">8.4</td></tr>
+    <tr><td><strong>Self (20)</strong></td><td class="ct-exp">8.2</td><td class="ct-exp">7.6</td><td class="ct-exp">4.2</td></tr>
+  </table>
+
+  <h3>The test statistic <span class="tag tag-key">KEY</span></h3>
+  <div class="formula-box"><div class="label">Chi-square</div><div class="main">χ² = Σ (O − E)² / E &nbsp; (over all cells) ~ χ²<sub>(r−1)(k−1)</sub></div></div>
+  <ul>
+    <li>Under H₀: O ≈ E → χ² ≈ 0.</li>
+    <li>Reject H₀ when χ² is large (observed table strays far from independence).</li>
+    <li><strong>Always one-sided right</strong> — χ² ≥ 0 by construction.</li>
+    <li>df = (r−1)(k−1); for a 3×3 table, df = 2×2 = <strong>4</strong>.</li>
+  </ul>
+  <div class="highlight"><strong>Internet providers:</strong> χ² = 3.195, df = 4. p = CHISQ.DIST.RT(3.195; 4) = <strong>0.526</strong> ≫ 0.05 → do not reject H₀. "No significant evidence of an association between provider and employment status."</div>
+
+  <svg viewBox="0 0 420 120" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:420px;display:block;margin:12px auto">
+    <text x="210" y="14" text-anchor="middle" font-size="11" font-weight="bold" fill="currentColor">χ²(4) — p-value = area right of χ²_obs</text>
+    <path d="M20,100 Q50,15 90,15 Q130,15 160,40 Q200,70 260,90 Q330,100 420,100Z" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+    <line x1="20" y1="100" x2="420" y2="100" stroke="currentColor" stroke-width="1"/>
+    <line x1="82" y1="14" x2="82" y2="100" stroke="#ea580c" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="82" y="10" text-anchor="middle" font-size="9" fill="#ea580c">χ²=3.195</text>
+    <path d="M82,100 Q82,14 90,15 Q130,15 160,40 Q200,70 260,90 Q330,100 420,100Z" fill="#ea580c" opacity="0.3"/>
+    <text x="280" y="65" font-size="9" fill="#ea580c">p = 0.526 (don't reject)</text>
+  </svg>
+
+  <h3>Assumptions <span class="tag tag-exam">EXAM</span></h3>
+  <table>
+    <tr><th>Condition</th><th>Rule</th></tr>
+    <tr><td>Minimum expected count</td><td>All E_{ij} ≥ 1</td></tr>
+    <tr><td>Most cells ≥ 5</td><td>At most 20% of cells with E_{ij} &lt; 5</td></tr>
+  </table>
+  <p>Here only one cell (4.2) is below 5 = 11% of 9 cells &lt; 20% ✓. <strong>If violated:</strong> merge small categories to boost expected counts.</p>
+  <p><strong>SPSS:</strong> Analyze → Descriptive Statistics → Crosstabs → Cells: tick "Expected" → Statistics: tick "Chi-square." Read the <em>Pearson Chi-Square</em> row (Value, df, Asymptotic Sig.), and check the footnote about cells &lt; 5.</p>
+</div>
+
+<!-- ==================================================================== -->
+<!-- =========================== MASTER MAP ============================ -->
+<!-- ==================================================================== -->
+<div class="part-header" id="master">
+  <div class="k">Bringing it all together</div>
+  <h2>Master Decision Tree — Which Test Do I Use?</h2>
+</div>
+
+<div class="card">
+  <p>Every exam question reduces to three questions: <strong>how many variables/groups? what type? are they linked?</strong> Follow the map.</p>
+  <table>
+    <tr><th>Your situation</th><th>Test</th><th>Statistic → distribution</th></tr>
+    <tr><td>One quantitative variable vs a fixed number μ₀</td><td>One-mean t-test (H1.1)</td><td>T=(X̄−μ₀)/(s/√n) → t<sub>n−1</sub></td></tr>
+    <tr><td>Is one variable normal? (assumption check)</td><td>KS / Shapiro–Wilk (H1.2)</td><td>D / SW</td></tr>
+    <tr><td>Two measurements on the <em>same</em> subjects</td><td>Paired t-test (H2)</td><td>T=D̄/(s_D/√n) → t<sub>n−1</sub></td></tr>
+    <tr><td>Two <em>separate</em> groups, equal variance (Levene p&gt;.05)</td><td>Pooled t-test (H2)</td><td>→ t<sub>n₁+n₂−2</sub></td></tr>
+    <tr><td>Two separate groups, unequal variance (Levene p≤.05)</td><td>Welch t-test (H2)</td><td>→ t<sub>Welch df</sub></td></tr>
+    <tr><td>3+ groups, one quantitative response</td><td>One-way ANOVA (H3)</td><td>F=MS_b/MS_w → F<sub>g−1, N−g</sub></td></tr>
+    <tr><td>After ANOVA: which pairs differ?</td><td>Bonferroni post-hoc (H3)</td><td>→ t<sub>N−g</sub>, α/k</td></tr>
+    <tr><td>Two quantitative variables — linear link?</td><td>Pearson correlation (H4.1)</td><td>T=r√(n−2)/√(1−r²) → t<sub>n−2</sub></td></tr>
+    <tr><td>Two qualitative variables — associated?</td><td>Chi-square (H4.2)</td><td>χ²=Σ(O−E)²/E → χ²<sub>(r−1)(k−1)</sub></td></tr>
+  </table>
+</div>
+
+<h2 id="cheatsheet">Master Cheat-Sheet</h2>
+<div class="card">
+  <h3>Excel p-value functions</h3>
+  <table>
+    <tr><th>Distribution</th><th>Left</th><th>Right</th><th>Two-sided</th></tr>
+    <tr><td>t</td><td><code>T.DIST(t;df;1)</code></td><td><code>1-T.DIST(t;df;1)</code></td><td><code>T.DIST.2T(ABS(t);df)</code></td></tr>
+    <tr><td>F</td><td>—</td><td><code>F.DIST.RT(f;df1;df2)</code></td><td>—</td></tr>
+    <tr><td>χ²</td><td>—</td><td><code>CHISQ.DIST.RT(x;df)</code></td><td>—</td></tr>
+    <tr><td>Critical t*</td><td colspan="3"><code>T.INV.2T(α;df)</code> two-sided · <code>T.INV(1-α;df)</code> one-sided right</td></tr>
+  </table>
+  <h3>Degrees of freedom — the cheat column everyone needs</h3>
+  <table>
+    <tr><th>Test</th><th>df</th></tr>
+    <tr><td>One-mean / paired t</td><td>n − 1</td></tr>
+    <tr><td>Pooled two-sample t</td><td>n₁ + n₂ − 2</td></tr>
+    <tr><td>Welch t</td><td>Welch formula (or min(n₁−1, n₂−1) conservative)</td></tr>
+    <tr><td>ANOVA F</td><td>(g − 1, N − g)</td></tr>
+    <tr><td>Post-hoc pairwise t</td><td>N − g <em>(not nᵢ+nⱼ−2!)</em></td></tr>
+    <tr><td>Correlation t</td><td>n − 2</td></tr>
+    <tr><td>Chi-square</td><td>(r − 1)(k − 1) <em>(not r×k!)</em></td></tr>
+  </table>
+  <h3>Assumptions at a glance</h3>
+  <table>
+    <tr><th>Test</th><th>Key assumptions</th></tr>
+    <tr><td>One-mean / paired t</td><td>Normal data (or D normal), or n ≥ 30</td></tr>
+    <tr><td>Unpaired t</td><td>Independence; normal or n₁+n₂ ≥ 40; Levene for variance</td></tr>
+    <tr><td>ANOVA</td><td>Independence; normal per group; equal variances (Levene)</td></tr>
+    <tr><td>Correlation t</td><td>Bivariate normality (elliptical scatter), or n &gt; 50</td></tr>
+    <tr><td>Chi-square</td><td>All E ≥ 1; ≤ 20% of cells with E &lt; 5</td></tr>
+  </table>
+</div>
+
+<h2>The Ten Deadliest Mistakes</h2>
+<div class="card">
+  <table>
+    <tr><th>#</th><th>Mistake</th><th>Fix</th></tr>
+    <tr><td>1</td><td>"Do not reject H₀" = "H₀ is true"</td><td>It only means insufficient evidence — never proof</td></tr>
+    <tr><td>2</td><td>"p-value = probability H₀ is true"</td><td>p = P(data this extreme │ H₀). Not about H₀'s truth.</td></tr>
+    <tr><td>3</td><td>Using NORM.DIST with s (σ unknown)</td><td>Use T.DIST with df = n−1</td></tr>
+    <tr><td>4</td><td>Running an unpaired test on paired data</td><td>Reduce to D = X−Y, one-sample t</td></tr>
+    <tr><td>5</td><td>Ignoring Levene's test, always using pooled</td><td>Check Levene first, then pick the row</td></tr>
+    <tr><td>6</td><td>6 t-tests instead of ANOVA</td><td>ANOVA once, then Bonferroni at α/k</td></tr>
+    <tr><td>7</td><td>Post-hoc df = nᵢ+nⱼ−2</td><td>Post-hoc df = N − g</td></tr>
+    <tr><td>8</td><td>Trusting r without the scatterplot</td><td>One outlier can fake a correlation</td></tr>
+    <tr><td>9</td><td>Chi-square df = r × k</td><td>df = (r−1)(k−1)</td></tr>
+    <tr><td>10</td><td>Reading a direction from chi-square</td><td>It only says "associated"; direction comes from proportions</td></tr>
+  </table>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<div class="card">
+  <table>
+    <tr><th>Term</th><th>Plain meaning</th></tr>
+    <tr><td>H₀ (null)</td><td>The boring default — no effect/difference/relationship. Presumed true.</td></tr>
+    <tr><td>H₁ (alternative)</td><td>The claim you're trying to establish.</td></tr>
+    <tr><td>Test statistic</td><td>All the evidence squeezed into one number (T, F, χ²).</td></tr>
+    <tr><td>p-value</td><td>P(evidence this extreme │ H₀ true). Small = surprising = reject.</td></tr>
+    <tr><td>α (significance level)</td><td>Chosen false-alarm tolerance, usually 0.05.</td></tr>
+    <tr><td>Type I error</td><td>False alarm — rejecting a true H₀. Rate = α.</td></tr>
+    <tr><td>Type II error</td><td>Miss — failing to reject a false H₀. Rate = β.</td></tr>
+    <tr><td>Power (1−β)</td><td>Ability to catch a real effect. Rises with n and effect size.</td></tr>
+    <tr><td>Degrees of freedom</td><td>How much independent information the estimate rests on.</td></tr>
+    <tr><td>CLT</td><td>For n ≥ 30, X̄ is ~normal regardless of the data's shape.</td></tr>
+    <tr><td>Levene's test</td><td>Pre-test for equal variances; picks pooled vs Welch.</td></tr>
+    <tr><td>Bonferroni</td><td>Divide α by the number of comparisons to control family-wise error.</td></tr>
+    <tr><td>Bivariate normal</td><td>The pair (X,Y) forms an elliptical cloud — assumption for correlation test.</td></tr>
+    <tr><td>Contingency table</td><td>Cross-tab of counts for two categorical variables.</td></tr>
+  </table>
+  <div class="story" style="margin-top:16px">
+    <span class="st-label">The one sentence to remember</span>
+    Every test in this chapter is the same trial: <strong>presume H₀, weigh the evidence, and only convict (reject) when the data would be genuinely surprising under innocence.</strong> Master that, and the formulas are just paperwork.
+  </div>
+</div>
+
+</div>
+</body>
+</html>
