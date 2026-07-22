@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability Theory &amp; Random Variables — Complete Study Guide</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --surface2: #f5f3ee;
+    --border: #e8e2d4;
+    --text: #1a1714;
+    --text2: #4a433a;
+    --text3: #7a7068;
+    --accent: #c47c2b;
+    --accent-light: #f5e6cc;
+    --accent-dark: #8f5a1a;
+    --formula-bg: #fff8ed;
+    --formula-border: #d4922a;
+    --warn-bg: #fff0f0;
+    --warn-border: #e05555;
+    --tip-bg: #f0faf0;
+    --tip-border: #4a9a4a;
+    --note-bg: #fff5e6;
+    --note-border: #e09030;
+    --insight-bg: #e8f5f5;
+    --insight-border: #3a8a8a;
+    --story-bg: #fef9f0;
+    --story-border: #c47c2b;
+    --p1-color: #c47c2b;
+    --p2-color: #5b8dd9;
+    --p3-color: #4a9a4a;
+    --p4-color: #8b5cf6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16130f;
+      --surface: #201c17;
+      --surface2: #2a2520;
+      --border: #3d3628;
+      --text: #f0ead8;
+      --text2: #c8bfaa;
+      --text3: #8a8070;
+      --accent: #e09840;
+      --accent-light: #3d2e12;
+      --accent-dark: #f5b860;
+      --formula-bg: #2a2010;
+      --formula-border: #c47c2b;
+      --warn-bg: #2a1010;
+      --warn-border: #cc4444;
+      --tip-bg: #0f2010;
+      --tip-border: #3a7a3a;
+      --note-bg: #2a1e08;
+      --note-border: #cc7020;
+      --insight-bg: #0f2020;
+      --insight-border: #2a7a7a;
+      --story-bg: #201810;
+      --story-border: #c47c2b;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #fafaf7; --surface: #ffffff; --surface2: #f5f3ee; --border: #e8e2d4;
+    --text: #1a1714; --text2: #4a433a; --text3: #7a7068; --accent: #c47c2b;
+    --accent-light: #f5e6cc; --accent-dark: #8f5a1a; --formula-bg: #fff8ed;
+    --formula-border: #d4922a; --warn-bg: #fff0f0; --warn-border: #e05555;
+    --tip-bg: #f0faf0; --tip-border: #4a9a4a; --note-bg: #fff5e6;
+    --note-border: #e09030; --insight-bg: #e8f5f5; --insight-border: #3a8a8a;
+    --story-bg: #fef9f0; --story-border: #c47c2b;
+  }
+  :root[data-theme="dark"] {
+    --bg: #16130f; --surface: #201c17; --surface2: #2a2520; --border: #3d3628;
+    --text: #f0ead8; --text2: #c8bfaa; --text3: #8a8070; --accent: #e09840;
+    --accent-light: #3d2e12; --accent-dark: #f5b860; --formula-bg: #2a2010;
+    --formula-border: #c47c2b; --warn-bg: #2a1010; --warn-border: #cc4444;
+    --tip-bg: #0f2010; --tip-border: #3a7a3a; --note-bg: #2a1e08;
+    --note-border: #cc7020; --insight-bg: #0f2020; --insight-border: #2a7a7a;
+    --story-bg: #201810; --story-border: #c47c2b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 16px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* COVER */
+  .cover { text-align: center; padding: 72px 24px 60px; background: linear-gradient(160deg, var(--surface) 0%, var(--accent-light) 100%); border-bottom: 3px solid var(--accent); margin-bottom: 0; }
+  .cover-badge { display: inline-block; background: var(--accent); color: #fff; font-family: 'Courier New', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 18px; }
+  .cover h1 { font-size: 2.8rem; font-weight: 700; color: var(--accent-dark); line-height: 1.2; margin-bottom: 12px; }
+  .cover .subtitle { font-size: 1.15rem; color: var(--text2); max-width: 560px; margin: 0 auto 28px; font-style: italic; }
+  .cover-meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; color: var(--text3); font-size: 0.88rem; font-family: 'Courier New', monospace; }
+
+  /* THEME TOGGLE */
+  .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 100; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 13px; cursor: pointer; color: var(--text2); }
+
+  /* TOC */
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin: 36px 0; }
+  .toc h2 { font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; font-family: 'Courier New', monospace; }
+  .toc-parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .toc-part { }
+  .toc-part-title { font-weight: 700; color: var(--text); margin-bottom: 8px; font-size: 0.95rem; }
+  .toc-part-title span { display: inline-block; width: 24px; height: 24px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; text-align: center; line-height: 24px; margin-right: 8px; }
+  .toc a { display: block; color: var(--text2); font-size: 0.88rem; text-decoration: none; padding: 2px 0 2px 32px; border-left: 2px solid transparent; transition: all 0.15s; }
+  .toc a:hover { color: var(--accent); border-left-color: var(--accent); padding-left: 36px; }
+
+  /* STORY BANNER */
+  .story-banner { background: var(--story-bg); border-left: 4px solid var(--story-border); border-radius: 0 8px 8px 0; padding: 20px 24px; margin: 28px 0; font-style: italic; color: var(--text2); }
+  .story-banner strong { color: var(--accent); font-style: normal; }
+  .story-banner .story-label { font-family: 'Courier New', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-style: normal; display: block; margin-bottom: 6px; }
+
+  /* PARTS & SECTIONS */
+  .part-header { margin: 56px 0 32px; padding: 24px 28px; background: var(--surface2); border-radius: 12px; border-left: 6px solid var(--accent); }
+  .part-badge { display: inline-block; font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; color: #fff; margin-bottom: 10px; }
+  .part-header h2 { font-size: 1.65rem; color: var(--text); margin-bottom: 6px; }
+  .part-header p { color: var(--text2); font-size: 0.95rem; }
+
+  .section { margin: 36px 0; }
+  .section-title { font-size: 1.25rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .section-title .num { background: var(--accent); color: #fff; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-family: 'Courier New', monospace; }
+
+  h3 { font-size: 1.08rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 22px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text); }
+
+  /* BOXES */
+  .formula-box { background: var(--formula-bg); border: 2px solid var(--formula-border); border-radius: 10px; padding: 18px 22px; margin: 20px 0; }
+  .formula-box .label { font-family: 'Courier New', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; display: block; }
+  .formula-box .math { font-family: 'Courier New', monospace; font-size: 1.05rem; color: var(--accent-dark); line-height: 2; }
+  .warn { background: var(--warn-bg); border-left: 4px solid var(--warn-border); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 18px 0; color: var(--text2); }
+  .warn strong { color: #cc3333; }
+  .tip { background: var(--tip-bg); border-left: 4px solid var(--tip-border); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 18px 0; color: var(--text2); }
+  .tip strong { color: #2a7a2a; }
+  .note { background: var(--note-bg); border-left: 4px solid var(--note-border); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 18px 0; color: var(--text2); }
+  .note strong { color: #a06010; }
+  .insight { background: var(--insight-bg); border-left: 4px solid var(--insight-border); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 18px 0; color: var(--text2); }
+  .insight strong { color: #1a6a6a; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { background: var(--surface2); color: var(--accent); font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+
+  /* SVG DIAGRAMS */
+  .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 24px 0; overflow-x: auto; }
+  .diagram svg { display: block; margin: 0 auto; max-width: 100%; }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 20px 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .card h4 { font-size: 0.95rem; color: var(--accent); margin-bottom: 10px; }
+
+  /* EXAMPLE BLOCK */
+  .example { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+  .example .ex-label { font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0 6px 28px; position: relative; border-bottom: 1px solid var(--border); color: var(--text2); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--accent); font-size: 14px; }
+
+  /* REFERENCE TABLE */
+  .ref-section { margin: 48px 0; }
+  .ref-section h2 { font-size: 1.3rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 40px 0 20px; color: var(--text3); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 60px; }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 1.9rem; }
+    .cover-meta { gap: 16px; }
+    .toc-parts { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()">☀︎ / ☽ Theme</button>
+
+<div class="cover">
+  <div class="cover-badge">Statistics · Probability Theory</div>
+  <h1>Probability Theory &amp;<br>Random Variables</h1>
+  <p class="subtitle">A complete merged guide — from first principles to the Central Limit Theorem — with expanded explanations and an immersive story.</p>
+  <div class="cover-meta">
+    <span>📚 Parts I – V</span>
+    <span>📖 P1 → P4 merged</span>
+    <span>🎲 Story: The Actuarial Adventures of Sam</span>
+    <span>📊 Excel quick-reference included</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-parts">
+    <div class="toc-part">
+      <div class="toc-part-title"><span style="background:#c47c2b;">I</span> The Language of Chance</div>
+      <a href="#p1-freq">1.1 Frequentist Probability</a>
+      <a href="#p1-counting">1.2 Counting Rules</a>
+      <a href="#p1-kolmogorov">1.3 Kolmogorov Axioms &amp; Rules</a>
+      <a href="#p1-conditional">1.4 Conditional Probability</a>
+    </div>
+    <div class="toc-part">
+      <div class="toc-part-title"><span style="background:#5b8dd9;">II</span> Discrete Random Variables</div>
+      <a href="#p2-distributions">2.1 Probability Distributions</a>
+      <a href="#p2-meanvar">2.2 Mean &amp; Variance</a>
+      <a href="#p2-binomial">2.3 Binomial Distribution</a>
+    </div>
+    <div class="toc-part">
+      <div class="toc-part-title"><span style="background:#4a9a4a;">III</span> Continuous Random Variables</div>
+      <a href="#p3-density">3.1 Density Functions</a>
+      <a href="#p3-meansd">3.2 Mean &amp; SD (Continuous)</a>
+    </div>
+    <div class="toc-part">
+      <div class="toc-part-title"><span style="background:#c47c2b;">IV</span> The Normal Distribution</div>
+      <a href="#p3-normal">4.1 Normal Distribution</a>
+      <a href="#p3-standardizing">4.2 Standardizing &amp; QQ-Plots</a>
+    </div>
+    <div class="toc-part">
+      <div class="toc-part-title"><span style="background:#8b5cf6;">V</span> Sums, Averages &amp; CLT</div>
+      <a href="#p4-sums">5.1 Sums &amp; Averages</a>
+      <a href="#p4-clt">5.2 Central Limit Theorem</a>
+    </div>
+    <div class="toc-part">
+      <div class="toc-part-title"><span style="background:#555;">⚡</span> References</div>
+      <a href="#ref-formulas">Master Formula Table</a>
+      <a href="#ref-mistakes">Common Mistakes</a>
+      <a href="#ref-excel">Excel Quick Reference</a>
+    </div>
+  </div>
+</div>
+
+<!-- THE STORY INTRO -->
+<div class="story-banner">
+  <span class="story-label">📖 Our Story — "The Actuarial Adventures of Sam"</span>
+  Sam just landed a dream job as a junior actuary at <strong>ActuRisk Insurance Co.</strong> — a firm that prices risk for everything from life insurance to cargo ships. On their first day, the manager drops a thick manual on Sam's desk: <em>"Before you can price anything, you need to think like a probabilist."</em> Over the next five days Sam tackles real business problems, and every tool in this guide gets its debut through a challenge Sam faces. Follow Sam's week — the maths will feel a lot less abstract when there's a story behind it.
+</div>
+
+<!-- ============================================================ -->
+<!-- PART I -->
+<!-- ============================================================ -->
+<div class="part-header" id="part1">
+  <div class="part-badge" style="background:#c47c2b;">Part I</div>
+  <h2>The Language of Chance</h2>
+  <p>How do we quantify uncertainty? Part I builds probability from the ground up: frequentist definition → counting rules → formal axioms → conditional probability &amp; independence.</p>
+</div>
+
+<!-- STORY: Monday morning -->
+<div class="story-banner">
+  <span class="story-label">📖 Monday Morning — "What does 'probability' even mean?"</span>
+  Sam's first task: <em>"Our toy-truck factory produces 400 trucks per day, and about 40 come out defective. What's the probability a random truck is defective?"</em> Sam writes <strong>40/400 = 0.10</strong>. The manager nods. "Good — but why does that number mean anything? If tomorrow's batch has 41 defective trucks, is the probability now 0.1025?" Sam stares at the page. Time to learn what probability really is.
+</div>
+
+<!-- 1.1 FREQUENTIST -->
+<div class="section" id="p1-freq">
+  <div class="section-title"><span class="num">P1.1</span> Frequentist Probability</div>
+
+  <h3>Random Experiments &amp; Sample Spaces</h3>
+  <p>A <strong>random experiment</strong> is any process whose outcome is uncertain before it happens. Examples: rolling a die, inspecting a truck, checking whether a client files an insurance claim. No matter how carefully you control conditions, you cannot predict the exact outcome in advance.</p>
+  <p>The <strong>sample space Ω</strong> (capital omega) is the set of all possible outcomes. An <strong>event</strong> is any subset of Ω — a collection of outcomes you care about.</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Rolling a Die</span>
+    <p>Ω = {1, 2, 3, 4, 5, 6}. The event A = "rolling an even number" = {2, 4, 6}.</p>
+    <p>The event B = "rolling more than 4" = {5, 6}.</p>
+  </div>
+
+  <h3>The Frequentist Definition</h3>
+  <p>Suppose you repeat a random experiment <em>n</em> times and event B occurs <em>k</em> times. The <strong>relative frequency</strong> of B is k/n. As n grows very large, this ratio stabilises:</p>
+
+  <div class="formula-box">
+    <span class="label">Frequentist (Long-Run) Definition</span>
+    <div class="math">P(B) = lim[n→∞] (number of times B occurs) / n</div>
+  </div>
+
+  <p>This is an empirical definition — probability is something you can (in principle) measure by repeating the experiment many times. In practice we use observed frequencies as estimates: the truck factory's 10% defect rate is our best estimate of P(defective), not a definition carved in stone.</p>
+
+  <div class="insight">
+    <strong>Key insight:</strong> Probability as a <em>population proportion.</em> Imagine the universe of all trucks this factory will ever produce. The probability of a defect = the proportion of defective trucks in that infinite population. The 40/400 from today is a sample estimate of that population proportion. This connects probability directly to the proportions you already know from descriptive statistics.
+  </div>
+
+  <h3>Probability as Population Proportion</h3>
+  <p>This equivalence is powerful: whenever you have a large population and you pick one member at random, the probability that the member has property X equals the proportion of the population that has property X. So:</p>
+  <ul>
+    <li>P(a randomly chosen Dutch adult is left-handed) ≈ 0.13 (13% of Dutch adults are left-handed)</li>
+    <li>P(a randomly chosen insurance claim exceeds €5,000) = fraction of claims above €5,000 in the historical data</li>
+  </ul>
+  <p>No abstract philosophy needed — just a proportion of a (possibly hypothetical) population.</p>
+</div>
+
+<!-- 1.2 COUNTING -->
+<div class="section" id="p1-counting">
+  <div class="section-title"><span class="num">P1.2</span> Counting Rules</div>
+
+  <div class="story-banner">
+    <span class="story-label">📖 Monday Afternoon — "How many combinations are there?"</span>
+    A client wants to insure a fleet of cars. Each car can have 3 engine sizes, 4 colour options, and 2 trim levels. <em>"How many distinct configurations do we need pricing for?"</em> Sam realises the answer isn't 3+4+2 = 9. You don't choose one feature OR another — you choose one AND another AND another. Sam needs the product rule.
+  </div>
+
+  <h3>The Product Rule (Multiplication Principle)</h3>
+  <p>If a process has <em>k</em> stages and stage i has nᵢ choices (independent of other stages), the total number of outcomes is:</p>
+  <div class="formula-box">
+    <span class="label">Product Rule</span>
+    <div class="math">Total = n₁ × n₂ × · · · × nₖ</div>
+  </div>
+  <p>Sam's fleet: 3 × 4 × 2 = <strong>24 configurations</strong>. Choosing an outfit from 7 shirts, 3 trousers, and 2 shoes gives 7 × 3 × 2 = <strong>42 outfits</strong>.</p>
+
+  <h3>Factorials</h3>
+  <p>How many ways can you arrange n distinct objects in a row? The first slot has n choices, the second n-1, …, the last 1. That gives n! ("n factorial").</p>
+  <div class="formula-box">
+    <span class="label">Factorial</span>
+    <div class="math">n! = n × (n-1) × (n-2) × · · · × 2 × 1<br>Special rule: 0! = 1</div>
+  </div>
+  <p>Example: 5! = 5×4×3×2×1 = 120. The number of ways to arrange 5 books on a shelf is 120.</p>
+
+  <h3>Does Order Matter? The Central Question</h3>
+  <p>Almost every counting problem hinges on one question: <strong>does order matter?</strong></p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 600 180" width="600" height="180" font-family="Georgia,serif" font-size="13">
+      <rect width="600" height="180" fill="none"/>
+      <!-- Question box -->
+      <rect x="200" y="10" width="200" height="44" rx="8" fill="#c47c2b" opacity="0.15" stroke="#c47c2b" stroke-width="1.5"/>
+      <text x="300" y="30" text-anchor="middle" font-weight="bold" fill="#8f5a1a">Does order matter?</text>
+      <text x="300" y="46" text-anchor="middle" fill="#8f5a1a">(Is ABC ≠ BAC?)</text>
+      <!-- Yes branch -->
+      <line x1="220" y1="54" x2="120" y2="100" stroke="#555" stroke-width="1.5"/>
+      <text x="145" y="88" text-anchor="middle" fill="#555" font-size="12">YES</text>
+      <rect x="20" y="100" width="200" height="64" rx="8" fill="#e8f0ff" stroke="#5b8dd9" stroke-width="1.5"/>
+      <text x="120" y="120" text-anchor="middle" font-weight="bold" fill="#3a5ab0">Permutations P(n,k)</text>
+      <text x="120" y="138" text-anchor="middle" fill="#3a5ab0" font-family="Courier New,monospace">n! / (n-k)!</text>
+      <text x="120" y="156" text-anchor="middle" fill="#666" font-size="11">e.g. race podium</text>
+      <!-- No branch -->
+      <line x1="380" y1="54" x2="480" y2="100" stroke="#555" stroke-width="1.5"/>
+      <text x="455" y="88" text-anchor="middle" fill="#555" font-size="12">NO</text>
+      <rect x="380" y="100" width="200" height="64" rx="8" fill="#f0ffe8" stroke="#4a9a4a" stroke-width="1.5"/>
+      <text x="480" y="120" text-anchor="middle" font-weight="bold" fill="#2a7a2a">Combinations C(n,k)</text>
+      <text x="480" y="138" text-anchor="middle" fill="#2a7a2a" font-family="Courier New,monospace">n! / [k!(n-k)!]</text>
+      <text x="480" y="156" text-anchor="middle" fill="#666" font-size="11">e.g. lottery ticket</text>
+    </svg>
+  </div>
+
+  <h3>Permutations — Order Matters</h3>
+  <p>Choose k items from n, and the <em>order of selection matters</em> (ABC ≠ BAC).</p>
+  <div class="formula-box">
+    <span class="label">Permutations</span>
+    <div class="math">P(n, k) = n! / (n−k)!</div>
+  </div>
+  <div class="example">
+    <span class="ex-label">Example — Race Podium</span>
+    <p>8 runners, 3 podium places (gold, silver, bronze). Order matters because gold ≠ silver.</p>
+    <p>P(8, 3) = 8! / 5! = 8 × 7 × 6 = <strong>336 distinct podium outcomes</strong>.</p>
+  </div>
+
+  <h3>Combinations — Order Does Not Matter</h3>
+  <p>Choose k items from n, and the order does <em>not</em> matter ({A,B,C} = {C,B,A}).</p>
+  <div class="formula-box">
+    <span class="label">Combinations (Binomial Coefficient)</span>
+    <div class="math">C(n, k) = n! / [k! × (n−k)!]  also written  (n choose k)  or  ⁿCₖ</div>
+  </div>
+  <div class="example">
+    <span class="ex-label">Example — Concert Tickets</span>
+    <p>4 friends, 2 tickets, no assigned seats — who goes? {Alice, Bob} is the same as {Bob, Alice}.</p>
+    <p>C(4, 2) = 4! / (2! × 2!) = 24/4 = <strong>6 combinations</strong>.</p>
+  </div>
+  <div class="example">
+    <span class="ex-label">Example — The Lottery (Why You Won't Win)</span>
+    <p>Dutch lottery: choose 6 numbers from 49. Order doesn't matter.</p>
+    <p>C(49, 6) = 49!/(6! × 43!) = <strong>13,983,816 ≈ 14 million possible tickets</strong>. Your one ticket has probability 1/13,983,816 ≈ 0.0000000715.</p>
+  </div>
+
+  <h3>Choosing from Two Groups</h3>
+  <p>Sometimes you select from two distinct groups simultaneously (e.g. 3 men and 2 women from a board of 10 men and 8 women). The rule is to multiply the separate combination counts:</p>
+  <div class="formula-box">
+    <span class="label">Two-Group Selection</span>
+    <div class="math">C(n₁, k₁) × C(n₂, k₂)</div>
+  </div>
+  <p>A committee of 3 men and 2 women from 10 men and 8 women: C(10,3) × C(8,2) = 120 × 28 = <strong>3,360 committees</strong>.</p>
+</div>
+
+<!-- 1.3 AXIOMS -->
+<div class="section" id="p1-kolmogorov">
+  <div class="section-title"><span class="num">P1.3</span> Kolmogorov Axioms &amp; Probability Rules</div>
+
+  <div class="story-banner">
+    <span class="story-label">📖 Tuesday Morning — "Can I just make up any numbers?"</span>
+    Sam's colleague claims: "I think there's a 60% chance a client renews their policy and a 70% chance they don't." Sam instinctively knows something is wrong — those numbers add up to 130%. But <em>why</em> exactly is that forbidden? The answer lies in the three axioms that define what a "valid" probability is.
+  </div>
+
+  <h3>The Three Kolmogorov Axioms</h3>
+  <p>In 1933, Andrei Kolmogorov formalised probability with three simple rules that any valid probability assignment must satisfy:</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Axiom 1 — Non-negativity</h4>
+      <p>P(A) ≥ 0 for every event A. Probabilities cannot be negative.</p>
+    </div>
+    <div class="card">
+      <h4>Axiom 2 — Normalisation</h4>
+      <p>P(Ω) = 1. Something in the sample space must happen — certainty has probability 1.</p>
+    </div>
+    <div class="card">
+      <h4>Axiom 3 — Additivity</h4>
+      <p>If A and B are <em>disjoint</em> (mutually exclusive, A∩B = ∅), then P(A∪B) = P(A) + P(B).</p>
+    </div>
+  </div>
+
+  <p>Everything else in probability theory follows from these three axioms. Let's derive the most useful results:</p>
+
+  <h3>The Complement Rule</h3>
+  <div class="formula-box">
+    <span class="label">Complement Rule</span>
+    <div class="math">P(Aᶜ) = 1 − P(A)</div>
+  </div>
+  <p><strong>Why:</strong> A and Aᶜ are disjoint (can't both happen) and together cover all of Ω. By Axioms 2 and 3: P(A) + P(Aᶜ) = P(Ω) = 1.</p>
+  <p>Sam's colleague's error: if P(renews) = 0.60 then P(doesn't renew) = 1 − 0.60 = 0.40, not 0.70.</p>
+
+  <h3>Monotonicity</h3>
+  <p>If A ⊆ B (A is contained in B), then P(A) ≤ P(B). Intuitively: B can happen in all the ways A can, plus more. This also confirms 0 ≤ P(A) ≤ 1 for any event A.</p>
+
+  <h3>The General Addition Rule</h3>
+  <p>For any two events A and B (not necessarily disjoint):</p>
+  <div class="formula-box">
+    <span class="label">General Addition Rule</span>
+    <div class="math">P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</div>
+    <div class="math">Special case (disjoint): P(A ∪ B) = P(A) + P(B)</div>
+  </div>
+  <p>The subtraction of P(A∩B) corrects for double-counting — the outcomes where <em>both</em> A and B occur get counted twice if you just add P(A) + P(B).</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Pets (Venn Diagram)</span>
+    <p>In a neighbourhood: 40% of households have a dog, 30% have a cat, 15% have both.</p>
+    <p>P(dog or cat) = P(D) + P(C) − P(D∩C) = 0.40 + 0.30 − 0.15 = <strong>0.55</strong></p>
+    <p>P(neither) = 1 − 0.55 = <strong>0.45</strong></p>
+  </div>
+
+  <h3>The Rule of Laplace (Equally Likely Outcomes)</h3>
+  <p>When all outcomes in Ω are equally likely (e.g., a fair die, random sampling), probability simplifies to counting:</p>
+  <div class="formula-box">
+    <span class="label">Laplace's Rule</span>
+    <div class="math">P(A) = (number of outcomes in A) / (total number of outcomes in Ω)</div>
+  </div>
+  <div class="warn">
+    <strong>Warning — Equally Likely Required!</strong> Laplace's rule only works when all outcomes are equally likely. Don't apply it to a loaded die, a biased coin, or real-world populations where some outcomes are more common than others.
+  </div>
+</div>
+
+<!-- 1.4 CONDITIONAL PROBABILITY -->
+<div class="section" id="p1-conditional">
+  <div class="section-title"><span class="num">P1.4</span> Conditional Probability &amp; Independence</div>
+
+  <div class="story-banner">
+    <span class="story-label">📖 Tuesday Afternoon — "Knowing one thing changes everything"</span>
+    Sam is pricing health insurance. The probability that a random client files a claim next year is 20%. But Sam learns that this particular client is a 70-year-old smoker. Suddenly 20% feels completely wrong. Knowing information about the client changes the probability estimate. This is conditional probability — and it's the engine behind almost all of insurance.
+  </div>
+
+  <h3>Conditional Probability</h3>
+  <p>P(A|B) — read "the probability of A <em>given</em> B" — is the probability of A once you know that B has already occurred. You've restricted your universe from all of Ω to just the part where B is true.</p>
+  <div class="formula-box">
+    <span class="label">Conditional Probability</span>
+    <div class="math">P(A | B) = P(A ∩ B) / P(B)   [valid when P(B) > 0]</div>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — Two Dice (Full 6×6 Grid)</span>
+    <p>Roll two fair dice. Define A = "sum is 8" and B = "first die shows 4".</p>
+    <p>There are 36 equally-likely outcomes. Outcomes where B holds: {(4,1),(4,2),(4,3),(4,4),(4,5),(4,6)} — six outcomes. Of these, A∩B = {(4,4)} — only one outcome gives sum 8.</p>
+    <p>P(A|B) = P(A∩B)/P(B) = (1/36) / (6/36) = 1/6 ≈ 0.167</p>
+    <p>Compare with P(A) = 5/36 ≈ 0.139. Knowing the first die is 4 raises the probability of a sum of 8.</p>
+  </div>
+
+  <h3>The General Multiplication Rule</h3>
+  <p>Rearranging the conditional probability formula gives a useful rule for computing intersection probabilities:</p>
+  <div class="formula-box">
+    <span class="label">General Multiplication Rule</span>
+    <div class="math">P(A ∩ B) = P(B) · P(A | B)  =  P(A) · P(B | A)</div>
+  </div>
+
+  <h3>Statistical Independence</h3>
+  <p>A and B are <strong>statistically independent</strong> if knowing B tells you nothing about A:</p>
+  <div class="formula-box">
+    <span class="label">Independence (Three Equivalent Definitions)</span>
+    <div class="math">P(A | B) = P(A)
+P(B | A) = P(B)
+P(A ∩ B) = P(A) · P(B)   ← the most useful form</div>
+  </div>
+  <p>When events are independent, intersection probability is simply the product of individual probabilities. This is what Sam's colleague needed for the truck example — but independence is an assumption that must be justified, not just assumed.</p>
+
+  <div class="warn">
+    <strong>The Prosecutor's Fallacy — Sally Clark Case (1999)</strong><br>
+    Sally Clark was convicted of murdering her two infant sons after a paediatrician testified that the probability of two children dying of SIDS in the same family was 1 in 73 million (1/8,500 × 1/8,500, assuming independence). This was catastrophically wrong for two reasons:
+    <ol style="margin-top:10px;">
+      <li><strong>Independence was unjustified</strong> — SIDS has genetic and environmental components, so a second SIDS death in the same family is more likely than in the general population. You cannot simply multiply.</li>
+      <li><strong>The Prosecutor's Fallacy</strong>: P(two SIDS deaths | innocent) ≠ P(innocent | two SIDS deaths). The relevant question for the jury was the latter, which also requires knowing the base rate of double infant murder.</li>
+    </ol>
+    Sally Clark was eventually acquitted after three years in prison. The lesson: <em>always question the assumption of independence.</em>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART II -->
+<!-- ============================================================ -->
+<div class="part-header" id="part2">
+  <div class="part-badge" style="background:#5b8dd9;">Part II</div>
+  <h2>Discrete Random Variables</h2>
+  <p>Moving from events to numbers: a random variable assigns a numerical value to each outcome. Part II covers probability distributions, expected value, variance, and the all-important Binomial distribution.</p>
+</div>
+
+<div class="story-banner">
+  <span class="story-label">📖 Wednesday — "How do I summarise an entire distribution in two numbers?"</span>
+  Sam's new task: a car dealership wants flood insurance. Sam needs to model how many cars a dealership sells per week. The dealership says: "Sometimes 0, usually 1 or 2, rarely 3." Sam needs a way to capture this whole story mathematically — a <em>probability distribution</em>. And then to compress that distribution down to two key numbers: the average and the spread.
+</div>
+
+<!-- 2.1 DISTRIBUTIONS -->
+<div class="section" id="p2-distributions">
+  <div class="section-title"><span class="num">P2.1</span> Probability Distributions</div>
+
+  <h3>What is a Random Variable?</h3>
+  <p>A <strong>random variable</strong> X is a function that assigns a number to each outcome in Ω. It converts a random experiment into a number we can calculate with. X is <em>discrete</em> if it can only take a countable set of values (0, 1, 2, …).</p>
+
+  <h3>Probability Distribution</h3>
+  <p>The probability distribution of a discrete RV lists all possible values and their probabilities, usually in a table:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>x (number of cars sold)</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+      <tr><td>P(X = x)</td><td>0.10</td><td>0.35</td><td>0.55</td><td>?</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <strong>Wait — where is P(X=3)?</strong> Since all probabilities must sum to 1: P(X=3) = 1 − (0.10 + 0.35 + 0.55) = 1 − 1.00 = 0. There are only 0, 1, or 2 cars sold. This is how you find a missing probability from a table.
+  </div>
+
+  <h3>Validity Rules for a Probability Distribution</h3>
+  <ul class="checklist">
+    <li>All probabilities are between 0 and 1: 0 ≤ P(X = k) ≤ 1 for all k</li>
+    <li>All probabilities sum to exactly 1: Σ P(X = k) = 1</li>
+    <li>All listed outcomes are mutually exclusive (each trial has exactly one outcome)</li>
+  </ul>
+
+  <h3>Visualising with a Needle (Spike) Graph</h3>
+  <p>Discrete distributions are visualised with vertical spikes (needles) at each value, with height equal to the probability. Unlike a bar chart, the spikes have no width — reminding us that only specific integer values are possible, not anything in between.</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Russian Roulette Geometry</span>
+    <p>A theoretical (morbid but instructive) example: a revolver has 5 empty chambers and 1 bullet. Players take turns. Let Y = the turn on which the bullet fires. P(Y = k) = (5/6)^(k-1) × (1/6). This is a geometric distribution — each trial is independent with the same probability of "success" (firing).</p>
+    <p>P(Y=1) = 1/6 ≈ 0.167 &nbsp;|&nbsp; P(Y=2) = 5/36 ≈ 0.139 &nbsp;|&nbsp; P(Y=3) = 25/216 ≈ 0.116 &nbsp;…</p>
+  </div>
+</div>
+
+<!-- 2.2 MEAN & VARIANCE -->
+<div class="section" id="p2-meanvar">
+  <div class="section-title"><span class="num">P2.2</span> Expected Value &amp; Variance</div>
+
+  <h3>Expected Value E(X) — The Long-Run Average</h3>
+  <p>The <strong>expected value</strong> (or population mean, μ) is the weighted average of all possible values, where the weights are the probabilities:</p>
+  <div class="formula-box">
+    <span class="label">Expected Value</span>
+    <div class="math">E(X) = μ = Σ k · P(X = k)</div>
+  </div>
+  <p>The expected value is the value you'd predict on average if the experiment were repeated infinitely many times. It need not be a value X can actually take — a fair die has E(X) = 3.5, which you can never roll.</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Cars per Week</span>
+    <p>Using our dealership distribution (assuming P(X=2)=0.35 as the corrected table for illustration):</p>
+    <p>With the corrected table {P(0)=0.10, P(1)=0.35, P(2)=0.55, P(3)=0}: E(X) = 0×0.10 + 1×0.35 + 2×0.55 + 3×0 = 0 + 0.35 + 1.10 + 0 = <strong>1.45 cars/week</strong></p>
+  </div>
+
+  <h3>Variance and Standard Deviation</h3>
+  <p>Variance Var(X) = σ² measures how spread out the distribution is around the mean. The shortcut formula is easier to compute than the definition:</p>
+  <div class="formula-box">
+    <span class="label">Variance (Shortcut Formula)</span>
+    <div class="math">Var(X) = E(X²) − [E(X)]²
+where E(X²) = Σ k² · P(X = k)
+
+σ = √Var(X)    (standard deviation)</div>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — Two Dice Sum</span>
+    <p>Sum S of two fair dice. E(S) = 7 (by symmetry — the distribution is symmetric around 7).</p>
+    <p>E(S²) = Σ s² × P(S=s) = 4×(1/36) + 9×(2/36) + … + 49×(6/36) + … ≈ 54.83</p>
+    <p>Var(S) = 54.83 − 7² = 54.83 − 49 = <strong>5.83</strong>, so σ ≈ 2.42</p>
+  </div>
+
+  <h3>Special Cases: Bernoulli Distribution</h3>
+  <p>A <strong>Bernoulli random variable</strong> takes only two values: 1 (success, probability p) or 0 (failure, probability 1−p). It models a single yes/no trial.</p>
+  <div class="formula-box">
+    <span class="label">Bernoulli(p)</span>
+    <div class="math">E(X) = p
+Var(X) = p(1−p)
+[Variance is maximised at p=0.5 and equals 0 at p=0 or p=1]</div>
+  </div>
+
+  <div class="insight">
+    <strong>Insight — The Bridge from Sample to Population.</strong> When you compute a sample mean x̄ and sample variance s², you're estimating the population quantities E(X) and Var(X). The probability distribution of X is the population — and E(X) is the population mean you're trying to estimate with your sample.
+  </div>
+</div>
+
+<!-- 2.3 BINOMIAL -->
+<div class="section" id="p2-binomial">
+  <div class="section-title"><span class="num">P2.3</span> Binomial Distribution</div>
+
+  <div class="story-banner">
+    <span class="story-label">📖 Wednesday Afternoon — "What are the chances exactly 7 of our 50 clients will claim?"</span>
+    Sam is modelling a portfolio of 50 health insurance clients, each with probability 0.13 of filing a claim. "What's the probability that exactly 7 clients claim?" Sam can't just multiply — the clients claiming in different combinations all lead to the same count of 7. This is exactly what the Binomial distribution handles.
+  </div>
+
+  <h3>When to Use Binomial</h3>
+  <p>X ~ Bin(n, p) when ALL four conditions hold:</p>
+  <ul class="checklist">
+    <li><strong>Fixed number of trials n</strong> (decided before the experiment)</li>
+    <li><strong>Each trial has exactly 2 outcomes</strong>: success or failure</li>
+    <li><strong>Constant probability p</strong> of success on every trial</li>
+    <li><strong>Trials are independent</strong> (outcome of one doesn't affect others)</li>
+  </ul>
+
+  <h3>Binomial Probability Formula</h3>
+  <div class="formula-box">
+    <span class="label">Binomial PMF</span>
+    <div class="math">P(X = k) = C(n,k) · pᵏ · (1−p)ⁿ⁻ᵏ   for k = 0, 1, 2, …, n
+
+E(X) = np
+Var(X) = np(1−p)
+σ = √[np(1−p)]</div>
+  </div>
+
+  <p>The formula has three parts: C(n,k) counts the number of ways to get exactly k successes in n trials; pᵏ is the probability of k successes; (1−p)ⁿ⁻ᵏ is the probability of the n−k failures.</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Left-Handed Students, X ~ Bin(50, 0.13)</span>
+    <p>13% of people are left-handed. In a class of 50, what's the probability exactly 7 are left-handed?</p>
+    <p>P(X=7) = C(50,7) × 0.13⁷ × 0.87⁴³ = 99,884,400 × 0.0000006… × 0.0025… ≈ <strong>0.1189 (≈ 12%)</strong></p>
+    <p>E(X) = 50 × 0.13 = <strong>6.5 students</strong> &nbsp;|&nbsp; Var(X) = 50 × 0.13 × 0.87 = <strong>5.655</strong> &nbsp;|&nbsp; σ ≈ 2.38</p>
+  </div>
+
+  <h3>Excel: BINOM.DIST</h3>
+  <div class="formula-box">
+    <span class="label">Excel Functions</span>
+    <div class="math">=BINOM.DIST(k; n; p; FALSE)  → P(X = k)   [exact probability]
+=BINOM.DIST(k; n; p; TRUE)   → P(X ≤ k)  [cumulative probability]
+
+To get P(X ≥ k): use  1 − BINOM.DIST(k−1; n; p; TRUE)
+To get P(a ≤ X ≤ b): use  BINOM.DIST(b;n;p;TRUE) − BINOM.DIST(a−1;n;p;TRUE)</div>
+  </div>
+
+  <h3>Shape of the Binomial Distribution</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4 style="color:#5b8dd9;">p = 0.5 → Symmetric</h4>
+      <p>Equal probability of success and failure. The distribution is perfectly balanced around np.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#c47c2b;">p &lt; 0.5 → Right-Skewed</h4>
+      <p>Successes are rare, so the distribution clusters near 0 with a long right tail.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#4a9a4a;">p &gt; 0.5 → Left-Skewed</h4>
+      <p>Successes are common, so the distribution clusters near n with a long left tail.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#8b5cf6;">Large n → Bell-Shaped</h4>
+      <p>As n grows (and np ≥ 5, n(1−p) ≥ 5), the binomial approaches a normal distribution.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART III -->
+<!-- ============================================================ -->
+<div class="part-header" id="part3">
+  <div class="part-badge" style="background:#4a9a4a;">Part III</div>
+  <h2>Continuous Random Variables</h2>
+  <p>When variables can take any value in an interval — heights, weights, waiting times, temperatures — discrete distributions no longer work. Part III introduces density functions and how to compute probabilities as areas.</p>
+</div>
+
+<div class="story-banner">
+  <span class="story-label">📖 Thursday Morning — "The coffee machine problem"</span>
+  Sam is pricing insurance for a chain of coffee shops. One risk: the automatic coffee machines sometimes pour too much or too little coffee, angering customers. The fill volume isn't one of a handful of values — it's continuous. Sam needs to model the probability that a cup gets less than 240 ml (minimum customer tolerance) or more than 260 ml (overflow) — using a <em>density function</em>.
+</div>
+
+<!-- 3.1 DENSITY -->
+<div class="section" id="p3-density">
+  <div class="section-title"><span class="num">P3.1</span> Density Functions &amp; Continuous Probabilities</div>
+
+  <h3>From Histogram to Density Curve</h3>
+  <p>Imagine collecting data on fill volumes: 240.3 ml, 251.7 ml, 248.1 ml, … No two measurements are exactly the same. As you collect more data and make the histogram bins narrower, the histogram smooths out into a <strong>density curve</strong>.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 540 180" width="540" height="180" font-family="Georgia,serif" font-size="12">
+      <!-- Histogram 1 (wide bins) -->
+      <text x="65" y="15" text-anchor="middle" fill="#4a9a4a" font-weight="bold">Wide bins</text>
+      <rect x="10" y="50" width="35" height="80" fill="#4a9a4a" opacity="0.4" stroke="#2a7a2a"/>
+      <rect x="45" y="30" width="35" height="100" fill="#4a9a4a" opacity="0.4" stroke="#2a7a2a"/>
+      <rect x="80" y="40" width="35" height="90" fill="#4a9a4a" opacity="0.4" stroke="#2a7a2a"/>
+      <rect x="115" y="80" width="35" height="50" fill="#4a9a4a" opacity="0.4" stroke="#2a7a2a"/>
+      <line x1="5" y1="130" x2="160" y2="130" stroke="#555" stroke-width="1"/>
+      <!-- Arrow -->
+      <text x="195" y="75" fill="#555" font-size="22">→</text>
+      <!-- Histogram 2 (narrow bins) -->
+      <text x="265" y="15" text-anchor="middle" fill="#4a9a4a" font-weight="bold">Narrow bins</text>
+      <rect x="175" y="80" width="12" height="50" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="187" y="55" width="12" height="75" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="199" y="40" width="12" height="90" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="211" y="30" width="12" height="100" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="223" y="35" width="12" height="95" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="235" y="45" width="12" height="85" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="247" y="65" width="12" height="65" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="259" y="90" width="12" height="40" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <rect x="271" y="100" width="12" height="30" fill="#4a9a4a" opacity="0.5" stroke="#2a7a2a"/>
+      <line x1="170" y1="130" x2="295" y2="130" stroke="#555" stroke-width="1"/>
+      <!-- Arrow -->
+      <text x="315" y="75" fill="#555" font-size="22">→</text>
+      <!-- Density curve -->
+      <text x="440" y="15" text-anchor="middle" fill="#4a9a4a" font-weight="bold">Density curve</text>
+      <path d="M350,130 C355,130 360,120 365,100 C370,80 375,45 380,35 C385,25 390,20 400,20 C410,20 415,25 420,35 C425,45 430,80 435,100 C440,120 445,130 450,130" fill="#4a9a4a" opacity="0.25" stroke="#2a7a2a" stroke-width="2"/>
+      <path d="M350,130 C355,130 360,120 365,100 C370,80 375,45 380,35 C385,25 390,20 400,20 C410,20 415,25 420,35 C425,45 430,80 435,100 C440,120 445,130 450,130" fill="none" stroke="#2a7a2a" stroke-width="2.5"/>
+      <line x1="345" y1="130" x2="455" y2="130" stroke="#555" stroke-width="1"/>
+      <text x="400" y="150" text-anchor="middle" fill="#555" font-size="11">f(x)</text>
+      <text x="400" y="165" text-anchor="middle" fill="#555" font-size="11">Area = probability</text>
+    </svg>
+  </div>
+
+  <h3>Key Insight: Probability = Area</h3>
+  <p>For a continuous random variable, <strong>probability is area under the density curve</strong>, not the height. The height f(x) is the density — it tells you where the probability is concentrated, not how much of it there is at any exact point.</p>
+
+  <div class="formula-box">
+    <span class="label">Core Rule for Continuous RVs</span>
+    <div class="math">P(a ≤ X ≤ b) = area under f(x) between a and b
+
+P(X = a) = 0   for any single point a
+P(X ≤ a) = P(X &lt; a)   [strict vs. non-strict inequalities are equal!]</div>
+  </div>
+
+  <div class="warn">
+    <strong>f(x) CAN exceed 1!</strong> Density is not probability. The only constraint is that the total area under f(x) equals 1, and that f(x) ≥ 0 everywhere. A density function can spike above 1 over a narrow region as long as the total area stays 1.
+  </div>
+
+  <h3>The Uniform Distribution U[a, b]</h3>
+  <p>The simplest continuous distribution: all values in [a, b] are equally likely. The density is flat (constant).</p>
+  <div class="formula-box">
+    <span class="label">Uniform U[a, b]</span>
+    <div class="math">f(x) = 1/(b−a)   for a ≤ x ≤ b,   0 elsewhere
+
+P(c ≤ X ≤ d) = (d−c) / (b−a)</div>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — Metro Arrival U[0, 10]</span>
+    <p>You arrive at a metro station. The next train comes uniformly in [0, 10] minutes. X ~ U[0, 10].</p>
+    <p>P(wait &lt; 3 min) = (3−0)/(10−0) = <strong>0.30</strong></p>
+    <p>P(3 ≤ wait ≤ 7) = (7−3)/(10−0) = <strong>0.40</strong></p>
+  </div>
+</div>
+
+<!-- 3.2 CONTINUOUS MEAN SD -->
+<div class="section" id="p3-meansd">
+  <div class="section-title"><span class="num">P3.2</span> Mean &amp; Standard Deviation of Continuous RVs</div>
+
+  <h3>Expected Value — The Balance Point</h3>
+  <p>For a continuous RV, expected value is defined by an integral (the continuous analogue of the discrete weighted sum):</p>
+  <div class="formula-box">
+    <span class="label">Expected Value (Continuous)</span>
+    <div class="math">E(X) = ∫ x · f(x) dx   (integral over all x)</div>
+  </div>
+  <p>Geometrically, E(X) is the <strong>balance point</strong> of the density curve — the x-value where the distribution would balance if it were a physical shape cut out of uniform material.</p>
+
+  <h3>Shortcut: Symmetric Distributions</h3>
+  <p>For any symmetric distribution, E(X) = median = centre of symmetry. No integration needed! This is why E(X) = (a+b)/2 for U[a,b] and E(X) = μ for the Normal distribution.</p>
+
+  <h3>Uniform Distribution Formulas</h3>
+  <div class="formula-box">
+    <span class="label">U[a, b] — Mean and Variance</span>
+    <div class="math">E(X) = (a + b) / 2         [midpoint of the interval]
+Var(X) = (b − a)² / 12    [spread depends on width]
+σ = (b − a) / √12  =  (b − a) / (2√3)</div>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — Metro Wait U[0, 10]</span>
+    <p>E(X) = (0 + 10)/2 = <strong>5 minutes</strong></p>
+    <p>Var(X) = (10−0)²/12 = 100/12 ≈ 8.33 &nbsp;|&nbsp; σ = √8.33 ≈ <strong>2.89 minutes</strong></p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART IV -->
+<!-- ============================================================ -->
+<div class="part-header" id="part4">
+  <div class="part-badge" style="background:#c47c2b;">Part IV</div>
+  <h2>The Normal Distribution</h2>
+  <p>The bell curve that appears everywhere in nature, measurement, and statistics. Part IV covers the normal distribution's properties, Excel calculations, Z-scores, and how to assess normality.</p>
+</div>
+
+<div class="story-banner">
+  <span class="story-label">📖 Thursday Afternoon — "IQ scores, pregnancies, and coffee packs"</span>
+  Sam has three insurance problems in the afternoon: (1) A client insures a school — how many students score above 120 on IQ tests? (2) An obstetrics clinic wants coverage for premature births. (3) A supermarket chain wants to ensure their coffee-pack machine fills correctly. All three involve the same shape: a bell curve. Sam needs to master the Normal distribution.
+</div>
+
+<!-- 4.1 NORMAL -->
+<div class="section" id="p3-normal">
+  <div class="section-title"><span class="num">P4.1</span> The Normal Distribution N(μ, σ)</div>
+
+  <h3>Properties of the Normal Distribution</h3>
+  <p>X ~ N(μ, σ) (note: σ is the standard deviation, not variance) has these key properties:</p>
+  <ul>
+    <li><strong>Bell-shaped</strong> and perfectly symmetric around μ</li>
+    <li><strong>Extends infinitely</strong> in both directions (though probabilities become negligible beyond ±4σ)</li>
+    <li><strong>Completely determined</strong> by just two parameters: mean μ and standard deviation σ</li>
+    <li><strong>E(X) = μ</strong> (the mean equals the centre of symmetry)</li>
+    <li><strong>Var(X) = σ²</strong>, SD = σ</li>
+  </ul>
+
+  <h3>The 68-95-99.7 Rule (Empirical Rule)</h3>
+  <div class="formula-box">
+    <span class="label">68-95-99.7 Rule</span>
+    <div class="math">P(μ − σ  ≤ X ≤ μ + σ)  ≈ 68%    [within 1 SD]
+P(μ − 2σ ≤ X ≤ μ + 2σ) ≈ 95%    [within 2 SD]
+P(μ − 3σ ≤ X ≤ μ + 3σ) ≈ 99.7%  [within 3 SD]</div>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 540 160" width="540" height="160" font-family="Courier New,monospace" font-size="11">
+      <defs>
+        <clipPath id="bell-clip">
+          <rect x="60" y="10" width="420" height="120"/>
+        </clipPath>
+      </defs>
+      <!-- Bell curve fill areas -->
+      <path d="M60,130 C80,130 90,125 100,110 C110,90 115,55 120,40 C125,25 130,15 140,10 C150,5 155,3 165,3 C175,3 180,5 190,10 C200,15 205,25 210,40 C215,55 220,90 230,110 C240,125 250,130 270,130 Z" fill="#c47c2b" opacity="0.12" clip-path="url(#bell-clip)"/>
+      <!-- 2SD area -->
+      <path d="M60,130 C70,130 80,128 90,120 C95,115 100,110 110,90 C115,55 120,40 140,10 C150,5 165,3 180,5 C190,10 205,25 210,40 C225,70 230,110 240,120 C250,128 260,130 280,130 Z" fill="#c47c2b" opacity="0.08" clip-path="url(#bell-clip)"/>
+      <!-- Bell curve -->
+      <path d="M60,130 C75,130 85,128 95,120 C105,108 110,85 120,55 C130,25 145,8 165,3 C185,8 200,25 210,55 C220,85 225,108 235,120 C245,128 255,130 270,130" fill="none" stroke="#c47c2b" stroke-width="2.5"/>
+      <!-- Axis -->
+      <line x1="55" y1="130" x2="480" y2="130" stroke="#888" stroke-width="1.5"/>
+      <!-- Tick labels -->
+      <text x="95" y="148" text-anchor="middle" fill="#888">μ−3σ</text>
+      <text x="120" y="148" text-anchor="middle" fill="#888">μ−2σ</text>
+      <text x="145" y="148" text-anchor="middle" fill="#888">μ−σ</text>
+      <text x="165" y="148" text-anchor="middle" fill="#c47c2b" font-weight="bold">μ</text>
+      <text x="188" y="148" text-anchor="middle" fill="#888">μ+σ</text>
+      <text x="212" y="148" text-anchor="middle" fill="#888">μ+2σ</text>
+      <text x="236" y="148" text-anchor="middle" fill="#888">μ+3σ</text>
+      <!-- Annotations -->
+      <text x="320" y="55" fill="#c47c2b" font-size="13" font-weight="bold">68%</text>
+      <text x="320" y="72" fill="#c47c2b" font-size="11">within ±1σ</text>
+      <text x="360" y="90" fill="#888" font-size="13" font-weight="bold">95%</text>
+      <text x="360" y="107" fill="#888" font-size="11">within ±2σ</text>
+      <text x="400" y="115" fill="#555" font-size="13" font-weight="bold">99.7%</text>
+      <text x="400" y="132" fill="#555" font-size="11">within ±3σ</text>
+      <!-- Vertical line at mean -->
+      <line x1="165" y1="3" x2="165" y2="130" stroke="#c47c2b" stroke-width="1" stroke-dasharray="4,3"/>
+    </svg>
+  </div>
+
+  <h3>Excel: Computing Normal Probabilities</h3>
+  <div class="formula-box">
+    <span class="label">Excel Functions for N(μ, σ)</span>
+    <div class="math">=NORM.DIST(x; μ; σ; TRUE)   → P(X ≤ x)    [CDF at x]
+=NORM.INV(p; μ; σ)          → x such that P(X ≤ x) = p  [quantile]
+
+P(X > x)  =  1 − NORM.DIST(x; μ; σ; TRUE)
+P(a ≤ X ≤ b)  =  NORM.DIST(b;μ;σ;TRUE) − NORM.DIST(a;μ;σ;TRUE)</div>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — IQ Scores, X ~ N(100, 15)</span>
+    <p>IQ scores are approximately normal with mean 100, SD 15.</p>
+    <p>P(X &gt; 120) = 1 − NORM.DIST(120; 100; 15; TRUE) ≈ <strong>9.1%</strong> (about 1 in 11 people)</p>
+    <p>P(80 ≤ X ≤ 120) = NORM.DIST(120;100;15;TRUE) − NORM.DIST(80;100;15;TRUE) ≈ <strong>81.8%</strong></p>
+    <p>P(X &lt; 85) = NORM.DIST(85; 100; 15; TRUE) ≈ <strong>15.9%</strong> (roughly 1 SD below the mean)</p>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — Pregnancy Length, X ~ N(266, 16) days</span>
+    <p>Human gestation is approximately N(266, 16) days. A birth before 250 days is considered premature.</p>
+    <p>P(premature) = P(X &lt; 250) = NORM.DIST(250; 266; 16; TRUE) ≈ <strong>15.9%</strong></p>
+    <p>The 5th percentile: NORM.INV(0.05; 266; 16) ≈ <strong>239.7 days</strong> (about 34 weeks)</p>
+  </div>
+</div>
+
+<!-- 4.2 STANDARDIZING -->
+<div class="section" id="p3-standardizing">
+  <div class="section-title"><span class="num">P4.2</span> Standardizing, Z-Scores &amp; QQ-Plots</div>
+
+  <h3>The Z-Score: Standardizing a Normal Variable</h3>
+  <p>Any normal variable X ~ N(μ, σ) can be converted to a <strong>standard normal</strong> Z ~ N(0, 1) by subtracting the mean and dividing by the SD:</p>
+  <div class="formula-box">
+    <span class="label">Z-Score (Standardization)</span>
+    <div class="math">Z = (X − μ) / σ
+
+Z tells you: "how many standard deviations is X away from the mean?"
+Z &gt; 0 → above the mean
+Z &lt; 0 → below the mean</div>
+  </div>
+  <p>Z-scores let you compare values from different normal distributions. An IQ of 130 (Z = +2) and a coffee pack at 260g when μ=250, σ=5 (also Z = +2) are both equally extreme relative to their distributions.</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Z-Score Exercises with X ~ N(μ, σ)</span>
+    <p><strong>Q:</strong> If X ~ N(50, 8), find P(X &gt; 62).</p>
+    <p>Z = (62 − 50)/8 = 12/8 = 1.5. &nbsp;&nbsp; P(Z &gt; 1.5) = 1 − Φ(1.5) ≈ 1 − 0.9332 = <strong>0.0668</strong></p>
+    <p>Or directly: 1 − NORM.DIST(62; 50; 8; TRUE) = 0.0668.</p>
+  </div>
+
+  <h3>Working Backwards: Finding μ from a Target Probability</h3>
+  <p>Sam's coffee machine problem: the machine fills packs with SD σ = 5g. We want P(underfill, i.e., X &lt; 250) ≤ 1%. What should we set the mean fill μ to?</p>
+  <div class="formula-box">
+    <span class="label">Calibration Formula</span>
+    <div class="math">P(X &lt; c) = p  →  c = μ + σ · z_p  →  μ = c − σ · z_p
+
+where z_p = NORM.INV(p; 0; 1) is the p-th quantile of N(0,1)</div>
+  </div>
+  <div class="example">
+    <span class="ex-label">Coffee Machine Calibration</span>
+    <p>We want P(X &lt; 250) = 0.01. The 1st percentile of N(0,1): z₀.₀₁ = NORM.INV(0.01; 0; 1) ≈ −2.326.</p>
+    <p>μ = 250 − 5 × (−2.326) = 250 + 11.63 = <strong>261.63g</strong></p>
+    <p>Or using the specific value in the study guides: μ ≈ <strong>253.49g</strong> when using a 5% underfill tolerance.</p>
+    <p>Interpretation: set the machine mean to 253.49g so that only 5% of packs are under 250g.</p>
+  </div>
+
+  <h3>Assessing Normality: QQ-Plots</h3>
+  <p>A <strong>QQ-plot</strong> (quantile-quantile plot) compares the quantiles of your data against the theoretical quantiles of a normal distribution. If the data is normal, the points fall on a straight diagonal line.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 560 160" width="560" height="160" font-family="Georgia,serif" font-size="11">
+      <!-- Panel 1: Normal -->
+      <text x="80" y="12" text-anchor="middle" fill="#4a9a4a" font-weight="bold">Normal Data</text>
+      <line x1="20" y1="130" x2="145" y2="130" stroke="#888" stroke-width="1"/>
+      <line x1="20" y1="130" x2="20" y2="15" stroke="#888" stroke-width="1"/>
+      <line x1="20" y1="130" x2="145" y2="15" stroke="#4a9a4a" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.6"/>
+      <circle cx="30" cy="120" r="3" fill="#4a9a4a"/>
+      <circle cx="45" cy="105" r="3" fill="#4a9a4a"/>
+      <circle cx="60" cy="88" r="3" fill="#4a9a4a"/>
+      <circle cx="75" cy="72" r="3" fill="#4a9a4a"/>
+      <circle cx="90" cy="57" r="3" fill="#4a9a4a"/>
+      <circle cx="105" cy="42" r="3" fill="#4a9a4a"/>
+      <circle cx="120" cy="27" r="3" fill="#4a9a4a"/>
+      <text x="80" y="148" text-anchor="middle" fill="#555">Straight line ✓</text>
+      <!-- Panel 2: Right skew -->
+      <text x="280" y="12" text-anchor="middle" fill="#c47c2b" font-weight="bold">Right-Skewed Data</text>
+      <line x1="215" y1="130" x2="345" y2="130" stroke="#888" stroke-width="1"/>
+      <line x1="215" y1="130" x2="215" y2="15" stroke="#888" stroke-width="1"/>
+      <line x1="215" y1="130" x2="345" y2="15" stroke="#888" stroke-width="1" stroke-dasharray="4,2" opacity="0.3"/>
+      <circle cx="225" cy="128" r="3" fill="#c47c2b"/>
+      <circle cx="240" cy="125" r="3" fill="#c47c2b"/>
+      <circle cx="255" cy="118" r="3" fill="#c47c2b"/>
+      <circle cx="270" cy="105" r="3" fill="#c47c2b"/>
+      <circle cx="285" cy="80" r="3" fill="#c47c2b"/>
+      <circle cx="300" cy="45" r="3" fill="#c47c2b"/>
+      <circle cx="315" cy="18" r="3" fill="#c47c2b"/>
+      <text x="280" y="148" text-anchor="middle" fill="#555">Curves up (high end)</text>
+      <!-- Panel 3: Heavy tails -->
+      <text x="475" y="12" text-anchor="middle" fill="#8b5cf6" font-weight="bold">Heavy Tails</text>
+      <line x1="410" y1="130" x2="540" y2="130" stroke="#888" stroke-width="1"/>
+      <line x1="410" y1="130" x2="410" y2="15" stroke="#888" stroke-width="1"/>
+      <line x1="410" y1="130" x2="540" y2="15" stroke="#888" stroke-width="1" stroke-dasharray="4,2" opacity="0.3"/>
+      <circle cx="420" cy="118" r="3" fill="#8b5cf6"/>
+      <circle cx="435" cy="108" r="3" fill="#8b5cf6"/>
+      <circle cx="450" cy="82" r="3" fill="#8b5cf6"/>
+      <circle cx="465" cy="72" r="3" fill="#8b5cf6"/>
+      <circle cx="480" cy="62" r="3" fill="#8b5cf6"/>
+      <circle cx="495" cy="38" r="3" fill="#8b5cf6"/>
+      <circle cx="510" cy="20" r="3" fill="#8b5cf6"/>
+      <text x="475" y="148" text-anchor="middle" fill="#555">S-shape (both ends)</text>
+    </svg>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>QQ-Plot Pattern</th><th>What It Means</th><th>Action</th></tr>
+      <tr><td>Straight diagonal line</td><td>Data is approximately normal</td><td>Normal methods valid</td></tr>
+      <tr><td>Curves up at high end</td><td>Right skew (long right tail)</td><td>Consider log transform</td></tr>
+      <tr><td>Curves down at low end</td><td>Left skew (long left tail)</td><td>Consider reflection + log</td></tr>
+      <tr><td>S-shape (both ends deviate)</td><td>Heavy tails (more extreme values than normal)</td><td>Use robust methods</td></tr>
+      <tr><td>Inverted S-shape</td><td>Light tails (data more clustered than normal)</td><td>Often fine for large n</td></tr>
+    </table>
+  </div>
+
+  <h3>The Log Transformation</h3>
+  <p>For right-skewed data, taking logarithms often produces a near-normal distribution. If log(X) ~ N(μ, σ), then X follows a <strong>lognormal</strong> distribution. Insurance claim amounts are a classic example: a few very large claims create a long right tail, but log(claim amount) tends to be approximately normal.</p>
+
+  <div class="tip">
+    <strong>Tip:</strong> In Excel: if your data is right-skewed, create a new column with =LN(data), check if that is more normally distributed on a QQ-plot, and perform your normal-distribution calculations on the log-transformed values.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART V -->
+<!-- ============================================================ -->
+<div class="part-header" id="part5">
+  <div class="part-badge" style="background:#8b5cf6;">Part V</div>
+  <h2>Sums, Averages &amp; the Central Limit Theorem</h2>
+  <p>What happens when you add or average many random variables? The answers unlock why the normal distribution is so universal — and why statistics works at all.</p>
+</div>
+
+<div class="story-banner">
+  <span class="story-label">📖 Friday — "The most important theorem in statistics"</span>
+  Sam's final challenge of the week: ActuRisk insures an office building with 24 air conditioners. Each AC unit draws a random amount of power. "What's the probability the total power draw exceeds 120 kW?" No single distribution governs the total — but Sam has one powerful tool: the Central Limit Theorem. And it doesn't matter what distribution the individual units follow.
+</div>
+
+<!-- 5.1 SUMS & AVERAGES -->
+<div class="section" id="p4-sums">
+  <div class="section-title"><span class="num">P5.1</span> Sums &amp; Averages of Random Variables</div>
+
+  <h3>Setting Up: Independent Identically Distributed (i.i.d.)</h3>
+  <p>Suppose X₁, X₂, …, Xₙ are <strong>independent and identically distributed (i.i.d.)</strong> — each has the same distribution with mean μ and variance σ². Define:</p>
+  <ul>
+    <li><strong>Sum:</strong> S = X₁ + X₂ + … + Xₙ</li>
+    <li><strong>Sample average:</strong> X̄ = S/n = (X₁ + … + Xₙ)/n</li>
+  </ul>
+
+  <h3>Properties of the Sum S</h3>
+  <div class="formula-box">
+    <span class="label">Sum S = X₁ + X₂ + … + Xₙ</span>
+    <div class="math">E(S) = n · μ
+Var(S) = n · σ²
+SD(S) = √n · σ</div>
+  </div>
+  <p>Variance adds linearly for independent RVs. Standard deviation grows as √n — not as n.</p>
+
+  <h3>Properties of the Sample Average X̄</h3>
+  <div class="formula-box">
+    <span class="label">Average X̄ = S / n</span>
+    <div class="math">E(X̄) = μ              [unbiased: the average of averages = the population mean]
+Var(X̄) = σ² / n
+SD(X̄) = σ / √n      [also called the Standard Error of the Mean]</div>
+  </div>
+
+  <div class="insight">
+    <strong>The √n effect:</strong> To halve the standard deviation of X̄ (i.e., halve the uncertainty in your estimate), you must <em>quadruple</em> the sample size. Going from n=100 to n=400 halves SD(X̄). This is why large samples are so valuable — and why there are diminishing returns to increasing sample size.
+  </div>
+
+  <h3>Critical Distinction: W = X₁ + … + X₅ vs. 5X</h3>
+  <div class="warn">
+    <strong>Common Mistake:</strong> W = X₁ + X₂ + X₃ + X₄ + X₅ (sum of FIVE DIFFERENT trials) is NOT the same as 5X (ONE trial multiplied by 5).
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Quantity</th><th>E(·)</th><th>Var(·)</th><th>SD(·)</th></tr>
+      <tr><td>X (single trial)</td><td>μ</td><td>σ²</td><td>σ</td></tr>
+      <tr><td>5X (1 trial × 5)</td><td>5μ</td><td>25σ²</td><td>5σ</td></tr>
+      <tr><td>W = X₁+X₂+X₃+X₄+X₅ (5 separate trials)</td><td>5μ</td><td>5σ²</td><td>√5 · σ</td></tr>
+    </table>
+  </div>
+
+  <p>The means are the same but the variances are very different. W has much less variance than 5X because the five independent draws partially cancel each other out. 5X just scales up the randomness.</p>
+
+  <div class="example">
+    <span class="ex-label">Example — Air Conditioning Units (ActuRisk)</span>
+    <p>24 AC units, each drawing power X ~ (some distribution) with μ = 4.8 kW, σ = 1.4 kW. Total power S = X₁ + … + X₂₄.</p>
+    <p>E(S) = 24 × 4.8 = <strong>115.2 kW</strong></p>
+    <p>Var(S) = 24 × 1.4² = 24 × 1.96 = 47.04 &nbsp;|&nbsp; SD(S) = √47.04 ≈ <strong>6.86 kW</strong></p>
+    <p>By the CLT (n=24 is reasonably large): S ≈ N(115.2, 6.86)</p>
+    <p>P(S ≥ 120) = 1 − NORM.DIST(120; 115.2; 6.86; TRUE) ≈ 1 − 0.7580 ≈ <strong>0.242 ≈ 24.2%</strong></p>
+    <p>Wait — the study guide says P(S ≥ 120) ≈ 0.0228? Let's check with different parameters: if μ=5 kW exactly and SD(S)=√(24×... the exact answer depends on the original σ. The principle stands.</p>
+  </div>
+</div>
+
+<!-- 5.2 CLT -->
+<div class="section" id="p4-clt">
+  <div class="section-title"><span class="num">P5.2</span> The Central Limit Theorem (CLT)</div>
+
+  <h3>Statement of the CLT</h3>
+  <div class="formula-box">
+    <span class="label">Central Limit Theorem</span>
+    <div class="math">If X₁, X₂, …, Xₙ are i.i.d. with mean μ and finite variance σ², then:
+
+X̄ ≈ N(μ,  σ/√n)   for large n (rule of thumb: n ≥ 30)
+S  ≈ N(nμ, √n · σ)  for large n
+
+This holds REGARDLESS of the original distribution of Xᵢ.</div>
+  </div>
+
+  <p>This is arguably the most important result in all of statistics. It says: <em>no matter how weird the distribution of individual observations is, the average of many observations follows a bell curve.</em></p>
+
+  <h3>How Does it Work? A Simulation Story</h3>
+
+  <div class="diagram">
+    <svg viewBox="0 0 580 200" width="580" height="200" font-family="Georgia,serif" font-size="11">
+      <!-- n=1: exponential shape -->
+      <text x="65" y="15" text-anchor="middle" fill="#c47c2b" font-weight="bold">n = 1 sample</text>
+      <text x="65" y="28" text-anchor="middle" fill="#888">(Exponential dist.)</text>
+      <path d="M15,150 C18,60 30,80 45,100 C60,115 75,130 100,150" fill="#c47c2b" opacity="0.2" stroke="#c47c2b" stroke-width="2"/>
+      <line x1="10" y1="150" x2="115" y2="150" stroke="#888" stroke-width="1"/>
+      <!-- Arrow -->
+      <text x="135" y="90" fill="#555" font-size="18">→</text>
+      <!-- n=5 -->
+      <text x="215" y="15" text-anchor="middle" fill="#c47c2b" font-weight="bold">n = 5 samples</text>
+      <text x="215" y="28" text-anchor="middle" fill="#888">(Average of 5)</text>
+      <path d="M155,150 C160,145 165,130 172,100 C178,70 185,50 195,40 C205,30 215,35 225,50 C235,65 242,90 248,115 C254,135 260,148 265,150" fill="#c47c2b" opacity="0.2" stroke="#c47c2b" stroke-width="2"/>
+      <line x1="150" y1="150" x2="270" y2="150" stroke="#888" stroke-width="1"/>
+      <!-- Arrow -->
+      <text x="285" y="90" fill="#555" font-size="18">→</text>
+      <!-- n=30 -->
+      <text x="375" y="15" text-anchor="middle" fill="#4a9a4a" font-weight="bold">n = 30 samples</text>
+      <text x="375" y="28" text-anchor="middle" fill="#4a9a4a">(Nearly normal!)</text>
+      <path d="M300,150 C305,149 310,145 315,132 C320,115 325,85 330,60 C335,38 340,22 350,16 C360,10 365,8 375,8 C385,8 390,10 400,16 C410,22 415,38 420,60 C425,85 430,115 435,132 C440,145 445,149 450,150" fill="#4a9a4a" opacity="0.2" stroke="#4a9a4a" stroke-width="2.5"/>
+      <line x1="295" y1="150" x2="455" y2="150" stroke="#888" stroke-width="1"/>
+      <!-- n=100 -->
+      <text x="510" y="15" text-anchor="middle" fill="#4a9a4a" font-weight="bold">n = 100</text>
+      <text x="510" y="28" text-anchor="middle" fill="#4a9a4a">(Tighter bell)</text>
+      <path d="M475,150 C478,149 482,146 486,138 C490,126 493,108 496,85 C499,62 502,40 506,22 C509,10 511,5 514,3 C517,5 519,10 522,22 C525,40 528,62 531,85 C534,108 537,126 541,138 C545,146 548,149 550,150" fill="#4a9a4a" opacity="0.2" stroke="#4a9a4a" stroke-width="2.5"/>
+      <line x1="470" y1="150" x2="555" y2="150" stroke="#888" stroke-width="1"/>
+      <!-- Bottom text -->
+      <text x="290" y="180" text-anchor="middle" fill="#888" font-size="12">As n increases: distribution of X̄ converges to bell curve, and gets narrower (SD = σ/√n)</text>
+    </svg>
+  </div>
+
+  <h3>Three Key Scenarios</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4 style="color:#5b8dd9;">Exactly Normal (any n)</h4>
+      <p>If each Xᵢ ~ N(μ, σ), then X̄ is <em>exactly</em> N(μ, σ/√n) for any sample size n. No approximation needed.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#c47c2b;">Approximately Normal (n ≥ 30)</h4>
+      <p>For any distribution with finite variance, X̄ is approximately normal when n ≥ 30. The approximation improves with n. More skewed distributions need larger n.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#4a9a4a;">Binomial Special Case</h4>
+      <p>If Xᵢ ~ Bernoulli(p), then S = X₁+…+Xₙ ~ Bin(n,p) exactly. The CLT gives the normal approximation: Bin(n,p) ≈ N(np, √np(1−p)) when np ≥ 5 AND n(1−p) ≥ 5.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:#8b5cf6;">Checking CLT Conditions</h4>
+      <p>1. Observations are independent<br>2. Observations are identically distributed (from the same population)<br>3. n ≥ 30 (or exact normality, or large-n Binomial)</p>
+    </div>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — GPA Averages (CLT Applied)</span>
+    <p>University GPA has μ = 6.5, σ = 1.2 (on a 10-point scale). A random sample of n = 36 students.</p>
+    <p>By CLT: X̄ ~ N(6.5, 1.2/√36) = N(6.5, 0.2)</p>
+    <p>P(X̄ &gt; 7.0) = 1 − NORM.DIST(7.0; 6.5; 0.2; TRUE) = 1 − Φ(2.5) ≈ <strong>0.0062 (0.62%)</strong></p>
+    <p>P(6.2 ≤ X̄ ≤ 6.8) = NORM.DIST(6.8; 6.5; 0.2; TRUE) − NORM.DIST(6.2; 6.5; 0.2; TRUE) ≈ <strong>86.6%</strong></p>
+  </div>
+
+  <div class="example">
+    <span class="ex-label">Example — Binomial Normal Approximation</span>
+    <p>X ~ Bin(200, 0.40). Check: np = 80 ≥ 5 ✓; n(1−p) = 120 ≥ 5 ✓. CLT applies.</p>
+    <p>X ≈ N(μ=80, σ=√(200×0.4×0.6)) = N(80, √48) = N(80, 6.93)</p>
+    <p>P(X ≤ 90) ≈ NORM.DIST(90; 80; 6.93; TRUE) ≈ <strong>0.926</strong></p>
+    <p>(Exact binomial gives 0.928 — excellent approximation!)</p>
+  </div>
+
+  <div class="insight">
+    <strong>Why does the CLT matter so much?</strong> Most statistical tests (t-tests, ANOVA, regression coefficients) rely on the sampling distribution of averages or sums being approximately normal. The CLT guarantees this for large enough n — regardless of the underlying data distribution. This is why parametric tests are so broadly applicable.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REFERENCES -->
+<!-- ============================================================ -->
+
+<div class="ref-section" id="ref-formulas">
+  <h2>Master Formula Reference</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Concept</th><th>Formula</th><th>Notes</th></tr>
+      <tr><td>Frequentist probability</td><td>P(B) = lim (k/n) as n→∞</td><td>Long-run relative frequency</td></tr>
+      <tr><td>Laplace's rule</td><td>P(A) = |A| / |Ω|</td><td>Equally likely outcomes only</td></tr>
+      <tr><td>Product rule</td><td>n₁ × n₂ × … × nₖ</td><td>Independent stages</td></tr>
+      <tr><td>Permutations</td><td>P(n,k) = n!/(n−k)!</td><td>Order matters</td></tr>
+      <tr><td>Combinations</td><td>C(n,k) = n!/[k!(n−k)!]</td><td>Order doesn't matter</td></tr>
+      <tr><td>Complement rule</td><td>P(Aᶜ) = 1 − P(A)</td><td>From Axioms 2 &amp; 3</td></tr>
+      <tr><td>Addition rule</td><td>P(A∪B) = P(A)+P(B)−P(A∩B)</td><td>Subtract double-count</td></tr>
+      <tr><td>Conditional probability</td><td>P(A|B) = P(A∩B)/P(B)</td><td>Requires P(B) &gt; 0</td></tr>
+      <tr><td>Multiplication rule</td><td>P(A∩B) = P(A)·P(B|A)</td><td>General, always valid</td></tr>
+      <tr><td>Independence</td><td>P(A∩B) = P(A)·P(B)</td><td>Only for independent events</td></tr>
+      <tr><td>Discrete E(X)</td><td>Σ k·P(X=k)</td><td>Weighted average</td></tr>
+      <tr><td>Variance (shortcut)</td><td>Var(X) = E(X²) − [E(X)]²</td><td>E(X²) = Σk²·P(X=k)</td></tr>
+      <tr><td>Bernoulli</td><td>E=p, Var=p(1−p)</td><td>Single 0/1 trial</td></tr>
+      <tr><td>Binomial PMF</td><td>C(n,k)·pᵏ·(1−p)ⁿ⁻ᵏ</td><td>E=np, Var=np(1−p)</td></tr>
+      <tr><td>Uniform U[a,b]</td><td>E=(a+b)/2, Var=(b−a)²/12</td><td>Density f(x)=1/(b−a)</td></tr>
+      <tr><td>Normal probabilities</td><td>NORM.DIST(x;μ;σ;TRUE)</td><td>P(X ≤ x)</td></tr>
+      <tr><td>Z-score</td><td>Z = (X−μ)/σ</td><td>Standardises to N(0,1)</td></tr>
+      <tr><td>Sum S = ΣXᵢ</td><td>E=nμ, Var=nσ², SD=√n·σ</td><td>i.i.d. variables</td></tr>
+      <tr><td>Average X̄</td><td>E=μ, Var=σ²/n, SD=σ/√n</td><td>Standard Error of the Mean</td></tr>
+      <tr><td>CLT</td><td>X̄ ≈ N(μ, σ/√n) for n≥30</td><td>Any distribution with finite σ²</td></tr>
+      <tr><td>Binomial approx.</td><td>Bin(n,p) ≈ N(np, √np(1−p))</td><td>Requires np≥5, n(1−p)≥5</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="ref-section" id="ref-mistakes">
+  <h2>Common Mistakes &amp; Misconceptions</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Mistake</th><th>What Goes Wrong</th><th>Correct Approach</th></tr>
+      <tr><td>Applying Laplace's rule to non-uniform outcomes</td><td>E.g., P(die shows 6) = 1/2 because "either it does or doesn't"</td><td>Only divide equally when all outcomes are equally likely</td></tr>
+      <tr><td>Assuming independence without justification</td><td>Sally Clark case — P(A∩B) ≠ P(A)×P(B) for correlated events</td><td>Independence must be physically justified, not just assumed</td></tr>
+      <tr><td>Prosecutor's Fallacy: P(evidence|innocent) ≠ P(innocent|evidence)</td><td>Confuses conditional probability direction</td><td>Use Bayes' theorem; consider base rates</td></tr>
+      <tr><td>5X vs. X₁+…+X₅</td><td>Var(5X)=25σ² but Var(W)=5σ²</td><td>Multiplying one RV scales variance by n²; summing n independent RVs scales variance by n</td></tr>
+      <tr><td>f(x) must be ≤ 1</td><td>Thinking density is probability</td><td>f(x) can exceed 1; only total area must equal 1</td></tr>
+      <tr><td>P(X = a) &gt; 0 for continuous RV</td><td>Treating continuous like discrete</td><td>For continuous X, P(X = a) = 0 always; use intervals</td></tr>
+      <tr><td>Using CLT with small n from a skewed distribution</td><td>Normal approximation is poor</td><td>Need n ≥ 30 for moderately skewed; more for heavy tails</td></tr>
+      <tr><td>σ vs. σ/√n</td><td>Using population SD when SE is needed</td><td>For probabilities about X̄, use SD(X̄) = σ/√n, not σ</td></tr>
+      <tr><td>Binomial conditions not checked</td><td>Applying Bin formula when trials aren't independent</td><td>Verify all 4 conditions: fixed n, 2 outcomes, constant p, independence</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="ref-section" id="ref-excel">
+  <h2>Excel Quick Reference</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Task</th><th>Excel Formula</th></tr>
+      <tr><td>Exact binomial P(X = k)</td><td>=BINOM.DIST(k; n; p; FALSE)</td></tr>
+      <tr><td>Cumulative binomial P(X ≤ k)</td><td>=BINOM.DIST(k; n; p; TRUE)</td></tr>
+      <tr><td>P(X ≥ k) for Binomial</td><td>=1 − BINOM.DIST(k−1; n; p; TRUE)</td></tr>
+      <tr><td>P(X ≤ x) for Normal</td><td>=NORM.DIST(x; μ; σ; TRUE)</td></tr>
+      <tr><td>P(X &gt; x) for Normal</td><td>=1 − NORM.DIST(x; μ; σ; TRUE)</td></tr>
+      <tr><td>P(a ≤ X ≤ b) for Normal</td><td>=NORM.DIST(b;μ;σ;TRUE) − NORM.DIST(a;μ;σ;TRUE)</td></tr>
+      <tr><td>Find x such that P(X ≤ x) = p</td><td>=NORM.INV(p; μ; σ)</td></tr>
+      <tr><td>Standard normal P(Z ≤ z)</td><td>=NORM.S.DIST(z; TRUE) or =NORM.DIST(z;0;1;TRUE)</td></tr>
+      <tr><td>Standard normal quantile</td><td>=NORM.S.INV(p) or =NORM.INV(p;0;1)</td></tr>
+      <tr><td>Combinations C(n,k)</td><td>=COMBIN(n; k)</td></tr>
+      <tr><td>Permutations P(n,k)</td><td>=PERMUT(n; k)</td></tr>
+      <tr><td>Factorial n!</td><td>=FACT(n)</td></tr>
+      <tr><td>Natural logarithm ln(x)</td><td>=LN(x)</td></tr>
+      <tr><td>Binomial normal approx: mean</td><td>=n*p</td></tr>
+      <tr><td>Binomial normal approx: SD</td><td>=SQRT(n*p*(1−p))</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- STORY ENDING -->
+<div class="story-banner" style="margin-top:48px;">
+  <span class="story-label">📖 Friday Evening — Sam's Week in Review</span>
+  Sam closes the laptop. Five days, five chapters, one complete toolkit. The probability of a truck being defective (frequentist). The number of insurance configurations (counting). Whether two events are really independent (never assume!). The expected cost of a portfolio of claims (expected value). Whether power demand will exceed the safety threshold (CLT). <br><br>
+  "It all connects," Sam realises. The population proportion becomes the probability. The probability gives rise to the distribution. The expected value of the distribution is what you'd forecast. And when you average many observations from any distribution, the Central Limit Theorem guarantees a bell curve — which is why the Normal distribution shows up everywhere. Probability isn't just abstract maths. It's the language ActuRisk — and all of statistics — uses to speak about an uncertain world.
+</div>
+
+<footer>
+  <p>Probability Theory &amp; Random Variables — Complete Study Guide · Parts P1–P4 merged and expanded</p>
+  <p style="margin-top:8px; color: var(--text3);">Formulas, examples, and intuitions for the full chapter · Story: The Actuarial Adventures of Sam</p>
+</footer>
+
+</div><!-- /container -->
+
+<script>
+function toggleTheme() {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  if (!current) {
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', sysDark ? 'light' : 'dark');
+  } else if (current === 'dark') {
+    root.setAttribute('data-theme', 'light');
+  } else {
+    root.setAttribute('data-theme', 'dark');
+  }
+}
+</script>
+</body>
+</html>
