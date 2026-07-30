@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Psychology of Choice — Study Guide</title>
+<style>
+  @page {
+    size: A4;
+    margin: 22mm 20mm 20mm 20mm;
+    @bottom-center {
+      content: counter(page);
+      font-family: "Liberation Sans", sans-serif;
+      font-size: 9pt;
+      color: #8a8296;
+    }
+    @bottom-right {
+      content: "Psychology of Choice · Chapter 1";
+      font-family: "Liberation Sans", sans-serif;
+      font-size: 8pt;
+      color: #b3adbd;
+    }
+  }
+  @page :first { margin: 0; @bottom-center { content: none; } @bottom-right { content: none; } }
+
+  :root {
+    --plum:   #3d2c4f;
+    --indigo: #4a3a6b;
+    --violet: #6c5b8f;
+    --accent: #c98a3c;   /* warm amber accent */
+    --accent-soft: #f3e3cd;
+    --ink:    #241f2b;
+    --muted:  #6a6472;
+    --line:   #e3dfea;
+    --tint:   #f7f4fb;
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: 11pt; }
+  body {
+    font-family: "Liberation Serif", Georgia, serif;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    height: 297mm;
+    padding: 40mm 26mm 26mm 26mm;
+    background: linear-gradient(150deg, #2c2038 0%, #3d2c4f 45%, #4a3a6b 100%);
+    color: #f6f2fb;
+    page-break-after: always;
+    position: relative;
+  }
+  .cover .kicker {
+    font-family: "Liberation Sans", sans-serif;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    font-size: 11pt;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .cover h1 {
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 46pt;
+    line-height: 1.05;
+    margin: 14mm 0 6mm 0;
+    font-weight: 700;
+  }
+  .cover .sub {
+    font-size: 15pt;
+    color: #d9cfe8;
+    max-width: 120mm;
+    line-height: 1.45;
+  }
+  .cover .chapline {
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 12pt;
+    color: #efe7f7;
+    margin-top: 16mm;
+    padding-top: 6mm;
+    border-top: 1px solid rgba(255,255,255,.22);
+  }
+  .cover .chapline b { color: var(--accent); }
+  .cover .footer-note {
+    position: absolute;
+    bottom: 24mm; left: 26mm; right: 26mm;
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 9.5pt;
+    color: #b8aecb;
+    line-height: 1.5;
+  }
+  .cover .thinkers {
+    margin-top: 10mm;
+    font-size: 12.5pt;
+    color: #e7dff2;
+  }
+  .cover .thinkers span { color: var(--accent); font-weight:700; font-family:"Liberation Sans",sans-serif;}
+
+  /* ---------- HEADINGS ---------- */
+  h2 {
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 21pt;
+    color: var(--plum);
+    margin: 0 0 2mm 0;
+    padding-top: 3mm;
+    font-weight: 700;
+    page-break-after: avoid;
+  }
+  h2 .num {
+    color: var(--accent);
+    margin-right: 6pt;
+  }
+  h3 {
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 14pt;
+    color: var(--indigo);
+    margin: 7mm 0 2mm 0;
+    font-weight: 700;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 11.5pt;
+    color: var(--violet);
+    margin: 5mm 0 1.5mm 0;
+    font-weight: 700;
+    page-break-after: avoid;
+  }
+  .section-band {
+    page-break-before: always;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 4mm;
+    padding-bottom: 2mm;
+  }
+  .section-band .eyebrow {
+    font-family:"Liberation Sans",sans-serif;
+    font-size: 9.5pt; letter-spacing:.2em; text-transform:uppercase;
+    color: var(--muted); font-weight:700;
+  }
+  p { margin: 0 0 2.6mm 0; }
+  a { color: var(--indigo); text-decoration: none; }
+  strong { color: var(--plum); }
+  em { color: #4a3a6b; }
+
+  ul, ol { margin: 0 0 3mm 0; padding-left: 6mm; }
+  li { margin-bottom: 1.3mm; }
+
+  /* ---------- BOXES ---------- */
+  .box {
+    border-radius: 4px;
+    padding: 4mm 5mm;
+    margin: 3.5mm 0;
+    page-break-inside: avoid;
+  }
+  .plain   { background: var(--tint); border: 1px solid var(--line); }
+  .keyidea { background: #efeaf6; border: 1px solid #d9cfe8; }
+  .study   { background: #fbfaff; border: 1px solid var(--line); }
+  .apply   { background: var(--accent-soft); border: 1px solid #e6cfa8; }
+  .quote {
+    background: #322443; color: #f2ecf8;
+    border-radius: 4px; padding: 5mm 6mm; margin: 4mm 0;
+    font-size: 12.5pt; font-style: italic; page-break-inside: avoid;
+  }
+  .quote .src { display:block; margin-top:2.5mm; font-style:normal; font-family:"Liberation Sans",sans-serif; font-size:9.5pt; color:#c9bce0; letter-spacing:.04em;}
+
+  .box .label, .study .label {
+    display: inline-block;
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 8.5pt; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    margin-bottom: 2mm;
+  }
+  .plain .label   { color: var(--violet); }
+  .keyidea .label { color: var(--indigo); }
+  .study .label   { color: var(--accent); }
+  .apply .label   { color: #9a6417; }
+
+  .box p:last-child, .study p:last-child { margin-bottom: 0; }
+
+  /* study card meta rows */
+  .study .grid { display: table; width: 100%; margin: 1mm 0 2mm; }
+  .study .row { display: table-row; }
+  .study .row > div { display: table-cell; padding: 1mm 3mm 1mm 0; vertical-align: top; }
+  .study .row > div:first-child {
+    width: 34mm; font-family:"Liberation Sans",sans-serif; font-size:9pt;
+    font-weight:700; color: var(--violet); text-transform:uppercase; letter-spacing:.05em;
+  }
+
+  /* ---------- TABLE ---------- */
+  table.data {
+    border-collapse: collapse; width: 100%; margin: 3mm 0;
+    font-size: 10pt; page-break-inside: avoid;
+  }
+  table.data caption {
+    caption-side: top; text-align: left;
+    font-family:"Liberation Sans",sans-serif; font-size:9pt; font-weight:700;
+    color: var(--muted); margin-bottom: 1.5mm; letter-spacing:.04em;
+  }
+  table.data th {
+    background: var(--plum); color: #fff;
+    font-family: "Liberation Sans", sans-serif; font-size: 9.5pt;
+    padding: 2mm 3mm; text-align: left; font-weight: 700;
+  }
+  table.data td {
+    padding: 1.8mm 3mm; border-bottom: 1px solid var(--line);
+  }
+  table.data tr:nth-child(even) td { background: var(--tint); }
+  table.data td.hi { font-weight:700; color: var(--plum); }
+  .fn { font-size: 8.5pt; color: var(--muted); font-family:"Liberation Sans",sans-serif; margin-top:1mm;}
+
+  /* ---------- TOC ---------- */
+  .toc { page-break-after: always; }
+  .toc h2 { border:none; }
+  .toc ol { list-style: none; padding-left: 0; counter-reset: none; }
+  .toc > ol > li {
+    font-family: "Liberation Sans", sans-serif; font-weight: 700;
+    color: var(--plum); font-size: 12pt; margin-top: 4mm;
+    border-bottom: 1px solid var(--line); padding-bottom: 1.5mm;
+  }
+  .toc > ol > li > span.n { color: var(--accent); margin-right: 4pt; }
+  .toc ul { list-style: none; padding-left: 8mm; margin: 1.5mm 0 0; }
+  .toc ul li {
+    font-family: "Liberation Serif", serif; font-weight: 400;
+    color: var(--ink); font-size: 10.5pt; margin: .8mm 0;
+  }
+
+  .biaschip {
+    display:inline-block; font-family:"Liberation Sans",sans-serif;
+    font-size:8.5pt; font-weight:700; color:#fff; background:var(--violet);
+    border-radius:10px; padding:.6mm 3mm; margin-right:2mm; letter-spacing:.03em;
+  }
+  .lead { font-size: 11.5pt; color: #332c3d; }
+  .divider { border:none; border-top:1px solid var(--line); margin:6mm 0; }
+  .qlist { background:#fbfaff; border-left:3px solid var(--accent); padding:3mm 5mm; margin:3mm 0; }
+  .qlist .label{display:block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9a6417;margin-bottom:1.5mm;}
+  .qlist ul{padding-left:5mm;margin:0;}
+  .term { font-family:"Liberation Sans",sans-serif; font-weight:700; color:var(--indigo); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div class="kicker">Course Study Guide</div>
+  <h1>The Psychology<br>of Choice</h1>
+  <div class="sub">Why we choose the way we do — from the rational ideal, through the predictable mistakes of behavioral economics, to the paradox that more freedom can leave us worse off.</div>
+  <div class="thinkers">Built around the work of <span>Dan Ariely</span> &nbsp;·&nbsp; <span>Barry Schwartz</span> &nbsp;·&nbsp; <span>Sheena Iyengar</span></div>
+  <div class="chapline"><b>Chapter 1</b> &nbsp;|&nbsp; Introduction · How We Choose · Behavioral Economics · The Paradox of Choice · Exercises</div>
+  <div class="footer-note">
+    An expanded companion to the Chapter 1 lecture slides. Each section develops the slide bullet points into the fuller explanation, worked examples, and reasoning that would normally be delivered aloud in class — so the guide can be read and studied on its own.
+  </div>
+</section>
+
+<!-- ============ TOC ============ -->
+<section class="toc">
+  <h2>What this chapter covers</h2>
+  <p class="lead" style="margin-bottom:5mm;">This chapter answers one deceptively simple question: <em>are we good at choosing, and does choosing make us better off?</em> The map below shows the journey — from an idealised model of the rational decision-maker, to the systematic ways real people depart from it, to what happens when a society hands people ever more options.</p>
+  <ol>
+    <li><span class="n">1.</span> Introduction: the world of choice
+      <ul>
+        <li>1.1 Your choices &nbsp;·&nbsp; 1.2 Choice is ubiquitous &nbsp;·&nbsp; 1.3 Why choice matters</li>
+      </ul>
+    </li>
+    <li><span class="n">2.</span> How do we choose?
+      <ul>
+        <li>2.1 Rational choice theory (Homo economicus) &nbsp;·&nbsp; 2.2 “But…” — where the model breaks</li>
+      </ul>
+    </li>
+    <li><span class="n">3.</span> Behavioral economics: predictable mistakes
+      <ul>
+        <li>3.1 Relativity &nbsp;·&nbsp; 3.2 Anchoring &nbsp;·&nbsp; 3.3 Emotions colour our thinking</li>
+        <li>3.4 Diversification &amp; keeping options open &nbsp;·&nbsp; 3.5 Conclusion &nbsp;·&nbsp; Extra: Procrastination</li>
+      </ul>
+    </li>
+    <li><span class="n">4.</span> The paradox of choice
+      <ul>
+        <li>4.0 The core paradox &nbsp;·&nbsp; 4.1 Paralysis &nbsp;·&nbsp; 4.2 Discontent &nbsp;·&nbsp; 4.3 Underlying processes</li>
+        <li>4.4 Consequences: maximizers vs. satisficers, regret, social comparison, society</li>
+      </ul>
+    </li>
+    <li><span class="n">5.</span> Exercises &nbsp;·&nbsp; Further reading</li>
+  </ol>
+
+  <div class="box keyidea" style="margin-top:8mm;">
+    <span class="label">The one-sentence version</span>
+    <p style="margin-bottom:0;">Classical economics assumes we choose rationally and always benefit from more options. Real psychology shows we make <strong>systematic, predictable errors</strong> (behavioral economics), and that beyond a point <strong>more choice actively harms</strong> well-being through paralysis and discontent (the paradox of choice).</p>
+  </div>
+</section>
+
+<!-- ============ 1. INTRODUCTION ============ -->
+<section>
+  <div class="section-band">
+    <div class="eyebrow">Part One</div>
+    <h2><span class="num">1.</span>Introduction: the world of choice</h2>
+  </div>
+
+  <p class="lead">Before any theory, the chapter starts with you. The point of the opening is to make an invisible thing visible: choice is so constant that we stop noticing it, and we almost never stop to ask whether we are any good at it.</p>
+
+  <h3><span style="color:var(--accent)">1.1</span> &nbsp;Your choices</h3>
+  <p>Take a moment and actually answer these — the exercise only works if you make it concrete rather than abstract:</p>
+  <ul>
+    <li><strong>Which choices did you make today?</strong> Not just the big ones. What to wear, whether to snooze the alarm, coffee or tea, which route to take, which message to answer first, whether to read this now or later.</li>
+    <li><strong>How many options did you actually have</strong> for each one? Often far more than you consciously considered.</li>
+    <li><strong>How did you make them?</strong> Did you weigh things up, or did you default to habit, to what you did last time, to what was easiest?</li>
+    <li><strong>Was it easy or difficult?</strong> Notice which choices felt effortless and which drained you.</li>
+    <li><strong>Are you happy with the result?</strong> And the deeper version: <strong>are you satisfied with the choices you have made across your life</strong> — study, relationships, career?</li>
+  </ul>
+  <div class="box plain">
+    <span class="label">Why we start here</span>
+    <p>Two patterns usually surface. First, the sheer <em>volume</em> of daily choices is far larger than we assume — a modern adult makes thousands of small decisions a day. Second, most of those decisions are made <em>automatically</em>, not through the careful reasoning we like to imagine. Holding those two facts together is the whole reason this chapter exists: if choosing is this frequent and this automatic, the quality of our choices matters enormously — and it is not guaranteed.</p>
+  </div>
+
+  <h3><span style="color:var(--accent)">1.2</span> &nbsp;Choice is ubiquitous</h3>
+  <p>Choices sit on a spectrum of weight:</p>
+  <ul>
+    <li><strong>Small choices</strong> — which cereal, which of 40 shampoos, which show to stream, which of dozens of near-identical products on a shelf. Individually trivial, but they arrive relentlessly and in enormous variety.</li>
+    <li><strong>Great choices</strong> — what to study, which career to pursue, where to live, whether and whom to marry, how to invest for retirement, medical decisions. Rare, high-stakes, and often irreversible.</li>
+  </ul>
+  <p>The key observation is that modern life has <strong>multiplied both kinds</strong>. Domains that once came with a default answer — one pension, one phone company, one local doctor, a marriage arranged or strongly expected — have all been converted into open menus. This expansion is usually sold to us as pure progress. Part of this chapter is asking whether that is entirely true.</p>
+
+  <h3><span style="color:var(--accent)">1.3</span> &nbsp;Why choice matters</h3>
+  <p>Choice is not just a convenience; in Western thought it is treated as close to a moral good. The argument runs on two levels:</p>
+  <ul>
+    <li><strong>Individual well-being.</strong> Choice is the vehicle of autonomy. Being able to select what fits <em>your</em> goals, tastes and values is what lets you author your own life rather than have it dictated to you. Freedom of choice is tied to dignity, agency and self-determination.</li>
+    <li><strong>Well-being of society.</strong> A market economy and a democracy both <em>run on</em> choice — consumers choosing between products, citizens choosing between ideas and representatives. The assumption is that free choice channels resources to what people actually want, producing prosperity and welfare.</li>
+  </ul>
+  <div class="quote">
+    “Freedom is the right to choose: the right to create for oneself the alternatives of choice. Without the possibility of choice, and the exercise of choice, a man is not a man but a member, an instrument, a thing.”
+    <span class="src">— Thomas Jefferson</span>
+  </div>
+  <p>Notice how strong Jefferson's claim is: without choice you are not fully a person. That is the cultural water we swim in — the near-automatic belief that <em>more choice is always better</em>. This chapter does not reject that belief so much as test it.</p>
+  <div class="box keyidea">
+    <span class="label">The two questions that drive the whole chapter</span>
+    <p style="margin-bottom:0;"><strong>(1) Can we actually choose well?</strong> &nbsp; <strong>(2) Do we really benefit from having so much choice?</strong> &nbsp; The rest of the chapter shows that the honest answers are “not as well as we think” and “not always” — and explains exactly why.</p>
+  </div>
+</section>
+
+<!-- ============ 2. HOW DO WE CHOOSE ============ -->
+<section>
+  <div class="section-band">
+    <div class="eyebrow">Part Two</div>
+    <h2><span class="num">2.</span>How do we choose?</h2>
+  </div>
+
+  <h3><span style="color:var(--accent)">2.1</span> &nbsp;Rational choice theory — the “Homo economicus” ideal</h3>
+  <p>The classical economic answer to “how do we choose?” is elegant and optimistic. It imagines a decision-maker nicknamed <span class="term">Homo economicus</span> — “economic man” — who chooses through a clean, logical procedure:</p>
+  <ol>
+    <li><strong>Identify your goals.</strong> Know what you are actually trying to achieve.</li>
+    <li><strong>Evaluate the importance of each goal.</strong> Decide how much each one matters — the weights.</li>
+    <li><strong>Rank the options</strong> against those weighted goals.</li>
+    <li><strong>Choose the best</strong> — the option that scores highest.</li>
+    <li><strong>Evaluate in light of future goals.</strong> Check the choice still serves you over time, and learn from it.</li>
+  </ol>
+  <p>This procedure only works if a set of strong <strong>assumptions</strong> holds true:</p>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li><strong>Complete information</strong> — you know all the options and all their relevant features.</li>
+      <li><strong>Perfect logic</strong> — you reason without error and your preferences are stable and consistent.</li>
+      <li><strong>Cost–benefit analysis</strong> — you can weigh each option's costs against its benefits and compare them on a common scale.</li>
+      <li><strong>Stable, self-known preferences</strong> — you know what you want, independent of how the options happen to be presented.</li>
+    </ul>
+  </div>
+  <p>The comforting conclusion of this model is baked in: because the chooser is rational and fully informed, <strong>choice necessarily benefits us</strong>. Give people more options and a rational agent can only end up equally well off or better — never worse. This is exactly why classical economics treats more choice as an unqualified good.</p>
+
+  <h3><span style="color:var(--accent)">2.2</span> &nbsp;“But…” — where the model breaks</h3>
+  <p>Keep the five rational steps in mind, because the rest of the chapter is essentially a catalogue of the ways real humans <em>fail to execute them</em>. Two research traditions supply the critique:</p>
+  <div class="box keyidea">
+    <span class="label">The two-pronged critique</span>
+    <p><strong>1 · Behavioral economics (Dan Ariely).</strong> We are not irrational in a random, hopeless way — we are irrational in <em>orderly, repeatable</em> ways. We make the <strong>same mistakes</strong> again and again, which means they can be studied, predicted, and even exploited. Ariely's phrase for this is <em>“predictably irrational.”</em></p>
+    <p style="margin-bottom:0;"><strong>2 · The paradox of choice (Barry Schwartz).</strong> Even setting aside our reasoning errors, the sheer <em>quantity</em> of choice carries its own costs. Too many options produce two negative outcomes: <strong>paralysis</strong> (we can't decide at all) and <strong>discontent</strong> (once we do decide, we're less satisfied with what we chose).</p>
+  </div>
+  <p>So the plan is set. Part 3 dismantles the “we choose well” assumption. Part 4 dismantles the “more choice is better” assumption. Together they overturn the tidy picture of Homo economicus.</p>
+</section>
+
+<!-- ============ 3. BEHAVIORAL ECONOMICS ============ -->
+<section>
+  <div class="section-band">
+    <div class="eyebrow">Part Three</div>
+    <h2><span class="num">3.</span>Behavioral economics: predictable mistakes</h2>
+  </div>
+
+  <h3><span style="color:var(--accent)">3.0</span> &nbsp;Introduction</h3>
+  <p>The central claim of behavioral economics is worth stating precisely: <strong>we are not that rational, but our irrationality is systematic.</strong> If our errors were random noise, they would cancel out on average and we could ignore them. Instead they lean consistently in the same direction — which is what makes them both scientifically interesting and commercially valuable. Marketers, menu designers and negotiators all use these effects on us, whether they know the theory or not.</p>
+  <p>This section examines four of the most important error patterns:</p>
+  <p style="margin-bottom:4mm;">
+    <span class="biaschip">3.1 Relativity</span>
+    <span class="biaschip">3.2 Anchoring</span>
+    <span class="biaschip">3.3 Emotions</span>
+    <span class="biaschip">3.4 Diversification</span>
+  </p>
+  <p>For each one, notice the recurring structure the slides use: <em>(A)</em> the intuition, <em>(B)</em> how it contradicts a specific step of rational choice theory, <em>(C)</em> the experiment that demonstrates it, and <em>(D/E)</em> the real-world applications and nuances.</p>
+
+  <!-- 3.1 RELATIVITY -->
+  <h3><span style="color:var(--accent)">3.1</span> &nbsp;Relativity</h3>
+  <h4>A · The intuition</h4>
+  <p>We are very poor at judging things in <em>absolute</em> terms, and very good at judging them <em>relative</em> to whatever sits next to them. The classic demonstration is the <strong>Ebbinghaus illusion</strong>: two centre circles of identical size look different — one surrounded by large circles seems small, one surrounded by small circles seems large. Your eyes are not measuring the circle; they are comparing it to its neighbours. The mind does the same thing with prices, salaries, partners and life choices.</p>
+  <h4>B · Which rational step it breaks — Step 1</h4>
+  <p>Rational choice theory assumes you already know your goals and the value of each option, fixed in advance. Relativity says the opposite: <strong>we don't know values on their own — only in context, relative to other things.</strong> Change the comparison set and the “value” of the very same option changes. That undermines Step 1 (knowing your goals/values) before you even begin.</p>
+  <div class="box study">
+    <span class="label">Sample research · the “decoy” effect</span>
+    <p>Ariely's famous example (the <em>Economist</em> subscription, echoed by the “trip to Rome” and dating experiments): when people choose between options, adding a deliberately <strong>inferior third option</strong> that is similar to one of the others makes that similar option look better and shifts choices toward it — even though a rational agent should ignore an option nobody wants.</p>
+    <div class="grid">
+      <div class="row"><div>Trip example</div><div>Rome-with-free-breakfast vs. Paris-with-free-breakfast vs. Rome-<em>without</em> breakfast. The “decoy” (Rome without breakfast) makes Rome-with-breakfast look like a bargain, pulling choices to Rome.</div></div>
+      <div class="row"><div>Dating example</div><div>Bring a slightly less attractive version of yourself and you look better by comparison. We evaluate a person relative to the nearest similar person, not on an absolute scale.</div></div>
+    </div>
+    <p style="margin-bottom:0;"><strong>Take-away:</strong> our preferences can be engineered simply by controlling what each option is compared against.</p>
+  </div>
+
+  <h4>C · Relativity and money: why more rarely feels like enough</h4>
+  <p>Relativity explains a well-documented finding: beyond a modest level, <strong>more money does not make people much happier</strong> (Clark, Frijters &amp; Shields, 2008). The reason is comparison. We don't judge our salary in absolute terms; we judge it against a reference group — colleagues, neighbours, friends. When your income rises, your reference group tends to rise with it, so the comparison resets and the extra money stops delivering satisfaction. You are on a treadmill: running to stay in the same emotional place.</p>
+
+  <h4>D · Nuance: not everything is relative</h4>
+  <p>Crucially, relativity does <strong>not</strong> apply equally to all goods (Solnick &amp; Hemenway, 2005). Some things we care about mainly in <em>relative</em> terms — we want more than the people around us. Other things we care about in <em>absolute</em> terms — we want a lot of them regardless of what anyone else has.</p>
+  <table class="data">
+    <caption>Positional (relative) vs. absolute goods</caption>
+    <tr><th style="width:50%">Judged mostly RELATIVELY (“more than others”)</th><th>Judged mostly in ABSOLUTE terms</th></tr>
+    <tr><td>Car</td><td>Health</td></tr>
+    <tr><td>House</td><td>Safety</td></tr>
+    <tr><td>Fashion / clothing</td><td>Close relationships</td></tr>
+    <tr><td>Job status</td><td></td></tr>
+    <tr><td class="hi">Income</td><td></td></tr>
+  </table>
+  <p>Solnick &amp; Hemenway asked people whether they would rather earn $50k while others earn $25k, or $100k while others earn $200k. For income and status, many people chose to be <em>absolutely poorer but relatively richer</em>. For things like health and vacation time, they chose the absolute maximum regardless of others. The lesson: the goods we chase hardest for status (money, car, house) are exactly the ones where relativity poisons our satisfaction — while the things that reliably matter (health, safety, relationships) are the ones we treat absolutely.</p>
+
+  <h4>E · Everyday examples</h4>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li><strong>The premium decoy.</strong> A coffee machine priced at <strong>$99.99</strong> sits next to a plain one at <strong>$49.99</strong>. The expensive model does two jobs: some people buy it, and — more importantly — it makes the $49.99 model feel modest and reasonable. Retailers routinely stock a product they don't expect to sell, purely to reshape the comparison.</li>
+      <li><strong>Executive pay.</strong> Top managers' salaries are driven heavily by comparison to <em>other</em> top managers (as Vlerick's research on Belgian listed companies showed). Because status is positional, pay ratchets upward: no executive wants to be paid below the peer benchmark, so the benchmark keeps climbing.</li>
+    </ul>
+  </div>
+  <div class="qlist">
+    <span class="label">Discussion</span>
+    <ul>
+      <li>How can you <em>apply</em> the logic of relativity — e.g. to make yourself happier (choose your comparison set deliberately) or to sell something (add a decoy)?</li>
+      <li>Which relative vs. absolute goods dominate your own daily life?</li>
+      <li>Who suffers more from relativity — maximizers or satisficers? (Hold that question; §4.4 answers it.)</li>
+    </ul>
+  </div>
+
+  <!-- 3.2 ANCHORING -->
+  <h3><span style="color:var(--accent)">3.2</span> &nbsp;Anchoring</h3>
+  <h4>A · The intuition</h4>
+  <p>We <strong>follow previous reference points</strong>. Once a number or a past experience is in mind, it acts as an <em>anchor</em> that pulls our subsequent judgements toward it — even when the anchor is arbitrary and logically irrelevant. Where relativity is about comparing options <em>side by side</em>, anchoring is about how an <em>earlier</em> value contaminates a <em>later</em> one.</p>
+  <h4>B · Which rational steps it breaks — Steps 2, 3, 4</h4>
+  <p>Rational choice assumes we value options through genuine cost–benefit analysis. Anchoring says value is instead <strong>constructed from whatever anchor happens to be nearby</strong>. This corrupts weighting the options (Step 2), ranking them (Step 3) and choosing (Step 4), because the whole valuation is quietly tethered to an irrelevant starting number.</p>
+  <div class="box study">
+    <span class="label">Core experiment · “arbitrary coherence” (Ariely, Loewenstein &amp; Prelec, 2003)</span>
+    <div class="grid">
+      <div class="row"><div>Participants</div><div>Business students (people who <em>should</em> value goods rationally).</div></div>
+      <div class="row"><div>Task 1</div><div>Write down the last two digits of your Social Security / ID number.</div></div>
+      <div class="row"><div>Task 2</div><div>State the maximum you'd pay for several products (wine, gadgets, chocolate).</div></div>
+      <div class="row"><div>Independent variable</div><div>The size of that essentially random two-digit number.</div></div>
+      <div class="row"><div>Dependent variable</div><div>The size of the bids.</div></div>
+      <div class="row"><div>Result</div><div><strong>The higher the ID number, the higher the bids</strong> — students with high numbers bid up to several times more for the identical product than students with low numbers.</div></div>
+    </div>
+    <p style="margin-bottom:0;"><strong>Why it's devastating:</strong> a number the participants knew was meaningless still shaped what they were willing to pay. Ariely calls this <em>“arbitrary coherence”</em>: the absolute level of what we'll pay is arbitrary (set by the anchor), yet our choices <em>relative</em> to that anchor stay coherent — so we never notice the anchor doing the work.</p>
+  </div>
+
+  <h4>C · Anchoring and value — “make it hard to get”</h4>
+  <div class="quote">
+    “In order to make a man or a boy covet a thing, it is only necessary to make the thing difficult to attain.”
+    <span class="src">— Mark Twain, <em>The Adventures of Tom Sawyer</em></span>
+  </div>
+  <p>Tom Sawyer turns the tedious chore of whitewashing a fence into something the other boys <em>pay him</em> to be allowed to do — simply by acting as though it were a rare privilege. The anchor here is framing: is this an unpleasant task you must be paid to endure, or a treat you'd pay to enjoy? Ariely tested exactly this.</p>
+  <div class="box study">
+    <span class="label">Anchoring &amp; framing experiment — the poetry reading</span>
+    <div class="grid">
+      <div class="row"><div>Participants</div><div>Students.</div></div>
+      <div class="row"><div>Condition 1a</div><div>Told they would have to <strong>pay</strong> to hear Ariely read poetry.</div></div>
+      <div class="row"><div>Condition 1b</div><div>Told they would be <strong>paid</strong> to listen to the same reading.</div></div>
+      <div class="row"><div>Condition 2</div><div>Then told the reading is actually <strong>free</strong>.</div></div>
+      <div class="row"><div>Measure</div><div>Would they participate, and on what terms?</div></div>
+    </div>
+    <p style="margin-bottom:0;"><strong>Result:</strong> the first anchor set the whole frame. Those first told they would <em>pay</em> treated the reading as valuable and were willing to attend for free; those first told they'd be <em>paid</em> treated it as a chore and now needed payment to attend the very same free event. The initial framing — not the experience itself — determined its perceived worth.</p>
+  </div>
+  <div class="qlist">
+    <span class="label">Discussion</span>
+    <ul>
+      <li>Where do sellers set anchors for you? (“Was €199, now €99”; the manufacturer's “suggested” price; the most expensive dish placed at the top of a menu to make the rest look cheap.)</li>
+      <li>Your first salary, your first rent, the first price you ever paid for coffee — how are these still anchoring what you think is “normal” today?</li>
+    </ul>
+  </div>
+
+  <!-- 3.3 EMOTIONS -->
+  <h3><span style="color:var(--accent)">3.3</span> &nbsp;Emotions colour our thinking</h3>
+  <h4>A · The intuition — hot vs. cold states</h4>
+  <p>We badly overestimate how <em>consistent</em> we are. In reality our decisions swing with our emotional state, and — critically — <strong>we cannot accurately predict, while calm, how we will decide while aroused.</strong> Psychologists call this a <span class="term">hot–cold empathy gap</span>.</p>
+  <table class="data">
+    <caption>Two decision-making states</caption>
+    <tr><th>‘COLD’ state</th><th>‘HOT’ state</th></tr>
+    <tr><td>Rational, deliberate</td><td>Emotional, aroused (hunger, fear, pain, anger, excitement, desire)</td></tr>
+    <tr><td>Long-term, goal-directed</td><td>Immediate gratification, impulsive</td></tr>
+    <tr><td><em>Thinking</em></td><td><em>Doing</em></td></tr>
+    <tr><td class="hi">Prefrontal cortex (planning, control)</td><td class="hi">Limbic system (emotion, drive)</td></tr>
+  </table>
+  <h4>B · Which rational steps it breaks — Steps 2, 3, 4</h4>
+  <p>The rational model assumes stable preferences. But the person who calmly plans (cold) and the person who actually decides in the moment (hot) can want genuinely different things. Because we plan in a cold state for choices we'll make in a hot state, we systematically <strong>mis-weight, mis-rank and mis-choose</strong> — for example, promising to diet, save, or behave safely, then doing the opposite when temptation is live.</p>
+  <div class="box study">
+    <span class="label">Experiment · arousal and decision-making (Ariely &amp; Loewenstein, 2006)</span>
+    <div class="grid">
+      <div class="row"><div>Participants</div><div>35 male students.</div></div>
+      <div class="row"><div>Design</div><div>Each answered the same questions about attraction, willingness to take risks, and how far they'd go to obtain sex — <strong>once in a calm (cold) state and once in a highly aroused (hot) state</strong> (a within-subjects design, so each person is his own comparison).</div></div>
+      <div class="row"><div>Independent variable</div><div>Emotional state: neutral vs. aroused.</div></div>
+      <div class="row"><div>Dependent variable</div><div>Judgements about risky and safe behaviour.</div></div>
+    </div>
+    <p style="margin-bottom:0;"><strong>Result:</strong> in the hot state the same individuals reported dramatically greater willingness to engage in risky and ethically questionable behaviour, and far less commitment to “safe” choices, than they had predicted for themselves while cold. The gap between the two states was large — and the cold-state self had no idea how differently the hot-state self would decide.</p>
+  </div>
+  <h4>D · Implications</h4>
+  <div class="box apply">
+    <span class="label">So what?</span>
+    <p style="margin-bottom:0;">Good decisions are not just about willpower in the moment — they are about <strong>designing your cold-state self to protect your hot-state self.</strong> Don't rely on resolving to resist temptation when aroused; instead make the decision in advance and remove the option: don't keep the snacks in the house, arrange safe transport <em>before</em> the party, automate savings so the money never reaches your hot-state hands. Sex education, addiction treatment, and financial planning all work better when they account for the hot state rather than assuming people are always in the cold one.</p>
+  </div>
+
+  <!-- 3.4 DIVERSIFICATION -->
+  <h3><span style="color:var(--accent)">3.4</span> &nbsp;Diversification bias &amp; the urge to keep options open</h3>
+  <h4>A · The story of Xiang Yu</h4>
+  <p>The Chinese general <strong>Xiang Yu</strong> led his army across a river to attack the enemy. While his troops slept, he ordered the cooking pots smashed and the boats burned — deliberately destroying his army's options to retreat or even to eat. With no way back, the soldiers had only one direction to fight in, and they won. The paradoxical moral: <strong>eliminating your own options can make you stronger.</strong> Yet almost everything in our psychology pushes the other way — we cling to options even when they cost us.</p>
+  <h4>B · The idea, vs. rational choice — Step 4</h4>
+  <p>Behavioral economics finds three related tendencies:</p>
+  <ul>
+    <li>We <strong>don't like to lose options</strong>, even bad ones we'll never use.</li>
+    <li>We <strong>diversify</strong> — spread our bets — even when it's unnecessary or actively silly.</li>
+    <li>We <strong>avoid focusing</strong> our resources, even when there is really only one good choice.</li>
+  </ul>
+  <p>This breaks Step 4 (choosing the best): instead of committing to the best option, we spend real time and money keeping worse options alive “just in case.”</p>
+  <div class="box study">
+    <span class="label">Experiment · the “doors” game (Shin &amp; Ariely, 2004)</span>
+    <div class="grid">
+      <div class="row"><div>Participants</div><div>Students.</div></div>
+      <div class="row"><div>Setup</div><div>A computer game with three doors. Clicking inside a door earns money; each door pays out in a different range. You have a limited budget of clicks, so every click spent switching between doors is a click <em>not</em> spent earning money behind the best one.</div></div>
+      <div class="row"><div>Independent variable</div><div>In one condition, <strong>a door you ignored would shrink and eventually disappear</strong>; in the other, all doors stayed open no matter what.</div></div>
+      <div class="row"><div>Dependent variable</div><div>How much effort players spent keeping doors open.</div></div>
+    </div>
+    <p><strong>Result:</strong> when doors threatened to vanish, players <strong>wasted clicks running back to keep them alive</strong> — even though those doors were worth no more, and the frantic door-tending <em>lowered their total earnings</em>. The mere <em>possibility</em> of losing an option triggered irrational effort to preserve it. In a later phase, players shifted toward disappearing doors even more strongly as availability shrank.</p>
+    <p style="margin-bottom:0;"><strong>Conclusion:</strong> we treat a closing option as a loss, and loss-aversion makes us pay to avoid it — even when the option is worthless and keeping it open makes us poorer.</p>
+  </div>
+  <div class="qlist">
+    <span class="label">Practical relevance</span>
+    <ul>
+      <li>Staying in a dead-end job or relationship “to keep options open.” Taking five subjects you're mediocre at instead of committing to the two you're great at. Keeping dozens of browser tabs, half-read books, unfinished side-projects — all open doors that quietly drain you.</li>
+      <li>Sometimes, like Xiang Yu, the strongest move is deliberately <strong>closing</strong> a door so you can commit fully to what remains.</li>
+    </ul>
+  </div>
+
+  <h3><span style="color:var(--accent)">3.5</span> &nbsp;Conclusion — mapping the biases onto the rational model</h3>
+  <p>The elegance of the section is that each bias attacks a specific step of rational choice theory. Seen together, they show the model failing at every stage — not randomly, but <strong>systematically and predictably</strong>:</p>
+  <table class="data">
+    <caption>Which rational step each bias corrupts</caption>
+    <tr><th style="width:40%">Rational choice step</th><th>Behavioral bias that attacks it</th></tr>
+    <tr><td>1 · Know your goals / values</td><td class="hi">Relativity — value exists only in context, not absolutely</td></tr>
+    <tr><td>2–4 · Weight, rank &amp; choose</td><td class="hi">Anchoring — valuations tethered to irrelevant reference points</td></tr>
+    <tr><td>2–4 · Weight, rank &amp; choose</td><td class="hi">Emotions — hot/cold states change what we want</td></tr>
+    <tr><td>4 · Choose (and commit to) the best</td><td class="hi">Diversification — we won't commit; we keep worthless options open</td></tr>
+  </table>
+  <p style="margin-bottom:0;"><strong>The headline:</strong> we make errors in a <em>systematic and predictable</em> way. That is the whole thesis of behavioral economics — and it is precisely what makes our irrationality studiable and, unfortunately, exploitable.</p>
+
+  <hr class="divider">
+  <h3>Extra · Procrastination</h3>
+  <p>A closely related failure worth flagging: <strong>procrastination</strong> is the hot–cold gap applied to time. In a cold state we set sensible long-term goals (start the essay early, exercise, save); in the hot present, immediate gratification wins and we postpone. Ariely's research on procrastination shows a practical fix — <strong>externally imposed deadlines beat self-set intentions.</strong> Students who were given (or forced to commit to) evenly spaced deadlines outperformed those told simply to “hand everything in by the end.” Structure protects us from our present-biased selves; pure willpower usually doesn't.</p>
+</section>
+
+<!-- ============ 4. PARADOX OF CHOICE ============ -->
+<section>
+  <div class="section-band">
+    <div class="eyebrow">Part Four</div>
+    <h2><span class="num">4.</span>The paradox of choice</h2>
+  </div>
+
+  <h3><span style="color:var(--accent)">4.0</span> &nbsp;The core paradox</h3>
+  <p>Part 3 attacked the assumption that <em>we choose well</em>. Part 4 attacks the deeper cultural assumption from §1.3 — that <em>more choice is always better</em>. This is Barry Schwartz's territory.</p>
+  <div class="box keyidea">
+    <span class="label">The assumption on trial</span>
+    <p style="margin-bottom:0;">“The more choices, the better, because it maximises freedom; and the more freedom, the more prosperity and welfare, because people can pick what's best for them.” This chain of reasoning underlies modern consumer societies. Schwartz argues it is <strong>only true up to a point</strong> — after which extra choice starts to hurt.</p>
+  </div>
+  <p>The paradox has two distinct negative effects, and it's important not to blur them:</p>
+  <ul>
+    <li><span class="term">Paralysis</span> — with too many options, people struggle to choose at all, and often <strong>don't choose</strong> — even when not choosing is clearly against their interest.</li>
+    <li><span class="term">Discontent</span> — even when people do manage to choose, having faced many options makes them <strong>less satisfied</strong> with what they picked.</li>
+  </ul>
+
+  <!-- 4.1 PARALYSIS -->
+  <h3><span style="color:var(--accent)">4.1</span> &nbsp;Paralysis</h3>
+  <h4>A · Big choices — retirement savings (the 401(k) study)</h4>
+  <p>A U.S. <strong>401(k)</strong> is a workplace retirement-savings plan: money you put in is tax-advantaged and often partly matched by your employer — meaning that <em>not</em> joining is like refusing free money. It is close to a financial no-brainer.</p>
+  <div class="box study">
+    <span class="label">Study · participation vs. number of funds offered</span>
+    <div class="grid">
+      <div class="row"><div>Participants</div><div>~800,000 employees across 657 organisations.</div></div>
+      <div class="row"><div>Independent variable</div><div>The number of investment fund options offered by the plan (ranged from about 2 to 60).</div></div>
+      <div class="row"><div>Dependent variable</div><div>Whether employees enrolled at all.</div></div>
+    </div>
+    <p style="margin-bottom:0;"><strong>Result:</strong> the <strong>more funds a plan offered, the fewer people joined.</strong> Every additional ~10 funds measurably reduced participation. Faced with an overwhelming menu, many people froze and defaulted to doing nothing — turning down free employer money and tax breaks. More options produced <em>less</em> of the beneficial behaviour.</p>
+  </div>
+  <p>This is paralysis at its most costly: the stakes are enormous (retirement security) and the “safe” default of inaction is actually the worst outcome.</p>
+
+  <h4>B · Small choices — the jam experiment (Iyengar &amp; Lepper, 2000)</h4>
+  <p>The most famous demonstration in this whole literature, precisely because the stakes are tiny — it isolates the effect of choice-quantity alone.</p>
+  <div class="box study">
+    <span class="label">Study · the jam tasting stand</span>
+    <div class="grid">
+      <div class="row"><div>Setting</div><div>A promotional tasting stand in a large upscale supermarket.</div></div>
+      <div class="row"><div>Participants</div><div>Adult shoppers (middle class, 62% women).</div></div>
+      <div class="row"><div>Independent variable</div><div><strong>Extensive choice:</strong> 24 exotic jam flavours &nbsp;vs.&nbsp; <strong>limited choice:</strong> 6 flavours.</div></div>
+      <div class="row"><div>Dependent variables</div><div>How many shoppers stopped to look; how many tasted; how many <em>bought</em>.</div></div>
+    </div>
+    <table class="data" style="margin-top:2mm;">
+      <tr><th>Measure</th><th>Limited choice (6)</th><th>Wide choice (24)</th></tr>
+      <tr><td>Showed interest (stopped)</td><td class="hi">60%<sup>a</sup></td><td>40%<sup>b</sup></td></tr>
+      <tr><td>Number of jams tasted</td><td>1.38<sup>a</sup></td><td>1.50<sup>a</sup></td></tr>
+      <tr><td><strong>Bought a jar</strong></td><td class="hi">30%<sup>a</sup></td><td>3%<sup>b</sup></td></tr>
+    </table>
+    <p class="fn">Values sharing a letter are <em>not</em> significantly different. So interest differed, tasting did not, and buying differed enormously.</p>
+    <p style="margin-bottom:0;"><strong>The striking result:</strong> the big display <em>attracted</em> more attention (24 jams is eye-catching), and people tasted about the same amount in both. But at the checkout the effect reversed completely — shoppers at the 6-jam stand were <strong>about ten times more likely to actually buy</strong> (30% vs. 3%). The large assortment drew people in and then paralysed them; they walked away empty-handed rather than commit.</p>
+  </div>
+  <div class="box apply">
+    <span class="label">Conclusion &amp; management implication</span>
+    <p><strong>Limited choice = more purchases.</strong> Attracting interest and converting it into a decision are two different things, and more options helps the first while sabotaging the second.</p>
+    <p style="margin-bottom:0;"><strong>Business model example — “Bongo box” gift boxes.</strong> A smart way to offer variety without paralysis is to <em>pre-bundle and categorise</em>. Instead of one giant menu, the customer first picks a manageable <em>theme</em> — Staying in nature (14), Culture &amp; entertainment (19), Eating &amp; drinking (24), Wellness (7), City break (17), Active experience (13), Surprise (8), a coupon code (2). Each box still contains many underlying options, but the buyer only ever faces a short, digestible menu at each step. Structure the choice; don't dump it.</p>
+  </div>
+  <div class="qlist">
+    <span class="label">Discussion</span>
+    <ul><li>Where do you see paralysis in practice — streaming catalogues, restaurant menus, dating apps, university course catalogues, insurance and phone tariffs? Which businesses succeed precisely by <em>curating down</em> the options for you?</li></ul>
+  </div>
+
+  <!-- 4.2 DISCONTENT -->
+  <h3><span style="color:var(--accent)">4.2</span> &nbsp;Discontent</h3>
+  <p>Paralysis is about failing to choose. Discontent is the second, subtler cost: even a <em>successful</em> choice tastes worse when it was drawn from a large set.</p>
+  <div class="box study">
+    <span class="label">Study · the chocolate tasting (Iyengar &amp; Lepper, 2000)</span>
+    <div class="grid">
+      <div class="row"><div>Participants</div><div>Students, assigned to three conditions.</div></div>
+      <div class="row"><div>Conditions</div><div><strong>No choice</strong> (n≈67): assigned a chocolate. &nbsp; <strong>Limited choice</strong> (n≈33): pick from 6. &nbsp; <strong>Extensive choice</strong> (n≈34): pick from 30.</div></div>
+      <div class="row"><div>Dependent variables</div><div>How the selection process felt; <em>anticipated</em> satisfaction; <em>actual</em> satisfaction after eating; and whether they took chocolate (rather than cash) as payment.</div></div>
+    </div>
+    <table class="data" style="margin-top:2mm;">
+      <caption>Results — higher = more of that quality</caption>
+      <tr><th>Measure</th><th>Limited (6)</th><th>Extensive (30)</th><th>No choice</th></tr>
+      <tr><td>Time to choose (sec)</td><td>8.91<sup>b</sup></td><td class="hi">24.36<sup>a</sup></td><td>—</td></tr>
+      <tr><td>“I had too many choices”</td><td>3.61<sup>b</sup></td><td class="hi">4.88<sup>a</sup></td><td>—</td></tr>
+      <tr><td>“It was pleasant to choose”</td><td>4.72<sup>b</sup></td><td class="hi">6.02<sup>a</sup></td><td>—</td></tr>
+      <tr><td>“It was hard to choose”</td><td>3.30<sup>b</sup></td><td class="hi">4.45<sup>a</sup></td><td>—</td></tr>
+      <tr><td>“It was frustrating to choose”</td><td>2.24<sup>b</sup></td><td class="hi">3.10<sup>a</sup></td><td>—</td></tr>
+      <tr><td>Anticipated satisfaction</td><td>5.67<sup>a</sup></td><td>5.67<sup>a</sup></td><td>—</td></tr>
+      <tr><td><strong>Actual satisfaction</strong></td><td class="hi">6.28<sup>a</sup></td><td>5.46<sup>b</sup></td><td>4.92<sup>c</sup></td></tr>
+      <tr><td><strong>Chose chocolate as payment</strong></td><td class="hi">48%<sup>a</sup></td><td>12%<sup>b</sup></td><td>10%<sup>b</sup></td></tr>
+    </table>
+    <p class="fn">Values sharing a letter are not significantly different.</p>
+  </div>
+  <div class="box keyidea">
+    <span class="label">How to read this table — it's the heart of §4</span>
+    <p>Look at the tension. The large assortment felt <strong>more enjoyable and exciting</strong> at the moment of choosing (“pleasant” 6.02 vs 4.72) — this is the seductive appeal that draws us in. But it was simultaneously <strong>more overwhelming and frustrating</strong>, took nearly <strong>three times as long</strong> (24s vs 9s), and — the punchline — produced the <strong>lowest actual satisfaction</strong> with the chocolate finally eaten (5.46 vs 6.28).</p>
+    <p style="margin-bottom:0;">Two more crucial details. First, <strong>anticipated satisfaction was identical (5.67)</strong> across conditions — people cannot predict that more choice will let them down, so they keep seeking it. Second, and remarkably, the 6-option choosers ended up <em>more</em> satisfied (6.28) than even the <em>no-choice</em> group (4.92) — so the answer is not “no choice.” It's a <strong>moderate, curated amount</strong> of choice. Choice follows an inverted-U: too little is disappointing, too much is worse, and a modest middle is best.</p>
+  </div>
+  <p>Why does extensive choice breed discontent? Three mechanisms: (1) <strong>higher expectations</strong> — with 30 options, surely one is perfect, so anything less feels like a failure; (2) <strong>opportunity costs</strong> — every rejected option's attractive features nag at you, diluting the appeal of the one you picked; (3) <strong>self-blame</strong> — with so many options, a disappointing outcome must be <em>your</em> fault. These reappear in §4.3–4.4.</p>
+
+  <!-- 4.3 PROCESSES -->
+  <h3><span style="color:var(--accent)">4.3</span> &nbsp;The underlying processes (Schwartz)</h3>
+  <p>In his TED talk, Barry Schwartz names <em>why</em> abundant choice backfires. These are the psychological processes that turn “more options” into “less happiness”:</p>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li><strong>Regret &amp; anticipated regret.</strong> With many alternatives, it's easy to imagine a better outcome you missed — so you regret your choice, and even <em>dread</em> that regret in advance, which makes deciding harder.</li>
+      <li><strong>Opportunity costs.</strong> Every option you reject has attractive features, and those subtract from your satisfaction with the winner. More options = more foregone attractions haunting you.</li>
+      <li><strong>Escalation of expectations.</strong> When options are limitless, you expect perfection. A good outcome no longer produces a pleasant surprise — it merely meets the sky-high bar, so the best you can feel is “not disappointed.”</li>
+      <li><strong>Self-blame.</strong> If you had only two options and were let down, you blame the world. With a hundred options, a poor result is your fault — you should have chosen better. Abundant choice converts external disappointment into internal, well-being-corroding self-criticism.</li>
+    </ul>
+  </div>
+  <p style="margin-bottom:0;">Schwartz's sharpest claim links this to modern unhappiness and even clinical depression: a culture of unlimited choice and sky-high expectations sets people up to feel that any shortfall is a personal failing.</p>
+
+  <!-- 4.4 CONSEQUENCES -->
+  <h3><span style="color:var(--accent)">4.4</span> &nbsp;Consequences</h3>
+
+  <h4>A · Individual level — how <em>you</em> choose matters</h4>
+  <p>The costs of choice don't hit everyone equally; they depend on your decision <em>style</em>. Schwartz's questionnaire probes it — do statements like these sound like you?</p>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li>I channel-surf even when I'm trying to follow one programme; I switch radio stations to check nothing better is on, even when I'm happy with what's playing.</li>
+      <li>Buying a gift for a friend is hard — I worry about getting it exactly right.</li>
+      <li>No matter how satisfied I am with my job, I keep an eye out for better opportunities.</li>
+      <li>Relationships are like clothing: I expect to “try on” a lot before finding the perfect fit.</li>
+      <li>I love ranked lists — best films, best novels, best athletes — and I fantasise about quite different ways of living.</li>
+    </ul>
+  </div>
+
+  <h4>The key distinction: maximizers vs. satisficers</h4>
+  <div class="box keyidea">
+    <p><strong>A <span class="term">maximizer</span></strong> searches every option “down to the bone,” determined to make the single <em>best possible</em> choice. Nothing less than optimal will do.</p>
+    <p style="margin-bottom:0;"><strong>A <span class="term">satisficer</span></strong> (satisfy + suffice) has standards, but as soon as an option is <em>good enough</em> to meet them, takes it and moves on.</p>
+  </div>
+  <p>Counter-intuitively, maximizers often obtain <em>objectively</em> better outcomes (a higher-paying job, a cheaper price) — yet they feel <em>worse</em>. The exhaustive search is exhausting, it maximises exposure to regret and opportunity costs, and it guarantees they'll always wonder whether a better option was still out there. <strong>Which aspect is most problematic?</strong> Research points to one component in particular — the compulsive <em>search for alternatives</em> and inability to stop looking.</p>
+
+  <div class="box study">
+    <span class="label">Study · maximization and well-being at work</span>
+    <div class="grid">
+      <div class="row"><div>Research question</div><div>Is maximizing related to (lower) well-being at work?</div></div>
+      <div class="row"><div>Participants</div><div>Heterogeneous sample of 370 employees; questionnaire study.</div></div>
+      <div class="row"><div>Independent variable</div><div>Maximization (and its sub-components).</div></div>
+      <div class="row"><div>Dependent variables</div><div>Life satisfaction, burnout, enthusiasm/commitment.</div></div>
+    </div>
+    <table class="data" style="margin-top:2mm;">
+      <caption>Correlations (* p&lt;.05, ** p&lt;.01, *** p&lt;.001)</caption>
+      <tr><th>Outcome</th><th>Maximization (total)</th><th>Alternative search</th><th>Decision difficulty</th><th>High standards</th></tr>
+      <tr><td>Life satisfaction</td><td>−.19***</td><td class="hi">−.26***</td><td>.08</td><td>.00</td></tr>
+      <tr><td>Enthusiasm</td><td>−.14*</td><td class="hi">−.20***</td><td>−.15**</td><td>.15***</td></tr>
+      <tr><td>Burnout</td><td>.19***</td><td class="hi">.25***</td><td>.10</td><td>.00</td></tr>
+    </table>
+    <p style="margin-bottom:0;"><strong>Conclusion:</strong> maximizing correlates with <em>lower</em> life satisfaction and enthusiasm and <em>higher</em> burnout. Decompose it and the damage comes overwhelmingly from the <strong>constant search for alternatives</strong> (the strongest correlations in every row), not from having high standards. In fact <em>high standards on their own</em> are harmless or even mildly positive (enthusiasm +.15***). The problem isn't wanting good things — it's the endless, restless searching that never lets you settle.</p>
+  </div>
+
+  <h4>Process 1 · Regret</h4>
+  <p>Maximizers carry more <strong>regret</strong> over decisions already made, precisely because they can always picture the road not taken. Regret is the emotional tax on refusing to let a choice be final.</p>
+
+  <h4>Process 2 · Social comparison</h4>
+  <p>Much of our (dis)satisfaction comes not from the choice itself but from comparing our outcome to other people's — the relativity of §3.1 applied to our whole lives.</p>
+  <table class="data">
+    <caption>Two directions of comparison</caption>
+    <tr><th>Upward comparison</th><th>Downward comparison</th></tr>
+    <tr><td>Comparing yourself to people who are <strong>better off</strong> than you.</td><td>Comparing yourself to people who are <strong>worse off</strong> than you.</td></tr>
+    <tr><td>Produces a sense of <em>“relative deprivation.”</em></td><td>Produces a sense that <em>you have it relatively good.</em></td></tr>
+    <tr><td class="hi">Negative feelings.</td><td class="hi">Positive feelings.</td></tr>
+  </table>
+  <div class="box study">
+    <span class="label">Study · maximization × direction of comparison</span>
+    <div class="grid">
+      <div class="row"><div>Research question</div><div>How does maximizing interact with upward vs. downward comparison?</div></div>
+      <div class="row"><div>Participants / task</div><div>Students doing a puzzle task, then exposed to a peer who did either <strong>better</strong> (Condition 1) or <strong>worse</strong> (Condition 2).</div></div>
+      <div class="row"><div>Independent variables</div><div>Maximization; direction of comparison.</div></div>
+      <div class="row"><div>Dependent variables</div><div>Self-rated performance; negative feelings.</div></div>
+    </div>
+    <p style="margin-bottom:0;"><strong>What we learn:</strong> maximizers are <em>far more reactive</em> to social comparison. An upward comparison sinks their self-rated performance and spikes negative feelings much more sharply than it does for satisficers; and even a downward comparison gives them less of a lift. Because maximizers are permanently scanning for the best, they are permanently exposed to someone, somewhere, who did better — a recipe for chronic dissatisfaction.</p>
+  </div>
+
+  <h4>B · The organizational field — but note the opposite failure mode</h4>
+  <p>Everything above warns against <em>over</em>-deliberating. In organisations there is a mirror-image danger: <strong>decision-deficiency syndrome</strong> (Michael Hyatt) — managers who delay decisions indefinitely or never decide at all.</p>
+  <div class="box plain">
+    <p>Not deciding is itself a choice — usually a bad one. Refuse to decide and you become “the plaything of circumstances,” drifting into a negative spiral. Making a decision, by contrast, <em>releases energy</em>: it creates momentum, direction and new challenges.</p>
+    <p style="margin-bottom:0;">The reassuring part, echoing Dave Ramsey's <em>“I make a decision; and if it's wrong, I make another,”</em> is that most decisions are <strong>reversible</strong>. You always keep the freedom to review or adjust a wrong choice. Employees respect a manager who decides and occasionally errs — then owns it and re-chooses — far more than an eternal doubter. <em>“What</em> you decide often matters less than <em>that</em> you decide.”</p>
+  </div>
+  <div class="box apply">
+    <span class="label">Reconciling the two halves of Part 4</span>
+    <p style="margin-bottom:0;">There is no contradiction. <strong>Satisficing is not indecision.</strong> The satisficer <em>decides promptly</em> once “good enough” is met — the healthy middle. Both the maximizer (who can't stop searching) and the decision-deficient manager (who can't start choosing) are stuck at the extremes of the same inverted-U. The goal is to <strong>set clear standards, choose the first option that meets them, then commit and stop looking.</strong></p>
+  </div>
+
+  <h4>Society</h4>
+  <div class="qlist">
+    <span class="label">Discussion — the societal level</span>
+    <ul>
+      <li>What consequences for <em>society</em> flow from a culture of unlimited choice and maximization — rising expectations, declining satisfaction despite rising affluence, decision fatigue, the outsourcing of curation to algorithms and brands, and the political and psychological costs of treating every citizen as a maximizing consumer?</li>
+      <li>Do you agree with Schwartz that we've passed the point where extra choice helps? Where would <em>you</em> draw the line — and who should draw it?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5. EXERCISES ============ -->
+<section>
+  <div class="section-band">
+    <div class="eyebrow">Part Five</div>
+    <h2><span class="num">5.</span>Exercises</h2>
+  </div>
+
+  <div class="box study">
+    <span class="label">Applied exercise · the BBQ packages</span>
+    <p>You're organising a BBQ for 4 people. Which package will the <em>average customer</em> most likely choose — and which will be <em>most satisfying</em> for the guests?</p>
+    <table class="data">
+      <tr><th>Package</th><th>Contents</th><th>Price</th></tr>
+      <tr><td class="hi">A</td><td>4 ribs, 4 steaks, 4 chicken breasts, 4 chipolatas <em>(16 items, 4 kinds — exactly enough)</em></td><td>€40</td></tr>
+      <tr><td class="hi">B</td><td>2 each of ribs, steaks, chicken breasts, chipolatas, scampi, marinated steaks, farmer's sausages, chicken legs <em>(16 items, 8 kinds — much more variety)</em></td><td>€60</td></tr>
+      <tr><td class="hi">C</td><td>Same 8-kind variety as B, plus mayonnaise <em>(a near-identical “decoy” for B)</em></td><td>€70</td></tr>
+    </table>
+    <p><strong>How to think it through with this chapter:</strong></p>
+    <ul>
+      <li><strong>What the average customer chooses:</strong> variety is seductive (§4.2 — the wide assortment <em>felt</em> more pleasant), so B and C tempt strongly. C is a classic <strong>decoy</strong> (§3.1): it's clearly worse value than B (basically B + mayo for €10 more), and its job is to make <strong>B look like the smart buy</strong>. So the relativity/decoy machinery pushes the average customer toward <strong>Package B</strong> — the many-options, higher-priced middle.</li>
+      <li><strong>What actually satisfies the guests:</strong> for 4 people, <strong>Package A</strong> gives everyone a full, generous portion of proven crowd-pleasers at the lowest price. B and C spread the same 16 pieces across 8 kinds — only 2 of each — so guests face the paradox of choice at the grill, more items run out or get picked over, and you paid €20–30 more for the privilege. The variety that <em>looks</em> more attractive in the shop delivers <em>less</em> satisfaction at the table.</li>
+      <li><strong>The lesson:</strong> the package that maximises perceived value at the point of sale (B, propped up by decoy C) is <em>not</em> the one that maximises actual enjoyment (A). This is the whole chapter in one barbecue: <strong>the appeal of abundance at the moment of choosing diverges from the satisfaction it delivers.</strong></li>
+    </ul>
+  </div>
+
+  <div class="box keyidea">
+    <span class="label">Chapter takeaways — the five things to remember</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>The rational ideal (Homo economicus)</strong> assumes full information, perfect logic and stable preferences — and concludes more choice is always good.</li>
+      <li><strong>Behavioral economics</strong> shows we break that model <em>systematically and predictably</em>: relativity, anchoring, hot/cold emotions, and refusing to close options.</li>
+      <li><strong>The paradox of choice</strong> shows abundance itself backfires — <em>paralysis</em> (we don't choose) and <em>discontent</em> (we like our choice less).</li>
+      <li><strong>Choice is an inverted-U:</strong> some beats none, but a curated middle beats overwhelming abundance. Maximizing correlates with lower well-being; the damage is in the endless <em>search</em>, not in high standards.</li>
+      <li><strong>The practical fix</strong> works at both levels: as a chooser, <em>satisfice</em> — set standards, take the first good-enough option, commit, stop looking. As a designer/manager, <em>curate and structure</em> options, and <em>decide</em> rather than drift.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section>
+  <div class="section-band">
+    <div class="eyebrow">Appendix</div>
+    <h2>Further reading &amp; sources</h2>
+  </div>
+  <p>This chapter is built on two accessible popular-science books, either of which makes excellent background reading:</p>
+  <ul>
+    <li><strong>Barry Schwartz — <em>The Paradox of Choice: Why More Is Less.</em></strong> The source for all of Part 4. See also his TED talk, “The Paradox of Choice.”</li>
+    <li><strong>Dan Ariely — <em>Predictably Irrational: The Hidden Forces That Shape Our Decisions.</em></strong> The source for all of Part 3. See also his TED talk, “Are we in control of our own decisions?”</li>
+  </ul>
+  <p><strong>Key empirical studies referenced:</strong></p>
+  <ul>
+    <li>Ariely, Loewenstein &amp; Prelec (2003) — anchoring &amp; “arbitrary coherence” (the ID-number bids).</li>
+    <li>Ariely &amp; Loewenstein (2006) — arousal and the hot/cold empathy gap.</li>
+    <li>Shin &amp; Ariely (2004) — the “doors” game and keeping options open.</li>
+    <li>Iyengar &amp; Lepper (2000) — the jam study and the chocolate study (paralysis &amp; discontent).</li>
+    <li>Clark, Frijters &amp; Shields (2008) — income, comparison and happiness.</li>
+    <li>Solnick &amp; Hemenway (2005) — positional (relative) vs. absolute goods.</li>
+  </ul>
+  <p class="fn" style="margin-top:6mm;">Study guide prepared as an expanded companion to the Chapter 1 lecture slides (“Choice”). The narrative fills in the explanations, worked examples and reasoning normally delivered in class, so the material can be studied independently.</p>
+</section>
+
+</body>
+</html>
