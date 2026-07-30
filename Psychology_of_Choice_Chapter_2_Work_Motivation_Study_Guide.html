@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Work Motivation — Self-Determination Theory · Study Guide</title>
+<style>
+  @page {
+    size: A4;
+    margin: 22mm 20mm 20mm 20mm;
+    @bottom-center { content: counter(page); font-family:"Liberation Sans",sans-serif; font-size:9pt; color:#7d8a86; }
+    @bottom-right { content: "Work Motivation · Chapter 2"; font-family:"Liberation Sans",sans-serif; font-size:8pt; color:#a9b4b0; }
+  }
+  @page :first { margin:0; @bottom-center{content:none;} @bottom-right{content:none;} }
+
+  :root{
+    --forest:#12433a;    /* deep teal-green primary */
+    --pine:#1c5c4f;
+    --emerald:#2e7d68;
+    --sage:#6aa08d;
+    --accent:#e0863b;    /* warm amber accent */
+    --accent-soft:#f6e7d2;
+    --ink:#1e2622;
+    --muted:#5f6b66;
+    --line:#dde7e2;
+    --tint:#f2f7f4;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:11pt;}
+  body{font-family:"Liberation Serif",Georgia,serif;color:var(--ink);line-height:1.5;margin:0;}
+
+  /* COVER */
+  .cover{height:297mm;padding:38mm 26mm 26mm 26mm;background:linear-gradient(150deg,#0d332c 0%,#12433a 45%,#1c5c4f 100%);color:#eef6f2;page-break-after:always;position:relative;}
+  .cover .kicker{font-family:"Liberation Sans",sans-serif;letter-spacing:.3em;text-transform:uppercase;font-size:11pt;color:var(--accent);font-weight:700;}
+  .cover h1{font-family:"Liberation Sans",sans-serif;font-size:43pt;line-height:1.06;margin:13mm 0 4mm 0;font-weight:700;}
+  .cover h1 .small{display:block;font-size:20pt;color:#bfd8cf;margin-top:5mm;font-weight:700;}
+  .cover .sub{font-size:14.5pt;color:#cfe2da;max-width:122mm;line-height:1.45;margin-top:6mm;}
+  .cover .thinkers{margin-top:9mm;font-size:12.5pt;color:#dcebe4;}
+  .cover .thinkers span{color:var(--accent);font-weight:700;font-family:"Liberation Sans",sans-serif;}
+  .cover .chapline{font-family:"Liberation Sans",sans-serif;font-size:11.5pt;color:#e9f2ed;margin-top:15mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.22);}
+  .cover .chapline b{color:var(--accent);}
+  .cover .footer-note{position:absolute;bottom:22mm;left:26mm;right:26mm;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;color:#a7bbb2;line-height:1.5;}
+
+  /* HEADINGS */
+  h2{font-family:"Liberation Sans",sans-serif;font-size:21pt;color:var(--forest);margin:0 0 2mm 0;padding-top:3mm;font-weight:700;page-break-after:avoid;}
+  h2 .num{color:var(--accent);margin-right:6pt;}
+  h3{font-family:"Liberation Sans",sans-serif;font-size:14pt;color:var(--pine);margin:7mm 0 2mm 0;font-weight:700;page-break-after:avoid;}
+  h4{font-family:"Liberation Sans",sans-serif;font-size:11.5pt;color:var(--emerald);margin:5mm 0 1.5mm 0;font-weight:700;page-break-after:avoid;}
+  .section-band{page-break-before:always;border-bottom:2px solid var(--accent);margin-bottom:4mm;padding-bottom:2mm;}
+  .section-band .eyebrow{font-family:"Liberation Sans",sans-serif;font-size:9.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+  p{margin:0 0 2.6mm 0;}
+  a{color:var(--pine);text-decoration:none;}
+  strong{color:var(--forest);}
+  em{color:var(--pine);}
+  ul,ol{margin:0 0 3mm 0;padding-left:6mm;}
+  li{margin-bottom:1.3mm;}
+
+  /* BOXES */
+  .box{border-radius:4px;padding:4mm 5mm;margin:3.5mm 0;page-break-inside:avoid;}
+  .plain{background:var(--tint);border:1px solid var(--line);}
+  .keyidea{background:#e6f0eb;border:1px solid #cfe0d8;}
+  .study{background:#fbfdfc;border:1px solid var(--line);}
+  .apply{background:var(--accent-soft);border:1px solid #ecd2ab;}
+  .warn{background:#fbeee6;border:1px solid #f0d2ba;}
+  .quote{background:#123a33;color:#eaf4ef;border-radius:4px;padding:5mm 6mm;margin:4mm 0;font-size:12.5pt;font-style:italic;page-break-inside:avoid;}
+  .quote .src{display:block;margin-top:2.5mm;font-style:normal;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;color:#a9cabe;letter-spacing:.04em;}
+  .box .label{display:inline-block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2mm;}
+  .plain .label{color:var(--emerald);}
+  .keyidea .label{color:var(--pine);}
+  .study .label{color:var(--accent);}
+  .apply .label{color:#9a6417;}
+  .warn .label{color:#b4622a;}
+  .box p:last-child{margin-bottom:0;}
+  .study .grid{display:table;width:100%;margin:1mm 0 2mm;}
+  .study .row{display:table-row;}
+  .study .row>div{display:table-cell;padding:1mm 3mm 1mm 0;vertical-align:top;}
+  .study .row>div:first-child{width:34mm;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;color:var(--emerald);text-transform:uppercase;letter-spacing:.05em;}
+
+  /* TABLE */
+  table.data{border-collapse:collapse;width:100%;margin:3mm 0;font-size:10pt;page-break-inside:avoid;}
+  table.data caption{caption-side:top;text-align:left;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;color:var(--muted);margin-bottom:1.5mm;letter-spacing:.04em;}
+  table.data th{background:var(--forest);color:#fff;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;padding:2mm 3mm;text-align:left;font-weight:700;}
+  table.data td{padding:1.8mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.data tr:nth-child(even) td{background:var(--tint);}
+  table.data td.hi{font-weight:700;color:var(--forest);}
+  .fn{font-size:8.5pt;color:var(--muted);font-family:"Liberation Sans",sans-serif;margin-top:1mm;}
+
+  /* TOC */
+  .toc{page-break-after:always;}
+  .toc h2{border:none;}
+  .toc ol{list-style:none;padding-left:0;}
+  .toc>ol>li{font-family:"Liberation Sans",sans-serif;font-weight:700;color:var(--forest);font-size:12pt;margin-top:4mm;border-bottom:1px solid var(--line);padding-bottom:1.5mm;}
+  .toc>ol>li>span.n{color:var(--accent);margin-right:4pt;}
+  .toc ul{list-style:none;padding-left:8mm;margin:1.5mm 0 0;}
+  .toc ul li{font-family:"Liberation Serif",serif;font-weight:400;color:var(--ink);font-size:10.5pt;margin:.8mm 0;}
+
+  .lead{font-size:11.5pt;color:#2b342f;}
+  .divider{border:none;border-top:1px solid var(--line);margin:6mm 0;}
+  .qlist{background:#fbfdfc;border-left:3px solid var(--accent);padding:3mm 5mm;margin:3mm 0;}
+  .qlist .label{display:block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9a6417;margin-bottom:1.5mm;}
+  .qlist ul{padding-left:5mm;margin:0;}
+  .term{font-family:"Liberation Sans",sans-serif;font-weight:700;color:var(--pine);}
+
+  /* CONTINUUM diagram */
+  .continuum{margin:4mm 0;page-break-inside:avoid;}
+  .cont-row{display:table;width:100%;table-layout:fixed;border-collapse:separate;border-spacing:2mm 0;}
+  .cont-cell{display:table-cell;width:20%;background:#fff;border:1px solid var(--line);border-top:3px solid var(--sage);border-radius:3px;padding:2.5mm 2mm;text-align:center;vertical-align:top;}
+  .cont-cell .t{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:9.5pt;color:var(--forest);display:block;margin-bottom:1mm;}
+  .cont-cell .d{font-size:8.5pt;color:var(--muted);line-height:1.35;}
+  .cont-cell.amot{border-top-color:#b0453a;}
+  .cont-cell.ctrl{border-top-color:#c77b3a;}
+  .cont-cell.auto{border-top-color:var(--emerald);}
+  .cont-brackets{display:table;width:100%;table-layout:fixed;border-spacing:2mm 0;margin-top:1.5mm;}
+  .cont-brackets > div{display:table-cell;text-align:center;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.05em;padding:1.5mm 1mm;border-radius:3px;color:#fff;}
+  .bk-none{width:20%;background:#b0453a;}
+  .bk-ctrl{width:40%;background:#c77b3a;}
+  .bk-auto{width:40%;background:var(--emerald);}
+  .arrow-note{text-align:center;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;color:var(--muted);margin-top:2mm;}
+
+  /* ABC triad */
+  .triad{display:table;width:100%;table-layout:fixed;border-spacing:3mm 0;margin:4mm 0;page-break-inside:avoid;}
+  .triad .card{display:table-cell;width:33%;background:#fff;border:1px solid var(--line);border-radius:4px;padding:3mm 3.5mm;vertical-align:top;}
+  .triad .card .h{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:12pt;margin-bottom:1.5mm;}
+  .triad .card.a .h{color:var(--emerald);}
+  .triad .card.b .h{color:var(--pine);}
+  .triad .card.c .h{color:var(--accent);}
+  .triad .card .letter{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:20pt;line-height:1;float:right;opacity:.25;}
+  .triad .card ul{padding-left:4.5mm;margin:1mm 0 0;font-size:9.5pt;line-height:1.4;}
+  .triad .card li{margin-bottom:.8mm;}
+
+  /* 2x2 grid */
+  .quad{margin:4mm 0;page-break-inside:avoid;}
+  .quad table{border-collapse:collapse;width:100%;table-layout:fixed;}
+  .quad td{border:1px solid var(--line);padding:3mm;vertical-align:top;}
+  .quad td .qt{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:10.5pt;margin-bottom:1mm;display:block;}
+  .quad td .qd{font-size:9pt;color:#37423d;line-height:1.4;}
+  .quad .axis-top td{border:none;text-align:center;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:1mm;}
+  .quad .rowlabel{width:15mm;border:none;font-family:"Liberation Sans",sans-serif;font-size:7.5pt;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;text-align:center;vertical-align:middle;padding:0 1.5mm;line-height:1.2;}
+  .cell-good{background:#e6f0eb;}
+  .cell-mid{background:#f6efe3;}
+  .cell-bad{background:#f7ece6;}
+  .cell-flat{background:var(--tint);}
+  .quad .qt.g{color:var(--emerald);} .quad .qt.m{color:#b4622a;} .quad .qt.bd{color:#b0453a;} .quad .qt.fl{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<section class="cover">
+  <div class="kicker">Course Study Guide</div>
+  <h1>Work Motivation<span class="small">Self-Determination Theory (SDT)</span></h1>
+  <div class="sub">Why people do what they do at work — and how to create the conditions in which they motivate themselves. The difference between “I have to” and “I want to,” and the ABC of needs that powers high-quality motivation.</div>
+  <div class="thinkers">Built on the work of <span>Edward Deci</span> &amp; <span>Richard Ryan</span>, with Van den Broeck, Van Coillie, Forest &amp; Müller</div>
+  <div class="chapline"><b>Chapter 2</b> &nbsp;|&nbsp; Why SDT · Theory X/Y · Types of Motivation · The ABC of Needs · Motivating Leadership</div>
+  <div class="footer-note">A structured companion to the Chapter 2 material. It keeps the full content of the source but reorganises it for study — adding the core SDT diagrams (the motivation continuum, the ABC triad, the motivation-profile grid), consequence tables, worked examples, a glossary and self-test questions.</div>
+</section>
+
+<!-- ===== TOC ===== -->
+<section class="toc">
+  <h2>What this chapter covers</h2>
+  <p class="lead" style="margin-bottom:5mm;">Chapter 1 asked whether we <em>choose</em> well. Chapter 2 asks a different question: once someone is <em>in</em> a role, what actually makes them act — and how do you get high-quality, lasting motivation rather than the fragile kind? Self-Determination Theory (SDT) is the most thoroughly tested modern answer.</p>
+  <ol>
+    <li><span class="n">0.</span> Why motivate according to SDT?
+      <ul><li>Without motivation there is no behaviour · Why SDT · Four myths it dismantles</li></ul>
+    </li>
+    <li><span class="n">1.</span> The metatheory: Theory X vs. Theory Y
+      <ul><li>Two views of people · Why your assumptions become self-fulfilling · “You get what you think”</li></ul>
+    </li>
+    <li><span class="n">2.</span> Types of motivation: “I have to” vs. “I want to”
+      <ul><li>Amotivation · Intrinsic &amp; extrinsic · The crowding-out experiment · The motivation continuum</li>
+        <li>Controlled vs. autonomous · Consequences (meta-analysis) · Motivation profiles · Job vs. task</li></ul>
+    </li>
+    <li><span class="n">3.</span> The ABC of motivation: the three basic needs
+      <ul><li>Autonomy · Belongingness · Competence · Autonomy ≠ independence · 7 characteristics · Consequences</li></ul>
+    </li>
+    <li><span class="n">4.</span> Putting it to work: motivating leadership
+      <ul><li>Four leadership styles · ABC-supportive vs. controlling leadership · Structure · Trust &amp; psychological safety · The ABC language · Change &amp; remote work</li></ul>
+    </li>
+    <li><span class="n">5.</span> Glossary &amp; self-test</li>
+  </ol>
+  <div class="box keyidea" style="margin-top:7mm;">
+    <span class="label">The one-sentence version</span>
+    <p style="margin-bottom:0;">People are motivated in different <em>ways</em>, and the way matters more than the amount: <strong>autonomous</strong> motivation (“I want to” — because it's enjoyable or meaningful) drives well-being and performance, while <strong>controlled</strong> motivation (“I have to” — outer or inner pressure) does not. You produce autonomous motivation by satisfying three basic needs — <strong>A</strong>utonomy, <strong>B</strong>elongingness, <strong>C</strong>ompetence.</p>
+  </div>
+</section>
+
+<!-- ===== 0. WHY SDT ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Orientation</div><h2><span class="num">0.</span>Why motivate according to SDT?</h2></div>
+
+  <h3>Without motivation, there is no behaviour</h3>
+  <p>The word <em>motivation</em> comes from the Latin <em>movere</em> — “to move.” Motivation is the <strong>energy</strong> that (1) makes you choose one task over another, (2) sets you in motion, and (3) makes you persevere when things get hard. Without it there is no movement: it is the basis of everything we do. It's what gets the marketing campaign finished, keeps the author writing when it's difficult — or, when misdirected, has you doodling on your phone instead of following the meeting. Something is always driving your behaviour. The practical question is not <em>whether</em> people are motivated, but <strong>how</strong>.</p>
+
+  <h3>Why base a whole book on SDT?</h3>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li><strong>It is one of the most influential, best-tested motivation theories.</strong> Founded by Edward Deci in the 1970s (experiments on how rewards affect intrinsic motivation) and developed with Richard Ryan into a broad theory backed by thousands of studies.</li>
+      <li><strong>It is universal.</strong> The same principles work at work, at home, in the gym and the classroom — across cultures, East and West.</li>
+      <li><strong>It is broad and practical.</strong> It explains <em>why</em> we act, <em>for whom</em> it works, and <em>how</em> to strengthen high-quality motivation — and it pays: research suggests every €1 invested in SDT-based motivation returns more than €3 within 12 months (less burnout, more productivity, innovation, involvement, lower absence).</li>
+    </ul>
+  </div>
+  <div class="quote">“SDT is one of the most influential theories of motivation in the 21st century and represents our current understanding of how to facilitate and sustain high quality motivation.”<span class="src">— Edward Deci &amp; Richard Ryan</span></div>
+
+  <h3>Four myths SDT dismantles</h3>
+  <table class="data">
+    <tr><th style="width:32%">The myth</th><th>What SDT says instead</th></tr>
+    <tr><td class="hi">A · “Some people just can't be motivated.”</td><td>Everyone is motivated — even your most difficult colleague. You can't force quality motivation with money, control or threats, but you <em>can</em> create the right environment in which people motivate themselves (so you don't have to police them).</td></tr>
+    <tr><td class="hi">B · “Intrinsic motivation is the only good kind.”</td><td>Not so. Much of work isn't fun, yet people can be excellently motivated for dull tasks <em>if those tasks are made meaningful</em>. Meaning can be as powerful as enjoyment.</td></tr>
+    <tr><td class="hi">C · “The more motivation, the better.”</td><td>No — <em>type</em> beats amount. Acting out of fear or guilt is motivation too, but low-quality. More pressure-based motivation is not better.</td></tr>
+    <tr><td class="hi">D · “Motivating people is hard and complex.”</td><td>SDT gives a simple working handle: people are optimally motivated when they experience <strong>A</strong>utonomy, <strong>B</strong>elongingness and <strong>C</strong>ompetence.</td></tr>
+  </table>
+  <div class="quote">“Instead of asking ‘how can I motivate people’, we should be asking ‘how can I create the conditions within which people will motivate themselves’.”<span class="src">— Edward Deci</span></div>
+</section>
+
+<!-- ===== 1. THEORY X / Y ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Part One · The Principles of SDT</div><h2><span class="num">1.</span>The metatheory: what you think is what you get</h2></div>
+  <p class="lead">Before any technique, SDT asks about your underlying <em>view of people</em>. McGregor (1960) framed the two poles as Theory X and Theory Y. Which one you hold quietly shapes how you manage — and, through that, how motivated your people actually become.</p>
+
+  <table class="data">
+    <caption>Two views of people (McGregor, 1960)</caption>
+    <tr><th style="width:50%">Theory X — pessimistic</th><th>Theory Y — optimistic</th></tr>
+    <tr><td>People are passive, lazy, not naturally motivated for work; they'd rather languish.</td><td>People are active, growth-oriented, curious; they want to develop and learn.</td></tr>
+    <tr><td>They need pressure and control; they can't really be trusted (they'll slack off given the chance).</td><td>They are proactive and shape their environment; they can be trusted and given space.</td></tr>
+    <tr><td>They come to work only for the paycheck. Motivate with rewards and threats — the carrot and the stick.</td><td>They care about the organisation and chose it. Collaboration is built on trust; mistakes are growth opportunities.</td></tr>
+    <tr><td class="hi">Echoed by Agency Theory (agents can't be trusted with principals' interests).</td><td class="hi">The starting point of SDT.</td></tr>
+  </table>
+
+  <h3>Why the choice is self-fulfilling</h3>
+  <p>Science can't prove which view is “true” — but it shows the two produce <strong>different realities</strong>. Believe people are lazy, and you'll give orders, monitor closely, and reward/punish; people then wait passively for instructions, because taking initiative in a direction you didn't sanction only risks punishment. Believe people are active, and you'll give space, treat mistakes as learning, and invite ideas; people then bring initiative and often achieve great things. In each case the belief creates the behaviour that confirms it. <strong>What you think is what you get.</strong></p>
+  <div class="quote">“If I kick my dog, he will move. And when I want him to move again, what must I do? I must kick him again. But it is only when he has his own generator that we can talk about motivation. He then needs no outside stimulation. He wants to do it.”<span class="src">— Frederick Herzberg</span></div>
+  <div class="box keyidea">
+    <span class="label">SDT starts from Theory Y</span>
+    <p>People are inherently active and growth-oriented (yes, we all enjoy a lazy Sunday — but the tendency to grow is there and can be tapped). Firms like <strong>Zappos</strong> (personalised workspaces, hiring “fun and a little weird” people), <strong>Netflix</strong> (unlimited vacation tied to meeting goals) and <strong>Google</strong> (“20% time”) lean on Theory Y to unlock initiative. Theory-X details creep in everywhere too — a time-clock that fires a punctual, productive worker for carpool lateness signals distrust louder than any mission statement.</p>
+  </div>
+</section>
+
+<!-- ===== 2. TYPES OF MOTIVATION ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Part One · The Principles of SDT</div><h2><span class="num">2.</span>Types of motivation: “I have to” vs. “I want to”</h2></div>
+  <p class="lead">SDT's signature insight: people can be motivated for the very same job for entirely different <em>reasons</em>, and those reasons lead to different consequences. The reasons form a continuum from no motivation, through pressured motivation, to willing motivation.</p>
+
+  <h3>First split: motivated or not?</h3>
+  <p>The baseline distinction is between <span class="term">amotivation</span> and being motivated. Amotivated employees feel helpless — they sense that acting is futile because the outcome won't come anyway. They show up, but float through the day counting hours. SDT's reassuring finding is that <em>most</em> employees are motivated in some way; the work is in improving the <em>quality</em> of that motivation.</p>
+
+  <h3>Second split: intrinsic vs. extrinsic — and why rewards can backfire</h3>
+  <p><strong>Intrinsic motivation</strong> = doing the work for its own sake, because it's fun or interesting (you'd keep doing it after winning the lottery). <strong>Extrinsic motivation</strong> = doing it for something in return (pay, a company car, a pat on the back). Classical theory says: to get more effort, add rewards. SDT's founding experiment showed that this can <em>destroy</em> the motivation you started with.</p>
+  <div class="box study">
+    <span class="label">Founding experiment · the puzzle study (Deci, 1971)</span>
+    <div class="grid">
+      <div class="row"><div>Task</div><div>Students solved intrinsically interesting puzzles across three lab sessions. Midway through each, the experimenter left; “free time” could be spent on the puzzles or on magazines. <em>Time spent on puzzles during the free break = the measure of intrinsic motivation.</em></div></div>
+      <div class="row"><div>Control group</div><div>Never paid, all three sessions.</div></div>
+      <div class="row"><div>Experimental group</div><div>Session 1: unpaid. Session 2: paid $1 per puzzle. Session 3: told the money ran out — unpaid again.</div></div>
+    </div>
+    <p><strong>Result:</strong> in session 2 the paid group worked harder (intrinsic + extrinsic motivation stacked). But in session 3 — reward gone — they spent <strong>markedly less</strong> free time on the puzzles than in session 1, and less than the never-paid control group. Introducing and then removing a reward left them <em>less</em> intrinsically motivated than if they'd never been paid at all.</p>
+    <p style="margin-bottom:0;"><strong>This is the <span class="term">crowding-out effect</span>:</strong> an external reward can undermine intrinsic motivation. Replicated many times, with money and with praise. You may have felt it — loving reading until school made you write book reports; losing creative joy once clients started judging your hobby-turned-job.</p>
+  </div>
+  <p>This poses a real problem: we <em>all</em> get paid. Does a salary erase intrinsic motivation? Not necessarily — because, SDT discovered, <strong>not all extrinsic motivation is the same</strong>.</p>
+
+  <h3>The full picture: four types of motivation on a continuum</h3>
+  <p>SDT breaks extrinsic motivation into three kinds and places all four motivations on a single quality continuum:</p>
+
+  <div class="continuum">
+    <div class="cont-row">
+      <div class="cont-cell amot"><span class="t">Amotivation</span><span class="d">No motivation. “Why bother — it's futile.” Helplessness, going through the motions.</span></div>
+      <div class="cont-cell ctrl"><span class="t">External coercion</span><span class="d">Pressure from <em>others</em>. Working to get a reward / avoid punishment or criticism. Behaviour depends entirely on others.</span></div>
+      <div class="cont-cell ctrl"><span class="t">Introjection</span><span class="d">Pressure from <em>within</em>. Self-worth on the line — acting to avoid guilt, shame, anxiety, or to prove yourself (“hubristic pride”).</span></div>
+      <div class="cont-cell auto"><span class="t">Identification</span><span class="d">Meaningfulness. You do it because you find it <em>valuable / important</em>, even if it isn't fun. The core of SDT.</span></div>
+      <div class="cont-cell auto"><span class="t">Intrinsic</span><span class="d">Interest &amp; enjoyment. The activity is its own reward — play, exploration, challenge-seeking.</span></div>
+    </div>
+    <div class="cont-brackets">
+      <div class="bk-none">NOT MOTIVATED</div>
+      <div class="bk-ctrl">CONTROLLED — “I have to”</div>
+      <div class="bk-auto">AUTONOMOUS — “I want to”</div>
+    </div>
+    <div class="arrow-note">◀ pressure, dependence on others &nbsp;&nbsp;|&nbsp;&nbsp; the goal: shift people rightward — motivation coming from within ▶</div>
+  </div>
+
+  <h4>The three extrinsic types, in detail</h4>
+  <ul>
+    <li><strong>A · External coercion</strong> — you let your behaviour depend on others' judgement: to get job security, a bonus, a promotion, more praise or less criticism. Highly controlling. <em>“Coercion can only end in chaos.” — Gandhi.</em></li>
+    <li><strong>B · Introjection (internal coercion)</strong> — the “must” has been swallowed and now comes from inside. Self-esteem, ego and status ride on performance; you act to avoid feeling guilty, ashamed or “like a failure.” Even acting to “be proud of yourself” or to boast about a title counts — this is <em>hubristic</em> pride (self-worth at stake), the opposite of <em>authentic</em> pride (proud of a job well done, able to shrug off failure with “I'll do better next time”).</li>
+    <li><strong>C · Identification (meaningfulness)</strong> — you're committed because the work is valuable and important to you. Construction workers “building a home for their customers”; nurses for whom caring is part of who they are. It's still extrinsic — finding something <em>important</em> isn't the same as <em>enjoying</em> it — but it carries you through the unpleasant parts <em>because</em> you see their value.</li>
+  </ul>
+  <p>Plus the fourth, non-extrinsic type — <strong>intrinsic motivation</strong>, where the reward is the activity itself.</p>
+  <div class="box keyidea">
+    <span class="label">The key reframe — controlled vs. autonomous</span>
+    <p>The old dividing line (extrinsic vs. intrinsic) is <em>not</em> the important one. The important line runs <strong>through</strong> the extrinsic types:</p>
+    <ul style="margin-bottom:0;">
+      <li><strong>Controlled motivation (“I have to”)</strong> = external coercion + introjection. You feel pressured, by others or by yourself.</li>
+      <li><strong>Autonomous motivation (“I want to”)</strong> = identification + intrinsic. You stand behind what you do; the drive comes from within. <em>You can be extrinsically <strong>and</strong> autonomously motivated</em> — that's the crucial move: meaningfulness is “just as good as” intrinsic motivation.</li>
+    </ul>
+  </div>
+  <div class="box plain">
+    <span class="label">Meaningfulness ≠ intrinsic — but both are autonomous</span>
+    <p style="margin-bottom:0;">Clearing your desk or backing up your laptop isn't <em>fun</em> (not intrinsic), but you do it willingly because it <em>matters</em> (identified). Intrinsic focuses on pleasure/interest; identification focuses on value/meaning. Both feel like “I want to.” This is liberating for managers: your job is not to make work an amusement park — it's to make the unpleasant-but-necessary <em>meaningful</em>. Recall the two kinds of happiness: <strong>hedonism</strong> (feeling good now — ice cream and Netflix) and <strong>eudaimonia</strong> (living well — realising your potential, which is often hard and frustrating but is where deep satisfaction lives).</p>
+  </div>
+  <div class="quote">“Humans are inherently motivated to grow and achieve and will fully commit to and engage in even uninteresting tasks when their meaning and value is understood.”<span class="src">— Edward Deci &amp; Richard Ryan</span></div>
+
+  <h4>Worked example — five people, five motivations</h4>
+  <table class="data">
+    <tr><th style="width:26%">Person</th><th style="width:34%">Reason for the job</th><th>Type</th></tr>
+    <tr><td>Andrew, fishmonger</td><td>Rolled into the family business; never asked if he liked it.</td><td class="hi">Amotivation</td></tr>
+    <tr><td>Louise, consultant</td><td>Chose it for the pay, company car, promotion odds.</td><td class="hi">External coercion &nbsp;<span style="color:#c77b3a">(controlled)</span></td></tr>
+    <tr><td>Paul, PhD chemist</td><td>Out to prove wrong the teachers who doubted him.</td><td class="hi">Introjection &nbsp;<span style="color:#c77b3a">(controlled)</span></td></tr>
+    <tr><td>Dora, care teacher</td><td>Helping children with extra exercises feels important.</td><td class="hi">Identification &nbsp;<span style="color:var(--emerald)">(autonomous)</span></td></tr>
+    <tr><td>Tom, truck driver</td><td>Loves hours on the open road.</td><td class="hi">Intrinsic &nbsp;<span style="color:var(--emerald)">(autonomous)</span></td></tr>
+  </table>
+
+  <h3>Different motivations, different consequences</h3>
+  <p>A meta-analysis of 100+ SDT workplace studies (a meta-analysis pools all research to date, giving highly reliable averages) found the types of motivation predict up to <strong>40% of the variation in how employees feel</strong> and <strong>25–30% of differences in performance</strong> — engagement, job satisfaction, in-role performance, and extra-role behaviour (going beyond the job description).</p>
+  <table class="data">
+    <caption>What each quality of motivation predicts</caption>
+    <tr><th style="width:22%">Motivation</th><th>Consequences</th></tr>
+    <tr><td class="hi" style="color:var(--emerald)">Intrinsic</td><td>The <strong>strongest</strong> predictor (≈ half the total effect). Less stress/burnout, more satisfaction &amp; enthusiasm, stronger commitment, no intent to leave, better performance, proactive problem-solving, extra-role helping, less deviance (bullying, loafing, theft), and — uniquely — <em>lower absenteeism</em>.</td></tr>
+    <tr><td class="hi" style="color:var(--emerald)">Identification (meaningfulness)</td><td>The second most important — and <strong>even more important than intrinsic for performance</strong>. It's what makes you deliver quality and persevere on the late-night deadline that is anything but fun.</td></tr>
+    <tr><td class="hi" style="color:#c77b3a">Introjection</td><td>Two faces: raises short-term enthusiasm, but also raises stress and does long-term damage. Little effect on performance.</td></tr>
+    <tr><td class="hi" style="color:#b0453a">External coercion</td><td>Worst. People will perform under pressure, but it's detrimental to well-being and to the organisation's long-term success.</td></tr>
+  </table>
+  <div class="box keyidea">
+    <span class="label">Summary</span>
+    <p style="margin-bottom:0;"><strong>Autonomous “I want” motivation</strong> → less stress/burnout, more engagement &amp; commitment, less turnover, more effort, better performance. <strong>Controlled “I must” motivation</strong> → the opposite. The extrinsic/intrinsic distinction matters far less than the controlled/autonomous one.</p>
+  </div>
+
+  <h3>Motivation profiles: people carry several motivations at once</h3>
+  <p>Reality isn't “either/or” — you might value your work, enjoy parts of it, work harder to dodge guilt, <em>and</em> like the paycheck, all at once. Scoring people on <em>autonomous</em> and <em>controlled</em> motivation yields four profiles:</p>
+
+  <div class="quad">
+    <table>
+      <tr class="axis-top"><td class="rowlabel"></td><td>Low controlled</td><td>High controlled</td></tr>
+      <tr>
+        <td class="rowlabel">High<br>autono-<br>mous</td>
+        <td class="cell-good"><span class="qt g">Wanters (autonomous)</span><span class="qd">“I want to.” The <strong>ideal</strong> profile. Low burnout risk (~7%), best work capacity, health, energy, satisfaction. Just keep the environment right.</span></td>
+        <td class="cell-mid"><span class="qt m">Highly motivated</span><span class="qd">Want to <em>and</em> have to. Also low burnout &amp; high enthusiasm — but carrying needless control. Remove the control elements to move them toward pure “wanters.”</span></td>
+      </tr>
+      <tr>
+        <td class="rowlabel">Low<br>autono-<br>mous</td>
+        <td class="cell-flat"><span class="qt fl">Unmotivated</span><span class="qd">Neither. Low well-being &amp; performance. The trick is to grow autonomous motivation — the carrot/stick is tempting but costly.</span></td>
+        <td class="cell-bad"><span class="qt bd">Musters (controlled)</span><span class="qd">“I have to.” The hardest group: exhausted, little enthusiasm, ~49% burnout risk, double the long-term absence. <strong>Don't</strong> just strip control — first <em>build</em> autonomous motivation.</span></td>
+      </tr>
+    </table>
+  </div>
+  <p>Ask managers which they'd want and most say “the highly motivated — more is better.” But the <strong>wanters</strong> do just as well on burnout and enthusiasm <em>without</em> the downsides of control. Grant et al. found personal initiative only pays off (more job offers, higher earnings for call-centre staff) for those high in autonomous and low in controlled motivation. Securex data: wanters want to work <strong>four years longer</strong> than musters — this matters for society, not just the firm.</p>
+  <div class="box apply">
+    <span class="label">The counter-intuitive management rule</span>
+    <p style="margin-bottom:0;">For musters, don't start by <em>removing</em> pressure — first <strong>increase autonomous motivation</strong> (make the work meaningful), <em>then</em> in a second phase remove the control. Increasing controlled motivation almost never helps and often actively harms.</p>
+  </div>
+
+  <h3>Motivation is task-specific — beware the “oil slick”</h3>
+  <p>You're not motivated the same way for every task. Teachers may be intrinsically motivated to teach but not to prepare lessons or do admin. Two asymmetries matter:</p>
+  <ul>
+    <li><strong>Autonomous motivation is specific and precious</strong> — it attaches to core tasks (teaching, welding, selling, coding) and being autonomously motivated <em>for the core</em> is the top predictor of job satisfaction and burnout.</li>
+    <li><strong>Controlled motivation spreads like an oil slick</strong> — once you “have to” do one task, that pressured feeling tends to bleed into the others. So stock the job with enough autonomously-motivating tasks to keep the slick small.</li>
+  </ul>
+  <p>The stakes are real: people say they'll do a task (be on time, write the report) but, if not properly motivated <em>for that task</em>, do it poorly or not at all. Only autonomously-motivated students actually enrolled in a training they'd signed up for; only autonomously-motivated employees genuinely share useful knowledge — the pressured ones more often withhold it and pretend not to know.</p>
+</section>
+
+<!-- ===== 3. ABC ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Part One · The Principles of SDT</div><h2><span class="num">3.</span>The ABC of motivation: three basic needs</h2></div>
+  <p class="lead">Autonomous motivation doesn't appear by wishing for it. It grows when three <strong>basic psychological needs</strong> are satisfied. Just as the body needs food, water and shelter, the psyche needs Autonomy, Belongingness and Competence to function well. Fulfil the ABC and people are better — not necessarily <em>more</em> — motivated.</p>
+
+  <div class="triad">
+    <div class="card a"><span class="letter">A</span><div class="h">Autonomy</div>
+      <div style="font-size:9.5pt;color:#37423d;">Standing behind what you do — psychological freedom, not doing things against your will.</div>
+      <ul><li>Allowed to be yourself</li><li>Experience choice &amp; volition</li><li>Can voice ideas &amp; input</li><li>Initiate your own actions</li></ul>
+    </div>
+    <div class="card b"><span class="letter">B</span><div class="h">Belongingness</div>
+      <div style="font-size:9.5pt;color:#37423d;">Warm, authentic bonds — feeling liked and cared for, and caring for others.</div>
+      <ul><li>Close, trusting relationships</li><li>Genuinely care for others</li><li>Feel accepted, part of a group</li><li>Have someone to turn to</li></ul>
+    </div>
+    <div class="card c"><span class="letter">C</span><div class="h">Competence</div>
+      <div style="font-size:9.5pt;color:#37423d;">Feeling effective — able to achieve what you set out to do and to grow.</div>
+      <ul><li>Feel capable &amp; effective</li><li>Reach desired goals</li><li>Develop skills, master tasks</li><li>Grow — even by making mistakes</li></ul>
+    </div>
+  </div>
+
+  <h3>Autonomy is the subtle one — and it is <em>not</em> independence</h3>
+  <p>Within SDT, autonomy is <strong>not</strong> “deciding everything yourself” (that's independence). It's feeling <em>psychologically free</em> — able to stand behind what you do. If the car is heading where you want it to go, the passenger seat can be as good as the driver's seat. You may not choose your clients or patients, yet still go to them willingly because the work speaks to you. Frustrated autonomy feels like a “chain of obligations,” doing things against your will.</p>
+  <p>Because autonomy ≠ independence, the two vary separately — giving four situations:</p>
+  <div class="quad">
+    <table>
+      <tr class="axis-top"><td class="rowlabel"></td><td>Independent of others</td><td>Dependent on others</td></tr>
+      <tr>
+        <td class="rowlabel">Autono-<br>mous</td>
+        <td class="cell-good"><span class="qt g">Independent &amp; autonomous</span><span class="qd">Choose what &amp; how, and fully back it. E.g. the gardener who decides whether to trim hedges or prune trees first.</span></td>
+        <td class="cell-good"><span class="qt g">Dependent but autonomous</span><span class="qd">Rely on others / didn't pick the task, yet fully support it. E.g. a prevention advisor who can't choose the calls but helps very willingly.</span></td>
+      </tr>
+      <tr>
+        <td class="rowlabel">Non-<br>autonom.</td>
+        <td class="cell-bad"><span class="qt bd">Independent, non-autonomous</span><span class="qd">On your own but <em>not</em> satisfied — e.g. so many choices, or so little structure, you don't know where to start (a cleaner with no brief in an empty house).</span></td>
+        <td class="cell-bad"><span class="qt bd">Dependent &amp; non-autonomous</span><span class="qd">Forced by circumstances into things you'd rather not do — e.g. assembly-line workers paced by a belt they can't control.</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="box warn">
+    <span class="label">Pitfall · “more autonomy = more freedom = better” is wrong</span>
+    <p style="margin-bottom:0;">You cannot give too much <em>psychological</em> freedom, but you can easily give too much <em>actual</em> freedom/independence. Total freedom often breeds “being left all alone” or chaos — think of people who flounder with unstructured work-from-home. The art is <strong>autonomy <em>with</em> structure</strong>: enough guidelines and support that people can then act autonomously within them. Children may choose mint or strawberry toothpaste — but they <em>will</em> brush their teeth.</p>
+  </div>
+
+  <h3>Belongingness &amp; Competence — briefly</h3>
+  <p><strong>Belongingness</strong> is satisfied by warm, trusting bonds where you can share ups <em>and</em> downs — not one-off team-building exercises. Harlow's monkeys clung to the soft cloth “mother” over the wire one with the milk; the quality (not quantity) of relationships is a top predictor of happiness. <em>“It is especially in the sharing of difficulty that we become very close.” — Dirk De Wachter.</em></p>
+  <p><strong>Competence</strong> is satisfied when you feel effective, can reach your goals, and can develop your talents — including learning through mistakes. Frustrated competence looks like chronic self-doubt, fear of failure and feeling a disappointment.</p>
+
+  <h3>Seven characteristics of the ABC needs</h3>
+  <table class="data">
+    <tr><td class="hi" style="width:34%">1 · Psychological</td><td>About mental functioning, not physical needs (food, sleep) — though those matter too.</td></tr>
+    <tr><td class="hi">2 · Essential</td><td>Fulfilling them boosts well-being &amp; performance; frustrating them breeds problems.</td></tr>
+    <tr><td class="hi">3 · Not necessarily explicit</td><td>You needn't consciously want them — even people who say they don't care about workplace bonds flourish once they feel they belong.</td></tr>
+    <tr><td class="hi">4 · Innate</td><td>Part of human nature; even small children feel better when they're met.</td></tr>
+    <tr><td class="hi">5 · Universal</td><td>Everyone has all three — labourer or clerk, young or old, introvert or extrovert; they drive growth in everyone.</td></tr>
+    <tr><td class="hi">6 · Fulfilled differently by each</td><td>One team handles more autonomy than another; an introvert needs one good talk, an extrovert a busy reception. However filled, a met need = optimal functioning.</td></tr>
+    <tr><td class="hi">7 · Equally important</td><td>Unlike Maslow's pyramid, no need must come “first.” They interlink (feeling connected makes autonomy easier), but one can be met while another isn't — and a gap in any one lowers motivation.</td></tr>
+  </table>
+
+  <h3>Consequences of fulfilling vs. frustrating the ABC</h3>
+  <table class="data">
+    <caption>Meta-analytic evidence</caption>
+    <tr><th style="width:50%">ABC fulfilled →</th><th>ABC frustrated →</th></tr>
+    <tr><td>More autonomous motivation</td><td>More controlled motivation</td></tr>
+    <tr><td>Optimal functioning: less stress/burnout, more enthusiasm, commitment, better &amp; more creative performance, extra-role behaviour, persistence, less absence, fewer problem behaviours, even less alcohol/drug use</td><td>Work stress; counterproductive behaviour including bullying and aggression</td></tr>
+    <tr><td>A better, healthier, more vital life <em>outside</em> work too — more energy, more positive &amp; fewer negative emotions, greater life satisfaction</td><td>Lower well-being; the positive effects reverse</td></tr>
+  </table>
+  <p style="margin-bottom:0;">These effects hold across the West, China and Latin America. Older workers whose needs are met plan less early retirement; even long-term-ill workers volunteering on care farms become readier to return to work when they feel autonomous, belonging and competent. The obvious next question — <em>how</em> do you make people feel this way? — is Part 2.</p>
+</section>
+
+<!-- ===== 4. LEADERSHIP ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Part Two · Tools for Working with SDT</div><h2><span class="num">4.</span>Putting it to work: motivating leadership</h2></div>
+  <p class="lead">Leaders are effective not because of who they <em>are</em> but because of what they <em>do</em>. So which leader behaviours actually satisfy the ABC and grow autonomous motivation?</p>
+
+  <h3>Four classic leadership styles</h3>
+  <table class="data">
+    <tr><th style="width:50%">Style</th><th>In short</th></tr>
+    <tr><td class="hi">Passive</td><td>Acts only when problems are out of control; postpones decisions, ignores problems, gives little direction — can be absent altogether.</td></tr>
+    <tr><td class="hi">Task-oriented</td><td>Focus on the tasks: provides structure, divides roles, sets goals, defines quality, ties reward to output.</td></tr>
+    <tr><td class="hi" style="color:var(--emerald)">Relationship-oriented</td><td>Prioritises people: attentive to emotions, concerned, open to input, friendly, respectful, accessible.</td></tr>
+    <tr><td class="hi" style="color:var(--emerald)">Change-oriented</td><td>Leads through change: creates a shared vision, guides through turbulence, encourages innovation and (daring to) take risks.</td></tr>
+  </table>
+  <p>Research: <strong>relationship-</strong> and <strong>change-oriented</strong> leaders best fulfil employees' ABC and boost autonomous motivation. SDT combines these two into its own style.</p>
+
+  <h3>ABC-supportive leadership</h3>
+  <p>ABC-supportive (a.k.a. autonomy-supportive) leadership blends the relationship and change approaches and responds directly to the three needs. It works whether it comes from a team lead or the CEO, and across collectivist and individualist cultures alike.</p>
+  <div class="triad">
+    <div class="card a"><div class="h" style="font-size:11pt;">Supports Autonomy</div><ul><li>Offers choices</li><li>Listens to input</li><li>Encourages initiative</li><li>Avoids reward/punishment steering</li><li>Gives a <em>meaningful rationale</em> when choice isn't possible</li></ul></div>
+    <div class="card b"><div class="h" style="font-size:11pt;">Supports Belongingness</div><ul><li>Shows genuine interest</li><li>Respects &amp; accepts people as they are</li><li>Takes needs &amp; emotions into account</li><li>Empathises; doesn't judge</li><li>Listens empathetically</li></ul></div>
+    <div class="card c"><div class="h" style="font-size:11pt;">Supports Competence</div><ul><li>Builds self-confidence</li><li>Helps people grow</li><li>Relies on their abilities</li><li>Focuses on strengths</li><li>Treats mistakes as learning</li></ul></div>
+  </div>
+
+  <h4>It is the opposite of controlling leadership</h4>
+  <p><strong>Controlling leaders</strong> frustrate the ABC and pump up controlled motivation: micromanaging every step (frustrates autonomy), keeping their distance (frustrates belongingness), pointing out mistakes and doubting ability (frustrates competence), steering by rewards/punishments (external coercion) and using blame and shame (internal coercion). People obey — but half-heartedly, and the stress makes them burnout-prone. They start from Theory X.</p>
+
+  <h4>But ABC-support is <em>not</em> soft — it provides structure</h4>
+  <div class="box keyidea">
+    <span class="label">Support + structure</span>
+    <p>ABC-supportive leadership is not laissez-faire. The best leaders <strong>combine ABC-support with structure</strong>: structure tasks, set clear expectations, follow up on performance, and give clear encouraging feedback. Too little structure = chaos; too much = controlling. Structure feeds the need for <em>competence</em>.</p>
+  </div>
+  <table class="data">
+    <caption>Two pitfalls managers fall into</caption>
+    <tr><th style="width:38%">Pitfall</th><th>Why it's wrong</th></tr>
+    <tr><td class="hi">1 · “I must check, or nothing happens.”</td><td>Pure Theory X. Assuming laziness → you control → you destroy autonomous motivation.</td></tr>
+    <tr><td class="hi">2 · “I daren't follow up — I'll seem controlling.”</td><td>Checking ≠ following up. <em>Not</em> following up signals “your work doesn't matter,” frustrating belongingness &amp; competence. Following up shows interest and presence.</td></tr>
+  </table>
+
+  <h3>Can leaders learn it? Yes.</h3>
+  <p>Intervention studies show ABC-supportive leadership is <strong>trainable</strong>. Deci, Connell &amp; Ryan (1989): during a downturn, an ailing firm trained managers top-to-bottom to let employees take initiative, make choices, receive constructive (not controlling) feedback, and to really listen to needs and emotions. Managers grew in ABC-support; employees' trust in the organisation rose — even in senior managers they barely met. In a residential psychiatric hospital, ABC workshops lifted staff's autonomous motivation and well-being <em>and</em> made them less controlling, so the young patients' needs were better met and <em>their</em> motivation for treatment rose. <em>Tips: be patient (people need time to trust the change); and actually use the input you ask for.</em></p>
+
+  <h3>Three preconditions</h3>
+  <table class="data">
+    <tr><td class="hi" style="width:26%">Trust</td><td>“The more you trust, the less you need to control.” Trust = <strong>competence</strong> (can do it) + <strong>loyalty</strong> (has your/the org's interests at heart) + <strong>integrity</strong> (honest, consistent). Not blind trust — a fair chance, then adjust if needed.</td></tr>
+    <tr><td class="hi">Psychological safety</td><td>A climate where you can speak up without losing face or being seen as incompetent. Successful teams don't make more mistakes — they <em>talk</em> about them. (Steve Jobs on a $400k error: “We just invested $400k in a learning experience — I want to hear about it.”) Without safety you can't let go, trust or learn.</td></tr>
+    <tr><td class="hi">Organisational climate</td><td>ABC-support works best when the whole climate backs it — valuing free will, cooperation, and growth; avoiding pressure, reward-focus, rivalry, skill-comparison and a single-minded outcome focus. Job insecurity shrinks the benefit of even good leaders.</td></tr>
+  </table>
+
+  <h3>The ABC language: how you say it</h3>
+  <p>Communication — spoken, emailed, even chat — either invites or coerces. SDT (echoing Rosenberg's Nonviolent Communication) favours <strong>inviting, connecting language</strong> built from your own needs, and warns against controlling language built from judgements and demands.</p>
+  <table class="data">
+    <caption>Two ways to say things</caption>
+    <tr><th style="width:50%">Inviting / connecting ✓</th><th>Coercive / controlling ✗</th></tr>
+    <tr><td>Open questions: “Could you…”, “What do you need?”</td><td>Commands: “Finish this now!”; must-statements: “You must…”</td></tr>
+    <tr><td>Choice: “You can consider…”; open verbs: “I suggest… do you like that?”</td><td>“Because I say so”; “Can you finally do it the way I expect?”</td></tr>
+    <tr><td>Encourage: “I trust you in this”; invite: “I invite you to try…”</td><td>Conditional feedback: “Good — just what I expected of you.”</td></tr>
+    <tr><td>Informational tips; consultation: “Which deadline is feasible for you?”</td><td>Self-esteem hooks: “Someone with your profile should manage this”; guilt &amp; shame: “We're deeply disappointed…”, “Aren't you ashamed?”</td></tr>
+  </table>
+  <div class="box plain">
+    <p style="margin-bottom:0;"><strong>Request, don't demand.</strong> Demands raise pressure; requests give others the chance to help you — and helping fulfils <em>their</em> ABC (they choose to, feel connected, feel competent). Start from your own need (“I feel unsure about the restructuring — can you give me more clarity?”) rather than a reproach (“You never communicate, so I feel bad”). And stay open to “no”: every no is a yes to something else — treat resistance as <em>information</em>, not disobedience.</p>
+  </div>
+  <div class="quote">“Every criticism, judgment, diagnosis, and expression of anger is the tragic expression of an unmet need.”<span class="src">— Marshall B. Rosenberg</span></div>
+
+  <h3>ABC-support in hard times: change &amp; working from home</h3>
+  <p>To SDT it doesn't matter <em>where</em> people work — autonomous motivation depends on the ABC being met, not on location. Remote work simply makes each need harder to tend:</p>
+  <ul>
+    <li><strong>Autonomy</strong> — let people choose hours and task order, but keep enough structure (monitor performance, safeguard quality) to avoid chaos.</li>
+    <li><strong>Belongingness</strong> — the hardest at a distance; isolation breeds loneliness. Invest in real connection: regular one-to-ones (call, video) and a group-level online community — balanced against individual autonomy.</li>
+    <li><strong>Competence</strong> — check everyone can handle the tasks, has the right equipment and space, and knows who to contact when stuck.</li>
+  </ul>
+  <div class="box apply">
+    <span class="label">Practical ABC leadership tips</span>
+    <p><strong>Autonomy:</strong> avoid pressure and micromanagement (even remotely) but <em>do</em> follow up; design meaningful, varied, challenging tasks; let people decide and participate; find where resistance comes from.</p>
+    <p><strong>Belongingness:</strong> be empathetic; listen openly; explore needs and concerns; don't judge or accuse; make time to talk even remotely; watch for loneliness (a daily check-in call).</p>
+    <p style="margin-bottom:0;"><strong>Competence:</strong> help set realistic goals; give accurate feedback; avoid competition; judge each person on their own progress, creativity and effort; give time and space to develop; agree how feedback is best delivered at a distance.</p>
+  </div>
+</section>
+
+<!-- ===== 5. GLOSSARY & SELF TEST ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Appendix</div><h2><span class="num">5.</span>Glossary &amp; self-test</h2></div>
+
+  <h3>Key terms</h3>
+  <table class="data">
+    <tr><td class="hi" style="width:30%">Self-Determination Theory (SDT)</td><td>Deci &amp; Ryan's broad, well-tested theory of motivation: quality of motivation depends on satisfying the basic needs for autonomy, belongingness and competence.</td></tr>
+    <tr><td class="hi">Amotivation</td><td>Absence of motivation; a sense that acting is futile.</td></tr>
+    <tr><td class="hi">Intrinsic motivation</td><td>Doing something for its own sake — because it's interesting or enjoyable.</td></tr>
+    <tr><td class="hi">Extrinsic motivation</td><td>Doing something for an outcome beyond the task itself. Comes in three types (below).</td></tr>
+    <tr><td class="hi">External coercion</td><td>Extrinsic + controlled: acting under pressure from others (reward/punishment).</td></tr>
+    <tr><td class="hi">Introjection</td><td>Extrinsic + controlled: internal pressure — guilt, shame, ego, proving yourself.</td></tr>
+    <tr><td class="hi">Identification (meaningfulness)</td><td>Extrinsic but <em>autonomous</em>: acting because the task is valuable/important to you.</td></tr>
+    <tr><td class="hi">Controlled motivation</td><td>“I have to” — external + introjected. Pressured; low quality.</td></tr>
+    <tr><td class="hi">Autonomous motivation</td><td>“I want to” — identified + intrinsic. Volitional; high quality.</td></tr>
+    <tr><td class="hi">Crowding-out effect</td><td>An external reward undermining pre-existing intrinsic motivation (Deci, 1971).</td></tr>
+    <tr><td class="hi">The ABC</td><td>The three basic psychological needs: Autonomy, Belongingness, Competence.</td></tr>
+    <tr><td class="hi">Autonomy vs. independence</td><td>Autonomy = standing behind what you do (psychological freedom); independence = not relying on others. They vary separately.</td></tr>
+    <tr><td class="hi">Theory X / Theory Y</td><td>Pessimistic vs. optimistic views of people (McGregor); SDT starts from Theory Y.</td></tr>
+    <tr><td class="hi">Hedonism / Eudaimonia</td><td>Feeling good now vs. living well by realising your potential.</td></tr>
+    <tr><td class="hi">ABC-supportive leadership</td><td>Leadership that satisfies the three needs, combining support with structure — the opposite of controlling leadership.</td></tr>
+    <tr><td class="hi">Psychological safety</td><td>A climate where people can speak up and admit mistakes without losing face.</td></tr>
+  </table>
+
+  <h3>Test yourself</h3>
+  <div class="qlist">
+    <span class="label">Check your understanding</span>
+    <ul>
+      <li>Why does SDT argue that “more motivation” is not the goal? What <em>is</em> the goal?</li>
+      <li>Explain the crowding-out effect using the 1971 puzzle experiment. Why is it a problem for bonus schemes?</li>
+      <li>Place the four motivation types on the continuum and mark the controlled/autonomous divide. Which extrinsic type is autonomous, and why?</li>
+      <li>Meaningfulness (identification) is extrinsic — so why is it “just as good as” intrinsic motivation?</li>
+      <li>Sort the four motivation profiles (wanters, highly motivated, musters, unmotivated) by well-being. Why treat musters by <em>adding</em> autonomy before removing control?</li>
+      <li>Why is autonomy <em>not</em> the same as independence? Give an example of “dependent but autonomous.”</li>
+      <li>Give the ABC and one way a remote-working leader can support each need.</li>
+      <li>How does ABC-supportive leadership differ from both controlling <em>and</em> laissez-faire leadership?</li>
+      <li>Rewrite a coercive instruction (“Finish this report now, I expect better from you”) in inviting, needs-based language.</li>
+      <li>“What you think is what you get.” Explain how a Theory-X belief becomes self-fulfilling.</li>
+    </ul>
+  </div>
+
+  <div class="box keyidea">
+    <span class="label">Five things to remember</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>Quality over quantity:</strong> autonomous (“I want”) motivation drives well-being and performance; controlled (“I must”) motivation doesn't.</li>
+      <li><strong>The real divide is controlled vs. autonomous</strong>, not extrinsic vs. intrinsic — meaningfulness makes even dull work high-quality.</li>
+      <li><strong>Rewards can backfire</strong> (crowding-out), so you can't simply buy motivation.</li>
+      <li><strong>The ABC is the engine:</strong> satisfy Autonomy, Belongingness and Competence and autonomous motivation grows by itself.</li>
+      <li><strong>Leadership is the lever:</strong> combine ABC-support with structure, trust and psychological safety, and speak an inviting rather than controlling language — “create the conditions in which people motivate themselves.”</li>
+    </ol>
+  </div>
+
+  <p class="fn" style="margin-top:6mm;">Structured study guide based on the Chapter 2 material “Self-Determination Theory / Work Motivation” (Behavior, Society &amp; Economy, KU Leuven — Van den Broeck, Van Coillie, Forest &amp; Müller), which itself builds on the work of Edward Deci &amp; Richard Ryan. Diagrams, tables and self-test questions added for study; wording of the source cleaned up and reorganised, with all core concepts retained.</p>
+</section>
+
+</body>
+</html>
