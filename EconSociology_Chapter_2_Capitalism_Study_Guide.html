@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Capitalism as Economic Organization — Study Guide</title>
+<style>
+  @page{
+    size:A4; margin:22mm 20mm 20mm 20mm;
+    @bottom-center{content:counter(page);font-family:"Liberation Sans",sans-serif;font-size:9pt;color:#8a7d76;}
+    @bottom-right{content:"Economic Sociology · Chapter 2";font-family:"Liberation Sans",sans-serif;font-size:8pt;color:#b6aaa2;}
+  }
+  @page :first{margin:0;@bottom-center{content:none;}@bottom-right{content:none;}}
+
+  :root{
+    --clay:#8a3a29; --sienna:#a8492f; --rust:#b8623f;
+    --accent:#2f6d6a; --accent-soft:#d9e8e6;
+    --ink:#251d1a; --muted:#6d5f58; --line:#e6ddd6; --tint:#f8f3ef;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:11pt;}
+  body{font-family:"Liberation Serif",Georgia,serif;color:var(--ink);line-height:1.5;margin:0;}
+
+  /* COVER */
+  .cover{height:297mm;padding:38mm 26mm 26mm 26mm;background:linear-gradient(150deg,#5c2419 0%,#8a3a29 48%,#a8492f 100%);color:#f7efe9;page-break-after:always;position:relative;}
+  .cover .kicker{font-family:"Liberation Sans",sans-serif;letter-spacing:.3em;text-transform:uppercase;font-size:11pt;color:#e6b98a;font-weight:700;}
+  .cover h1{font-family:"Liberation Sans",sans-serif;font-size:42pt;line-height:1.07;margin:13mm 0 4mm 0;font-weight:700;}
+  .cover h1 .small{display:block;font-size:18pt;color:#e8cdbc;margin-top:5mm;font-weight:700;}
+  .cover .sub{font-size:14.5pt;color:#e9d6c9;max-width:124mm;line-height:1.45;margin-top:6mm;}
+  .cover .thinkers{margin-top:9mm;font-size:12.5pt;color:#f1ddd0;}
+  .cover .thinkers span{color:#e6b98a;font-weight:700;font-family:"Liberation Sans",sans-serif;}
+  .cover .chapline{font-family:"Liberation Sans",sans-serif;font-size:11.5pt;color:#f3e4da;margin-top:15mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.24);}
+  .cover .chapline b{color:#e6b98a;}
+  .cover .footer-note{position:absolute;bottom:22mm;left:26mm;right:26mm;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;color:#cbb2a4;line-height:1.5;}
+
+  /* HEADINGS */
+  h2{font-family:"Liberation Sans",sans-serif;font-size:21pt;color:var(--clay);margin:0 0 2mm 0;padding-top:3mm;font-weight:700;page-break-after:avoid;}
+  h2 .num{color:var(--accent);margin-right:6pt;}
+  h3{font-family:"Liberation Sans",sans-serif;font-size:14pt;color:var(--sienna);margin:7mm 0 2mm 0;font-weight:700;page-break-after:avoid;}
+  h4{font-family:"Liberation Sans",sans-serif;font-size:11.5pt;color:var(--rust);margin:5mm 0 1.5mm 0;font-weight:700;page-break-after:avoid;}
+  .section-band{page-break-before:always;border-bottom:2px solid var(--accent);margin-bottom:4mm;padding-bottom:2mm;}
+  .section-band .eyebrow{font-family:"Liberation Sans",sans-serif;font-size:9.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+  p{margin:0 0 2.6mm 0;}
+  strong{color:var(--clay);} em{color:var(--sienna);}
+  ul,ol{margin:0 0 3mm 0;padding-left:6mm;} li{margin-bottom:1.3mm;}
+
+  /* BOXES */
+  .box{border-radius:4px;padding:4mm 5mm;margin:3.5mm 0;page-break-inside:avoid;}
+  .plain{background:var(--tint);border:1px solid var(--line);}
+  .keyidea{background:#efe1da;border:1px solid #e2ccc0;}
+  .study{background:#fdfaf8;border:1px solid var(--line);}
+  .apply{background:var(--accent-soft);border:1px solid #b9d4d1;}
+  .warn{background:#f7ece6;border:1px solid #ecd2ba;}
+  .quote{background:#4a1e15;color:#f3e6de;border-radius:4px;padding:5mm 6mm;margin:4mm 0;font-size:12.5pt;font-style:italic;page-break-inside:avoid;}
+  .quote .src{display:block;margin-top:2.5mm;font-style:normal;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;color:#d3b3a3;letter-spacing:.04em;}
+  .box .label{display:inline-block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2mm;}
+  .plain .label{color:var(--rust);} .keyidea .label{color:var(--clay);} .study .label{color:var(--accent);}
+  .apply .label{color:#245a57;} .warn .label{color:#b26a2b;}
+  .box p:last-child{margin-bottom:0;}
+  .study .grid{display:table;width:100%;margin:1mm 0 2mm;}
+  .study .row{display:table-row;}
+  .study .row>div{display:table-cell;padding:1mm 3mm 1mm 0;vertical-align:top;}
+  .study .row>div:first-child{width:32mm;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;color:var(--rust);text-transform:uppercase;letter-spacing:.05em;}
+
+  /* TABLE */
+  table.data{border-collapse:collapse;width:100%;margin:3mm 0;font-size:10pt;page-break-inside:avoid;}
+  table.data caption{caption-side:top;text-align:left;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;color:var(--muted);margin-bottom:1.5mm;letter-spacing:.04em;}
+  table.data th{background:var(--clay);color:#fff;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;padding:2mm 3mm;text-align:left;font-weight:700;}
+  table.data td{padding:1.8mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.data tr:nth-child(even) td{background:var(--tint);}
+  table.data td.hi{font-weight:700;color:var(--clay);}
+  table.data.splitok{page-break-inside:auto;}
+  table.data.splitok tr{page-break-inside:avoid;}
+  .fn{font-size:8.5pt;color:var(--muted);font-family:"Liberation Sans",sans-serif;margin-top:1mm;}
+
+  /* TOC */
+  .toc{page-break-after:always;} .toc h2{border:none;}
+  .toc ol{list-style:none;padding-left:0;}
+  .toc>ol>li{font-family:"Liberation Sans",sans-serif;font-weight:700;color:var(--clay);font-size:12pt;margin-top:4mm;border-bottom:1px solid var(--line);padding-bottom:1.5mm;}
+  .toc>ol>li>span.n{color:var(--accent);margin-right:4pt;}
+  .toc ul{list-style:none;padding-left:8mm;margin:1.5mm 0 0;}
+  .toc ul li{font-family:"Liberation Serif",serif;font-weight:400;color:var(--ink);font-size:10.5pt;margin:.8mm 0;}
+
+  .lead{font-size:11.5pt;color:#332721;}
+  .divider{border:none;border-top:1px solid var(--line);margin:6mm 0;}
+  .qlist{background:#fdfaf8;border-left:3px solid var(--accent);padding:3mm 5mm;margin:3mm 0;}
+  .qlist .label{display:block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#245a57;margin-bottom:1.5mm;}
+  .qlist ul{padding-left:5mm;margin:0;}
+  .term{font-family:"Liberation Sans",sans-serif;font-weight:700;color:var(--sienna);}
+
+  /* definition centrepiece */
+  .defn{background:#fff;border:1px solid #e2ccc0;border-radius:4px;padding:4mm 5mm;margin:4mm 0;page-break-inside:avoid;}
+  .defn .lab{font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);margin-bottom:2mm;}
+  .defn .body{font-size:13pt;line-height:1.5;color:#2b211c;}
+  .defn .mark{font-family:"Liberation Sans",sans-serif;font-weight:700;color:#fff;background:var(--accent);border-radius:9px;padding:.3mm 2.2mm;font-size:10pt;}
+  .defn .mark.two{background:var(--rust);}
+
+  /* two-panel lifeworld vs system */
+  .lvs{display:table;width:100%;table-layout:fixed;border-spacing:0;margin:4mm 0;page-break-inside:avoid;border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+  .lvs .col{display:table-cell;width:50%;padding:3.5mm 4mm;vertical-align:top;}
+  .lvs .lw{background:#eef3f2;}
+  .lvs .sy{background:#f4e9e3;border-left:1px solid var(--line);}
+  .lvs .h{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:11.5pt;margin-bottom:1mm;}
+  .lvs .lw .h{color:var(--accent);} .lvs .sy .h{color:var(--clay);}
+  .lvs .sub{font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:2mm;}
+  .lvs ul{padding-left:4.5mm;margin:0;font-size:9.5pt;line-height:1.42;}
+  .colonize{background:var(--clay);color:#fff;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;text-align:center;padding:1.6mm;letter-spacing:.04em;border-radius:0 0 3px 3px;}
+
+  /* four-type / 2x2 dims */
+  .dims{display:table;width:100%;table-layout:fixed;border-spacing:3mm;margin:4mm 0;page-break-inside:avoid;}
+  .dims .drow{display:table-row;}
+  .dims .card{display:table-cell;width:50%;background:#fff;border:1px solid var(--line);border-radius:4px;padding:3mm 3.5mm;vertical-align:top;}
+  .dims .card .n{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:16pt;float:right;opacity:.22;line-height:1;}
+  .dims .card .h{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:11pt;color:var(--sienna);margin-bottom:1mm;}
+  .dims .card .d{font-size:9.5pt;color:#37302b;line-height:1.42;}
+
+  /* flow chain */
+  .flow{display:table;width:100%;table-layout:fixed;border-spacing:0;margin:4mm 0;page-break-inside:avoid;}
+  .flow .cell{display:table-cell;vertical-align:middle;text-align:center;}
+  .flow .node{background:#fff;border:1px solid var(--line);border-top:3px solid var(--rust);border-radius:3px;padding:2.5mm 1.5mm;font-family:"Liberation Sans",sans-serif;font-size:8.6pt;font-weight:700;color:#3a2c26;line-height:1.3;}
+  .flow .node.end{border-top-color:var(--clay);background:#efe1da;color:var(--clay);}
+  .flow .ar{width:8mm;color:var(--rust);font-size:14pt;font-weight:700;}
+  svg{max-width:100%;height:auto;}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="kicker">Course Study Guide · Economic Sociology</div>
+  <h1>Capitalism<span class="small">as economic organization</span></h1>
+  <div class="sub">When exchange becomes the <em>dominant</em> way a society coordinates its economy, we call it capitalism. What that means sociologically, where it came from, and why there is more than one kind.</div>
+  <div class="thinkers">With <span>Weber</span>, <span>Marx</span>, <span>Habermas</span> &amp; the “Varieties of Capitalism” school</div>
+  <div class="chapline"><b>Part 2 · Chapter 2</b> &nbsp;|&nbsp; What capitalism is (not) · Genesis &amp; dynamics · Capitalism or capitalisms?</div>
+  <div class="footer-note">An expanded companion to the Chapter 2 lecture slides of the Economic Sociology part. Each section develops the slide bullet points into the fuller explanation, cases and reasoning normally delivered aloud in class — so the guide can be read and studied on its own. Continues directly from Chapter 1 (Economic Action &amp; Institutions).</div>
+</section>
+
+<!-- TOC -->
+<section class="toc">
+  <h2>What this chapter covers</h2>
+  <p class="lead" style="margin-bottom:5mm;">Chapter 1 introduced <strong>exchange</strong> as one of three ways to coordinate an economy (alongside reciprocity and redistribution). Exchange is the backbone of the market — and when it grows into the <em>dominant</em> coordination mechanism of a whole economic system (a “market society”), some call the result <strong>capitalism</strong>. This chapter asks what capitalism actually is, how it arose, and whether there is one capitalism or several.</p>
+  <ol>
+    <li><span class="n">0.</span> Orientation: from exchange to “market society”</li>
+    <li><span class="n">1.</span> What capitalism is (and is not)
+      <ul><li>What it is <em>not</em>: a swear-word · greed &nbsp;·&nbsp; What it <em>is</em>: profit-oriented market exchange · an endogenous-but-constructed system</li></ul>
+    </li>
+    <li><span class="n">2.</span> Genesis &amp; dynamics of capitalism
+      <ul><li>2.1 The West and the rest? (unicity vs. revisionism · the China case · the high-level equilibrium trap)</li>
+        <li>2.2 Colonization of the life world (Habermas · commercial surrogacy · life world vs. system)</li></ul>
+    </li>
+    <li><span class="n">3.</span> Capitalism or capitalisms?
+      <ul><li>3.1 Weber's four types &nbsp;·&nbsp; 3.2 Varieties of capitalism: liberal vs. coordinated</li></ul>
+    </li>
+    <li><span class="n">4.</span> Glossary &amp; self-test</li>
+  </ol>
+  <div class="box keyidea" style="margin-top:6mm;">
+    <span class="label">The one-sentence version</span>
+    <p style="margin-bottom:0;">Capitalism is not a moral verdict or “greed,” but <strong>coordination through profit-oriented market exchange</strong> in a system that is <strong>endogenous yet constructed</strong> (states built the markets). It arose in a particular time and place — the debate is <em>how</em> uniquely Western — it tends to <strong>expand</strong> into ever more of social life (Habermas's “colonization of the life world”), and it comes in <strong>varieties</strong> (Weber's four types; today's liberal vs. coordinated economies).</p>
+  </div>
+</section>
+
+<!-- 0. ORIENTATION -->
+<section>
+  <div class="section-band"><div class="eyebrow">Orientation</div><h2><span class="num">0.</span>From exchange to “market society”</h2></div>
+  <p class="lead">This chapter builds directly on the last one. Recall the three ideal-typical coordination mechanisms: <strong>exchange, reciprocity, redistribution</strong>. Exchange — transactions in a market — is the <strong>essential backbone of the market</strong>.</p>
+  <div class="box keyidea">
+    <span class="label">The move this chapter makes</span>
+    <p style="margin-bottom:0;">When market exchange stops being just <em>one</em> mechanism among three and becomes the <strong>dominant coordination mechanism of an entire economic system</strong> — a <span class="term">market society</span> — some observers call that <strong>capitalism</strong>. The rest of the chapter is about pinning down what that word should (and shouldn't) mean, where the system came from, and how many kinds of it there are.</p>
+  </div>
+</section>
+
+<!-- 1. WHAT CAPITALISM IS (NOT) -->
+<section>
+  <div class="section-band"><div class="eyebrow">Section One</div><h2><span class="num">1.</span>What capitalism is (and is not)</h2></div>
+  <p class="lead">“Capitalism” carries heavy <em>emotional</em> baggage in everyday life that differs from a careful sociological definition. That baggage comes in two connected forms — a pejorative tone and an equation with greed — and clearing both away is the first job.</p>
+
+  <h3>What capitalism is <em>not</em></h3>
+  <h4>1 · A term of abuse (the pejorative connotation)</h4>
+  <p>In daily speech “capitalism” is often a <strong>negative verdict</strong> — the word of choice for Marxists and the anti-globalisation movement, set against a supposedly neutral “free market.” But this is unstable: <strong>neoliberals</strong> happily use “capitalism” as a positive badge too. Because the same word swings between insult and compliment, social science must treat it as <strong>value-free as possible</strong> — a category of analysis, not a cheer or a boo.</p>
+  <h4>2 · Greed</h4>
+  <p>A second popular image: capitalism as a system where <strong>greed dominates all social relations</strong>. Oliver Stone's <em>Wall Street</em> films made stockbroking and corporate raiding into icons of capitalist greed — and total submission to it. Some defenders of capitalism even argue for the <em>ethical value</em> of greed, reinforcing the impression.</p>
+  <div class="quote">“Greed is good.” (1987) &nbsp;→&nbsp; “Now it seems it's legal.” (2010)<span class="src">— Gordon Gekko, <em>Wall Street</em> &amp; <em>Wall Street: Money Never Sleeps</em></span></div>
+  <div class="box keyidea">
+    <span class="label">Why “greed” fails as a definition</span>
+    <p>Greed is <strong>far too common</strong> to pick capitalism out: it appears in plenty of pre-, non- and quasi-capitalist systems (classical Rome, the Middle Ages). What is <em>distinctively</em> capitalist is not greed itself but its <strong>own regulation of the legitimacy of greed</strong> — <em>which</em> wealth gets honoured.</p>
+    <ul style="margin-bottom:0;">
+      <li><strong>Under capitalism:</strong> more prestige for wealth won through <em>market transactions</em> (profit); <em>less</em> for merely inherited wealth.</li>
+      <li><strong>Pre-capitalist societies:</strong> the <em>inverse</em> status ordering — inherited, landed wealth ranks highest, “trade” is faintly vulgar. Think of the landed gentry of 19th-century England (Jane Austen's world), where living off rents outranks earning a profit.</li>
+    </ul>
+  </div>
+
+  <h3>What capitalism <em>is</em></h3>
+  <p>So if it's neither a swear-word nor greed, what is it? The sociological definition has <strong>two distinguishing features</strong>:</p>
+  <div class="defn">
+    <div class="lab">Definition</div>
+    <div class="body">Capitalism is <span class="mark">1</span> an <strong>endogenous but constructed system</strong> of <span class="mark two">2</span> <strong>coordination through exchange on the market with durable profit acquisition as the central motivator</strong>.</div>
+  </div>
+  <p>We take the two elements in <em>reverse</em> order — the second (profit-oriented exchange) first, because it is the more concrete.</p>
+
+  <h4>Element 2 · Market exchange oriented toward profit</h4>
+  <p>This is Polanyi's <strong>exchange</strong> type (as opposed to reciprocity and redistribution) — but now specifically harnessed to the <em>durable</em> pursuit of profit. Two things travel with it as <strong>logical (and probably necessary) conditions</strong>:</p>
+  <div class="dims">
+    <div class="drow">
+      <div class="card"><span class="n">i</span><div class="h">Protected property rights</div><div class="d">Property is protected by an <strong>authority</strong> — the state — whose enforcement makes using your <em>own</em> means of force redundant. You don't need private muscle to hold what's yours; law and the state do it. This is what makes calm, large-scale market exchange possible.</div></div>
+      <div class="card"><span class="n">ii</span><div class="h">Profit-seeking firms</div><div class="d">Companies that <strong>systematically pursue profit</strong>. Note the careful wording: the <em>goal</em> is profit — but that goal is <strong>not necessarily achieved</strong>. Capitalism is defined by the orientation, not by guaranteed success.</div></div>
+    </div>
+  </div>
+
+  <h4>Element 1 · An endogenous but constructed system</h4>
+  <p>The subtler feature — and a genuine <strong>paradox</strong>, captured by the image of the <em>Sorcerer's Apprentice</em> (a force conjured up by people that then runs beyond their control). Capitalism is both at once:</p>
+  <table class="data">
+    <tr><th style="width:50%">Endogenous — its own runaway dynamic</th><th>Constructed — made and maintained by actors</th></tr>
+    <tr><td>A complex system with a <strong>dynamic of its own that exceeds the understanding of its actors</strong> (cf. Marx). No one is fully “driving”; the system has emergent momentum.</td><td>Yet its emergence and reproduction <strong>depend on deliberate intervention</strong> by actors — especially <em>political and intellectual elites</em>.</td></tr>
+  </table>
+  <div class="box keyidea">
+    <span class="label">The key corrective</span>
+    <p style="margin-bottom:0;">Capitalism did <strong>not</strong> arise from simply “leaving markets alone.” It <strong>depended on the intentional intervention of (early) states in the <em>construction</em> of markets</strong> — coining money, enforcing contracts, chartering companies, standardising weights. <strong>Laissez-faire</strong> is best understood not as capitalism's natural condition but as its <em>ideological base</em> — a story the system tells about itself. Markets were made, not found.</p>
+  </div>
+</section>
+
+<!-- 2. GENESIS & DYNAMICS -->
+<section>
+  <div class="section-band"><div class="eyebrow">Section Two</div><h2><span class="num">2.</span>Genesis &amp; dynamics of capitalism</h2></div>
+  <p class="lead">Two propositions describe how capitalist economic organisation <em>expands</em> — one across space, one within society:</p>
+  <div class="box plain">
+    <ol style="margin-bottom:0;">
+      <li><strong>The thesis of unicity</strong> — capitalism developed in the West and <em>spread outward</em> geographically to the rest of the world (§2.1).</li>
+      <li><strong>The thesis of the colonization of the life world</strong> — the logic of capitalism reaches into <em>ever more areas of social life</em> than just the economy (§2.2).</li>
+    </ol>
+  </div>
+
+  <h3><span style="color:var(--accent)">2.1</span> &nbsp;The West and the rest?</h3>
+  <p>The <strong>classical thesis of unicity</strong> holds that capitalism developed in the West (Europe) — and <em>only</em> there. Yet this sits awkwardly with an inconvenient fact: technologically, the West actually <strong>lagged behind</strong> India, the Middle East and China until roughly the 16th–17th century. Taking China as the case, the debate becomes: did China also develop (elements of) capitalism?</p>
+  <table class="data">
+    <caption>Two positions</caption>
+    <tr><th style="width:26%">Position</th><th>Claim</th></tr>
+    <tr><td class="hi">Thesis of unicity</td><td><strong>No</strong> — only the West developed capitalism.</td></tr>
+    <tr><td class="hi">Revisionism</td><td><strong>Yes</strong> — the emergence was <em>multipolar</em>; China had capitalist elements too.</td></tr>
+  </table>
+  <div class="box study">
+    <span class="label">Consensus · China's head start (until the Ming, late 13th c.)</span>
+    <p>Both sides agree China led for a long time. Elements of that lead:</p>
+    <ul style="margin-bottom:0;">
+      <li><strong>Printing</strong> — 9th century (the West: only the 15th!)</li>
+      <li><strong>Gunpowder</strong></li>
+      <li><strong>Compass and mechanical clocks</strong></li>
+      <li><strong>Admiral Zheng He's naval expeditions</strong> (1405–33): seven voyages, large-scale, far-reaching and effective — hundreds of ships and crews running into the tens of thousands.</li>
+    </ul>
+  </div>
+  <p>The <strong>unicity</strong> reading: from then on China <em>stood still</em>, for essentially <strong>cultural</strong> reasons (a self-satisfied “triumphalism,” a turn inward), and the West took over — using gunpowder, via further innovation, to build the military and hence trade supremacy that carried capitalism. <strong>Revisionism</strong> attacks this on two fronts:</p>
+  <h4>Revisionist argument 1 · The gap is much more recent</h4>
+  <p>The divergence only really opened <strong>after 1800</strong>. Until Western industrialisation, China <strong>kept pace</strong> with the West in <em>marketisation</em> and <em>monetisation</em>. What China lacked came late and specific: <strong>mechanisation and central workplaces</strong> — the factory, and the industrialisation it drove.</p>
+  <h4>Revisionist argument 2 · Ecological, not cultural, causes — the “high-level equilibrium trap”</h4>
+  <p>The relative standstill wasn't about culture but about a <strong>disadvantageous population-to-land ratio</strong>. The causal chain:</p>
+  <div class="flow">
+    <div class="cell"><div class="node">Fast population growth (demographic factors)</div></div>
+    <div class="cell ar">→</div>
+    <div class="cell"><div class="node">Over-supply of cheap labour &nbsp;+&nbsp; comparatively expensive capital</div></div>
+    <div class="cell ar">→</div>
+    <div class="cell"><div class="node end">Labour-saving innovation less likely &amp; more costly → relative standstill</div></div>
+  </div>
+  <p style="margin-bottom:0;">When labour is dirt cheap and capital dear, there is little incentive to invent machines that <em>save</em> labour. China was, in effect, trapped at a high level of pre-industrial development — efficient, but with the wrong price signals to industrialise. Not a cultural failing; an ecological-economic bind.</p>
+
+  <h3><span style="color:var(--accent)">2.2</span> &nbsp;Colonization of the life world</h3>
+  <p>“Expansion” in §2.1 meant a <em>geographical</em> variable — how much territory and how many people are drawn in. But expansion can also happen <strong>within a single society</strong>, as the market logic reaches into domains that used to lie outside it. Two underlying ideas:</p>
+  <div class="box plain">
+    <ol style="margin-bottom:0;">
+      <li><strong>Incorporating ever more areas of society into capitalist logic</strong> — e.g. the <em>commercialisation of reproduction</em> (commercial surrogacy; the case of Gujarat, India).</li>
+      <li><strong>Markets emerging out of markets</strong> — e.g. financial markets in <em>stocks and derivatives</em> (markets built on top of other markets).</li>
+    </ol>
+  </div>
+  <div class="box study">
+    <span class="label">Case · commercial surrogacy in Anand, India</span>
+    <p style="margin-bottom:0;">A clinic in Anand lets <strong>poor rural women “rent” themselves as surrogate mothers</strong>. Middle-class prospective parents (Indian and foreign) effectively <strong>“order” a baby</strong>; usually the biological father is the male partner, sometimes both partners contribute (via IVF). The surrogates <strong>remain in the clinic for the whole pregnancy</strong>, and the baby is <strong>handed over immediately at birth</strong>. It is an extreme — and probably growing — case of the <strong>commercialisation of intimate life</strong>.</p>
+  </div>
+  <p>Jürgen <span class="term">Habermas</span> names this kind of expansion the <strong>colonization of the life world</strong>. His framework rests on a distinction between two types of social action, and two corresponding spheres:</p>
+  <div class="lvs">
+    <div class="col lw">
+      <div class="sub">Communicative action</div>
+      <div class="h">The Life World</div>
+      <ul>
+        <li>Action aimed at <strong>mutual understanding</strong>, not an external goal</li>
+        <li>Private life <em>and</em> the community as <em>civitas</em> (politics in the pure sense)</li>
+        <li>Produces <strong>identity, belonging, community</strong> — the <em>symbolic</em> existence of humans</li>
+        <li>Governed by <strong>truth &amp; truthfulness</strong></li>
+      </ul>
+    </div>
+    <div class="col sy">
+      <div class="sub">Strategic (instrumental-rational) action</div>
+      <div class="h">The System</div>
+      <ul>
+        <li>Action aimed at an <strong>external goal</strong> (convince, sell)</li>
+        <li><strong>Material</strong> existence — including the economy</li>
+        <li>Governed by <strong>efficiency &amp; effectiveness</strong>, not truth</li>
+        <li>Efficiency typically expressed through <strong>monetised currency</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colonize" style="margin-top:-4mm;">COLONIZATION → the SYSTEM's money/efficiency criteria invade and re-value the LIFE WORLD</div>
+  <p style="margin-top:3mm;">The <strong>problem</strong> arises when relationships and values that <em>used to</em> belong to the life world get <strong>valued according to system criteria</strong> (money, efficiency). That intrusion is what Habermas calls colonization — the system colonising the life world.</p>
+  <div class="box warn">
+    <span class="label">Is the image valid? Two caveats</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>It's not a one-way, generalised march.</strong> Some things that <em>were</em> commodities before capitalism are <strong>strongly tabooed</strong> in capitalist societies — slaves, acquiring partners through dowries, buying government positions. In these areas the market actually <em>retreated</em>.</li>
+      <li><strong>The life world has always expressed value in economic terms too</strong> — the engagement ring, gifts. Money and intimacy were never hermetically sealed. So the boundary shifts both ways, and was never pure.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 3. CAPITALISM OR CAPITALISMS -->
+<section>
+  <div class="section-band"><div class="eyebrow">Section Three</div><h2><span class="num">3.</span>Capitalism or capitalisms?</h2></div>
+  <p class="lead">Is capitalism one thing, or should we distinguish several <em>types</em>? This has always been debated. We look at two typologies — a classical one (Max Weber) and a recent one (“Varieties of Capitalism”).</p>
+
+  <h3><span style="color:var(--accent)">3.1</span> &nbsp;Weber's typology — four types</h3>
+  <p>Weber distinguished four types, with a certain <strong>evolutionary logic</strong> running toward the fourth as the most mature form — a <em>historical</em> approach.</p>
+  <table class="data">
+    <caption>Weber's four types of capitalism (1 → 4: increasing maturity)</caption>
+    <tr><th style="width:22%">Type</th><th>What it is</th></tr>
+    <tr><td class="hi">1 · Traditional</td><td>Concentrated on <strong>trade</strong> and a limited amount of <strong>banking</strong> (e.g. credit). Think of pockets of capitalist life in medieval towns — <em>islands of market functioning in a sea of self-sufficient (autarkic) agricultural communities.</em></td></tr>
+    <tr><td class="hi">2 · Political</td><td>Political events and processes open access to <strong>large, often one-shot profit opportunities</strong>. Cases: colonialism, monopolies granted by the king.</td></tr>
+    <tr><td class="hi">3 · Adventurer</td><td><strong>Swift, random, exceptional</strong> profit opportunities. Type 2 is a <em>subset</em> of this. Pure forms: plundering/predatory economies — extortion, piracy.</td></tr>
+    <tr><td class="hi">4 · Rational</td><td>The type set out in “what capitalism is” — the <strong>most mature</strong> form (durable, calculated profit through market exchange). In practice it often still mixes with elements of types 1–3.</td></tr>
+  </table>
+
+  <h3><span style="color:var(--accent)">3.2</span> &nbsp;Varieties of capitalism — liberal vs. coordinated</h3>
+  <p>A more recent theory (the “<span class="term">Varieties of Capitalism</span>” school, c. 2001) sets out to <strong>compare existing contemporary systems</strong> across countries — a <em>comparative</em> rather than historical approach. It rests on three starting points:</p>
+  <div class="box plain">
+    <ol style="margin-bottom:0;">
+      <li><strong>Firms and their coordination problems are central</strong> — chiefly: how do companies handle problems of <em>asymmetric information</em> and <em>control</em>? Other actors (employees, financiers) face the same. There are two solution styles → see the table.</li>
+      <li><strong>Institutional complementarities</strong> — choosing a solution in one domain makes it <em>more profitable</em> (lower learning/coordination cost) to use the same style in another domain. So the pieces line up into coherent regimes.</li>
+      <li><strong>Comparative institutional advantages</strong> — both regimes survive because each has its <em>own</em> strengths (especially different effects on innovation), preserved over time.</li>
+    </ol>
+  </div>
+  <table class="data">
+    <caption>The two ideal-typical regimes</caption>
+    <tr><th style="width:26%">Dimension</th><th>Liberal market economy</th><th>Coordinated market economy</th></tr>
+    <tr><td class="hi">Coordination style</td><td>Outsourcing to the <strong>market</strong>, flexibly</td><td>Mutual <strong>long-term agreements</strong> &amp; cooperation</td></tr>
+    <tr><td class="hi">Skills &amp; schooling (example)</td><td>General, portable skills; hire &amp; fire on the market</td><td>Firm/industry-specific skills built through stable relationships</td></tr>
+    <tr><td class="hi">Labour &amp; capital markets</td><td>Both <strong>market-oriented &amp; flexible</strong> (complementary)</td><td>Both <strong>stable &amp; long-term</strong> (complementary)</td></tr>
+    <tr><td class="hi">Typical countries</td><td>Mainly <strong>Anglo-Saxon</strong></td><td><strong>Scandinavian, continental-European, Japan</strong></td></tr>
+    <tr><td class="hi">Comparative advantage in innovation</td><td><strong>Radical</strong> innovation (e.g. the PC, the internet) — via flexible use of human capital &amp; finance</td><td><strong>Incremental</strong> innovation — via stable, long-term relationships in human capital &amp; finance</td></tr>
+  </table>
+  <div class="box keyidea">
+    <span class="label">The pay-off</span>
+    <p style="margin-bottom:0;">There isn't a single “best” capitalism converging on one model. The two regimes <strong>persist side by side</strong> because their institutions are internally consistent (complementarity) and each is genuinely better at something (comparative advantage) — the liberal at radical breakthroughs, the coordinated at steady refinement. “Capitalism” is therefore better written in the plural: <strong>capitalisms</strong>.</p>
+  </div>
+</section>
+
+<!-- 4. GLOSSARY & SELF-TEST -->
+<section>
+  <div class="section-band"><div class="eyebrow">Appendix</div><h2><span class="num">4.</span>Glossary &amp; self-test</h2></div>
+
+  <h3>Key terms</h3>
+  <table class="data splitok">
+    <tr><td class="hi" style="width:30%">Market society</td><td>An economic system in which market exchange has become the <em>dominant</em> coordination mechanism — the setting some call capitalism.</td></tr>
+    <tr><td class="hi">Capitalism (definition)</td><td>An endogenous-but-constructed system of coordination through profit-oriented market exchange.</td></tr>
+    <tr><td class="hi">Legitimacy of greed</td><td>What is distinctively capitalist: honouring wealth from market profit over inherited wealth (pre-capitalist societies rank these inversely).</td></tr>
+    <tr><td class="hi">Endogenous but constructed</td><td>Capitalism's paradox (the Sorcerer's Apprentice): a system with a runaway dynamic (Marx) that nonetheless had to be built and maintained by states and elites.</td></tr>
+    <tr><td class="hi">Laissez-faire</td><td>Not capitalism's natural state but its <em>ideological</em> self-image; in fact states actively constructed markets.</td></tr>
+    <tr><td class="hi">Thesis of unicity</td><td>Capitalism arose only in the West and spread outward.</td></tr>
+    <tr><td class="hi">Revisionism</td><td>The counter-view: capitalist elements emerged multipolar (incl. China); the West/China gap is post-1800 and ecological, not cultural.</td></tr>
+    <tr><td class="hi">High-level equilibrium trap</td><td>China's standstill explained by a bad population-land ratio: cheap labour + dear capital → little incentive for labour-saving innovation.</td></tr>
+    <tr><td class="hi">Colonization of the life world</td><td>Habermas: the intrusion of system criteria (money, efficiency) into domains once governed by communicative action.</td></tr>
+    <tr><td class="hi">Communicative vs. strategic action</td><td>Action aimed at mutual understanding (life world) vs. action aimed at an external goal (system).</td></tr>
+    <tr><td class="hi">Life world / System</td><td>Symbolic existence (identity, belonging; truth) vs. material existence (economy; efficiency).</td></tr>
+    <tr><td class="hi">Weber's four types</td><td>Traditional, political, adventurer, rational — increasing maturity toward rational capitalism.</td></tr>
+    <tr><td class="hi">Varieties of Capitalism</td><td>Comparative theory (c. 2001) distinguishing liberal from coordinated market economies.</td></tr>
+    <tr><td class="hi">Institutional complementarity</td><td>Using the same coordination style across domains (labour, capital) is mutually reinforcing — producing coherent regimes.</td></tr>
+    <tr><td class="hi">Comparative institutional advantage</td><td>Why both regimes survive: liberal → radical innovation; coordinated → incremental innovation.</td></tr>
+  </table>
+
+  <h3>Test yourself</h3>
+  <div class="qlist">
+    <span class="label">Check your understanding</span>
+    <ul>
+      <li>How does exchange become “capitalism”? What is a market society?</li>
+      <li>Why must social science treat “capitalism” as value-free — and why is “greed” a poor definition?</li>
+      <li>What is <em>distinctively</em> capitalist about how greed/wealth is regulated? Contrast it with the 19th-century landed gentry.</li>
+      <li>State the two-part definition of capitalism. What are the two necessary conditions of profit-oriented exchange?</li>
+      <li>Explain “endogenous but constructed” via the Sorcerer's Apprentice. Why is laissez-faire an <em>ideology</em>, not a description?</li>
+      <li>State the two theses about capitalism's expansion (unicity; colonization of the life world).</li>
+      <li>List the elements of China's head start. How do the two revisionist arguments challenge the unicity thesis?</li>
+      <li>Explain the high-level equilibrium trap. Why do cheap labour and dear capital discourage innovation?</li>
+      <li>Using the surrogacy case, explain Habermas's life world vs. system and what “colonization” means.</li>
+      <li>Give the two caveats to the colonization thesis.</li>
+      <li>Name and illustrate Weber's four types. Which is most “mature,” and why is the ordering evolutionary?</li>
+      <li>Contrast liberal and coordinated market economies on coordination, skills, and innovation. Why do both survive?</li>
+    </ul>
+  </div>
+
+  <div class="box keyidea">
+    <span class="label">Five things to remember</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>Capitalism ≠ a swear-word or greed.</strong> It's profit-oriented market exchange become the dominant coordination mechanism.</li>
+      <li><strong>Markets were made, not found:</strong> capitalism is endogenous (runaway dynamic) <em>and</em> constructed (states built the markets; laissez-faire is ideology).</li>
+      <li><strong>Expansion runs two ways:</strong> outward geographically (the West-and-the-rest debate) and inward into social life (colonization of the life world).</li>
+      <li><strong>The West's lead is recent &amp; contingent</strong> — China led for centuries; the post-1800 gap owes more to ecology (the high-level equilibrium trap) than culture.</li>
+      <li><strong>There are capitalisms, plural:</strong> Weber's four historical types, and today's liberal (radical innovation) vs. coordinated (incremental innovation) economies.</li>
+    </ol>
+  </div>
+
+  <p class="fn" style="margin-top:6mm;">Expanded study guide based on the Chapter 2 lecture slides of the Economic Sociology part (“Capitalism as economic organization”), drawing on Weber, Marx, Habermas and the Varieties-of-Capitalism literature. Diagrams, tables and self-test questions added for study; the terse slide points developed into the fuller explanation normally given in class. Continues from Chapter 1 (Economic Action &amp; Institutions).</p>
+</section>
+
+</body>
+</html>
