@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Economic Action &amp; Institutions — Study Guide</title>
+<style>
+  @page{
+    size:A4; margin:22mm 20mm 20mm 20mm;
+    @bottom-center{content:counter(page);font-family:"Liberation Sans",sans-serif;font-size:9pt;color:#8a7d76;}
+    @bottom-right{content:"Economic Sociology · Chapter 1";font-family:"Liberation Sans",sans-serif;font-size:8pt;color:#b6aaa2;}
+  }
+  @page :first{margin:0;@bottom-center{content:none;}@bottom-right{content:none;}}
+
+  :root{
+    --clay:#8a3a29;      /* deep terracotta primary */
+    --sienna:#a8492f;
+    --rust:#b8623f;
+    --accent:#2f6d6a;    /* deep teal accent (complementary) */
+    --accent-soft:#d9e8e6;
+    --ink:#251d1a;
+    --muted:#6d5f58;
+    --line:#e6ddd6;
+    --tint:#f8f3ef;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:11pt;}
+  body{font-family:"Liberation Serif",Georgia,serif;color:var(--ink);line-height:1.5;margin:0;}
+
+  /* COVER */
+  .cover{height:297mm;padding:38mm 26mm 26mm 26mm;background:linear-gradient(150deg,#5c2419 0%,#8a3a29 48%,#a8492f 100%);color:#f7efe9;page-break-after:always;position:relative;}
+  .cover .kicker{font-family:"Liberation Sans",sans-serif;letter-spacing:.3em;text-transform:uppercase;font-size:11pt;color:#e6b98a;font-weight:700;}
+  .cover h1{font-family:"Liberation Sans",sans-serif;font-size:40pt;line-height:1.07;margin:13mm 0 4mm 0;font-weight:700;}
+  .cover h1 .small{display:block;font-size:18pt;color:#e8cdbc;margin-top:5mm;font-weight:700;}
+  .cover .sub{font-size:14.5pt;color:#e9d6c9;max-width:124mm;line-height:1.45;margin-top:6mm;}
+  .cover .thinkers{margin-top:9mm;font-size:12.5pt;color:#f1ddd0;}
+  .cover .thinkers span{color:#e6b98a;font-weight:700;font-family:"Liberation Sans",sans-serif;}
+  .cover .chapline{font-family:"Liberation Sans",sans-serif;font-size:11.5pt;color:#f3e4da;margin-top:15mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.24);}
+  .cover .chapline b{color:#e6b98a;}
+  .cover .footer-note{position:absolute;bottom:22mm;left:26mm;right:26mm;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;color:#cbb2a4;line-height:1.5;}
+
+  /* HEADINGS */
+  h2{font-family:"Liberation Sans",sans-serif;font-size:21pt;color:var(--clay);margin:0 0 2mm 0;padding-top:3mm;font-weight:700;page-break-after:avoid;}
+  h2 .num{color:var(--accent);margin-right:6pt;}
+  h3{font-family:"Liberation Sans",sans-serif;font-size:14pt;color:var(--sienna);margin:7mm 0 2mm 0;font-weight:700;page-break-after:avoid;}
+  h4{font-family:"Liberation Sans",sans-serif;font-size:11.5pt;color:var(--rust);margin:5mm 0 1.5mm 0;font-weight:700;page-break-after:avoid;}
+  .section-band{page-break-before:always;border-bottom:2px solid var(--accent);margin-bottom:4mm;padding-bottom:2mm;}
+  .section-band .eyebrow{font-family:"Liberation Sans",sans-serif;font-size:9.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+  p{margin:0 0 2.6mm 0;}
+  a{color:var(--sienna);text-decoration:none;}
+  strong{color:var(--clay);}
+  em{color:var(--sienna);}
+  ul,ol{margin:0 0 3mm 0;padding-left:6mm;}
+  li{margin-bottom:1.3mm;}
+
+  /* BOXES */
+  .box{border-radius:4px;padding:4mm 5mm;margin:3.5mm 0;page-break-inside:avoid;}
+  .plain{background:var(--tint);border:1px solid var(--line);}
+  .keyidea{background:#efe1da;border:1px solid #e2ccc0;}
+  .study{background:#fdfaf8;border:1px solid var(--line);}
+  .apply{background:var(--accent-soft);border:1px solid #b9d4d1;}
+  .warn{background:#f7ece6;border:1px solid #ecd2ba;}
+  .quote{background:#4a1e15;color:#f3e6de;border-radius:4px;padding:5mm 6mm;margin:4mm 0;font-size:12.5pt;font-style:italic;page-break-inside:avoid;}
+  .quote .src{display:block;margin-top:2.5mm;font-style:normal;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;color:#d3b3a3;letter-spacing:.04em;}
+  .box .label{display:inline-block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2mm;}
+  .plain .label{color:var(--rust);}
+  .keyidea .label{color:var(--clay);}
+  .study .label{color:var(--accent);}
+  .apply .label{color:#245a57;}
+  .warn .label{color:#b26a2b;}
+  .box p:last-child{margin-bottom:0;}
+  .study .grid{display:table;width:100%;margin:1mm 0 2mm;}
+  .study .row{display:table-row;}
+  .study .row>div{display:table-cell;padding:1mm 3mm 1mm 0;vertical-align:top;}
+  .study .row>div:first-child{width:34mm;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;color:var(--rust);text-transform:uppercase;letter-spacing:.05em;}
+
+  /* TABLE */
+  table.data{border-collapse:collapse;width:100%;margin:3mm 0;font-size:10pt;page-break-inside:avoid;}
+  table.data caption{caption-side:top;text-align:left;font-family:"Liberation Sans",sans-serif;font-size:9pt;font-weight:700;color:var(--muted);margin-bottom:1.5mm;letter-spacing:.04em;}
+  table.data th{background:var(--clay);color:#fff;font-family:"Liberation Sans",sans-serif;font-size:9.5pt;padding:2mm 3mm;text-align:left;font-weight:700;}
+  table.data td{padding:1.8mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.data tr:nth-child(even) td{background:var(--tint);}
+  table.data td.hi{font-weight:700;color:var(--clay);}
+  .fn{font-size:8.5pt;color:var(--muted);font-family:"Liberation Sans",sans-serif;margin-top:1mm;}
+
+  /* TOC */
+  .toc{page-break-after:always;}
+  .toc h2{border:none;}
+  .toc ol{list-style:none;padding-left:0;}
+  .toc>ol>li{font-family:"Liberation Sans",sans-serif;font-weight:700;color:var(--clay);font-size:12pt;margin-top:4mm;border-bottom:1px solid var(--line);padding-bottom:1.5mm;}
+  .toc>ol>li>span.n{color:var(--accent);margin-right:4pt;}
+  .toc ul{list-style:none;padding-left:8mm;margin:1.5mm 0 0;}
+  .toc ul li{font-family:"Liberation Serif",serif;font-weight:400;color:var(--ink);font-size:10.5pt;margin:.8mm 0;}
+
+  .lead{font-size:11.5pt;color:#332721;}
+  .divider{border:none;border-top:1px solid var(--line);margin:6mm 0;}
+  .qlist{background:#fdfaf8;border-left:3px solid var(--accent);padding:3mm 5mm;margin:3mm 0;}
+  .qlist .label{display:block;font-family:"Liberation Sans",sans-serif;font-size:8.5pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#245a57;margin-bottom:1.5mm;}
+  .qlist ul{padding-left:5mm;margin:0;}
+  .term{font-family:"Liberation Sans",sans-serif;font-weight:700;color:var(--sienna);}
+
+  /* three ideal-type cards */
+  .types{display:table;width:100%;table-layout:fixed;border-spacing:3mm 0;margin:4mm 0;page-break-inside:avoid;}
+  .types .card{display:table-cell;width:33%;background:#fff;border:1px solid var(--line);border-radius:4px;padding:3mm 3mm 3.5mm;vertical-align:top;}
+  .types .card .h{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:11.5pt;margin-bottom:1mm;}
+  .types .card.ex .h{color:var(--accent);}
+  .types .card.re .h{color:var(--rust);}
+  .types .card.rd .h{color:var(--clay);}
+  .types .card .dg{margin:2mm 0;}
+  .types .card p{font-size:9pt;color:#37302b;line-height:1.4;margin:0;}
+
+  /* four dimensions */
+  .dims{display:table;width:100%;table-layout:fixed;border-spacing:3mm;margin:4mm 0;page-break-inside:avoid;}
+  .dims .drow{display:table-row;}
+  .dims .card{display:table-cell;width:50%;background:#fff;border:1px solid var(--line);border-radius:4px;padding:3mm 3.5mm;vertical-align:top;}
+  .dims .card .n{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:16pt;float:right;opacity:.22;line-height:1;}
+  .dims .card .h{font-family:"Liberation Sans",sans-serif;font-weight:700;font-size:11pt;color:var(--sienna);margin-bottom:1mm;}
+  .dims .card .d{font-size:9.5pt;color:#37302b;line-height:1.42;}
+
+  .fig{background:#fdfaf8;border:1px solid var(--line);border-radius:4px;padding:3mm 4mm 2mm;margin:4mm 0;page-break-inside:avoid;text-align:center;}
+  .fig .cap{font-family:"Liberation Sans",sans-serif;font-size:8.5pt;color:var(--muted);margin-top:1.5mm;letter-spacing:.03em;}
+  svg{max-width:100%;height:auto;}
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<section class="cover">
+  <div class="kicker">Course Study Guide · Economic Sociology</div>
+  <h1>Economic Action<br>&amp; Institutions<span class="small">A general sociological framework</span></h1>
+  <div class="sub">What counts as “economic” shapes how we study it. A sociological view — after Karl Polanyi — showing that the economy is more than the market, is woven into society, and is a product of history.</div>
+  <div class="thinkers">Built on the work of <span>Karl Polanyi</span>, with <span>Granovetter</span>, <span>Malthus</span> &amp; <span>Sahlins</span></div>
+  <div class="chapline"><b>Part 2 · Chapter 1</b> &nbsp;|&nbsp; More than the market · Three ideal types · Embeddedness · Economic history</div>
+  <div class="footer-note">An expanded companion to the Chapter 1 lecture slides of the Economic Sociology part. Each section develops the slide bullet points into the fuller explanation, examples and reasoning normally delivered aloud in class — so the guide can be read and studied on its own.</div>
+</section>
+
+<!-- ===== TOC ===== -->
+<section class="toc">
+  <h2>What this chapter covers</h2>
+  <p class="lead" style="margin-bottom:5mm;">This is the opening chapter of the <em>Economic Sociology</em> part of the course. Where mainstream economics treats “the economy” as the market, sociology asks a prior question: <em>what even counts as economic activity — and how is it bound up with the rest of society and its history?</em> The whole chapter is organised around three statements drawn from Karl Polanyi.</p>
+  <ol>
+    <li><span class="n">0.</span> Orientation: a sociological view of the economy
+      <ul><li>Why the definition of “economic” matters · Polanyi's three statements</li></ul>
+    </li>
+    <li><span class="n">1.</span> Economic action is more than market exchange
+      <ul><li>1.1 What is economic action? (action · institution · the double reduction)</li>
+        <li>1.2 Formal vs. substantive economy · 1.3 Three ideal types · 1.4 Case: the enclave economy</li></ul>
+    </li>
+    <li><span class="n">2.</span> Economic action is embedded in the social
+      <ul><li>Embeddedness · Polanyi &amp; Granovetter · The four dimensions</li></ul>
+    </li>
+    <li><span class="n">3.</span> Economic structures as a historical product
+      <ul><li>Historicising the economy · The Neolithic revolution · Malthus · Sahlins' “original affluent society”</li></ul>
+    </li>
+    <li><span class="n">4.</span> Glossary &amp; self-test</li>
+  </ol>
+  <div class="box keyidea" style="margin-top:7mm;">
+    <span class="label">The one-sentence version</span>
+    <p style="margin-bottom:0;">Economics tends to reduce “the economy” to <strong>rational action in a market</strong>. A sociological approach (after Polanyi) widens the lens: production and distribution are coordinated by <strong>three mechanisms</strong> — exchange, reciprocity and redistribution; the economy is always <strong>embedded</strong> in social life; and its forms are the <strong>product of history</strong>, not a natural given.</p>
+  </div>
+</section>
+
+<!-- ===== 0. ORIENTATION ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Orientation</div><h2><span class="num">0.</span>A sociological view of the economy</h2></div>
+  <p class="lead">The starting provocation of the chapter: <strong>what is defined as “economic” has far-reaching consequences for how it is studied.</strong> Draw the boundary narrowly — “the economy = the market” — and you will only ever see markets. Draw it as a sociologist does and a much larger world of economic life comes into view.</p>
+  <p>The chapter builds on <span class="term">Karl Polanyi</span> (1886–1964), an economic historian and anthropologist whose work grounds a <em>sociological</em> approach to “the” economy. His argument is summarised in three statements, which are also the three parts of this chapter:</p>
+  <div class="box keyidea">
+    <span class="label">Polanyi's three statements — the spine of the chapter</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>Economic action is more than market exchange.</strong> Markets are one way to coordinate production and distribution — not the only way.</li>
+      <li><strong>Economic activities are embedded in other social phenomena</strong> (and vice versa). The economy isn't a separate machine; it is stitched into social life.</li>
+      <li><strong>Economic systems are the product of a historical evolution.</strong> Today's market economy is a recent development, not the timeless natural state of humanity.</li>
+    </ol>
+  </div>
+  <p style="margin-bottom:0;">Keep these three in mind — each becomes one numbered section below, and together they form the sociologist's answer to the economist's picture of the world.</p>
+</section>
+
+<!-- ===== 1. MORE THAN MARKET EXCHANGE ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Statement One</div><h2><span class="num">1.</span>Economic action is more than market exchange</h2></div>
+
+  <h3><span style="color:var(--accent)">1.1</span> &nbsp;What is economic action?</h3>
+  <p>The chapter title has two key words worth unpacking first — <em>action</em> and <em>institution</em>.</p>
+  <div class="box plain">
+    <span class="label">Two building-block concepts</span>
+    <p><strong>Action</strong> = things we do <em>with an intention</em> — all behaviour except the automated stuff (breathing, reflexes). Almost everything we do that counts as “economic” is intentional, so it qualifies as action.</p>
+    <p style="margin-bottom:0;"><strong>Institution</strong> = “durable, socially organized elements of social structure that meet social and individual needs and in return influence and maintain social order and the continuity of social life” (Odrowąż-Coates, 2021). The move from <em>action</em> to <em>institution</em> is a <strong>jump from the inter-individual to the societal</strong> level — from what one person does to the durable patterns a whole society settles into.</p>
+  </div>
+  <p>Now the central definitions. <strong>Economy</strong> = the <em>production and distribution of resources</em>. That's broad on purpose. Mainstream <strong>economics</strong>, the chapter argues, performs a <span class="term">double reduction</span> — quietly narrowing that broad idea down to two things:</p>
+  <table class="data">
+    <caption>The “double reduction” economics performs</caption>
+    <tr><th style="width:42%">Economics equates economic activity to…</th><th>…but the sociological criticism is</th></tr>
+    <tr><td class="hi">1 · Actions in a <em>market economy</em></td><td>Much production/distribution happens <em>outside</em> markets entirely.</td></tr>
+    <tr><td class="hi">2 · <em>Instrumental-rational</em> actions (means-end calculation)</td><td>Plenty of economic action is driven by tradition, obligation, affection or norms — not cold calculation.</td></tr>
+  </table>
+  <p>The criticism, in one line: <strong>there are many other forms of action and many other institutions that are “economic” too.</strong></p>
+
+  <h4>Examples of “other” economic institutions</h4>
+  <p>These everyday examples all move resources around — i.e. they <em>are</em> production/distribution — yet none is a market transaction:</p>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li><strong>Domestic food culture</strong> — a household cooking and sharing meals produces and distributes real resources, coordinated by roles and love, not prices.</li>
+      <li><strong>Santa Claus / Saint Nicholas</strong> — an entire seasonal institution for redistributing goods to children via gifts.</li>
+      <li><strong>Volunteering</strong> — labour and services provided with no market wage.</li>
+      <li><strong>Donations</strong> — resources transferred out of solidarity or duty.</li>
+      <li><strong>Invitations to parties or dinner</strong> — hosting distributes food and hospitality, and quietly builds mutual obligation.</li>
+    </ul>
+  </div>
+  <p style="margin-bottom:0;">All of these show that distribution and production can be driven by <strong>alternative coordination mechanisms</strong> than the market. This criticism was developed most consistently by Polanyi, in his contrast between the <em>formal</em> and <em>substantive</em> approaches to the economy — which is §1.2.</p>
+
+  <h3><span style="color:var(--accent)">1.2</span> &nbsp;The formal versus the substantive economy</h3>
+  <p>Polanyi's charge against economics is <strong>myopia</strong> — it generalises too much from the “here and now.” It takes one historically specific arrangement (utility maximisation in a market economy) and treats it as the universal essence of economic life.</p>
+  <table class="data">
+    <caption>Two approaches to “the economy” (Polanyi)</caption>
+    <tr><th style="width:50%">Formal approach</th><th>Substantive approach</th></tr>
+    <tr><td>The economy = rational utility-maximisation in a <strong>market</strong>. Economising: allocating scarce means to competing ends.</td><td>The economy = however a society actually <strong>provisions itself</strong> — meets its material needs — by whatever institutions it uses.</td></tr>
+    <tr><td>Treats the market as the natural, universal form.</td><td>Sees market coordination as a <strong>recent invention</strong>. Markets have always existed, but historically <em>alongside</em> or even <em>subordinate to</em> other economic institutions.</td></tr>
+    <tr><td class="hi">Narrow — “myopic.”</td><td class="hi">Broad — historical and comparative.</td></tr>
+  </table>
+  <p style="margin-bottom:0;">From the substantive perspective, an economy coordinated <em>mainly</em> through market transactions is unusual and modern. Ideal-typically, there are <strong>three forms of coordination</strong>: <em>exchange, reciprocity and redistribution</em> — the subject of §1.3.</p>
+
+  <h3><span style="color:var(--accent)">1.3</span> &nbsp;Three ideal types of coordination</h3>
+  <p>An <span class="term">ideal type</span> (a Weberian device) is a deliberately pure, simplified model used as a yardstick — real economies always mix the three. Here they are:</p>
+
+  <div class="types">
+    <div class="card ex">
+      <div class="h">1 · Exchange</div>
+      <div class="dg">
+        <svg viewBox="0 0 150 74" role="img" aria-label="Two parties exchanging goods and money">
+          <circle cx="28" cy="37" r="15" fill="#e7f0ef" stroke="#2f6d6a" stroke-width="1.5"/>
+          <text x="28" y="41" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="11" font-weight="700" fill="#2f6d6a">A</text>
+          <circle cx="122" cy="37" r="15" fill="#e7f0ef" stroke="#2f6d6a" stroke-width="1.5"/>
+          <text x="122" y="41" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="11" font-weight="700" fill="#2f6d6a">B</text>
+          <line x1="45" y1="29" x2="105" y2="29" stroke="#2f6d6a" stroke-width="1.5" marker-end="url(#at)"/>
+          <line x1="105" y1="47" x2="45" y2="47" stroke="#b8623f" stroke-width="1.5" marker-end="url(#ar)"/>
+          <text x="75" y="24" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="7" fill="#2f6d6a">goods</text>
+          <text x="75" y="58" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="7" fill="#b8623f">money</text>
+          <defs>
+            <marker id="at" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2f6d6a"/></marker>
+            <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#b8623f"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <p><strong>Transactions in a market.</strong> Two parties trade, roughly simultaneously and at agreed terms (price). Impersonal, self-interested, calculable — the one type economics focuses on.</p>
+    </div>
+    <div class="card re">
+      <div class="h">2 · Reciprocity</div>
+      <div class="dg">
+        <svg viewBox="0 0 150 74" role="img" aria-label="A gives to B at time t, B returns at time t plus one">
+          <circle cx="28" cy="37" r="15" fill="#f4e6df" stroke="#b8623f" stroke-width="1.5"/>
+          <text x="28" y="41" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="11" font-weight="700" fill="#b8623f">A</text>
+          <circle cx="122" cy="37" r="15" fill="#f4e6df" stroke="#b8623f" stroke-width="1.5"/>
+          <text x="122" y="41" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="11" font-weight="700" fill="#b8623f">B</text>
+          <path d="M44,28 Q75,10 106,28" fill="none" stroke="#b8623f" stroke-width="1.5" marker-end="url(#rr)"/>
+          <path d="M106,46 Q75,64 44,46" fill="none" stroke="#9a7f74" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#rg)"/>
+          <text x="75" y="12" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="7" fill="#b8623f">gift · t</text>
+          <text x="75" y="70" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="7" fill="#9a7f74">return · t+1</text>
+          <defs>
+            <marker id="rr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#b8623f"/></marker>
+            <marker id="rg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#9a7f74"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <p><strong>Mutual obligations over time.</strong> A gives now (<em>t</em>); B is expected to return later (<em>t+1</em>). The delay and the bond are the point — not an instant equal swap.</p>
+    </div>
+    <div class="card rd">
+      <div class="h">3 · Redistribution</div>
+      <div class="dg">
+        <svg viewBox="0 0 150 74" role="img" aria-label="Resources move from members to a centre and back">
+          <circle cx="75" cy="37" r="15" fill="#efe1da" stroke="#8a3a29" stroke-width="1.5"/>
+          <text x="75" y="41" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="8" font-weight="700" fill="#8a3a29">centre</text>
+          <circle cx="18" cy="16" r="8" fill="#f8f3ef" stroke="#8a3a29" stroke-width="1.2"/>
+          <circle cx="18" cy="58" r="8" fill="#f8f3ef" stroke="#8a3a29" stroke-width="1.2"/>
+          <circle cx="132" cy="16" r="8" fill="#f8f3ef" stroke="#8a3a29" stroke-width="1.2"/>
+          <circle cx="132" cy="58" r="8" fill="#f8f3ef" stroke="#8a3a29" stroke-width="1.2"/>
+          <line x1="27" y1="20" x2="61" y2="32" stroke="#8a3a29" stroke-width="1.3" marker-end="url(#dr)"/>
+          <line x1="27" y1="54" x2="61" y2="42" stroke="#8a3a29" stroke-width="1.3" marker-end="url(#dr)"/>
+          <line x1="89" y1="32" x2="123" y2="20" stroke="#b8623f" stroke-width="1.3" marker-end="url(#dr2)"/>
+          <line x1="89" y1="42" x2="123" y2="54" stroke="#b8623f" stroke-width="1.3" marker-end="url(#dr2)"/>
+          <text x="40" y="10" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="7" fill="#8a3a29">in</text>
+          <text x="112" y="10" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="7" fill="#b8623f">back</text>
+          <defs>
+            <marker id="dr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#8a3a29"/></marker>
+            <marker id="dr2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#b8623f"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <p><strong>To the centre and back.</strong> Resources flow from members to a central authority, which then allocates them out again. The modern archetype: <em>taxes</em>.</p>
+    </div>
+  </div>
+
+  <h4>Reciprocity — the coordination of close relationships</h4>
+  <p>Reciprocity goes <strong>far beyond</strong> gift institutions in the narrow sense (birthdays, Christmas). It is <em>par excellence</em> the coordination mechanism of <strong>primary relationships</strong> in an economic sense — first and foremost the <strong>household</strong> and its close ties. Crucially, these reciprocal institutions don't float free of the market: they <em>coordinate with</em> market relationships. The classic application is the <strong>household division of labour</strong> — who cooks, cleans, earns and cares is settled largely by reciprocal obligation and role, not by internal price-setting, yet it dovetails with the members' paid market work.</p>
+
+  <h4>Redistribution — movement to the centre and back</h4>
+  <div class="box plain">
+    <ul style="margin-bottom:0;">
+      <li><strong>Often, but not necessarily, compulsory.</strong> It can coexist with reciprocity and with exchange.</li>
+      <li><strong>Biblical example — Genesis 41:56.</strong> Joseph stores grain centrally during seven years of plenty and releases it during the seven-year famine in Egypt — a textbook central gathering-and-redistributing.</li>
+      <li><strong>The main contemporary form is state redistribution (taxes)</strong> — compulsory and general.</li>
+      <li><strong>It does not automatically increase equality.</strong> Distinguish two kinds:
+        <ul>
+          <li><em>Horizontal redistribution</em> — the <strong>insurance principle</strong>: moving resources across states of the world (healthy→sick, employed→unemployed), not necessarily rich→poor.</li>
+          <li><em>Vertical redistribution</em> — can run <strong>either way</strong>: <em>progressive/redistributive</em> (rich→poor) <em>or</em> <strong>regressive</strong> (effectively poor→rich).</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <h3><span style="color:var(--accent)">1.4</span> &nbsp;Case: the enclave economy</h3>
+  <p>A concrete application that shows all three mechanisms mixing in real life. The <span class="term">enclave economy</span> is a specific case of the broader <em>ethnic economy</em>.</p>
+  <div class="box study">
+    <span class="label">The case</span>
+    <div class="grid">
+      <div class="row"><div>Definition</div><div>A <strong>geographic concentration of ethnic enterprises</strong> in an enclave.</div></div>
+      <div class="row"><div>Case site</div><div>The <em>Rue de Brabant</em>, straddling Schaerbeek and Saint-Josse in Brussels — a dense shopping street on market day.</div></div>
+      <div class="row"><div>Visible core</div><div>Retail, usually run by <strong>family companies</strong> — grocery stores, tea houses, hairdressers.</div></div>
+      <div class="row"><div>Wider network</div><div>Around that core, a broader circulation of goods and services: <strong>credit, advice, mediation, charity, direct mutual support.</strong></div></div>
+    </div>
+  </div>
+  <div class="box keyidea">
+    <span class="label">Why it matters theoretically</span>
+    <p>The key contrast with the mainstream economy is the <strong>strong integration of economic activity into the community</strong>. Here the three ideal types are <em>constantly mixed up</em> and hard to tell apart — even for the participants:</p>
+    <ul style="margin-bottom:0;">
+      <li><strong>Favours</strong> → reciprocal</li>
+      <li><strong>Charity</strong> → redistributive</li>
+      <li><strong>Buying &amp; selling</strong> → exchange</li>
+    </ul>
+    <p style="margin-top:2mm;margin-bottom:0;">And this needn't be warm and fuzzy — it can be <strong>strategic and instrumental</strong> too. Being on the <em>receiving</em> end of a gift relationship makes you <strong>“owing”</strong>: reciprocity quietly creates obligation, leverage and social debt. The boundary between generosity and calculation is blurred by design.</p>
+  </div>
+</section>
+
+<!-- ===== 2. EMBEDDEDNESS ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Statement Two</div><h2><span class="num">2.</span>Economic action is embedded in the social</h2></div>
+  <p class="lead"><span class="term">Embeddedness</span> is a <em>sensitizing concept</em> — not a precise measuring instrument but a lens that alerts you to look for how the economy is woven into social life.</p>
+
+  <h3>Origins and two criticisms</h3>
+  <p>The idea comes from Polanyi's <em>The Great Transformation</em>. His claim: the breakthrough of the market economy meant the economy was <strong>symbolically set apart</strong> from society — treated as a separate, self-regulating sphere — instead of an economy <em>embedded within</em> society, as in earlier eras. Two legitimate criticisms refine this:</p>
+  <div class="box plain">
+    <ol style="margin-bottom:0;">
+      <li><strong>Pre-capitalist economies are embedded — but that judgment is <em>a priori</em></strong> (Mark Granovetter's criticism). Polanyi assumes older economies were embedded rather than demonstrating it case by case; embeddedness shouldn't be presumed, it should be shown.</li>
+      <li><strong>The reverse embedding is also possible.</strong> Not only is the economy embedded in society — society is increasingly embedded in <em>the economy</em>. The influence runs both ways.</li>
+    </ol>
+  </div>
+  <div class="box keyidea">
+    <span class="label">Working definition</span>
+    <p style="margin-bottom:0;">Embeddedness = <strong>the intertwining between the constitution of society and the economic system.</strong> Because society and economy are mutually constituting, embeddedness is <strong>multidimensional</strong> — it shows up in several distinct ways.</p>
+  </div>
+
+  <h3>The four dimensions of embeddedness</h3>
+  <p>An often-quoted classification distinguishes four dimensions — four different ways the economy is threaded into the social:</p>
+  <div class="dims">
+    <div class="drow">
+      <div class="card"><span class="n">1</span><div class="h">Cognitive embeddedness</div><div class="d">The <strong>systematic biases</strong> of agents (cf. the experiments of behavioural economics — the relativity, anchoring, framing effects from the psychology part) and the shared <strong>“definitions of the situation.”</strong> How people perceive and mentally frame economic choices is socially shaped.</div></div>
+      <div class="card"><span class="n">2</span><div class="h">Normative embeddedness</div><div class="d">The <strong>norms and values</strong> around economic action — situations and interactions that are socially <strong>expected or disapproved of</strong>. What is considered “done” or “not done” (haggling, tipping, charging a friend interest) is normative.</div></div>
+    </div>
+    <div class="drow">
+      <div class="card"><span class="n">3</span><div class="h">Structural embeddedness</div><div class="d">The <strong>relational networks</strong> and overall <strong>structure of society</strong> in which action sits. Who is connected to whom — the web of ongoing relationships — channels economic opportunity and information.</div></div>
+      <div class="card"><span class="n">4</span><div class="h">Political embeddedness</div><div class="d">The effects of the <strong>distribution of power</strong> — “politics” in the broad sense. Economic outcomes reflect who holds power and how it is exercised, not just neutral supply and demand.</div></div>
+    </div>
+  </div>
+  <p style="margin-bottom:0;">The payoff of the concept: a market price, a wage or a deal is never a purely “economic” fact. It is simultaneously cognitive, normative, structural and political — which is exactly what a sociological analysis is trained to see.</p>
+</section>
+
+<!-- ===== 3. HISTORICAL PRODUCT ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Statement Three</div><h2><span class="num">3.</span>Economic structures as a historical product</h2></div>
+  <p class="lead">Sociology leans on a <strong>historicising</strong> approach far more than economics does — and applies it to economic institutions themselves. The lesson: today's arrangements are not natural or eternal; they <em>became</em> what they are.</p>
+
+  <h3>The Neolithic revolution</h3>
+  <p>The prime example is the <span class="term">Neolithic revolution</span> (roughly 10,000–8,000 BC): the transition from <strong>hunter-gatherer</strong> society (Palaeolithic) to a <strong>settled agricultural</strong> economy (Neolithic). One important caveat: despite the word “revolution,” <strong>this did not happen overnight</strong> — it was a gradual transformation over millennia, not a literal sudden event.</p>
+
+  <h3>The base model: Thomas Malthus (1766–1834)</h3>
+  <p>To understand the pressures on early societies, the chapter uses Malthus's model of population and food.</p>
+  <table class="data">
+    <tr><td class="hi" style="width:34%">1 · The Malthusian law</td><td>A <em>demographic</em> thesis: the reproductive impulse (the sexual drive) tends to push population toward <strong>exponential</strong> growth.</td></tr>
+    <tr><td class="hi">2 · The Malthusian trap</td><td>But the <strong>food supply grows only linearly</strong>. Population therefore outruns food, and the gap is periodically closed by <strong>“positive checks”</strong> — hunger, epidemics, war — which cut the population back down.</td></tr>
+  </table>
+  <div class="fig">
+    <svg viewBox="0 0 460 150" role="img" aria-label="Exponential population growth versus linear food supply, crossing at a crisis point">
+      <line x1="40" y1="120" x2="440" y2="120" stroke="#b6aaa2" stroke-width="1"/>
+      <line x1="40" y1="120" x2="40" y2="15" stroke="#b6aaa2" stroke-width="1"/>
+      <text x="240" y="140" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="9" fill="#6d5f58">time →</text>
+      <!-- resources: linear -->
+      <line x1="40" y1="105" x2="440" y2="55" stroke="#2f6d6a" stroke-width="2.2"/>
+      <text x="392" y="48" font-family="Liberation Sans, sans-serif" font-size="9" font-weight="700" fill="#2f6d6a">resources</text>
+      <!-- population: exponential -->
+      <path d="M40,116 C220,112 300,96 350,40 C368,22 378,18 388,15" fill="none" stroke="#b8623f" stroke-width="2.4"/>
+      <text x="330" y="34" font-family="Liberation Sans, sans-serif" font-size="9" font-weight="700" fill="#b8623f">population</text>
+      <!-- crisis marker -->
+      <circle cx="366" cy="63" r="4" fill="#8a3a29"/>
+      <line x1="366" y1="63" x2="366" y2="120" stroke="#8a3a29" stroke-width="0.8" stroke-dasharray="3,3"/>
+      <text x="366" y="18" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="9" font-weight="700" fill="#8a3a29">crisis</text>
+    </svg>
+    <div class="cap">Figure 1 · Exponential population growth vs. linear growth of the food supply — they collide at a “crisis.”</div>
+  </div>
+  <div class="fig">
+    <svg viewBox="0 0 460 150" role="img" aria-label="Population repeatedly hits the resource ceiling and is cut back by positive checks">
+      <line x1="40" y1="120" x2="440" y2="120" stroke="#b6aaa2" stroke-width="1"/>
+      <line x1="40" y1="120" x2="40" y2="15" stroke="#b6aaa2" stroke-width="1"/>
+      <text x="240" y="140" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="9" fill="#6d5f58">time →</text>
+      <!-- resource ceiling -->
+      <line x1="40" y1="100" x2="440" y2="52" stroke="#2f6d6a" stroke-width="2.2"/>
+      <text x="392" y="45" font-family="Liberation Sans, sans-serif" font-size="9" font-weight="700" fill="#2f6d6a">resources</text>
+      <!-- population sawtooth hugging the ceiling -->
+      <path d="M40,116 C120,110 150,92 168,86 L182,100 C210,94 236,80 252,74 L266,88 C292,82 316,70 330,64 L344,78 C368,72 388,60 402,55"
+            fill="none" stroke="#b8623f" stroke-width="2.2"/>
+      <text x="150" y="78" font-family="Liberation Sans, sans-serif" font-size="9" font-weight="700" fill="#b8623f">population</text>
+      <!-- positive check markers -->
+      <circle cx="168" cy="86" r="3.4" fill="#8a3a29"/><circle cx="252" cy="74" r="3.4" fill="#8a3a29"/><circle cx="330" cy="64" r="3.4" fill="#8a3a29"/>
+      <text x="252" y="26" text-anchor="middle" font-family="Liberation Sans, sans-serif" font-size="9" font-weight="700" fill="#8a3a29">positive checks</text>
+      <line x1="252" y1="30" x2="252" y2="70" stroke="#8a3a29" stroke-width="0.8" stroke-dasharray="3,3"/>
+    </svg>
+    <div class="cap">Figure 2 · The Malthusian trap: population repeatedly rises to the resource ceiling and is knocked back by positive checks (hunger, epidemics).</div>
+  </div>
+  <p>Applied to <strong>Palaeolithic</strong> societies, the Malthusian model predicts a permanent <strong>tendency to mere subsistence</strong> — a standard of living pinned at survival level, because any surplus is instantly consumed by population growth until the next positive check. That grim picture is exactly what Marshall Sahlins set out to challenge.</p>
+
+  <h3>Sahlins' “original affluent society”</h3>
+  <p><span class="term">Marshall Sahlins</span> argues <em>against</em> the subsistence conjecture. His provocative thesis: for Palaeolithic humans, material needs were <strong>easily fulfilled</strong> — making hunter-gatherers, paradoxically, the “original affluent society.”</p>
+  <div class="box keyidea">
+    <span class="label">Two reasons they were “affluent”</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>Limited needs.</strong> They wanted little, so little was enough. Affluence is reached not only by producing much but by <em>desiring little</em>.</li>
+      <li><strong>An implicit limit on demographic growth</strong> — driven by the <em>absolute necessity of mobility</em>. Nomadic life makes large families impractical (you can only carry so much, and so many infants), which keeps population from outrunning resources — defusing the Malthusian trap from the demographic side.</li>
+    </ol>
+  </div>
+  <div class="box study">
+    <span class="label">The evidence — anthropology of hunter-gatherers</span>
+    <p>Sahlins uses present-day hunter-gatherers as a possible comparison for prehistory — with a clear caveat: <strong>today's H-G societies are often strongly marginalised</strong>, pushed into the poorest, harshest areas, so they may understate prehistoric conditions. He therefore leans on two well-documented groups observed near the onset of colonisation:</p>
+    <ul style="margin-bottom:0;">
+      <li><strong>Aborigines in Arnhem Land</strong>, north-east Australia;</li>
+      <li><strong>the !Kung</strong> in the Kalahari, Botswana.</li>
+    </ul>
+    <p style="margin-top:2mm;margin-bottom:0;"><strong>Result:</strong> relatively <em>easy food for a limited amount of work</em> — surprisingly short working hours to meet their needs.</p>
+  </div>
+  <div class="quote">“Want not, lack not.”<span class="src">— the logic of Sahlins' original affluent society</span></div>
+  <p>Sahlins is careful: he does <strong>not</strong> claim Palaeolithic people lived “the good life.” His point is narrower — <em>limited needs allowed those needs to be met.</em> Summarised:</p>
+  <div class="box plain">
+    <ol style="margin-bottom:0;">
+      <li>A <strong>low standard of living</strong> — but one <em>largely exceeding</em> bare survival.</li>
+      <li>They <strong>met, even surpassed, their goals with limited effort.</strong></li>
+      <li>The <strong>absolute requirement of mobility limits demographic growth</strong>, and so prevents the falling yields-per-head that the Malthusian trap predicts.</li>
+    </ol>
+  </div>
+
+  <h3>The central lessons</h3>
+  <p>Sahlins' theory is backed not only by anthropological data but by <strong>historical-archaeological research</strong> — e.g. comparisons of Palaeolithic and Neolithic human skeletons, which often show early farmers were <em>less</em> healthy and well-nourished than the foragers who preceded them. Two lessons close the chapter:</p>
+  <div class="box keyidea">
+    <span class="label">Two central lessons</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>“Lack” is a <em>ratio</em>, not an absolute</strong> — the ratio of fulfilment to human needs, and <em>both</em> terms are variable. You can reduce lack by having more, or by needing less. Scarcity is as much about desire as about supply.</li>
+      <li><strong>The Neolithic is a <em>double</em> revolution:</strong>
+        <ul>
+          <li><em>Technological</em> — a new way of fulfilling needs, from hunting-gathering to agriculture;</li>
+          <li><em>Individual</em> — a transformation of the person, with newly <strong>internalised (expanded) needs</strong>. Settling down didn't just change how we produce; it changed how much we <em>want</em>.</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+  <p style="margin-bottom:0;">This lands the whole chapter back on its first move: what counts as “economic” — even what counts as “scarcity” or “affluence” — is not a natural fact but a socially and historically variable one. Which is precisely the sociological point.</p>
+</section>
+
+<!-- ===== 4. GLOSSARY & SELF-TEST ===== -->
+<section>
+  <div class="section-band"><div class="eyebrow">Appendix</div><h2><span class="num">4.</span>Glossary &amp; self-test</h2></div>
+
+  <h3>Key terms</h3>
+  <table class="data">
+    <tr><td class="hi" style="width:30%">Economic action</td><td>Intentional behaviour related to the production and distribution of resources.</td></tr>
+    <tr><td class="hi">Institution</td><td>Durable, socially organised elements of social structure that meet needs and maintain social order (Odrowąż-Coates, 2021). The leap from the inter-individual to the societal.</td></tr>
+    <tr><td class="hi">Economy</td><td>The production and distribution of resources (broadly defined).</td></tr>
+    <tr><td class="hi">Double reduction</td><td>Economics' narrowing of “economic” to (1) market actions and (2) instrumental-rational actions.</td></tr>
+    <tr><td class="hi">Formal economy</td><td>Polanyi: the economy as utility-maximisation in a market — the “myopic” view.</td></tr>
+    <tr><td class="hi">Substantive economy</td><td>Polanyi: the economy as how a society actually provisions itself, by whatever institutions.</td></tr>
+    <tr><td class="hi">Ideal type</td><td>A pure, simplified model (Weber) used as a yardstick; reality mixes types.</td></tr>
+    <tr><td class="hi">Exchange</td><td>Coordination via market transactions between parties.</td></tr>
+    <tr><td class="hi">Reciprocity</td><td>Coordination via mutual obligation over time (t → t+1); the mechanism of households and close ties.</td></tr>
+    <tr><td class="hi">Redistribution</td><td>Movement of resources to a centre and back out; e.g. taxes. Horizontal (insurance) vs. vertical (progressive or regressive).</td></tr>
+    <tr><td class="hi">Enclave / ethnic economy</td><td>Geographic concentration of ethnic enterprises where the three ideal types mix and economic life is integrated into the community.</td></tr>
+    <tr><td class="hi">Embeddedness</td><td>The intertwining of the constitution of society and the economic system; a multidimensional sensitizing concept.</td></tr>
+    <tr><td class="hi">Four dimensions</td><td>Cognitive, normative, structural, political embeddedness.</td></tr>
+    <tr><td class="hi">Neolithic revolution</td><td>Gradual (not overnight) transition from hunter-gatherer to settled agricultural economy (~10–8000 BC).</td></tr>
+    <tr><td class="hi">Malthusian law / trap</td><td>Exponential population vs. linear food; the gap closed by “positive checks” (hunger, epidemics).</td></tr>
+    <tr><td class="hi">Original affluent society</td><td>Sahlins: hunter-gatherers met needs easily thanks to limited needs and mobility-limited population growth.</td></tr>
+  </table>
+
+  <h3>Test yourself</h3>
+  <div class="qlist">
+    <span class="label">Check your understanding</span>
+    <ul>
+      <li>Why does the <em>definition</em> of “economic” have far-reaching consequences for how it is studied?</li>
+      <li>State Polanyi's three statements. Which section of the chapter corresponds to each?</li>
+      <li>What is the “double reduction,” and what is the sociological objection to each half?</li>
+      <li>Give three everyday “economic institutions” that are <em>not</em> market transactions, and say how each moves resources.</li>
+      <li>Contrast the formal and substantive approaches to the economy.</li>
+      <li>Define the three ideal types and draw the flow of each. Which does mainstream economics focus on?</li>
+      <li>Why is reciprocity central to the household? What does it mean that receiving a gift makes you “owing”?</li>
+      <li>Distinguish horizontal from vertical redistribution. Why doesn't redistribution automatically increase equality?</li>
+      <li>In the enclave economy, how do favours, charity and exchange get “mixed up” — and why can this be strategic?</li>
+      <li>Name and illustrate the four dimensions of embeddedness.</li>
+      <li>Explain the Malthusian trap using Figures 1 and 2. What are “positive checks”?</li>
+      <li>How does Sahlins challenge the subsistence view? Why is “lack” a ratio, and why is the Neolithic a <em>double</em> revolution?</li>
+    </ul>
+  </div>
+
+  <div class="box keyidea">
+    <span class="label">Five things to remember</span>
+    <ol style="margin-bottom:0;">
+      <li><strong>“Economic” is bigger than “market.”</strong> Defining it narrowly (the double reduction) blinds you to most economic life.</li>
+      <li><strong>Three ways to coordinate</strong> production &amp; distribution: exchange (market), reciprocity (mutual obligation), redistribution (centre-and-back). Real economies mix all three.</li>
+      <li><strong>The economy is embedded</strong> — cognitively, normatively, structurally, politically — in society, and vice versa.</li>
+      <li><strong>Economic forms are historical</strong>, not natural: the market economy and even settled agriculture are recent, hard-won arrangements.</li>
+      <li><strong>Scarcity is relative:</strong> “lack” is the ratio of fulfilment to needs — and needs themselves are socially and historically variable (Sahlins).</li>
+    </ol>
+  </div>
+
+  <p class="fn" style="margin-top:6mm;">Expanded study guide based on the Chapter 1 lecture slides of the Economic Sociology part (“Economic action and economic institutions: a general framework”), which builds on the work of Karl Polanyi, with Granovetter, Malthus and Sahlins. Diagrams, tables and self-test questions added for study; the terse slide points developed into the fuller explanation normally given in class.</p>
+</section>
+
+</body>
+</html>
