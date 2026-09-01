@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Supply &amp; Demand — Exam Essentials</title>
+<style>
+  :root{
+    --ink:#1f2a33; --muted:#5a6b78; --line:#d7e0e6;
+    --blue:#1f8fb2; --blue-dark:#2a5566; --blue-soft:#e3eef3;
+    --accent:#e8814a; --red:#c0392b; --green:#2e8b57;
+    --note:#fff8ec; --note-b:#e9c46a;
+    --def:#eef6f9; --def-b:#1f8fb2;
+    --cue:#f2ecf7; --cue-b:#8e6fb0;
+    --test:#eef7f0; --test-b:#2e8b57;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:15px;}
+  body{
+    font-family:"Georgia","Times New Roman",serif;
+    color:var(--ink); line-height:1.55; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{
+    max-width:820px; margin:0 auto; padding:34px 46px;
+  }
+  h1,h2,h3,h4{font-family:"Helvetica Neue",Arial,sans-serif; line-height:1.2;}
+  h2.section{
+    font-size:1.7rem; color:#fff; background:var(--blue-dark);
+    padding:16px 22px; border-radius:8px; margin:0 0 6px;
+    letter-spacing:.3px;
+  }
+  h2.section .tag{display:block;font-size:.8rem;color:#b9d6e0;font-weight:400;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  h3{font-size:1.22rem; color:var(--blue-dark); margin:26px 0 8px; border-bottom:2px solid var(--blue-soft); padding-bottom:5px;}
+  h4{font-size:1.02rem; color:var(--blue); margin:18px 0 4px;}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0 8px 4px; padding-left:22px;}
+  li{margin:5px 0;}
+  b,strong{color:#14323e;}
+  .term{color:var(--blue-dark); font-weight:700;}
+  code,.mono{font-family:"SFMono-Regular",Consolas,monospace; font-size:.92em;}
+  .eq{font-style:italic; font-family:"Cambria","Georgia",serif; background:#f6f9fb; border:1px solid var(--line);
+      padding:8px 14px; border-radius:6px; margin:10px 0; display:block; text-align:center; font-size:1.05rem;}
+  .frac{display:inline-block; vertical-align:middle; text-align:center; font-size:.85em;}
+  .frac .n{display:block; border-bottom:1px solid currentColor; padding:0 3px;}
+  .frac .d{display:block; padding:0 3px;}
+  /* callout boxes */
+  .box{border-radius:8px; padding:12px 16px 12px 16px; margin:14px 0; border-left:5px solid;}
+  .box .lbl{font-family:"Helvetica Neue",Arial,sans-serif; font-size:.72rem; font-weight:700;
+            letter-spacing:1.5px; text-transform:uppercase; display:block; margin-bottom:4px;}
+  .def{background:var(--def); border-color:var(--def-b);} .def .lbl{color:var(--def-b);}
+  .note{background:var(--note); border-color:var(--note-b);} .note .lbl{color:#b8860b;}
+  .cue{background:var(--cue); border-color:var(--cue-b);} .cue .lbl{color:var(--cue-b);}
+  .test{background:var(--test); border-color:var(--test-b);} .test .lbl{color:var(--test-b);}
+  .cue ul{margin-bottom:0;}
+  /* tables */
+  table.data{border-collapse:collapse; margin:12px 0; font-family:"Helvetica Neue",Arial,sans-serif; font-size:.9rem; width:100%;}
+  table.data th{background:var(--blue); color:#fff; text-align:left; padding:7px 12px; font-weight:600;}
+  table.data td{padding:6px 12px; border-bottom:1px solid var(--line);}
+  table.data tr:nth-child(even) td{background:#f4f8fa;}
+  table.data td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .profit-tbl{width:100%; border-collapse:collapse; font-family:"Helvetica Neue",Arial,sans-serif; font-size:.9rem; margin:8px 0;}
+  .profit-tbl caption{background:var(--blue); color:#fff; padding:6px 10px; font-weight:700; text-align:left; border-radius:5px 5px 0 0;}
+  .profit-tbl td{padding:5px 12px; border-bottom:1px solid var(--line);}
+  .profit-tbl td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .profit-tbl tr.total td{font-weight:700; background:var(--blue-soft); border-top:2px solid var(--blue);}
+  .profit-tbl tr.sub td{color:var(--muted); padding-left:26px;}
+  /* figures */
+  figure{margin:18px 0; padding:14px; background:#fff; border:1px solid var(--line); border-radius:8px;}
+  figure svg{display:block; width:100%; height:auto; max-width:100%;}
+  figcaption{font-family:"Helvetica Neue",Arial,sans-serif; font-size:.82rem; color:var(--muted); margin-top:8px; text-align:center;}
+  figcaption b{color:var(--blue-dark);}
+  .two{display:flex; gap:16px; flex-wrap:wrap;} .two>div{flex:1 1 300px;}
+  /* cover */
+  .cover{height:1000px; display:flex; flex-direction:column; justify-content:center; padding:60px;
+         background:linear-gradient(135deg,#2a5566 0%,#1f8fb2 100%); color:#fff;}
+  .cover .kicker{font-family:"Helvetica Neue",Arial,sans-serif; letter-spacing:4px; text-transform:uppercase; font-size:.9rem; opacity:.85;}
+  .cover h1{font-size:3.2rem; margin:12px 0 6px; line-height:1.08;}
+  .cover .sub{font-size:1.5rem; font-weight:300; font-family:"Helvetica Neue",Arial,sans-serif; opacity:.95;}
+  .cover .rule{width:90px; height:5px; background:#e8814a; margin:26px 0;}
+  .cover .meta{font-family:"Helvetica Neue",Arial,sans-serif; font-size:1rem; opacity:.9; margin-top:auto;}
+  .cover ul{list-style:none; padding:0; font-family:"Helvetica Neue",Arial,sans-serif; font-size:1.05rem;}
+  .cover ul li{margin:7px 0; padding-left:26px; position:relative;}
+  .cover ul li::before{content:"›"; position:absolute; left:0; color:#e8814a; font-size:1.4rem; line-height:1;}
+  .toc{font-family:"Helvetica Neue",Arial,sans-serif;}
+  .toc li{margin:9px 0; font-size:1.05rem;}
+  .toc b{color:var(--blue-dark);}
+  .lead{font-size:1.05rem; color:var(--muted);}
+  @page{size:A4; margin:14mm;}
+  .pb{page-break-before:always;}
+  .avoid{page-break-inside:avoid;}
+  figure,.box,.profit-tbl,table.data{page-break-inside:avoid;}
+  h3{page-break-after:avoid;}
+  .footer-note{margin-top:40px; padding-top:14px; border-top:1px solid var(--line); font-size:.8rem; color:var(--muted); font-family:"Helvetica Neue",Arial,sans-serif;}
+
+  .kf{background:#0f3a4a;color:#eaf3f6;border-radius:8px;padding:12px 16px;margin:12px 0;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .kf .lbl{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7fd0e6;display:block;margin-bottom:4px}
+  .kf b{color:#fff}
+  .trap{background:#fdecec;border-left:5px solid #c0392b;border-radius:8px;padding:12px 16px;margin:12px 0}
+  .trap .lbl{font-family:"Helvetica Neue",Arial,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#c0392b;display:block;margin-bottom:4px}
+  .big{font-size:1.15rem}
+  table.data td,table.data th{padding:5px 10px}
+</style>
+</head>
+<body>
+<section class="cover">
+  <div class="kicker">Microeconomics · Exam Cram · Units 7 &amp; 8</div>
+  <h1>Supply &amp; Demand<br>— Must-Know</h1>
+  <div class="sub">The essentials you cannot walk into the exam without</div>
+  <div class="rule"></div>
+  <ul>
+    <li>Solve for equilibrium · surplus · deadweight loss</li>
+    <li>Elasticity &amp; the revenue rule</li>
+    <li>Taxes: the wedge &amp; who really pays</li>
+    <li>Competitive firm (P = MC) vs market power (markup)</li>
+  </ul>
+  <div class="meta">Night-before revision · the full unit guides follow this section</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">If you read one page</span>The 12 things you must know</h2>
+<ol class="big" style="line-height:1.5">
+  <li><b>Demand slopes down</b> (= willingness to pay), <b>supply slopes up</b> (= marginal cost / willingness to accept). They cross at the <b>equilibrium</b> (P*, Q*).</li>
+  <li><b>To find equilibrium: set quantity demanded = quantity supplied, solve for p, then plug back in for q.</b></li>
+  <li><b>Consumer surplus</b> = triangle <b>under demand, above price</b>. <b>Producer surplus</b> = triangle <b>above supply, below price</b>. Both are ½·base·height.</li>
+  <li><b>Elasticity ε = (%ΔQ)/(%ΔP)</b> in absolute value. ε&gt;1 elastic, ε&lt;1 inelastic. <b>The slope coefficient is NOT the elasticity.</b></li>
+  <li><b>Inelastic demand:</b> raising price <b>raises</b> revenue. <b>Elastic demand:</b> raising price <b>lowers</b> revenue.</li>
+  <li><b>A shift's split into price vs quantity depends on elasticity.</b> More elastic demand → shift moves quantity a lot, price a little.</li>
+  <li><b>A tax drives a wedge:</b> buyer price rises, seller price falls, quantity falls. <b>It doesn't matter who legally pays</b> — same outcome.</li>
+  <li><b>Tax incidence: the more INELASTIC side bears the bigger share.</b> A tax creates a <b>deadweight loss</b>.</li>
+  <li><b>Competitive (price-taking) firm: produce where P = MC.</b> Its supply curve is its MC curve (above AC). Exit if P &lt; AC.</li>
+  <li><b>Long run under competition: entry drives price to P = MC = AC</b> (zero economic profit).</li>
+  <li><b>Firm with market power: MR &lt; P.</b> For linear demand, <b>MR has the same intercept but is twice as steep.</b> Produce where <b>MR = MC</b>, then read the price up on the demand curve (so <b>P &gt; MC</b>).</li>
+  <li><b>Markup rule: (P − MC)/P = 1/ε.</b> More elastic demand → smaller markup. Market power → deadweight loss; competition removes it.</li>
+</ol>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Core skill 1</span>Solve for the Equilibrium</h2>
+<div class="kf"><span class="lbl">The method (works every time)</span>
+  <b>Step 1.</b> Write demand and supply as quantities: q<sub>D</sub>(p) and q<sub>S</sub>(p).<br>
+  <b>Step 2.</b> Set <b>q<sub>D</sub> = q<sub>S</sub></b> and solve for the price p*.<br>
+  <b>Step 3.</b> Put p* back into either equation to get q*.</div>
+<div class="box note"><span class="lbl">Worked example</span>Demand q = 200 − 5p, supply q = −50 + 20p.
+  <br>Set equal: 200 − 5p = −50 + 20p → 250 = 25p → <b>p* = 10</b>. Then q* = 200 − 5(10) = <b>150</b>.</div>
+<div class="trap"><span class="lbl">Exam trap</span><b>"Normal slopes"</b> means demand down, supply up. If a question says supply is <b>perfectly inelastic</b> it's a <b>vertical</b> line (fixed quantity); <b>perfectly elastic</b> is a <b>horizontal</b> line (fixed price). Excess supply (price too high) pushes price <b>down</b>; excess demand (price too low) pushes it <b>up</b>.</div>
+<h3>Consumer &amp; producer surplus — the master picture</h3>
+<figure class="avoid">
+<svg viewBox="0 0 660 392" role="img" aria-label="Competitive equilibrium surplus">
+  <line x1="78" y1="40" x2="78" y2="326" stroke="#333" stroke-width="1.5"/>
+  <line x1="78" y1="326" x2="618" y2="326" stroke="#333" stroke-width="1.5"/>
+  <text x="70" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Price, P</text>
+  <text x="345.0" y="360" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Quantity, Q</text>
+  <polygon points="78.0,172.2 78.0,69.6 291.6,172.2" fill="#e8814a" opacity="0.22"/>
+  <polygon points="78.0,172.2 78.0,274.7 291.6,172.2" fill="#6f4fb0" opacity="0.18"/>
+  <line x1="78.0" y1="69.6" x2="612.0" y2="326.0" stroke="#c0392b" stroke-width="2.4"/>
+  <text x="505.2" y="264.5" font-family="Arial" font-size="11" fill="#c0392b" text-anchor="start">Demand (WTP)</text>
+  <line x1="78.0" y1="274.7" x2="505.2" y2="69.6" stroke="#2a6f8e" stroke-width="2.4"/>
+  <text x="398.4" y="82.5" font-family="Arial" font-size="11" fill="#2a6f8e" text-anchor="start">Supply (MC/WTA)</text>
+  <line x1="78.0" y1="172.2" x2="291.6" y2="172.2" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="291.6" y1="326.0" x2="291.6" y2="172.2" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="291.6" cy="172.2" r="4" fill="#14323e"/>
+  <text x="99.4" y="126.0" font-family="Arial" font-size="11" fill="#7a5230" text-anchor="start">Consumer surplus</text>
+  <text x="99.4" y="218.3" font-family="Arial" font-size="11" fill="#6f4fb0" text-anchor="start">Producer surplus</text>
+  <text x="72.0" y="175.2" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="end">P*</text>
+  <text x="291.6" y="342.0" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="middle">Q*</text>
+</svg>
+<figcaption><b>The one diagram to memorise.</b> Consumer surplus = area <b>under demand, above P*</b>. Producer surplus = area <b>above supply, below P*</b>. Total surplus (CS+PS) is <b>maximised</b> at the competitive equilibrium — no deadweight loss.</figcaption>
+</figure>
+<div class="kf"><span class="lbl">Surplus formulas (straight-line curves)</span>
+  <b>CS = ½ × Q* × (demand choke price − P*)</b> &nbsp;&nbsp;(choke = the price where q = 0)<br>
+  <b>PS = ½ × Q* × (P* − supply intercept price)</b></div>
+<div class="box note"><span class="lbl">Worked example (same numbers)</span>Invert: demand p = 40 − q/5 (choke 40); supply p = 2.5 + q/20 (intercept 2.5). At q*=150, p*=10:
+  <br>CS = ½·150·(40−10) = <b>2250</b>. &nbsp; PS = ½·150·(10−2.5) = <b>562.5</b>.</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Core skill 2</span>Elasticity &amp; Revenue</h2>
+<div class="kf"><span class="lbl">Definition</span>
+  <b>ε = |%ΔQ / %ΔP| = |(dQ/dP) · (P/Q)|</b> — always take the absolute value for demand.</div>
+<table class="data avoid">
+  <tr><th>ε</th><th>Name</th><th>Quantity response</th><th>Raise price → revenue…</th></tr>
+  <tr><td>&gt; 1</td><td>Elastic</td><td>very responsive</td><td><b>falls</b></td></tr>
+  <tr><td>= 1</td><td>Unit-elastic</td><td>—</td><td>unchanged (max)</td></tr>
+  <tr><td>&lt; 1</td><td>Inelastic</td><td>barely responds</td><td><b>rises</b></td></tr>
+</table>
+<div class="trap"><span class="lbl">The #1 elasticity trap</span>If demand is q = 200 − 5p, the <b>5 is NOT the elasticity</b> — it's the slope coefficient (dq/dp = −5). Elasticity also multiplies by <b>P/Q</b>: at p=10, q=150, ε = 5·(10/150) = <b>1/3</b> (inelastic). Always compute P/Q.</div>
+<div class="box note"><span class="lbl">Worked example</span>Used cars have elasticity 0.6 (inelastic). If price rises 10%, quantity falls only 0.6×10 = <b>6%</b>. Since quantity falls <i>less</i> than price rose, <b>total spending on used cars rises</b>.</div>
+<h3>Shifts: elasticity decides price vs quantity</h3>
+<p>A cost fall (or good harvest) shifts <b>supply right/down</b>; a popularity change shifts <b>demand</b>. How the new equilibrium splits into a price change vs a quantity change depends on <b>elasticity</b>.</p>
+<figure class="avoid">
+<svg viewBox="0 0 660 388" role="img" aria-label="Supply shift with elastic vs inelastic demand">
+  <defs><marker id="a9" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7f97"/></marker></defs>
+  <line x1="78" y1="40" x2="78" y2="326" stroke="#333" stroke-width="1.5"/>
+  <line x1="78" y1="326" x2="618" y2="326" stroke="#333" stroke-width="1.5"/>
+  <text x="70" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">P</text>
+  <text x="345.0" y="360" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Q</text>
+  <polyline fill="none" stroke="#2e8b57" stroke-width="2.4" points="104.7,272.4 112.3,269.2 119.8,266.0 127.4,262.8 135.0,259.6 142.5,256.4 150.1,253.2 157.7,250.0 165.2,246.9 172.8,243.7 180.4,240.5 187.9,237.3 195.5,234.1 203.0,230.9 210.6,227.7 218.2,224.5 225.7,221.3 233.3,218.1 240.9,214.9 248.4,211.7 256.0,208.5 263.6,205.3 271.1,202.1 278.7,198.9 286.3,195.7 293.8,192.5 301.4,189.3 309.0,186.1 316.5,182.9 324.1,179.7 331.6,176.5 339.2,173.3 346.8,170.1 354.3,167.0 361.9,163.8 369.5,160.6 377.0,157.4 384.6,154.2 392.2,151.0 399.7,147.8 407.3,144.6 414.9,141.4 422.4,138.2 430.0,135.0 437.6,131.8 445.1,128.6 452.7,125.4 460.3,122.2 467.8,119.0 475.4,115.8 482.9,112.6 490.5,109.4 498.1,106.2 505.6,103.0 513.2,99.8 520.8,96.6 528.3,93.4 535.9,90.2 543.5,87.1 551.0,83.9 558.6,80.7"/>
+  <polyline fill="none" stroke="#2e8b57" stroke-width="2.4" points="126.1,297.2 133.7,294.0 141.4,290.8 149.0,287.5 156.7,284.3 164.3,281.1 172.0,277.8 179.6,274.6 187.3,271.4 194.9,268.1 202.6,264.9 210.3,261.7 217.9,258.4 225.6,255.2 233.2,252.0 240.9,248.7 248.5,245.5 256.2,242.3 263.8,239.0 271.5,235.8 279.1,232.6 286.8,229.3 294.4,226.1 302.1,222.9 309.8,219.6 317.4,216.4 325.1,213.2 332.7,209.9 340.4,206.7 348.0,203.5 355.7,200.2 363.3,197.0 371.0,193.8 378.6,190.5 386.3,187.3 393.9,184.1 401.6,180.8 409.3,177.6 416.9,174.4 424.6,171.1 432.2,167.9 439.9,164.7 447.5,161.4 455.2,158.2 462.8,155.0 470.5,151.7 478.1,148.5 485.8,145.3 493.5,142.0 501.1,138.8 508.8,135.6 516.4,132.3 524.1,129.1 531.7,125.9 539.4,122.6 547.0,119.4 554.7,116.2 562.3,112.9 570.0,109.7 577.6,106.5 585.3,103.2"/>
+  <line x1="451.79999999999995" y1="128.60000000000002" x2="451.79999999999995" y2="156.8" stroke="#4a7f97" stroke-width="1.4" marker-end="url(#a9)"/>
+  <polyline fill="none" stroke="#2a6f8e" stroke-width="2.2" points="131.4,131.4 139.0,132.8 146.5,134.2 154.1,135.6 161.7,137.0 169.2,138.4 176.8,139.8 184.4,141.2 191.9,142.6 199.5,144.0 207.1,145.4 214.6,146.8 222.2,148.2 229.7,149.6 237.3,151.0 244.9,152.4 252.4,153.8 260.0,155.2 267.6,156.6 275.1,158.0 282.7,159.4 290.3,160.8 297.8,162.2 305.4,163.6 313.0,165.0 320.5,166.4 328.1,167.8 335.7,169.2 343.2,170.6 350.8,172.0 358.4,173.4 365.9,174.8 373.5,176.2 381.0,177.6 388.6,179.0 396.2,180.4 403.7,181.8 411.3,183.2 418.9,184.6 426.4,186.0 434.0,187.3 441.6,188.7 449.1,190.1 456.7,191.5 464.3,192.9 471.8,194.3 479.4,195.7 487.0,197.1 494.5,198.5 502.1,199.9 509.6,201.3 517.2,202.7 524.8,204.1 532.3,205.5 539.9,206.9 547.5,208.3 555.0,209.7 562.6,211.1 570.2,212.5 577.7,213.9 585.3,215.3"/>
+  <polyline fill="none" stroke="#2a6f8e" stroke-width="2.2" points="291.6,80.7 293.6,84.0 295.5,87.3 297.5,90.6 299.4,93.9 301.4,97.2 303.3,100.5 305.3,103.8 307.3,107.1 309.2,110.4 311.2,113.7 313.1,117.1 315.1,120.4 317.1,123.7 319.0,127.0 321.0,130.3 322.9,133.6 324.9,136.9 326.8,140.2 328.8,143.5 330.8,146.8 332.7,150.1 334.7,153.5 336.6,156.8 338.6,160.1 340.6,163.4 342.5,166.7 344.5,170.0 346.4,173.3 348.4,176.6 350.3,179.9 352.3,183.2 354.3,186.5 356.2,189.9 358.2,193.2 360.1,196.5 362.1,199.8 364.0,203.1 366.0,206.4 368.0,209.7 369.9,213.0 371.9,216.3 373.8,219.6 375.8,222.9 377.8,226.2 379.7,229.6 381.7,232.9 383.6,236.2 385.6,239.5 387.5,242.8 389.5,246.1 391.5,249.4 393.4,252.7 395.4,256.0 397.3,259.3 399.3,262.6 401.2,266.0 403.2,269.3 405.2,272.6 407.1,275.9 409.1,279.2"/>
+  <circle cx="345.0" cy="170.9" r="4" fill="#14323e"/>
+  <text x="331.0" y="166.9" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">A</text>
+  <circle cx="400.5" cy="181.3" r="4" fill="#14323e"/>
+  <text x="408.5" y="177.3" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">B</text>
+  <circle cx="361.0" cy="198.0" r="4" fill="#14323e"/>
+  <text x="347.0" y="202.0" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">C</text>
+  <line x1="78.0" y1="170.9" x2="345.0" y2="170.9" stroke="#c9d3d9" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="78.0" y1="181.3" x2="400.5" y2="181.3" stroke="#c9d3d9" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="78.0" y1="198.0" x2="361.0" y2="198.0" stroke="#c9d3d9" stroke-width="1" stroke-dasharray="3 3"/>
+</svg>
+<figcaption><b>Same supply shift, two demands.</b> With <b>elastic</b> (flat) demand → price barely falls, quantity jumps (point B). With <b>inelastic</b> (steep) demand → price drops a lot, quantity barely moves (point C).</figcaption>
+</figure>
+<div class="trap"><span class="lbl">Classic MCQ</span>"Price will fall by the same amount as costs." <b>False</b> — the price change depends on the elasticities of BOTH curves, almost never one-for-one. Also: a price change is a <b>movement along</b> a curve, <b>not</b> a shift of it.</div>
+<div class="box def"><span class="lbl">Two-shock questions (both curves move)</span>If supply shifts left <b>and</b> demand shifts left (e.g. fewer shrimp caught + less popular): <b>quantity falls for certain</b>, but the <b>price change is ambiguous</b> — it depends on the relative size of the two shifts.</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Core skill 3</span>Taxes — the Wedge</h2>
+<div class="kf"><span class="lbl">How to solve a specific (per-unit) tax t</span>
+  Let p = market price. If the <b>seller</b> remits the tax: seller keeps <b>p − t</b>, buyer pays <b>p</b>. Rewrite supply using (p − t), set new supply = demand, solve.<br>
+  <b>Buyer price − seller price = t</b> always. Quantity falls.</div>
+<figure class="avoid">
+<svg viewBox="0 0 660 392" role="img" aria-label="Tax wedge, revenue and DWL">
+  <line x1="78" y1="40" x2="78" y2="326" stroke="#333" stroke-width="1.5"/>
+  <line x1="78" y1="326" x2="618" y2="326" stroke="#333" stroke-width="1.5"/>
+  <text x="70" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Price, P</text>
+  <text x="345.0" y="360" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Quantity, Q</text>
+  <line x1="78.0" y1="69.6" x2="612.0" y2="326.0" stroke="#c0392b" stroke-width="2.2"/>
+  <text x="515.9" y="269.6" font-family="Arial" font-size="11" fill="#c0392b" text-anchor="start">Demand</text>
+  <line x1="78.0" y1="274.7" x2="505.2" y2="69.6" stroke="#2a6f8e" stroke-width="2.2"/>
+  <text x="398.4" y="77.3" font-family="Arial" font-size="11" fill="#2a6f8e" text-anchor="start">Supply</text>
+  <line x1="78.0" y1="223.5" x2="398.4" y2="69.6" stroke="#2a6f8e" stroke-width="1.8" stroke-dasharray="5 3"/>
+  <text x="163.4" y="192.7" font-family="Arial" font-size="10" fill="#4a7f97" text-anchor="start">Supply+tax</text>
+  <polygon points="78.0,146.5 238.2,146.5 238.2,197.8 78.0,197.8" fill="#6f4fb0" opacity="0.16"/>
+  <polygon points="238.2,146.5 291.6,172.2 238.2,197.8" fill="#e8814a" opacity="0.45"/>
+  <line x1="78.0" y1="146.5" x2="238.2" y2="146.5" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="78.0" y1="197.8" x2="238.2" y2="197.8" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="238.2" y1="326.0" x2="238.2" y2="146.5" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="291.6" y1="326.0" x2="291.6" y2="172.2" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="238.2" cy="146.5" r="3.5" fill="#c0392b"/>
+  <circle cx="238.2" cy="197.8" r="3.5" fill="#2a6f8e"/>
+  <circle cx="291.6" cy="172.2" r="3.5" fill="#14323e"/>
+  <text x="72.0" y="149.5" font-family="Arial" font-size="10" fill="#c0392b" text-anchor="end">Pb (buyer)</text>
+  <text x="72.0" y="200.8" font-family="Arial" font-size="10" fill="#2a6f8e" text-anchor="end">Ps (seller)</text>
+  <text x="110.0" y="172.2" font-family="Arial" font-size="10" fill="#6f4fb0" text-anchor="start">gov. revenue</text>
+  <text x="270.2" y="167.1" font-family="Arial" font-size="10" fill="#b5651d" text-anchor="start">DWL</text>
+</svg>
+<figcaption><b>The tax wedge.</b> Buyer price P<sub>b</sub> rises, seller price P<sub>s</sub> falls, and P<sub>b</sub> − P<sub>s</sub> = t. Government collects the purple rectangle (t × Q). The orange triangle is the <b>deadweight loss</b> — trades that no longer happen.</figcaption>
+</figure>
+<div class="box note"><span class="lbl">Worked example</span>Supply q = −80 + 20p, demand q = 130 − 10p. Pre-tax: p = 7, q = 60. A €3 seller tax → supply becomes q = −80 + 20(p−3) = −140 + 20p. New: −140 + 20p = 130 − 10p → <b>p (buyer) = 9</b>, seller price = 6, q = 40. <b>Buyer price +2, seller price −1.</b></div>
+<div class="kf"><span class="lbl">Incidence — who really pays (memorise)</span>
+  <b>The more INELASTIC side of the market bears the LARGER share of the tax.</b><br>
+  · Perfectly inelastic supply → sellers bear it all, <b>consumer price unchanged</b>.<br>
+  · Perfectly elastic supply → buyers bear it all, market price rises by the full t.<br>
+  · <b>It makes no difference whether the buyer or the seller legally pays</b> — identical prices &amp; quantities. Subsidies = negative taxes.</div>
+<div class="trap"><span class="lbl">Trap</span>"The impact on the producer price is larger if supply is more elastic." <b>False</b> — more elastic supply means sellers bear <b>less</b>, so the producer price moves <b>less</b>.</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Unit 8</span>The Competitive (Price-Taking) Firm</h2>
+<div class="box def"><span class="lbl">Price-taker</span>Many firms, identical product → each firm <b>takes the market price as given</b> and faces a <b>horizontal</b> demand at that price. It only chooses <b>how much</b> to produce.</div>
+<div class="kf"><span class="lbl">The rules (know these cold)</span>
+  <b>1.</b> Produce where <b>P = MC</b> (because for a price-taker, MR = P, and profit-max is MR = MC).<br>
+  <b>2.</b> The firm's <b>supply curve = its MC curve</b>, for the part <b>above AC</b>.<br>
+  <b>3.</b> <b>Shut down / exit if P &lt; AC.</b> Producer surplus = area between price and MC.<br>
+  <b>4.</b> Market supply = <b>horizontal sum</b> of all firms' MC curves.<br>
+  <b>5.</b> <b>Long run: entry drives price down to P = MC = AC</b> → zero economic profit.</div>
+<figure class="avoid">
+<svg viewBox="0 0 660 388" role="img" aria-label="Individual firm supply">
+  <line x1="78" y1="40" x2="78" y2="326" stroke="#333" stroke-width="1.5"/>
+  <line x1="78" y1="326" x2="618" y2="326" stroke="#333" stroke-width="1.5"/>
+  <text x="70" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Price, MC (€)</text>
+  <text x="345.0" y="360" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Quantity of loaves, Q</text>
+  <text x="72.0" y="272.6" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">1</text>
+  <text x="72.0" y="216.2" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">2</text>
+  <text x="72.0" y="159.8" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">3</text>
+  <text x="72.0" y="103.4" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">4</text>
+  <text x="72.0" y="47.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="end">5</text>
+  <text x="184.8" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">40</text>
+  <text x="291.6" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">80</text>
+  <text x="398.4" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">120</text>
+  <text x="505.2" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">160</text>
+  <text x="612.0" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">200</text>
+  <polyline fill="none" stroke="#2a6f8e" stroke-width="2.6" points="78.0,241.4 398.4,241.4"/>
+  <polyline fill="none" stroke="#2a6f8e" stroke-width="2.6" points="398.4,241.4 398.4,179.4"/>
+  <polyline fill="none" stroke="#2a6f8e" stroke-width="2.6" points="398.4,179.4 558.6,179.4"/>
+  <text x="411.8" y="165.3" font-family="Arial" font-size="10" fill="#14323e" text-anchor="start">Marginal cost of a loaf</text>
+  <line x1="78.0" y1="193.5" x2="558.6" y2="193.5" stroke="#c0392b" stroke-width="2.0"/>
+  <text x="99.4" y="182.2" font-family="Arial" font-size="10" fill="#c0392b" text-anchor="start">Demand (P = 2.35€)</text>
+  <line x1="398.4" y1="326.0" x2="398.4" y2="179.4" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="398.4" cy="193.5" r="3.5" fill="#14323e"/>
+  <text x="406.4" y="185.5" font-family="Arial" font-size="10" font-weight="bold" fill="#14323e">produce 120</text>
+</svg>
+<figcaption><b>Price-taker's choice.</b> Demand is horizontal at the market price. Produce every unit whose price exceeds its marginal cost — here up to where P meets the step in MC.</figcaption>
+</figure>
+<div class="box def"><span class="lbl">Efficiency (the big Unit 8 result)</span>The competitive equilibrium <b>maximises total surplus with no deadweight loss</b> — provided price-taking, complete contracts and <b>no externalities</b>. This is what "perfect competition is efficient" means.</div>
+<div class="trap"><span class="lbl">Traps</span>· "MR = price" is only true for a <b>price-taker</b>. · "Producer surplus is zero in perfect competition" is <b>false</b> in general (only if supply is perfectly elastic / constant MC). · Strong economies of scale → markets tend to be <b>more concentrated</b>.</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">Unit 7</span>The Firm With Market Power</h2>
+<div class="box def"><span class="lbl">Market power</span>A firm selling a <b>differentiated</b> product faces a <b>downward-sloping</b> demand curve and can <b>set a price above marginal cost</b>. To sell one more unit it must lower the price on <b>all</b> units → <b>MR &lt; P</b>.</div>
+<div class="kf"><span class="lbl">The two must-know facts</span>
+  <b>Linear demand P = a − bQ ⟹ MR = a − 2bQ</b> — <b>same intercept, twice as steep.</b><br>
+  <b>Profit max: MR = MC.</b> Find Q there, then read the <b>price up on the demand curve</b> (so P &gt; MC).</div>
+<figure class="avoid">
+<svg viewBox="0 0 660 392" role="img" aria-label="Monopoly MR=MC and deadweight loss">
+  <line x1="78" y1="40" x2="78" y2="326" stroke="#333" stroke-width="1.5"/>
+  <line x1="78" y1="326" x2="618" y2="326" stroke="#333" stroke-width="1.5"/>
+  <text x="70" y="36" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Price, P</text>
+  <text x="345.0" y="360" font-family="Arial" font-size="12.5" fill="#14323e" text-anchor="middle">Quantity, Q</text>
+  <line x1="78.0" y1="57.4" x2="612.0" y2="326.0" stroke="#c0392b" stroke-width="2.4"/>
+  <text x="518.5" y="265.6" font-family="Arial" font-size="11" fill="#c0392b" text-anchor="start">Demand</text>
+  <line x1="78.0" y1="57.4" x2="345.0" y2="326.0" stroke="#2e8b57" stroke-width="2.2"/>
+  <text x="304.9" y="285.7" font-family="Arial" font-size="11" fill="#2e8b57" text-anchor="start">MR</text>
+  <line x1="78.0" y1="272.3" x2="612.0" y2="272.3" stroke="#b5468a" stroke-width="2.2"/>
+  <text x="531.9" y="252.1" font-family="Arial" font-size="11" fill="#b5468a" text-anchor="start">MC</text>
+  <polygon points="291.6,164.9 291.6,272.3 505.2,272.3" fill="#e8814a" opacity="0.45"/>
+  <line x1="78.0" y1="164.9" x2="291.6" y2="164.9" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="291.6" y1="326.0" x2="291.6" y2="164.9" stroke="#8a97a0" stroke-width="1" stroke-dasharray="3 3"/>
+  <circle cx="291.6" cy="164.9" r="4" fill="#14323e"/>
+  <text x="297.6" y="158.9" font-family="Arial" font-size="13" font-weight="bold" fill="#14323e">M</text>
+  <circle cx="505.2" cy="272.3" r="3.5" fill="#14323e"/>
+  <text x="72.0" y="167.9" font-family="Arial" font-size="11" fill="#5a6b78" text-anchor="end">Pm</text>
+  <text x="291.6" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">Qm</text>
+  <text x="505.2" y="342.0" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="middle">Qc</text>
+  <text x="358.4" y="225.3" font-family="Arial" font-size="10" fill="#b5651d" text-anchor="start">DWL</text>
+  <text x="118.0" y="57.4" font-family="Arial" font-size="10" fill="#5a6b78" text-anchor="start">Monopoly: MR = MC → Qm, then price up to demand (Pm)</text>
+</svg>
+<figcaption><b>Monopoly/market-power picture.</b> MR (twice as steep) meets MC at Q<sub>m</sub>; the price P<sub>m</sub> is read up on demand. Because output is restricted below the competitive level Q<sub>c</sub>, there is a <b>deadweight loss</b> (orange).</figcaption>
+</figure>
+<div class="box note"><span class="lbl">Worked example (monopoly)</span>Demand q = 200 − 5p → inverse p = 40 − q/5, so MR = 40 − 2q/5. MC = 2. Set MR = MC: 40 − 2q/5 = 2 → <b>q = 95</b>, p = 40 − 95/5 = <b>21</b>. Consumer surplus = ½·(40−21)·95 = <b>902.5</b>.</div>
+<div class="kf"><span class="lbl">The markup rule (Lerner)</span>
+  <b>(P − MC)/P = 1/ε</b> — the price markup equals the <b>inverse of the demand elasticity</b>.<br>
+  More elastic demand (bigger ε, more competition) → <b>smaller markup, price closer to MC</b>. As ε → ∞ you get perfect competition (P = MC, no DWL).</div>
+<div class="box def"><span class="lbl">MC &amp; AC (cost side, both units)</span>
+  <b>AC = C(Q)/Q</b> (slope of the ray from the origin); <b>MC</b> = cost of one more unit (slope of the total-cost curve).
+  <b>If MC &lt; AC → AC falling; if MC &gt; AC → AC rising.</b> So <b>MC cuts AC at the minimum of AC.</b>
+  <b>Economies of scale</b> = AC falls as output rises (spreading fixed costs; increasing returns).</div>
+</section>
+<section class="page pb">
+<h2 class="section"><span class="tag">One-page</span>Formula Cheat-Sheet &amp; Top Traps</h2>
+<table class="data avoid">
+  <tr><th>Thing</th><th>Formula / rule</th></tr>
+  <tr><td>Equilibrium</td><td class="mono">set q_D = q_S, solve for p*, then q*</td></tr>
+  <tr><td>Consumer surplus</td><td class="mono">½ × Q* × (demand choke − P*)</td></tr>
+  <tr><td>Producer surplus</td><td class="mono">½ × Q* × (P* − supply intercept)</td></tr>
+  <tr><td>Elasticity of demand</td><td class="mono">ε = |(dQ/dP)·(P/Q)| ; &gt;1 elastic, &lt;1 inelastic</td></tr>
+  <tr><td>Revenue &amp; elasticity</td><td class="mono">inelastic: P↑ ⇒ revenue↑ ; elastic: P↑ ⇒ revenue↓</td></tr>
+  <tr><td>Specific tax</td><td class="mono">P_b − P_s = t ; who pays is irrelevant; DWL created</td></tr>
+  <tr><td>Tax incidence</td><td class="mono">less-elastic side bears more of the tax</td></tr>
+  <tr><td>Competitive firm</td><td class="mono">P = MC ; supply = MC above AC ; exit if P &lt; AC</td></tr>
+  <tr><td>Long-run competition</td><td class="mono">P = MC = AC (zero economic profit)</td></tr>
+  <tr><td>Market power output</td><td class="mono">MR = MC, then P from demand ; P &gt; MC</td></tr>
+  <tr><td>Linear demand MR</td><td class="mono">P = a − bQ ⇒ MR = a − 2bQ (twice as steep)</td></tr>
+  <tr><td>Markup (Lerner)</td><td class="mono">(P − MC)/P = 1/ε</td></tr>
+  <tr><td>AC vs MC</td><td class="mono">MC &lt; AC ⇒ AC falling; they cross at min AC</td></tr>
+</table>
+<div class="trap"><span class="lbl">Top exam traps (from past papers)</span>
+  <ul style="margin:4px 0">
+    <li>Slope coefficient ≠ elasticity (multiply by P/Q).</li>
+    <li>Who legally pays a tax doesn't change the outcome.</li>
+    <li>More elastic side of the market bears <b>less</b> of a tax.</li>
+    <li>A cost cut does <b>not</b> cut price one-for-one.</li>
+    <li>MR = P only for a price-taker; for market power MR &lt; P.</li>
+    <li>Setting P &gt; MC (market power) is <b>not Pareto efficient</b> (deadweight loss).</li>
+    <li>Economies of scale ≠ economies of scope (scale = one good, output↑; scope = two goods, shared input).</li>
+    <li>"Increasing returns / a &gt;proportional output rise" = economies of scale, <b>not</b> diseconomies.</li>
+  </ul></div>
+<div class="box test"><span class="lbl">Two-minute self-test</span>
+  <ol style="margin:4px 0">
+    <li>Demand q = 100 − 2p, supply q = −20 + 2p. Find p*, q*, CS, PS. <i>(p*=30, q*=40; CS=½·40·(50−30)=400; PS=½·40·(30−10)=400.)</i></li>
+    <li>A monopolist faces p = 60 − 2q, MC = 4. Find q, p. <i>(MR = 60 − 4q = 4 → q = 14, p = 32.)</i></li>
+    <li>A €4 tax; demand more inelastic than supply. Who bears more? <i>(Buyers — the more inelastic side.)</i></li>
+  </ol></div>
+<div class="footer-note">This is a condensed exam-revision sheet for Units 7 (the firm &amp; market power) and 8 (supply &amp; demand / competitive markets). The full, detailed unit guides follow this section — use them for the diagrams and derivations. Good luck tomorrow!</div>
+</section>
+</body>
+</html>
